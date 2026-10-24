@@ -338,3 +338,19 @@ RLS الموجودة، وأي route موجود.
 - Apple 4.8 (Sign in with Apple): <https://developer.apple.com/forums/thread/765145>
 - متطلبات Xcode 26 / iOS 26 SDK: <https://developer.apple.com/news/upcoming-requirements/>, <https://capgo.app/blog/xcode-26-requirement-for-capacitor-apps/>
 - لازم نراجع النص الحالي على <https://developer.apple.com/app-store/review/guidelines/> وسياسات Google Play قبل المرحلة 9.
+
+---
+
+## 14. إجابات 24 أكتوبر (بتغيّر اللي فوق)
+
+| السؤال | الإجابة | الأثر |
+|---|---|---|
+| الماك | macOS 13.7.8 (Ventura)، Intel | Xcode 26 محتاج macOS 15.6 على الأقل، فالماك مش هيقدر يبني للستور. **iOS builds وTestFlight من GitHub Actions على macOS**. الماك للتجربة بس، لو Xcode/Flutter المتاحين على Ventura اشتغلوا |
+| Google في production | `GET /auth/options` على `ziadd.atlass.dpdns.org` ← `{"google":false}` | B2b مش محتاجينه دلوقتي. Sign in with Apple فاضل لأنك طلبته |
+| OTP في production | القيمة في GitHub (مش متاحة لي) | هيبان في المرحلة 0 من أول تسجيل دخول تجريبي |
+| Cloudflare | طلب بـ UA بتاع التطبيق رجع 200 | مفيش challenge للـ native client |
+| AASA | `/.well-known/apple-app-site-association` بيرجّع صفحة الـ SPA (HTML) | لازم الإضافة في §5 عشان الروابط تفتح التطبيق |
+| بيانات الشركة | Atlas · 6 أكتوبر · info@atlas.com · 01000510491 | الإيميل لازم يتأكد (هل الدومين ده بتاعكم؟). والعنوان محتاج تفاصيل أكتر عشان الستور |
+| السن | 13 سنة أو أكبر | تأكيد سن عند التسجيل، واللي أصغر من 13 مايقدرش يسجّل. مفيش موافقة ولي أمر |
+| المنتدى | **يتأجّل** | **B6 اتشال**، والمنتدى مش في النسخة الأولى، وصفحة بلاغات الويب اتشالت |
+| الأكاديمية التجريبية | `https://ziadd.atlass.dpdns.org/` (academyId `7857eec7-…`، theme `manara`) | التجارب وحساب الديمو للمراجعة عليها |
