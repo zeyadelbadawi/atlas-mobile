@@ -1,0 +1,477 @@
+<title>رحلة طالب Atlas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;700&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: one reading column, a sticky section index, each flow = short brief + diagram + notes */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#17202b; --muted:#5a6676; --line:#dde2e8;
+  --accent:#1f5fbf; --accent-soft:#e6eefb; --warn:#9a5b00; --warn-soft:#fdf1df; --err:#a8322b; --err-soft:#fbe7e5; --ok:#1c7a4b; --ok-soft:#e3f4ea;
+  --display:"Readex Pro","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f141a; --surface:#161d26; --fg:#e7ecf2; --muted:#9aa7b6; --line:#2a3542;
+  --accent:#7fb0ff; --accent-soft:#1b2a40; --warn:#f0b866; --warn-soft:#33270f; --err:#ff8f86; --err-soft:#3a1c1a; --ok:#6fd6a0; --ok-soft:#143023; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f141a; --surface:#161d26; --fg:#e7ecf2; --muted:#9aa7b6; --line:#2a3542;
+  --accent:#7fb0ff; --accent-soft:#1b2a40; --warn:#f0b866; --warn-soft:#33270f; --err:#ff8f86; --err-soft:#3a1c1a; --ok:#6fd6a0; --ok-soft:#143023; color-scheme:dark}
+html{direction:rtl}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:40px}
+header{display:grid;gap:12px}
+.eyebrow{font-size:13px;color:var(--muted);letter-spacing:.02em}
+h1{font-family:var(--display);font-size:clamp(28px,5vw,40px);line-height:1.25;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-size:24px;line-height:1.35;margin:0;text-wrap:balance}
+h3{font-size:16px;margin:0;font-weight:600}
+p{margin:0;max-width:68ch}
+.lead{color:var(--muted);font-size:17px}
+nav.index{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav.index ol{list-style:none;margin:0;padding:0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+nav.index a{display:block;white-space:nowrap;padding:6px 12px;border-radius:999px;color:var(--fg);text-decoration:none;font-size:14px;border:1px solid var(--line);background:var(--surface)}
+nav.index a:hover,nav.index a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+section.flow{display:grid;gap:16px;scroll-margin-top:70px}
+.num{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto}
+.diagram pre.mermaid{margin:0;direction:ltr;text-align:center;background:transparent}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.note{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:6px;min-width:0}
+.note ul{margin:0;padding-inline-start:18px;display:grid;gap:4px}
+.note.warn{background:var(--warn-soft);border-color:transparent}
+.note.err{background:var(--err-soft);border-color:transparent}
+.note.ok{background:var(--ok-soft);border-color:transparent}
+code{font-family:var(--mono);font-size:13px;direction:ltr;unicode-bidi:isolate;background:var(--accent-soft);padding:1px 6px;border-radius:5px;overflow-wrap:anywhere}
+.tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tab{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:4px}
+.tab strong{font-family:var(--display);font-weight:500}
+.tab span{color:var(--muted);font-size:14px}
+footer{color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Atlas Mobile · تطبيق الطلاب · مبني على الـ API الحالي + إضافات الباك اند B1–B7</div>
+  <h1>رحلة الطالب في التطبيق، من التحميل لحد آخر الكورس</h1>
+  <p class="lead">تسع خرائط. الأولى بتوريك الرحلة كلها على بعضها، والباقي كل واحدة بتفصّل جزء. كل خريطة فيها الطريق العادي، والقرارات، والأخطاء اللي ممكن الطالب يقابلها، والـ endpoint اللي ورا كل خطوة.</p>
+  <div class="legend" aria-label="مفتاح الألوان">
+    <span class="chip"><span class="dot" style="background:#1f5fbf"></span>شاشة</span>
+    <span class="chip"><span class="dot" style="background:#9a5b00"></span>قرار / فحص من السيرفر</span>
+    <span class="chip"><span class="dot" style="background:#a8322b"></span>خطأ أو منع</span>
+    <span class="chip"><span class="dot" style="background:#1c7a4b"></span>نجاح / نهاية</span>
+    <span class="chip"><span class="dot" style="background:#7a4fb5"></span>إضافة باك اند جديدة</span>
+  </div>
+</header>
+
+<nav class="index" aria-label="الأقسام">
+  <ol>
+    <li><a href="#overview">الخريطة العامة</a></li>
+    <li><a href="#launch">أول تشغيل</a></li>
+    <li><a href="#auth">الدخول والتسجيل</a></li>
+    <li><a href="#home">الرئيسية والتبويبات</a></li>
+    <li><a href="#lesson">الدرس والفيديو</a></li>
+    <li><a href="#assess">الكويز والواجب</a></li>
+    <li><a href="#free">الكورسات المجانية</a></li>
+    <li><a href="#notify">الإشعارات</a></li>
+    <li><a href="#account">الحساب والخروج</a></li>
+    <li><a href="#edges">الحالات الاستثنائية</a></li>
+  </ol>
+</nav>
+
+<!-- 0 -->
+<section class="flow" id="overview">
+  <div class="num">00</div>
+  <h2>الخريطة العامة</h2>
+  <p>الرحلة الأساسية: يفتح التطبيق، يختار أكاديميته، يدخل، يتعلّم، ياخد شهادة. الطالب ممكن يرجع لأي نقطة، أو يضيف أكاديمية تانية، ولكل أكاديمية جلسة لوحدها.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  A["تحميل التطبيق من الستور"]:::screen --> B["أول تشغيل<br/>فحص النسخة + شاشة الخصوصية"]:::screen
+  B --> C["اختيار الأكاديمية<br/>رابط · QR · لينك · آخر أكاديميات"]:::screen
+  C --> D{"عنده حساب؟"}:::decision
+  D -- "أيوه" --> E["تسجيل الدخول<br/>إيميل · Apple · Google"]:::screen
+  D -- "لأ" --> F["حساب جديد"]:::screen
+  F --> E
+  E --> G{"كود إيميل أو موافقة الأكاديمية؟"}:::decision
+  G -- "OTP" --> G1["إدخال الكود"]:::screen --> H
+  G -- "مستني موافقة" --> G2["شاشة: طلبك عند الأكاديمية"]:::error
+  G -- "تمام" --> H["طلب إذن الإشعارات<br/>بعد شرح بسيط"]:::backend
+  H --> I["الرئيسية"]:::screen
+  I --> J["كورساتي"]:::screen
+  I --> K["الكورسات المجانية"]:::screen
+  K -- "تسجيل" --> J
+  J --> L["المنهج"]:::screen
+  L --> M["درس فيديو / نص / ملف"]:::screen
+  L --> N["كويز / واجب"]:::screen
+  M --> O{"خلّص كل المطلوب؟"}:::decision
+  N --> O
+  O -- "لسه" --> L
+  O -- "أيوه" --> P["الكورس اكتمل"]:::success
+  P --> Q["الشهادة: عرض · PDF · رابط تحقق"]:::success
+  I -. "Push" .-> R["إشعار ← يفتح الشاشة المطلوبة"]:::backend
+  I --> S["الحساب والإعدادات"]:::screen
+  S --> T["تسجيل خروج / إضافة أكاديمية / حذف الحساب"]:::screen
+  T --> C
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+  <div class="tabs" aria-label="التبويبات الأساسية">
+    <div class="tab"><strong>الرئيسية</strong><span>استكمال آخر درس، المواعيد الجاية، آخر الإعلانات</span></div>
+    <div class="tab"><strong>كورساتي</strong><span>المسجّل فيها (من الويب أو مجاناً) والتقدّم</span></div>
+    <div class="tab"><strong>استكشف</strong><span>الكورسات المجانية بس</span></div>
+    <div class="tab"><strong>الإشعارات</strong><span>مع عدّاد غير المقروء</span></div>
+    <div class="tab"><strong>حسابي</strong><span>البروفايل، الأجهزة، الشهادات، النتائج، السياسات</span></div>
+  </div>
+  <p class="lead">على الـ iPad التبويبات دي بتبقى sidebar، والقوائم بتتفتح master/detail جنب بعض.</p>
+</section>
+
+<!-- 1 -->
+<section class="flow" id="launch">
+  <div class="num">01</div>
+  <h2>أول تشغيل واختيار الأكاديمية</h2>
+  <p>قبل أي حاجة التطبيق بيسأل السيرفر: هل النسخة دي لسه مدعومة؟ وبعدين بيعرض شاشة خصوصية واضحة. الضروري متوضّح، والاختياري مقفول لحد ما الطالب يوافق. بعدها يختار أكاديميته.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  S["Splash بلوجو Atlas"]:::screen --> CFG{"GET public/mobile/config"}:::backend
+  CFG -- "النسخة أقل من المدعوم" --> UPD["شاشة: حدّث التطبيق<br/>زرار يفتح الستور"]:::error
+  CFG -- "صيانة" --> MNT["شاشة صيانة + حاول تاني"]:::error
+  CFG -- "تمام / مفيش نت" --> FIRST{"أول مرة يفتح؟"}:::decision
+  FIRST -- "أيوه" --> LANG["اختيار اللغة<br/>عربي / English"]:::screen
+  LANG --> PRIV["شاشة الخصوصية<br/>الضروري: الجلسة والجهاز<br/>اختياري: تقارير الأعطال (مقفول)"]:::screen
+  PRIV --> LEGAL["روابط: الخصوصية · الشروط · الكوكيز · الاسترداد"]:::screen
+  PRIV --> PICK
+  FIRST -- "لأ" --> SAVED{"فيه أكاديمية وجلسة محفوظة؟"}:::decision
+  SAVED -- "أيوه" --> REF{"POST auth/refresh<br/>Cookie + Origin"}:::decision
+  REF -- "نجح" --> HOME["الرئيسية"]:::success
+  REF -- "انتهت الجلسة" --> LOGIN["تسجيل الدخول<br/>بنفس الأكاديمية"]:::screen
+  SAVED -- "لأ" --> PICK["اختيار الأكاديمية"]:::screen
+  PICK --> P1["كتابة رابط الأكاديمية<br/>slug.atlass.dpdns.org أو دومين خاص"]:::screen
+  PICK --> P2["Scan QR من الموقع أو الإعلان"]:::screen
+  PICK --> P3["Deep link من إيميل أو واتساب"]:::screen
+  PICK --> P4["آخر أكاديميات استخدمتها"]:::screen
+  P1 --> RES{"GET public/websites/resolve?hostname="}:::decision
+  P2 --> RES
+  P3 --> RES
+  P4 --> RES
+  RES -- "مش موجودة" --> NF["رسالة: الرابط ده مش لأكاديمية على Atlas"]:::error
+  NF --> PICK
+  RES -- "اتلاقت" --> ID["GET :academyId/identity + logo<br/>اسم ولوجو وألوان الأكاديمية"]:::screen
+  ID --> WEL["ترحيب بهوية الأكاديمية<br/>دخول · حساب جديد"]:::success
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+  <div class="notes">
+    <div class="note"><h3>اللي بيتخزن</h3><ul><li>الأكاديميات: host، اسم، لوجو (مش بيانات سرية)</li><li>الـ cookies لكل host في storage مشفّر</li><li>اختيار اللغة والمظهر</li></ul></div>
+    <div class="note warn"><h3>ألوان الأكاديمية</h3><ul><li>بتتطبّق على الأزرار والعناوين</li><li>لو اللون ضعيف مع الخلفية، التطبيق بيعدّل درجته عشان يوصل لـ contrast 4.5:1</li></ul></div>
+    <div class="note"><h3>مفيش</h3><ul><li>أي tracking أو إعلانات، فمفيش طلب ATT</li><li>أي إذن قبل ما يكون له لازمة</li></ul></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="flow" id="auth">
+  <div class="num">02</div>
+  <h2>الدخول والتسجيل</h2>
+  <p>نفس قواعد موقع الأكاديمية بالظبط: الموبايل إجباري ومايتكررش، والكود بيتبعت على الإيميل للأجهزة الجديدة لو الأكاديمية مفعّلاه، والأكاديمية ممكن تكون محتاجة توافق على الطلاب. Sign in with Apple بيعدّي على نفس المسار.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  W["ترحيب الأكاديمية"]:::screen --> SI["دخول"]:::screen
+  W --> SU["حساب جديد"]:::screen
+  W --> AP["Sign in with Apple<br/>(iOS، وGoogle لو مفعّل)"]:::backend
+
+  SI --> SI1{"POST auth/sign-in<br/>surface=academy"}:::decision
+  SI1 -- "بيانات غلط" --> E1["رسالة عامة: الإيميل أو الباسورد غلط"]:::error
+  SI1 -- "محاولات كتير" --> E2["استنى شوية وحاول تاني"]:::error
+  SI1 -- "authenticator مفعّل" --> TF["كود الـ Authenticator / كود احتياطي"]:::screen
+  SI1 -- "emailOtpRequired" --> OTP["كود الإيميل<br/>مع إعادة إرسال وعدّاد"]:::screen
+  SI1 -- "تمام" --> GATE
+  TF --> GATE
+  OTP -- "auth/otp/verify" --> GATE
+  OTP -- "المحاولات خلصت" --> E3["ابدأ الدخول من الأول"]:::error
+
+  SU --> SU1["الاسم · الإيميل · الموبايل + الدولة · الباسورد"]:::screen
+  SU1 --> SU2["تأكيد السن: 13+ أو بموافقة ولي الأمر<br/>الموافقة على الشروط والخصوصية"]:::backend
+  SU2 --> SU3{"POST auth/register"}:::decision
+  SU3 -- "الموبايل مستخدم 409" --> E4["الرقم ده مستخدم في حساب تاني"]:::error
+  SU3 -- "الإيميل له حساب Atlas" --> JN["ادخل بباسوردك عشان تنضم للأكاديمية<br/>auth/academy-join"]:::screen
+  SU3 -- "حساب جديد" --> VE["افتح الإيميل وأكّد الحساب<br/>Universal link يفتح التطبيق"]:::screen
+  JN --> SI
+  VE --> SI
+
+  AP --> AP1{"POST auth/apple/native"}:::backend
+  AP1 -- "الإيميل له حساب" --> LK["اربط Apple بحسابك<br/>بالباسورد"]:::screen
+  AP1 -- "مفيش حساب" --> CA["كمّل الحساب: الموبايل + السن + الشروط"]:::screen
+  AP1 -- "مربوط" --> GATE
+  LK --> GATE
+  CA --> GATE
+
+  SI --> FP["نسيت الباسورد"]:::screen --> FP1["إيميل فيه رابط ← يفتح التطبيق ← باسورد جديد"]:::screen --> SI
+
+  GATE{"حالة الطالب في الأكاديمية"}:::decision
+  GATE -- "pending" --> PD["طلبك عند الأكاديمية<br/>هيوصلك إشعار لما يتقبل"]:::error
+  GATE -- "rejected / blocked" --> BL["مش متاح · تواصل مع الأكاديمية"]:::error
+  GATE -- "active" --> PUSH["شاشة شرح الإشعارات ← طلب الإذن<br/>PUT users/me/push-devices"]:::backend
+  PUSH --> H["الرئيسية"]:::success
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+  <div class="notes">
+    <div class="note"><h3>الجلسة</h3><ul><li>Access token في الذاكرة بس (15 دقيقة)</li><li>Refresh token في cookie <code>__Host-atlas_session</code> جوه الـ jar المشفّر</li><li>refresh واحد بس في نفس الوقت</li></ul></div>
+    <div class="note warn"><h3>حساب المراجعة (Apple / Google)</h3><ul><li>أكاديمية ديمو + حساب طالب</li><li>الكود بيتخطّى للحساب ده بس (B3)</li><li>بيتكتب في الـ review notes مع QR</li></ul></div>
+    <div class="note"><h3>إذن الإشعارات</h3><ul><li>بعد أول دخول، مش في أول تشغيل</li><li>شاشة بتشرح الأول، و"مش دلوقتي" بنفس وزن "سماح"</li><li>لو رفض: الإشعارات جوه التطبيق شغالة عادي</li></ul></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="flow" id="home">
+  <div class="num">03</div>
+  <h2>الرئيسية وكورساتي</h2>
+  <p>الرئيسية بتجاوب على سؤال واحد: أكمّل منين؟ كورساتي فيها كل اللي الطالب مسجّل فيه. الكورسات اللي اشتراها من الموقع بتظهر عادي، بس من غير أسعار ولا أي كلام عن الشراء.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  H["الرئيسية<br/>GET learning/overview"]:::screen --> C1["كارت: كمّل آخر درس"]:::screen
+  H --> C2["الجاي: كويزات وواجبات بمواعيدها<br/>learning/quizzes · learning/assignments"]:::screen
+  H --> C3["آخر الإعلانات<br/>announcements"]:::screen
+  H --> C4{"مفيش ولا كورس؟"}:::decision
+  C4 -- "أيوه" --> EM["شاشة فاضية بتوجّه لاستكشف المجاني"]:::screen
+  C1 --> LES["الدرس"]:::success
+  MY["كورساتي<br/>GET enrollments"]:::screen --> F1["فلتر: شغال · مكتمل · منتهي"]:::screen
+  MY --> CD["تفاصيل الكورس<br/>courses/:id + progress"]:::screen
+  CD --> SEQ["المنهج<br/>learning/courses/:id/sequence"]:::screen
+  SEQ --> IT{"حالة العنصر"}:::decision
+  IT -- "مقفول" --> LK["بيوضّح السبب: درس قبله لازم يخلص / ميعاد فتح"]:::error
+  IT -- "متاح" --> LES
+  CD --> ANN["إعلانات الكورس"]:::screen
+  CD --> FOR["منتدى الكورس"]:::screen
+  FOR --> TH["المواضيع ← الردود ← رد جديد"]:::screen
+  TH --> RP["إبلاغ عن محتوى / حظر مستخدم"]:::backend
+  CD --> ENDX{"الاشتراك في الكورس انتهى أو اتلغى؟"}:::decision
+  ENDX -- "أيوه" --> EXP["الكورس للقراءة بس + تواصل مع الأكاديمية"]:::error
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+</section>
+
+<!-- 4 -->
+<section class="flow" id="lesson">
+  <div class="num">04</div>
+  <h2>الدرس والفيديو</h2>
+  <p>كل درس بيطلب grant من السيرفر. السيرفر بيتأكد من الاشتراك والجهاز وعدد الجلسات، ويطلّع كود watermark للطالب ده بالذات. الفيديو YouTube، شغال جوه WebView، والـ watermark مرسوم فوقه.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  L["فتح الدرس"]:::screen --> G{"GET learning/courses/:id/lessons/:lessonId/content"}:::decision
+  G -- "حد الأجهزة" --> DV["شاشة الأجهزة: شيل جهاز قديم<br/>DELETE learning/devices/:id"]:::error
+  DV --> G
+  G -- "جلسة تانية شغالة" --> TK["كمّل هنا؟ الجلسة التانية هتقف<br/>POST learning/session/takeover"]:::error
+  TK --> G
+  G -- "watermark 503" --> WM["مش قادرين نعرض الفيديو دلوقتي · حاول تاني"]:::error
+  G -- "مش مسموح" --> NA["الدرس ده مش متاح لك"]:::error
+  G -- "نص" --> TX["درس نصي<br/>HTML آمن، بيتعرض native"]:::screen
+  G -- "ملف" --> FL["ملف: رابط قصير المدة<br/>بيتفتح جوه التطبيق"]:::screen
+  G -- "فيديو" --> PB["POST learning/courses/:id/playback<br/>بداية الجلسة"]:::decision
+  PB --> PL["Player: YouTube + Watermark<br/>label بيتحرك كل 20–45 ثانية + tile"]:::screen
+  PL --> HB["Heartbeat دوري + تجديد الـ grant<br/>lessons/:lessonId/playback/refresh"]:::screen
+  PL --> BG{"التطبيق راح background؟"}:::decision
+  BG -- "أيوه" --> RL["إيقاف + POST playback/release"]:::screen
+  RL -- "رجع" --> PB
+  PL --> SC{"تسجيل شاشة أو watermark اتشال؟"}:::decision
+  SC -- "أيوه" --> PS["إيقاف الفيديو + رسالة<br/>Android: FLAG_SECURE يمنع التسجيل"]:::error
+  PL --> DONE["خلص الفيديو / زرار تم"]:::screen
+  TX --> DONE
+  FL --> DONE
+  DONE --> CP["POST courses/:id/progress/complete-lesson"]:::decision
+  CP --> NX{"فيه عنصر بعده؟"}:::decision
+  NX -- "أيوه" --> L
+  NX -- "لأ" --> CC["الكورس اكتمل<br/>learning/courses/:courseId/completion"]:::success
+  CC --> CERT["الشهادة: عرض · تحميل PDF · مشاركة رابط التحقق"]:::success
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+  <div class="notes">
+    <div class="note"><h3>الـ player على الموبايل</h3><ul><li>أفقي full-screen والـ watermark معاه</li><li>مفيش picture-in-picture (زي الويب)</li><li>مفيش تحميل للمشاهدة من غير نت</li></ul></div>
+    <div class="note warn"><h3>قيد معروف</h3><ul><li>فيديو YouTube بيفضل على YouTube. لو حد عرف اللينك يقدر يتفرج من غير watermark. ده موجود في الـ FAQ بتاع الويب كمان</li></ul></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="flow" id="assess">
+  <div class="num">05</div>
+  <h2>الكويز والواجب</h2>
+  <p>الكويز بيفتح full-screen ويحفظ الإجابات أول بأول. لو الطالب خرج من التطبيق في النص، ده بيتسجّل للمدرّس بنفس events الويب. الواجب ليه مسودة ورفع ملفات من الكاميرا أو الملفات.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  Q["مقدمة الكويز<br/>المحاولات · الوقت · قواعد النزاهة"]:::screen --> QS{"POST quizzes/:quizId/attempts"}:::decision
+  QS -- "المحاولات خلصت / مقفول" --> QX["مش متاح + السبب"]:::error
+  QS -- "تمام" --> QA["الأسئلة full-screen<br/>حفظ تلقائي: PUT attempts/:id/answers"]:::screen
+  QA --> QE{"خرج من التطبيق / مكالمة؟"}:::decision
+  QE -- "أيوه" --> EV["event: visibility_hidden / visible<br/>POST attempts/:id/events"]:::screen
+  EV --> WR["تحذير لما يرجع + تأكيد إنه شافه"]:::error
+  WR --> QA
+  QA --> QT{"الوقت خلص؟"}:::decision
+  QT -- "أيوه" --> SUB
+  QA --> SUB["تسليم<br/>POST attempts/:id/submit"]:::decision
+  SUB --> RES{"النتيجة بتظهر إمتى؟ (حسب إعداد الكويز)"}:::decision
+  RES -- "فوراً" --> RS["النتيجة والتصحيح<br/>attempts/:id/results"]:::success
+  RES -- "بعد التصحيح" --> WT["في انتظار التصحيح ← Push لما يخلص"]:::backend
+
+  A["الواجب<br/>courses/:id/assignments/:assignmentId"]:::screen --> AD["كتابة الإجابة<br/>مسودة: PUT submission/draft"]:::screen
+  AD --> AF["إرفاق: كاميرا · صور · ملفات<br/>POST submission/attachment"]:::screen
+  AF --> AS["تسليم: POST submission"]:::decision
+  AS -- "بعد الميعاد" --> AL["حسب سياسة التأخير: مقبول بخصم / مرفوض"]:::error
+  AS -- "اتسلّم" --> AG["في انتظار التصحيح"]:::screen
+  AG -. "Push: اتصحّح" .-> AR["الدرجة والملاحظات"]:::success
+  RS --> RL["كل النتائج: learning/results"]:::screen
+  AR --> RL
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+</section>
+
+<!-- 6 -->
+<section class="flow" id="free">
+  <div class="num">06</div>
+  <h2>الكورسات المجانية</h2>
+  <p>"استكشف" بيعرض الكورسات المجانية بس. الكورسات المدفوعة اللي الطالب مش مسجّل فيها مش بتظهر خالص، لا سعر ولا زرار ولا رابط للموقع، عشان مراجعة Apple.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  X["استكشف<br/>courses (مجاني بس) + التصنيفات"]:::screen --> XD["تفاصيل الكورس<br/>المنهج · المدرّس · التقييم الحقيقي"]:::screen
+  XD --> PV{"فيه درس معاينة مجاني؟"}:::decision
+  PV -- "أيوه" --> PVW["معاينة بـ watermark"]:::screen
+  XD --> EN{"POST enrollments"}:::decision
+  EN -- "الأكاديمية بتوافق الأول" --> EP["طلبك اتبعت ← Push لما يتقبل"]:::backend
+  EN -- "اتسجّل" --> OK["اتضاف لكورساتي ← ابدأ أول درس"]:::success
+  EN -- "مسجّل قبل كده" --> OPEN["افتح الكورس"]:::success
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+</section>
+
+<!-- 7 -->
+<section class="flow" id="notify">
+  <div class="num">07</div>
+  <h2>الإشعارات</h2>
+  <p>أي حدث بيعمل إشعار in-app النهارده، هيبعت Push للتطبيق كمان (B1). الإشعار بيوصل بس للأجهزة اللي داخلة على نفس الأكاديمية، والضغط عليه بيفتح الشاشة المطلوبة على طول.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  EV["حدث في الباك اند<br/>تصحيح · إعلان · قبول تسجيل · دفع اتقبل على الويب · ميعاد كويز"]:::screen --> IN["صف إشعار in-app<br/>(موجود النهارده)"]:::screen
+  IN --> PR{"تفضيلات الطالب + FLAG_PUSH_MODE"}:::backend
+  PR -- "مقفول" --> ONLY["in-app بس"]:::screen
+  PR -- "مفتوح" --> FCM["Job ← FCM<br/>لأجهزة الطالب على نفس الأكاديمية"]:::backend
+  FCM -- "token ميت" --> RV["الـ token يتلغي"]:::error
+  FCM --> NOTI["الإشعار على الموبايل"]:::screen
+  NOTI --> TAP{"ضغط عليه"}:::decision
+  TAP --> SAME{"نفس الأكاديمية المفتوحة؟"}:::decision
+  SAME -- "أيوه" --> DL["فتح الشاشة: الواجب · النتيجة · الإعلان · الكورس<br/>+ PATCH notifications/:id/read"]:::success
+  SAME -- "أكاديمية تانية" --> SW["التبديل لها ← فتح الشاشة"]:::success
+  SAME -- "الجلسة انتهت" --> RE["تسجيل الدخول ← بعدين الشاشة"]:::screen
+  LIST["تبويب الإشعارات<br/>GET notifications · summary · read-all"]:::screen
+  PREF["التفضيلات: لكل نوع إيميل / Push"]:::screen
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+  <div class="notes">
+    <div class="note"><h3>محتوى الـ Push</h3><ul><li>عنوان ونص قصير مترجم EN/AR</li><li>مفيش درجات ولا بيانات حساسة على شاشة القفل</li><li>badge على أيقونة التطبيق = غير المقروء</li></ul></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="flow" id="account">
+  <div class="num">08</div>
+  <h2>الحساب والخروج والحذف</h2>
+  <p>كل اللي في صفحات الحساب على الويب موجود هنا. حذف الحساب سهل تلاقيه وواضح. الخروج بيمسح الـ cookies وبيلغي Push token الجهاز.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  AC["حسابي"]:::screen --> PF["البروفايل: الاسم والصورة<br/>PATCH users/me"]:::screen
+  AC --> PH["الموبايل<br/>users/me/phone"]:::screen
+  AC --> PW["الباسورد<br/>POST users/me/password"]:::screen
+  AC --> DVS["الأجهزة والجلسات<br/>learning/devices · auth/sessions · revoke-others"]:::screen
+  AC --> CRT["الشهادات والنتائج"]:::screen
+  AC --> STG["اللغة · المظهر · الإشعارات · تقارير الأعطال"]:::screen
+  AC --> ABT["عن التطبيق: بيانات الشركة · تواصل مع الأكاديمية · مساعدة"]:::screen
+  AC --> POL["السياسات: خصوصية · شروط · كوكيز · استرداد"]:::screen
+  AC --> ACD["أكاديمياتي: تبديل / إضافة أكاديمية"]:::screen
+  ACD --> PICK["اختيار الأكاديمية"]:::screen
+  AC --> EXP["تصدير بياناتي<br/>privacy-requests"]:::screen
+  EXP --> EXP2["كود على الإيميل ← الطلب ← ملف التصدير"]:::success
+  AC --> OUT["تسجيل الخروج"]:::screen
+  OUT --> OUT1["DELETE push-devices/current<br/>POST auth/sign-out<br/>مسح cookies الأكاديمية دي"]:::backend
+  OUT1 --> PICK
+  AC --> DEL["حذف الحساب"]:::screen
+  DEL --> DEL1["إيه اللي هيتمسح<br/>GET users/me/deletion-plan"]:::screen
+  DEL1 --> DEL2["تأكيد: كود أو باسورد<br/>POST users/me/delete/request ← delete"]:::decision
+  DEL2 -- "رجع" --> AC
+  DEL2 -- "أكّد" --> DEL3["مسح · إلغاء Apple token · إلغاء كل الأجهزة"]:::backend
+  DEL3 --> BYE["تم الحذف ← شاشة البداية"]:::success
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+</section>
+
+<!-- 9 -->
+<section class="flow" id="edges">
+  <div class="num">09</div>
+  <h2>الحالات الاستثنائية</h2>
+  <p>دي ممكن تحصل في أي شاشة. كل واحدة ليها شاشة أو رسالة واضحة، ومفيش حالة بتنتهي بشاشة فاضية أو crash.</p>
+  <div class="diagram"><pre class="mermaid">
+flowchart TD
+  ANY["أي شاشة"]:::screen --> N1{"مفيش نت"}:::decision
+  N1 --> N1a["شريط: انت offline<br/>البيانات اللي اتحملت قبل كده بس · مفيش فيديو"]:::error
+  ANY --> N2{"401 والـ refresh فشل"}:::decision
+  N2 --> N2a["الجلسة انتهت ← دخول بنفس الأكاديمية ← يرجع لنفس المكان"]:::screen
+  ANY --> N3{"الأكاديمية وقّفت الطالب"}:::decision
+  N3 --> N3a["حسابك في الأكاديمية دي موقوف · تواصل معاها"]:::error
+  ANY --> N4{"اشتراك الأكاديمية في Atlas منتهي"}:::decision
+  N4 --> N4a["الأكاديمية مش متاحة مؤقتاً<br/>من غير تفاصيل فلوس"]:::error
+  ANY --> N5{"نسخة قديمة / صيانة"}:::decision
+  N5 --> N5a["حدّث التطبيق / صيانة"]:::error
+  ANY --> N6{"الأكاديمية غيّرت رابطها"}:::decision
+  N6 --> N6a["resolve على الرابط القديم ← تحويل ← تحديث المحفوظ"]:::screen
+  ANY --> N7{"خطأ سيرفر 5xx"}:::decision
+  N7 --> N7a["رسالة من errors.json + حاول تاني<br/>+ Sentry لو الطالب وافق"]:::error
+  ANY --> N8{"Universal link لأكاديمية مش محفوظة"}:::decision
+  N8 --> N8a["إضافة الأكاديمية ← دخول ← الشاشة المطلوبة"]:::screen
+  classDef screen stroke:#1f5fbf,stroke-width:2px
+  classDef decision stroke:#9a5b00,stroke-width:2px
+  classDef error stroke:#a8322b,stroke-width:2px
+  classDef success stroke:#1c7a4b,stroke-width:2px
+  classDef backend stroke:#7a4fb5,stroke-width:2px,stroke-dasharray:4 3
+  </pre></div>
+  <div class="notes">
+    <div class="note err"><h3>مش موجود في التطبيق</h3><ul><li>شراء أو أسعار أو روابط دفع</li><li>شاشات "قريباً"</li><li>live sessions لحد ما الـ add-on يتفعّل</li></ul></div>
+    <div class="note ok"><h3>دايماً موجود</h3><ul><li>طريق للرجوع من أي شاشة</li><li>طريق للتواصل مع الأكاديمية</li><li>حذف الحساب من الإعدادات</li></ul></div>
+  </div>
+</section>
+
+<footer>مبني على <code>atlas</code> و<code>atlas-backend</code> بتاريخ 24 أكتوبر 2026، وعلى خطة <code>atlas-mobile/docs/ATLAS_MOBILE_PLAN.md</code>. الخطوات البنفسجي محتاجة إضافات الباك اند (B1–B7) أو الويب.</footer>
+</div>
