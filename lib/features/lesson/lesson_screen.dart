@@ -14,6 +14,7 @@ import '../../app/ui_helpers.dart';
 import '../../core/api/api_error.dart';
 import '../../core/learning/learning_models.dart';
 import '../../design/design.dart';
+import '../learning/course_widgets.dart';
 import '../player/playback_session.dart';
 import '../player/youtube_lesson_player.dart';
 
@@ -305,12 +306,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         ] else ...[
           AtlasBanner(kind: AtlasBannerKind.success, message: l.lessonDone),
           const SizedBox(height: AtlasSpace.s16),
-          if (next != null && next.isLesson)
+          if (next != null && next.type != 'live_session')
             AtlasButton(
               label: l.lessonNext(next.title),
-              onPressed: () => context.pushReplacement(
-                '/course/${widget.courseId}/lesson/${next.id}',
-              ),
+              onPressed: () =>
+                  openItem(context, ref, seq!, next, replace: true),
             )
           else
             AtlasButton(

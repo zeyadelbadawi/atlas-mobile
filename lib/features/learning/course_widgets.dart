@@ -51,16 +51,25 @@ class ContinueForCourse extends ConsumerWidget {
   }
 }
 
-/// Opens a course item: lessons in the player; quizzes, assignments and live
-/// sessions on the academy's website until their app screens land (phase 4).
+/// Opens a course item in the app: lessons in the player, quizzes and
+/// assignments on their screens. Live sessions open on the academy's
+/// website (Zoom in the app comes when the backend enables it).
+/// [replace] swaps the current screen (lesson → next activity).
 void openItem(
   BuildContext context,
   WidgetRef ref,
   CourseSequence s,
-  SequenceItem item,
-) {
-  if (item.isLesson) {
-    context.push('/course/${s.courseId}/lesson/${item.id}');
+  SequenceItem item, {
+  bool replace = false,
+}) {
+  final path = switch (item.type) {
+    'lesson' => '/course/${s.courseId}/lesson/${item.id}',
+    'quiz' => '/course/${s.courseId}/quiz/${item.id}',
+    'assignment' => '/course/${s.courseId}/assignment/${item.id}',
+    _ => null,
+  };
+  if (path != null) {
+    replace ? context.pushReplacement(path) : context.push(path);
     return;
   }
   final host = ref.read(sessionProvider).academy!.host;
@@ -144,6 +153,66 @@ class AnnouncementRow extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// A recent graded result on the home screen (opens "My results": the
+/// overview names the attempt, not the quiz).
+class RecentResultRow extends StatelessWidget {
+  const RecentResultRow({super.key, required this.item});
+  final RecentResult item;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final c = a.colors;
+    final score = item.score;
+    return MergeSemantics(
+      child: Pressable(
+        onTap: () => context.push('/account/results'),
+        scale: 0.99,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: c.rule)),
+          ),
+          child: Row(
+            children: [
+              Icon(itemIcon(item.type), size: 20, color: c.inkSecondary),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      style: a.type.headline.copyWith(color: c.ink),
+                    ),
+                    Text(
+                      item.courseTitle,
+                      style: a.type.footnote.copyWith(color: c.inkSecondary),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                score == null
+                    ? l.resultsAwaiting
+                    : item.type == 'quiz'
+                    ? l.quizPercent(context.digits('${score.round()}'))
+                    : context.digits('${score.round()}'),
+                style: (score == null ? a.type.footnote : a.type.title3)
+                    .copyWith(
+                      color: item.status == 'failed' ? c.danger : c.ink,
+                    ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

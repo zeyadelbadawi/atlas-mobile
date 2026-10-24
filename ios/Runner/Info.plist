@@ -71,5 +71,9 @@
 		<string>ar</string>
 		<string>en</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Atlas uses the camera only when you take a photo of your work to attach to an assignment.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Atlas opens your photos only when you choose one to attach to an assignment.</string>
 </dict>
 </plist>

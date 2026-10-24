@@ -90,11 +90,12 @@ first-run screens.
 | `CourseCover` | Booklet ratio 64×84. Without an image, it shows the cover colour with the unit number. |
 | `CourseRow`, `AcademyRow`, `SettingsGroup` / `SettingsRow`, `SectionHeader` | — |
 | `AtlasTabBar` | Floating glass bar on iOS, Material 3 navigation bar on Android. |
+| `OptionTile`, `FactList`, `StatusPill`, `AnswerField`, `Panel` (`lib/features/quiz/assessment_widgets.dart`) | Quiz choices (52 pt rows, accent ring when picked, green/red verdicts on results), label/value facts, status pills, multi-line answers. |
 
 ## Verification
 
 - `test/design/goldens`: home (Ziadd light and dark, Manara on Android, Riwaq in English) and component
   samples.
-- `test/app/goldens`: picker, sign-in (Arabic, English dark, iPad), register, code, account and about.
+- `test/app/goldens`: picker, sign-in (Arabic, English dark, iPad), register, code, account, about, home, courses, course, lesson, devices, quiz (intro, running, results Arabic and English dark), assignment, results and certificates.
 - Regenerate with `flutter test --tags golden --update-goldens`.
 - Goldens render the body text in Noto Sans Arabic (`test/fonts`); on devices it is the platform face.

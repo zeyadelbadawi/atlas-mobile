@@ -1171,6 +1171,1218 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Course'**
   String get coursesCover;
+
+  /// No description provided for @quizInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructions'**
+  String get quizInstructions;
+
+  /// No description provided for @quizInstructionsDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer every question, then submit your attempt.'**
+  String get quizInstructionsDefault;
+
+  /// No description provided for @quizFactQuestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions'**
+  String get quizFactQuestions;
+
+  /// No description provided for @quizFactTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time limit'**
+  String get quizFactTime;
+
+  /// No description provided for @quizNoTimeLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'No time limit'**
+  String get quizNoTimeLimit;
+
+  /// No description provided for @quizFactAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'Attempts'**
+  String get quizFactAttempts;
+
+  /// No description provided for @quizAttemptsOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{used} of {total} used'**
+  String quizAttemptsOf(String used, String total);
+
+  /// No description provided for @quizAttemptsUnlimited.
+  ///
+  /// In en, this message translates to:
+  /// **'{used} used, unlimited'**
+  String quizAttemptsUnlimited(String used);
+
+  /// No description provided for @quizFactPassing.
+  ///
+  /// In en, this message translates to:
+  /// **'Passing score'**
+  String get quizFactPassing;
+
+  /// No description provided for @quizPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{value}%'**
+  String quizPercent(String value);
+
+  /// No description provided for @quizFactOpens.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens'**
+  String get quizFactOpens;
+
+  /// No description provided for @quizFactDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get quizFactDue;
+
+  /// No description provided for @quizFactCloses.
+  ///
+  /// In en, this message translates to:
+  /// **'Closes'**
+  String get quizFactCloses;
+
+  /// No description provided for @quizFactCounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Which attempt counts'**
+  String get quizFactCounts;
+
+  /// No description provided for @quizPolicyHighest.
+  ///
+  /// In en, this message translates to:
+  /// **'Your highest score'**
+  String get quizPolicyHighest;
+
+  /// No description provided for @quizPolicyLatest.
+  ///
+  /// In en, this message translates to:
+  /// **'Your latest attempt'**
+  String get quizPolicyLatest;
+
+  /// No description provided for @quizPolicyFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first attempt'**
+  String get quizPolicyFirst;
+
+  /// No description provided for @quizPolicyAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'The average of your attempts'**
+  String get quizPolicyAverage;
+
+  /// No description provided for @quizTimerNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The clock starts when you press Start and keeps running even if you close the app. When it reaches zero, the answers you have saved are submitted automatically.'**
+  String get quizTimerNote;
+
+  /// No description provided for @quizStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start quiz'**
+  String get quizStart;
+
+  /// No description provided for @quizResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume quiz'**
+  String get quizResume;
+
+  /// No description provided for @quizAttemptsLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No attempts left} =1{1 attempt left} other{{n} attempts left}}'**
+  String quizAttemptsLeft(int count, String n);
+
+  /// No description provided for @quizIntegrityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What is recorded during this quiz'**
+  String get quizIntegrityTitle;
+
+  /// No description provided for @quizIntegrityRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.'**
+  String get quizIntegrityRecorded;
+
+  /// No description provided for @quizIntegrityMonitor.
+  ///
+  /// In en, this message translates to:
+  /// **'You will not be interrupted. The record is shown to your reviewer with your attempt.'**
+  String get quizIntegrityMonitor;
+
+  /// No description provided for @quizIntegrityWarn.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be warned each time one is recorded. The limit is {n}; reaching it flags the attempt for review.'**
+  String quizIntegrityWarn(String n);
+
+  /// No description provided for @quizIntegrityStrict.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be warned each time one is recorded. When {n} have been recorded, the quiz is submitted automatically with the answers you have saved.'**
+  String quizIntegrityStrict(String n);
+
+  /// No description provided for @quizIntegrityFullscreen.
+  ///
+  /// In en, this message translates to:
+  /// **'The app shows the quiz on the whole screen. Leaving the app is recorded.'**
+  String get quizIntegrityFullscreen;
+
+  /// No description provided for @quizIntegrityHonest.
+  ///
+  /// In en, this message translates to:
+  /// **'Atlas never uses your camera or microphone, never records your screen or what you type, and sees nothing outside this quiz. Nothing is blocked.'**
+  String get quizIntegrityHonest;
+
+  /// No description provided for @quizIntegrityAck.
+  ///
+  /// In en, this message translates to:
+  /// **'I understand what is recorded during this quiz.'**
+  String get quizIntegrityAck;
+
+  /// No description provided for @quizQuestionOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Question {current} of {total}'**
+  String quizQuestionOf(String current, String total);
+
+  /// No description provided for @quizPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get quizPrevious;
+
+  /// No description provided for @quizNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get quizNext;
+
+  /// No description provided for @quizSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit attempt'**
+  String get quizSubmit;
+
+  /// No description provided for @quizSubmitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit this attempt?'**
+  String get quizSubmitTitle;
+
+  /// No description provided for @quizSubmitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You won\'t be able to change your answers after submitting.'**
+  String get quizSubmitBody;
+
+  /// No description provided for @quizSubmitUnanswered.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 question is still unanswered (question {numbers}). Unanswered questions count as incorrect. You won\'t be able to change your answers after submitting.} other{{n} questions are still unanswered (questions {numbers}). Unanswered questions count as incorrect. You won\'t be able to change your answers after submitting.}}'**
+  String quizSubmitUnanswered(int count, String numbers, String n);
+
+  /// No description provided for @quizSubmitConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get quizSubmitConfirm;
+
+  /// No description provided for @quizKeepAnswering.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep answering'**
+  String get quizKeepAnswering;
+
+  /// No description provided for @quizSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving…'**
+  String get quizSaving;
+
+  /// No description provided for @quizOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline — will retry'**
+  String get quizOffline;
+
+  /// No description provided for @quizUnsaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved changes'**
+  String get quizUnsaved;
+
+  /// No description provided for @quizSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get quizSaved;
+
+  /// No description provided for @quizNotSavedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing saved yet'**
+  String get quizNotSavedYet;
+
+  /// No description provided for @quizAnswered.
+  ///
+  /// In en, this message translates to:
+  /// **'{answered} of {total} answered'**
+  String quizAnswered(String answered, String total);
+
+  /// No description provided for @quizTimeLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Time left'**
+  String get quizTimeLeft;
+
+  /// No description provided for @quizTimerHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Timed — the clock is hidden'**
+  String get quizTimerHidden;
+
+  /// No description provided for @quizHurry.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish up'**
+  String get quizHurry;
+
+  /// No description provided for @quizAnnounceMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 minute left} other{{n} minutes left}}'**
+  String quizAnnounceMinutes(int count, String n);
+
+  /// No description provided for @quizAnnounceSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} seconds left'**
+  String quizAnnounceSeconds(String n);
+
+  /// No description provided for @quizYourAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your answer'**
+  String get quizYourAnswer;
+
+  /// No description provided for @quizTypeAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your answer'**
+  String get quizTypeAnswer;
+
+  /// No description provided for @quizShortHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A short answer. Capitalisation does not matter.'**
+  String get quizShortHint;
+
+  /// No description provided for @quizEssayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'This question is graded by a reviewer.'**
+  String get quizEssayHint;
+
+  /// No description provided for @quizPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 point} other{{n} points}}'**
+  String quizPoints(int count, String n);
+
+  /// No description provided for @quizChooseOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose one answer'**
+  String get quizChooseOne;
+
+  /// No description provided for @quizChooseAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose all that apply'**
+  String get quizChooseAll;
+
+  /// No description provided for @quizFlag.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark for review'**
+  String get quizFlag;
+
+  /// No description provided for @quizUnflag.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove mark'**
+  String get quizUnflag;
+
+  /// No description provided for @quizNavItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Question {number}, {state}'**
+  String quizNavItem(String number, String state);
+
+  /// No description provided for @quizStateAnswered.
+  ///
+  /// In en, this message translates to:
+  /// **'answered'**
+  String get quizStateAnswered;
+
+  /// No description provided for @quizStateUnanswered.
+  ///
+  /// In en, this message translates to:
+  /// **'not answered'**
+  String get quizStateUnanswered;
+
+  /// No description provided for @quizStateFlagged.
+  ///
+  /// In en, this message translates to:
+  /// **'marked for review'**
+  String get quizStateFlagged;
+
+  /// No description provided for @quizEventTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'An event was recorded'**
+  String get quizEventTitle;
+
+  /// No description provided for @quizEventWarn.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 event has been recorded on this attempt. Stay in the app until you submit.} other{{n} events have been recorded on this attempt. Stay in the app until you submit.}}'**
+  String quizEventWarn(int count, String n);
+
+  /// No description provided for @quizEventStrict.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {max} events recorded. When the limit is reached, the quiz is submitted automatically.'**
+  String quizEventStrict(String n, String max);
+
+  /// No description provided for @quizEventDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Another event was recorded'**
+  String get quizEventDialogTitle;
+
+  /// No description provided for @quizEventDialogWarn.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reviewer will see the record alongside your answers.'**
+  String get quizEventDialogWarn;
+
+  /// No description provided for @quizContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue quiz'**
+  String get quizContinue;
+
+  /// No description provided for @quizResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your result'**
+  String get quizResultTitle;
+
+  /// No description provided for @quizPassed.
+  ///
+  /// In en, this message translates to:
+  /// **'Passed'**
+  String get quizPassed;
+
+  /// No description provided for @quizFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not passed'**
+  String get quizFailed;
+
+  /// No description provided for @quizPointsOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{earned} of {total} points'**
+  String quizPointsOf(String earned, String total);
+
+  /// No description provided for @quizPassingLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Passing score {score}%'**
+  String quizPassingLine(String score);
+
+  /// No description provided for @quizCounted.
+  ///
+  /// In en, this message translates to:
+  /// **'Counted score: {score}%'**
+  String quizCounted(String score);
+
+  /// No description provided for @quizScoreWithheldDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Your score will be shown after the due date.'**
+  String get quizScoreWithheldDue;
+
+  /// No description provided for @quizScoreWithheldAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'Your score will be shown once you have used all your attempts.'**
+  String get quizScoreWithheldAttempts;
+
+  /// No description provided for @quizScoreWithheldNever.
+  ///
+  /// In en, this message translates to:
+  /// **'This quiz does not show scores.'**
+  String get quizScoreWithheldNever;
+
+  /// No description provided for @quizScoreWithheldSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Your score is being prepared.'**
+  String get quizScoreWithheldSoon;
+
+  /// No description provided for @quizAnswersWithheld.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct answers are not shown for this attempt yet.'**
+  String get quizAnswersWithheld;
+
+  /// No description provided for @quizSubmittedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Attempt submitted'**
+  String get quizSubmittedTitle;
+
+  /// No description provided for @quizTimeRanOutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time ran out'**
+  String get quizTimeRanOutTitle;
+
+  /// No description provided for @quizTimeRanOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Time ran out. Your answers were submitted automatically.'**
+  String get quizTimeRanOut;
+
+  /// No description provided for @quizAutoIntegrityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted automatically'**
+  String get quizAutoIntegrityTitle;
+
+  /// No description provided for @quizAutoIntegrity.
+  ///
+  /// In en, this message translates to:
+  /// **'The quiz was submitted because the recorded-event limit was reached. The answers you had saved were graded as they were.'**
+  String get quizAutoIntegrity;
+
+  /// No description provided for @quizInvalidatedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This attempt was voided'**
+  String get quizInvalidatedTitle;
+
+  /// No description provided for @quizInvalidated.
+  ///
+  /// In en, this message translates to:
+  /// **'A reviewer voided this attempt. It no longer counts, and the attempt has been given back to you.'**
+  String get quizInvalidated;
+
+  /// No description provided for @quizAwaitingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting grading'**
+  String get quizAwaitingTitle;
+
+  /// No description provided for @quizAwaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Some questions are graded by a reviewer. Your score appears once they have finished.'**
+  String get quizAwaiting;
+
+  /// No description provided for @quizLate.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted after the due date'**
+  String get quizLate;
+
+  /// No description provided for @quizVerdictCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct'**
+  String get quizVerdictCorrect;
+
+  /// No description provided for @quizVerdictIncorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect'**
+  String get quizVerdictIncorrect;
+
+  /// No description provided for @quizVerdictPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting grading'**
+  String get quizVerdictPending;
+
+  /// No description provided for @quizVerdictRecorded.
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded'**
+  String get quizVerdictRecorded;
+
+  /// No description provided for @quizNotAnswered.
+  ///
+  /// In en, this message translates to:
+  /// **'Not answered'**
+  String get quizNotAnswered;
+
+  /// No description provided for @quizCorrectAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct answer'**
+  String get quizCorrectAnswer;
+
+  /// No description provided for @quizAcceptedAnswers.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted answers'**
+  String get quizAcceptedAnswers;
+
+  /// No description provided for @quizExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Explanation'**
+  String get quizExplanation;
+
+  /// No description provided for @quizReviewLesson.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the lesson'**
+  String get quizReviewLesson;
+
+  /// No description provided for @quizReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers'**
+  String get quizReviewTitle;
+
+  /// No description provided for @quizHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Your attempts'**
+  String get quizHistory;
+
+  /// No description provided for @quizAttemptN.
+  ///
+  /// In en, this message translates to:
+  /// **'Attempt {number}'**
+  String quizAttemptN(String number);
+
+  /// No description provided for @quizRetake.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get quizRetake;
+
+  /// No description provided for @quizNoMoreAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'No more attempts available'**
+  String get quizNoMoreAttempts;
+
+  /// No description provided for @quizNextActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to the next activity'**
+  String get quizNextActivity;
+
+  /// No description provided for @quizBackToCourse.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the course'**
+  String get quizBackToCourse;
+
+  /// No description provided for @quizLeaveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave the quiz?'**
+  String get quizLeaveTitle;
+
+  /// No description provided for @quizLeaveBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers are saved. The timer keeps running while you\'re away.'**
+  String get quizLeaveBody;
+
+  /// No description provided for @quizLeaveTimedOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers are saved. You can resume later.'**
+  String get quizLeaveTimedOff;
+
+  /// No description provided for @quizLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get quizLeave;
+
+  /// No description provided for @quizStay.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay'**
+  String get quizStay;
+
+  /// No description provided for @assignmentInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Instructions'**
+  String get assignmentInstructions;
+
+  /// No description provided for @assignmentNoInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'The academy hasn\'t added instructions.'**
+  String get assignmentNoInstructions;
+
+  /// No description provided for @assignmentDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get assignmentDue;
+
+  /// No description provided for @assignmentNoDue.
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get assignmentNoDue;
+
+  /// No description provided for @assignmentLate.
+  ///
+  /// In en, this message translates to:
+  /// **'After the due date'**
+  String get assignmentLate;
+
+  /// No description provided for @assignmentLateBlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Submissions are not accepted'**
+  String get assignmentLateBlock;
+
+  /// No description provided for @assignmentLateAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted and marked late'**
+  String get assignmentLateAccept;
+
+  /// No description provided for @assignmentResubmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Resubmitting'**
+  String get assignmentResubmission;
+
+  /// No description provided for @assignmentResubmitAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed until it is graded'**
+  String get assignmentResubmitAllowed;
+
+  /// No description provided for @assignmentResubmitNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not allowed'**
+  String get assignmentResubmitNotAllowed;
+
+  /// No description provided for @assignmentResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Your answer'**
+  String get assignmentResponse;
+
+  /// No description provided for @assignmentResponseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your answer here'**
+  String get assignmentResponseHint;
+
+  /// No description provided for @assignmentCharsLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{used} / {max}'**
+  String assignmentCharsLeft(String used, String max);
+
+  /// No description provided for @assignmentAttachment.
+  ///
+  /// In en, this message translates to:
+  /// **'Attachment'**
+  String get assignmentAttachment;
+
+  /// No description provided for @assignmentAttachmentHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. A photo or a PDF, up to 10 MB.'**
+  String get assignmentAttachmentHelp;
+
+  /// No description provided for @assignmentTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get assignmentTakePhoto;
+
+  /// No description provided for @assignmentChoosePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a photo'**
+  String get assignmentChoosePhoto;
+
+  /// No description provided for @assignmentChooseFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a PDF'**
+  String get assignmentChooseFile;
+
+  /// No description provided for @assignmentUploading.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading…'**
+  String get assignmentUploading;
+
+  /// No description provided for @assignmentRemoveAttachment.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get assignmentRemoveAttachment;
+
+  /// No description provided for @assignmentTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The attachment must be smaller than 10 MB.'**
+  String get assignmentTooLarge;
+
+  /// No description provided for @assignmentBadType.
+  ///
+  /// In en, this message translates to:
+  /// **'The attachment must be a PDF or an image (JPG, PNG, GIF or WebP).'**
+  String get assignmentBadType;
+
+  /// No description provided for @assignmentUploadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The attachment didn\'t upload. Try again.'**
+  String get assignmentUploadFailed;
+
+  /// No description provided for @assignmentSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit assignment'**
+  String get assignmentSubmit;
+
+  /// No description provided for @assignmentResubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Resubmit'**
+  String get assignmentResubmit;
+
+  /// No description provided for @assignmentEditSubmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Change my submission'**
+  String get assignmentEditSubmission;
+
+  /// No description provided for @assignmentSubmitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit this assignment?'**
+  String get assignmentSubmitTitle;
+
+  /// No description provided for @assignmentResubmitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace your submission?'**
+  String get assignmentResubmitTitle;
+
+  /// No description provided for @assignmentSubmitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your reviewer will see exactly what is in the form now.'**
+  String get assignmentSubmitBody;
+
+  /// No description provided for @assignmentSubmitLateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The due date has passed, so this submission will be marked late. Your reviewer will see exactly what is in the form now.'**
+  String get assignmentSubmitLateBody;
+
+  /// No description provided for @assignmentKeepEditing.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep editing'**
+  String get assignmentKeepEditing;
+
+  /// No description provided for @assignmentEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Write an answer or add an attachment first.'**
+  String get assignmentEmpty;
+
+  /// No description provided for @assignmentDraftSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving draft…'**
+  String get assignmentDraftSaving;
+
+  /// No description provided for @assignmentDraftSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved'**
+  String get assignmentDraftSaved;
+
+  /// No description provided for @assignmentDraftFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft not saved — check your connection'**
+  String get assignmentDraftFailed;
+
+  /// No description provided for @assignmentDraftUnsaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved changes'**
+  String get assignmentDraftUnsaved;
+
+  /// No description provided for @assignmentConflictTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This draft changed on another device'**
+  String get assignmentConflictTitle;
+
+  /// No description provided for @assignmentConflictBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose which version to keep.'**
+  String get assignmentConflictBody;
+
+  /// No description provided for @assignmentKeepMine.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep this version'**
+  String get assignmentKeepMine;
+
+  /// No description provided for @assignmentUseTheirs.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the other version'**
+  String get assignmentUseTheirs;
+
+  /// No description provided for @assignmentPastDueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The due date has passed'**
+  String get assignmentPastDueTitle;
+
+  /// No description provided for @assignmentPastDueBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'This assignment no longer accepts submissions.'**
+  String get assignmentPastDueBlocked;
+
+  /// No description provided for @assignmentPastDueAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'You can still submit. Your submission will be marked late.'**
+  String get assignmentPastDueAccepted;
+
+  /// No description provided for @assignmentYourSubmission.
+  ///
+  /// In en, this message translates to:
+  /// **'Your submission'**
+  String get assignmentYourSubmission;
+
+  /// No description provided for @assignmentSubmittedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted {date}'**
+  String assignmentSubmittedAt(String date);
+
+  /// No description provided for @assignmentSubmittedLate.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted late'**
+  String get assignmentSubmittedLate;
+
+  /// No description provided for @assignmentNoText.
+  ///
+  /// In en, this message translates to:
+  /// **'No written answer.'**
+  String get assignmentNoText;
+
+  /// No description provided for @assignmentOpenAttachment.
+  ///
+  /// In en, this message translates to:
+  /// **'Open attachment'**
+  String get assignmentOpenAttachment;
+
+  /// No description provided for @assignmentStepSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get assignmentStepSubmitted;
+
+  /// No description provided for @assignmentStepGrading.
+  ///
+  /// In en, this message translates to:
+  /// **'Being graded'**
+  String get assignmentStepGrading;
+
+  /// No description provided for @assignmentStepGraded.
+  ///
+  /// In en, this message translates to:
+  /// **'Graded'**
+  String get assignmentStepGraded;
+
+  /// No description provided for @assignmentAwaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your reviewer to grade it.'**
+  String get assignmentAwaiting;
+
+  /// No description provided for @assignmentScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Score: {score}'**
+  String assignmentScore(String score);
+
+  /// No description provided for @assignmentGradedNoScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Graded'**
+  String get assignmentGradedNoScore;
+
+  /// No description provided for @assignmentFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback'**
+  String get assignmentFeedback;
+
+  /// No description provided for @assignmentGradedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Graded {date}'**
+  String assignmentGradedAt(String date);
+
+  /// No description provided for @assignmentResubmitClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Resubmitting isn\'t available for this assignment.'**
+  String get assignmentResubmitClosed;
+
+  /// No description provided for @resultsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My results'**
+  String get resultsTitle;
+
+  /// No description provided for @resultsCoursesCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses completed'**
+  String get resultsCoursesCompleted;
+
+  /// No description provided for @resultsQuizzesPassed.
+  ///
+  /// In en, this message translates to:
+  /// **'Quizzes passed'**
+  String get resultsQuizzesPassed;
+
+  /// No description provided for @resultsAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Average quiz score'**
+  String get resultsAverage;
+
+  /// No description provided for @resultsNoScores.
+  ///
+  /// In en, this message translates to:
+  /// **'No scores yet'**
+  String get resultsNoScores;
+
+  /// No description provided for @resultsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No results yet'**
+  String get resultsEmptyTitle;
+
+  /// No description provided for @resultsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Once you submit a quiz or an assignment, your scores appear here.'**
+  String get resultsEmptyBody;
+
+  /// No description provided for @resultsAwaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting grading'**
+  String get resultsAwaiting;
+
+  /// No description provided for @resultsHasFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback available'**
+  String get resultsHasFeedback;
+
+  /// No description provided for @resultsRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent results'**
+  String get resultsRecent;
+
+  /// No description provided for @resultsSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All results'**
+  String get resultsSeeAll;
+
+  /// No description provided for @certificatesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My certificates'**
+  String get certificatesTitle;
+
+  /// No description provided for @certificatesOff.
+  ///
+  /// In en, this message translates to:
+  /// **'This academy doesn\'t issue certificates.'**
+  String get certificatesOff;
+
+  /// No description provided for @certificatesEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No certificates yet'**
+  String get certificatesEmptyTitle;
+
+  /// No description provided for @certificatesEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish a course that awards one and your certificate appears here.'**
+  String get certificatesEmptyBody;
+
+  /// No description provided for @certificateSerial.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial'**
+  String get certificateSerial;
+
+  /// No description provided for @certificateIssued.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued {date}'**
+  String certificateIssued(String date);
+
+  /// No description provided for @certificateScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Score {score}%'**
+  String certificateScore(String score);
+
+  /// No description provided for @certificateRevoked.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrawn'**
+  String get certificateRevoked;
+
+  /// No description provided for @certificateRevokedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrawn {date}'**
+  String certificateRevokedOn(String date);
+
+  /// No description provided for @certificateRevokedReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String certificateRevokedReason(String reason);
+
+  /// No description provided for @certificateCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code'**
+  String get certificateCode;
+
+  /// No description provided for @certificateCopyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy code'**
+  String get certificateCopyCode;
+
+  /// No description provided for @certificateCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get certificateCopied;
+
+  /// No description provided for @certificateShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share verification link'**
+  String get certificateShare;
+
+  /// No description provided for @certificateShareText.
+  ///
+  /// In en, this message translates to:
+  /// **'My certificate for {course}: {link}'**
+  String certificateShareText(String course, String link);
+
+  /// No description provided for @certificateDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Open PDF'**
+  String get certificateDownload;
+
+  /// No description provided for @certificatePreparing.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing your certificate…'**
+  String get certificatePreparing;
+
+  /// No description provided for @certificatePreparingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'This usually takes under a minute.'**
+  String get certificatePreparingHint;
+
+  /// No description provided for @certificateRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get certificateRefresh;
+
+  /// No description provided for @certificateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The certificate file couldn\'t be prepared. The academy has been told; try again later.'**
+  String get certificateFailed;
+
+  /// No description provided for @courseCertificateIssued.
+  ///
+  /// In en, this message translates to:
+  /// **'Your certificate is ready.'**
+  String get courseCertificateIssued;
+
+  /// No description provided for @courseOpenCertificates.
+  ///
+  /// In en, this message translates to:
+  /// **'View certificate'**
+  String get courseOpenCertificates;
+
+  /// No description provided for @accountLearning.
+  ///
+  /// In en, this message translates to:
+  /// **'Learning'**
+  String get accountLearning;
 }
 
 class _AppLocalizationsDelegate

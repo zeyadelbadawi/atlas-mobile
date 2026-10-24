@@ -18,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../design/golden_harness.dart';
+import 'fake_assessment.dart';
 import 'fake_learning.dart';
 
 const ziadd = Academy(
@@ -63,6 +64,7 @@ Future<ProviderContainer> _pump(
   String? path,
   Object? extra,
   Size size = const Size(393, 852),
+  FakeAssessmentRepository? assessments,
 }) async {
   SharedPreferences.setMockInitialValues({
     'settings.language': language,
@@ -96,6 +98,9 @@ Future<ProviderContainer> _pump(
       ),
       sessionProvider.overrideWith(session),
       learningRepositoryProvider.overrideWithValue(FakeLearningRepository()),
+      assessmentRepositoryProvider.overrideWithValue(
+        assessments ?? FakeAssessmentRepository(),
+      ),
     ],
   );
   addTearDown(container.dispose);
@@ -238,5 +243,82 @@ void main() {
   testWidgets('signin_ar_ipad', (t) async {
     await _pump(t, session: _SignedOut.new, size: const Size(820, 1180));
     await _golden(t, 'signin_ar_ipad');
+  }, variant: ios);
+  const course = FakeLearningRepository.courseId;
+
+  testWidgets('quiz_intro_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/course/$course/quiz/l3',
+      size: const Size(393, 1500),
+    );
+    await _golden(t, 'quiz_intro_ar');
+  }, variant: ios);
+
+  testWidgets('quiz_running_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/course/$course/quiz/l3',
+      assessments: FakeAssessmentRepository(stage: QuizStage.running),
+    );
+    await t.tap(find.text('٥'));
+    await t.pump(const Duration(milliseconds: 300));
+    await _golden(t, 'quiz_running_ar');
+  }, variant: ios);
+
+  testWidgets('quiz_results_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/course/$course/quiz/l3',
+      assessments: FakeAssessmentRepository(stage: QuizStage.results),
+      size: const Size(393, 1900),
+    );
+    await _golden(t, 'quiz_results_ar');
+  }, variant: ios);
+
+  testWidgets('quiz_results_en_dark', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      language: 'en',
+      theme: ThemeMode.dark,
+      path: '/course/$course/quiz/l3',
+      assessments: FakeAssessmentRepository(stage: QuizStage.results),
+      size: const Size(393, 1900),
+    );
+    await _golden(t, 'quiz_results_en_dark');
+  }, variant: ios);
+
+  testWidgets('assignment_graded_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/course/$course/assignment/l6',
+      size: const Size(393, 1500),
+    );
+    await _golden(t, 'assignment_graded_ar');
+  }, variant: ios);
+
+  testWidgets('results_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/account/results',
+      size: const Size(393, 1000),
+    );
+    await _golden(t, 'results_ar');
+  }, variant: ios);
+
+  testWidgets('certificates_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/account/certificates',
+      size: const Size(393, 1150),
+    );
+    await _golden(t, 'certificates_ar');
   }, variant: ios);
 }

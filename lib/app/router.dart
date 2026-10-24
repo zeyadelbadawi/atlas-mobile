@@ -9,7 +9,11 @@ import '../features/account/devices_screen.dart';
 import '../features/courses/course_screen.dart';
 import '../features/courses/my_courses_screen.dart';
 import '../features/home/home_screen.dart';
+import '../features/assignment/assignment_screen.dart';
+import '../features/certificates/certificates_screen.dart';
 import '../features/lesson/lesson_screen.dart';
+import '../features/quiz/quiz_screen.dart';
+import '../features/results/results_screen.dart';
 import '../features/shell/main_shell.dart';
 import '../features/auth/code_screens.dart';
 import '../features/auth/other_auth_screens.dart';
@@ -122,6 +126,28 @@ final routerProvider = Provider<GoRouter>((ref) {
           courseId: s.pathParameters['id']!,
           lessonId: s.pathParameters['lessonId']!,
         ),
+      ),
+      GoRoute(
+        path: '/course/:id/quiz/:quizId',
+        builder: (_, s) => QuizScreen(
+          courseId: s.pathParameters['id']!,
+          quizId: s.pathParameters['quizId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/course/:id/assignment/:assignmentId',
+        builder: (_, s) => AssignmentScreen(
+          courseId: s.pathParameters['id']!,
+          assignmentId: s.pathParameters['assignmentId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/account/results',
+        builder: (_, _) => const ResultsScreen(),
+      ),
+      GoRoute(
+        path: '/account/certificates',
+        builder: (_, _) => const CertificatesScreen(),
       ),
       GoRoute(
         path: '/account/devices',

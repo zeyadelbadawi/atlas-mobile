@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -105,4 +106,36 @@ String? validateEmail(BuildContext context, String value) {
   if (v.isEmpty) return context.l10n.validationEmailRequired;
   if (!_emailPattern.hasMatch(v)) return context.l10n.validationEmailInvalid;
   return null;
+}
+
+/// A native confirm dialog (Cupertino on iOS). True only when confirmed.
+Future<bool> confirmDialog(
+  BuildContext context, {
+  required String title,
+  String? body,
+  required String confirm,
+  required String cancel,
+  bool destructive = false,
+}) async {
+  final ios = Theme.of(context).platform == TargetPlatform.iOS;
+  Widget action(BuildContext c, String label, bool value) => ios
+      ? CupertinoDialogAction(
+          isDefaultAction: value && !destructive,
+          isDestructiveAction: value && destructive,
+          onPressed: () => Navigator.pop(c, value),
+          child: Text(label),
+        )
+      : TextButton(
+          onPressed: () => Navigator.pop(c, value),
+          child: Text(label),
+        );
+  final ok = await showAdaptiveDialog<bool>(
+    context: context,
+    builder: (c) => AlertDialog.adaptive(
+      title: Text(title),
+      content: body == null ? null : Text(body),
+      actions: [action(c, cancel, false), action(c, confirm, true)],
+    ),
+  );
+  return ok == true;
 }

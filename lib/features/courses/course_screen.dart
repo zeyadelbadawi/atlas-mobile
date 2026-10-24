@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../app/learning_providers.dart';
@@ -131,39 +132,58 @@ class _CompletedCard extends ConsumerWidget {
     final l = context.l10n;
     final a = context.atlas;
     final completion = ref.watch(completionProvider(courseId)).value;
-    final certificate =
-        completion != null &&
-        completion.certificateEnabled &&
-        completion.certificateStatus != 'issued';
+    final enabled = completion?.certificateEnabled ?? false;
+    final issued = completion?.certificateStatus == 'issued';
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: a.colors.tonal,
         borderRadius: BorderRadius.circular(AtlasRadius.xl),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(LucideIcons.circleCheckBig, color: a.colors.accent, size: 28),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l.courseCompletedTitle,
-                  style: a.type.title3.copyWith(color: a.colors.ink),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                LucideIcons.circleCheckBig,
+                color: a.colors.accent,
+                size: 28,
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l.courseCompletedTitle,
+                      style: a.type.title3.copyWith(color: a.colors.ink),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      !enabled
+                          ? l.courseCompletedBody
+                          : issued
+                          ? l.courseCertificateIssued
+                          : l.courseCertificatePending,
+                      style: a.type.subhead.copyWith(
+                        color: a.colors.inkSecondary,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  certificate
-                      ? l.courseCertificatePending
-                      : l.courseCompletedBody,
-                  style: a.type.subhead.copyWith(color: a.colors.inkSecondary),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
+          if (enabled && issued) ...[
+            const SizedBox(height: 14),
+            AtlasButton(
+              label: l.courseOpenCertificates,
+              icon: LucideIcons.award,
+              onPressed: () => context.push('/account/certificates'),
+            ),
+          ],
         ],
       ),
     );
@@ -195,7 +215,7 @@ class SyllabusRow extends StatelessWidget {
         lock
       else if (item.durationSeconds != null && item.durationSeconds! > 0)
         l.minutes(context.digits('${(item.durationSeconds! / 60).ceil()}')),
-      if (!item.isLesson && !item.isLocked) l.itemOnWebsite,
+      if (item.type == 'live_session' && !item.isLocked) l.itemOnWebsite,
     ].join(context.sep);
     final fg = item.isLocked ? c.inkTertiary : c.ink;
     return MergeSemantics(

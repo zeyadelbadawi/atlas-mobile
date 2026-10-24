@@ -86,6 +86,26 @@ class AccountScreen extends ConsumerWidget {
                         color: a.colors.inkSecondary,
                       ),
                     ),
+                    SectionHeader(title: l.accountLearning),
+                    SettingsGroup(
+                      children: [
+                        SettingsRow(
+                          title: l.resultsTitle,
+                          icon: LucideIcons.chartColumn,
+                          onTap: () => context.push('/account/results'),
+                        ),
+                        SettingsRow(
+                          title: l.certificatesTitle,
+                          icon: LucideIcons.award,
+                          onTap: () => context.push('/account/certificates'),
+                        ),
+                        SettingsRow(
+                          title: l.accountDevices,
+                          icon: LucideIcons.smartphone,
+                          onTap: () => context.push('/account/devices'),
+                        ),
+                      ],
+                    ),
                     SectionHeader(title: l.accountLanguage),
                     _choice<String?>(
                       context,

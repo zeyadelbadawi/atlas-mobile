@@ -78,12 +78,38 @@ class LearnerOverview {
       announcements = _list(j['announcements'])
           .map(Announcement.fromJson)
           .toList(),
-      allCourses = _int((j['courseCounts'] as Map?)?['all']);
+      allCourses = _int((j['courseCounts'] as Map?)?['all']),
+      recentResults = _list(j['recentResults'])
+          .map(RecentResult.fromJson)
+          .toList();
 
+  final List<RecentResult> recentResults;
   final List<ContinueItem> continueLearning;
   final List<Deadline> deadlines;
   final List<Announcement> announcements;
   final int allCourses;
+}
+
+/// A graded quiz attempt or assignment on the home screen.
+class RecentResult {
+  RecentResult.fromJson(Map<String, dynamic> j)
+    : id = j['id'] as String? ?? '',
+      type = j['type'] as String? ?? 'quiz',
+      title = j['title'] as String? ?? '',
+      courseId = j['courseId'] as String? ?? '',
+      courseTitle = j['courseTitle'] as String? ?? '',
+      status = j['status'] as String? ?? '',
+      score = (j['score'] as num?)?.toDouble(),
+      at = _date(j['at']);
+
+  final String id;
+  final String type;
+  final String title;
+  final String courseId;
+  final String courseTitle;
+  final String status;
+  final double? score;
+  final DateTime? at;
 }
 
 class EnrolledCourse {

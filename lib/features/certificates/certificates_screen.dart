@@ -1,0 +1,367 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../app/learning_providers.dart';
+import '../../app/providers.dart';
+import '../../app/ui_helpers.dart';
+import '../../core/learning/assessment_models.dart';
+import '../../design/design.dart';
+import '../learning/learning_ui.dart';
+import '../quiz/assessment_widgets.dart';
+
+/// The learner's certificates. Three honest states: the academy issues
+/// none (said plainly, so an empty list never reads as "you earned none"),
+/// none earned yet, or the cards — withdrawn ones included with their
+/// reason. A download is never a stored link: "Open PDF" asks for a fresh
+/// signed one at that moment.
+class CertificatesScreen extends ConsumerWidget {
+  const CertificatesScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final c = a.colors;
+    final value = ref.watch(certificatesProvider);
+    return Scaffold(
+      appBar: AppBar(),
+      body: RefreshIndicator.adaptive(
+        onRefresh: () => ref.refresh(certificatesProvider.future),
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(
+            AtlasSpace.gutter,
+            0,
+            AtlasSpace.gutter,
+            48,
+          ),
+          children: [
+            ReadableWidth(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      l.certificatesTitle,
+                      style: a.type.title1.copyWith(color: c.ink),
+                    ),
+                  ),
+                  const SizedBox(height: AtlasSpace.s16),
+                  AsyncBody<LearnerCertificates>(
+                    value: value,
+                    onRetry: () => ref.invalidate(certificatesProvider),
+                    data: (list) {
+                      if (list.items.isEmpty) {
+                        return _Empty(
+                          title: list.enabled
+                              ? l.certificatesEmptyTitle
+                              : l.certificatesOff,
+                          body: list.enabled ? l.certificatesEmptyBody : null,
+                        );
+                      }
+                      return Column(
+                        children: [
+                          for (final cert in list.items)
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                bottom: AtlasSpace.s16,
+                              ),
+                              child: CertificateCard(certificate: cert),
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Empty extends StatelessWidget {
+  const _Empty({required this.title, this.body});
+  final String title;
+  final String? body;
+
+  @override
+  Widget build(BuildContext context) {
+    final a = context.atlas;
+    final c = a.colors;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32),
+      child: Column(
+        children: [
+          Icon(LucideIcons.award, size: 36, color: c.inkTertiary),
+          const SizedBox(height: 12),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: a.type.title3.copyWith(color: c.ink),
+          ),
+          if (body != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              body!,
+              textAlign: TextAlign.center,
+              style: a.type.subhead.copyWith(color: c.inkSecondary),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class CertificateCard extends ConsumerStatefulWidget {
+  const CertificateCard({super.key, required this.certificate});
+  final Certificate certificate;
+
+  @override
+  ConsumerState<CertificateCard> createState() => _CertificateCardState();
+}
+
+class _CertificateCardState extends ConsumerState<CertificateCard> {
+  bool _opening = false, _copied = false;
+  String? _error;
+
+  Uri _verifyUrl() {
+    final host = ref.read(sessionProvider).academy!.host;
+    return Uri.https(host, '/verify/${widget.certificate.verificationCode}');
+  }
+
+  Future<void> _open() async {
+    setState(() {
+      _opening = true;
+      _error = null;
+    });
+    try {
+      final link = await ref
+          .read(assessmentRepositoryProvider)
+          .certificateDownload(widget.certificate.id);
+      await launchUrl(Uri.parse(link.url), mode: LaunchMode.inAppBrowserView);
+    } on Object catch (e) {
+      if (mounted) setState(() => _error = errorText(ref, context, e));
+    } finally {
+      if (mounted) setState(() => _opening = false);
+    }
+  }
+
+  Future<void> _copy() async {
+    await Clipboard.setData(
+      ClipboardData(text: widget.certificate.codeDisplay),
+    );
+    if (mounted) setState(() => _copied = true);
+  }
+
+  Future<void> _share(BuildContext buttonContext) async {
+    final box = buttonContext.findRenderObject() as RenderBox?;
+    await SharePlus.instance.share(
+      ShareParams(
+        text: context.l10n.certificateShareText(
+          widget.certificate.courseTitle,
+          _verifyUrl().toString(),
+        ),
+        sharePositionOrigin: box == null
+            ? null
+            : box.localToGlobal(Offset.zero) & box.size,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final c = a.colors;
+    final cert = widget.certificate;
+    final d = context.digits;
+    return Container(
+      decoration: BoxDecoration(
+        color: c.raised,
+        borderRadius: BorderRadius.circular(AtlasRadius.xl),
+        border: Border.all(color: c.rule),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // The cover band, like the front of a handout.
+          Container(
+            color: cert.revoked ? c.sunken : c.cover,
+            padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        cert.courseTitle,
+                        style: a.type.title3.copyWith(
+                          color: cert.revoked ? c.ink : c.onCover,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        cert.nameOnCertificate,
+                        style: a.type.subhead.copyWith(
+                          color: (cert.revoked ? c.ink : c.onCover).withValues(
+                            alpha: 0.8,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  LucideIcons.award,
+                  size: 28,
+                  color: cert.revoked ? c.inkTertiary : c.onCover,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 6,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    if (cert.revoked)
+                      StatusPill(
+                        label: l.certificateRevoked,
+                        tone: PillTone.danger,
+                      ),
+                    Text(
+                      [
+                        if (cert.issuedAt != null)
+                          l.certificateIssued(
+                            shortDate(context, cert.issuedAt!),
+                          ),
+                        if (cert.overallScore != null)
+                          l.certificateScore(
+                            d('${cert.overallScore!.round()}'),
+                          ),
+                      ].join(context.sep),
+                      style: a.type.footnote.copyWith(color: c.inkSecondary),
+                    ),
+                  ],
+                ),
+                if (cert.revoked) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    [
+                      if (cert.revokedAt != null)
+                        l.certificateRevokedOn(
+                          shortDate(context, cert.revokedAt!),
+                        ),
+                      if (cert.revokeReason?.isNotEmpty ?? false)
+                        l.certificateRevokedReason(cert.revokeReason!),
+                    ].join(context.sep),
+                    style: a.type.subhead.copyWith(color: c.ink),
+                  ),
+                ],
+                const SizedBox(height: 14),
+                Text(
+                  l.certificateCode,
+                  style: a.type.footnote.copyWith(color: c.inkSecondary),
+                ),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: SelectableText(
+                    cert.codeDisplay,
+                    style: a.type.title2.copyWith(
+                      color: c.ink,
+                      letterSpacing: 1.5,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ),
+                Text(
+                  '${l.certificateSerial}: ${cert.serial}',
+                  style: a.type.caption.copyWith(color: c.inkTertiary),
+                ),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 4,
+                  children: [
+                    TextButton.icon(
+                      onPressed: _copy,
+                      icon: Icon(
+                        _copied ? LucideIcons.check : LucideIcons.copy,
+                        size: 18,
+                      ),
+                      label: Text(
+                        _copied ? l.certificateCopied : l.certificateCopyCode,
+                      ),
+                    ),
+                    if (!cert.revoked)
+                      Builder(
+                        builder: (b) => TextButton.icon(
+                          onPressed: () => _share(b),
+                          icon: const Icon(LucideIcons.share2, size: 18),
+                          label: Text(l.certificateShare),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                if (cert.revoked)
+                  const SizedBox.shrink()
+                else if (cert.renderStatus == 'pending')
+                  Row(
+                    children: [
+                      const SizedBox.square(
+                        dimension: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          '${l.certificatePreparing} ${l.certificatePreparingHint}',
+                          style: a.type.subhead.copyWith(color: c.ink),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => ref.invalidate(certificatesProvider),
+                        child: Text(l.certificateRefresh),
+                      ),
+                    ],
+                  )
+                else if (cert.renderStatus == 'failed')
+                  AtlasBanner(
+                    kind: AtlasBannerKind.error,
+                    message: l.certificateFailed,
+                  )
+                else
+                  AtlasButton(
+                    label: l.certificateDownload,
+                    icon: LucideIcons.fileDown,
+                    loading: _opening,
+                    onPressed: _opening ? null : _open,
+                  ),
+                if (_error != null) ...[
+                  const SizedBox(height: 8),
+                  AtlasBanner(kind: AtlasBannerKind.error, message: _error!),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -342,5 +342,445 @@
       }
     }
   },
-  "coursesCover": "Course"
+  "coursesCover": "Course",
+  "quizInstructions": "Instructions",
+  "quizInstructionsDefault": "Answer every question, then submit your attempt.",
+  "quizFactQuestions": "Questions",
+  "quizFactTime": "Time limit",
+  "quizNoTimeLimit": "No time limit",
+  "quizFactAttempts": "Attempts",
+  "quizAttemptsOf": "{used} of {total} used",
+  "@quizAttemptsOf": {
+    "placeholders": {
+      "used": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "quizAttemptsUnlimited": "{used} used, unlimited",
+  "@quizAttemptsUnlimited": {
+    "placeholders": {
+      "used": {
+        "type": "String"
+      }
+    }
+  },
+  "quizFactPassing": "Passing score",
+  "quizPercent": "{value}%",
+  "@quizPercent": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "quizFactOpens": "Opens",
+  "quizFactDue": "Due",
+  "quizFactCloses": "Closes",
+  "quizFactCounts": "Which attempt counts",
+  "quizPolicyHighest": "Your highest score",
+  "quizPolicyLatest": "Your latest attempt",
+  "quizPolicyFirst": "Your first attempt",
+  "quizPolicyAverage": "The average of your attempts",
+  "quizTimerNote": "The clock starts when you press Start and keeps running even if you close the app. When it reaches zero, the answers you have saved are submitted automatically.",
+  "quizStart": "Start quiz",
+  "quizResume": "Resume quiz",
+  "quizAttemptsLeft": "{count, plural, =0{No attempts left} =1{1 attempt left} other{{n} attempts left}}",
+  "@quizAttemptsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quizIntegrityTitle": "What is recorded during this quiz",
+  "quizIntegrityRecorded": "While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.",
+  "quizIntegrityMonitor": "You will not be interrupted. The record is shown to your reviewer with your attempt.",
+  "quizIntegrityWarn": "You will be warned each time one is recorded. The limit is {n}; reaching it flags the attempt for review.",
+  "@quizIntegrityWarn": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quizIntegrityStrict": "You will be warned each time one is recorded. When {n} have been recorded, the quiz is submitted automatically with the answers you have saved.",
+  "@quizIntegrityStrict": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quizIntegrityFullscreen": "The app shows the quiz on the whole screen. Leaving the app is recorded.",
+  "quizIntegrityHonest": "Atlas never uses your camera or microphone, never records your screen or what you type, and sees nothing outside this quiz. Nothing is blocked.",
+  "quizIntegrityAck": "I understand what is recorded during this quiz.",
+  "quizQuestionOf": "Question {current} of {total}",
+  "@quizQuestionOf": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "quizPrevious": "Previous",
+  "quizNext": "Next",
+  "quizSubmit": "Submit attempt",
+  "quizSubmitTitle": "Submit this attempt?",
+  "quizSubmitBody": "You won't be able to change your answers after submitting.",
+  "quizSubmitUnanswered": "{count, plural, =1{1 question is still unanswered (question {numbers}). Unanswered questions count as incorrect. You won't be able to change your answers after submitting.} other{{n} questions are still unanswered (questions {numbers}). Unanswered questions count as incorrect. You won't be able to change your answers after submitting.}}",
+  "@quizSubmitUnanswered": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "numbers": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quizSubmitConfirm": "Submit",
+  "quizKeepAnswering": "Keep answering",
+  "quizSaving": "Saving…",
+  "quizOffline": "Offline — will retry",
+  "quizUnsaved": "Unsaved changes",
+  "quizSaved": "Saved",
+  "quizNotSavedYet": "Nothing saved yet",
+  "quizAnswered": "{answered} of {total} answered",
+  "@quizAnswered": {
+    "placeholders": {
+      "answered": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "quizTimeLeft": "Time left",
+  "quizTimerHidden": "Timed — the clock is hidden",
+  "quizHurry": "Finish up",
+  "quizAnnounceMinutes": "{count, plural, =1{1 minute left} other{{n} minutes left}}",
+  "@quizAnnounceMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quizAnnounceSeconds": "{n} seconds left",
+  "@quizAnnounceSeconds": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quizYourAnswer": "Your answer",
+  "quizTypeAnswer": "Type your answer",
+  "quizShortHint": "A short answer. Capitalisation does not matter.",
+  "quizEssayHint": "This question is graded by a reviewer.",
+  "quizPoints": "{count, plural, =1{1 point} other{{n} points}}",
+  "@quizPoints": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quizChooseOne": "Choose one answer",
+  "quizChooseAll": "Choose all that apply",
+  "quizFlag": "Mark for review",
+  "quizUnflag": "Remove mark",
+  "quizNavItem": "Question {number}, {state}",
+  "@quizNavItem": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      }
+    }
+  },
+  "quizStateAnswered": "answered",
+  "quizStateUnanswered": "not answered",
+  "quizStateFlagged": "marked for review",
+  "quizEventTitle": "An event was recorded",
+  "quizEventWarn": "{count, plural, =1{1 event has been recorded on this attempt. Stay in the app until you submit.} other{{n} events have been recorded on this attempt. Stay in the app until you submit.}}",
+  "@quizEventWarn": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "quizEventStrict": "{n} of {max} events recorded. When the limit is reached, the quiz is submitted automatically.",
+  "@quizEventStrict": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "quizEventDialogTitle": "Another event was recorded",
+  "quizEventDialogWarn": "Your reviewer will see the record alongside your answers.",
+  "quizContinue": "Continue quiz",
+  "quizResultTitle": "Your result",
+  "quizPassed": "Passed",
+  "quizFailed": "Not passed",
+  "quizPointsOf": "{earned} of {total} points",
+  "@quizPointsOf": {
+    "placeholders": {
+      "earned": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "quizPassingLine": "Passing score {score}%",
+  "@quizPassingLine": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "quizCounted": "Counted score: {score}%",
+  "@quizCounted": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "quizScoreWithheldDue": "Your score will be shown after the due date.",
+  "quizScoreWithheldAttempts": "Your score will be shown once you have used all your attempts.",
+  "quizScoreWithheldNever": "This quiz does not show scores.",
+  "quizScoreWithheldSoon": "Your score is being prepared.",
+  "quizAnswersWithheld": "Correct answers are not shown for this attempt yet.",
+  "quizSubmittedTitle": "Attempt submitted",
+  "quizTimeRanOutTitle": "Time ran out",
+  "quizTimeRanOut": "Time ran out. Your answers were submitted automatically.",
+  "quizAutoIntegrityTitle": "Submitted automatically",
+  "quizAutoIntegrity": "The quiz was submitted because the recorded-event limit was reached. The answers you had saved were graded as they were.",
+  "quizInvalidatedTitle": "This attempt was voided",
+  "quizInvalidated": "A reviewer voided this attempt. It no longer counts, and the attempt has been given back to you.",
+  "quizAwaitingTitle": "Awaiting grading",
+  "quizAwaiting": "Some questions are graded by a reviewer. Your score appears once they have finished.",
+  "quizLate": "Submitted after the due date",
+  "quizVerdictCorrect": "Correct",
+  "quizVerdictIncorrect": "Incorrect",
+  "quizVerdictPending": "Awaiting grading",
+  "quizVerdictRecorded": "Recorded",
+  "quizNotAnswered": "Not answered",
+  "quizCorrectAnswer": "Correct answer",
+  "quizAcceptedAnswers": "Accepted answers",
+  "quizExplanation": "Explanation",
+  "quizReviewLesson": "Review the lesson",
+  "quizReviewTitle": "Your answers",
+  "quizHistory": "Your attempts",
+  "quizAttemptN": "Attempt {number}",
+  "@quizAttemptN": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "quizRetake": "Try again",
+  "quizNoMoreAttempts": "No more attempts available",
+  "quizNextActivity": "Continue to the next activity",
+  "quizBackToCourse": "Back to the course",
+  "quizLeaveTitle": "Leave the quiz?",
+  "quizLeaveBody": "Your answers are saved. The timer keeps running while you're away.",
+  "quizLeaveTimedOff": "Your answers are saved. You can resume later.",
+  "quizLeave": "Leave",
+  "quizStay": "Stay",
+  "assignmentInstructions": "Instructions",
+  "assignmentNoInstructions": "The academy hasn't added instructions.",
+  "assignmentDue": "Due",
+  "assignmentNoDue": "No due date",
+  "assignmentLate": "After the due date",
+  "assignmentLateBlock": "Submissions are not accepted",
+  "assignmentLateAccept": "Accepted and marked late",
+  "assignmentResubmission": "Resubmitting",
+  "assignmentResubmitAllowed": "Allowed until it is graded",
+  "assignmentResubmitNotAllowed": "Not allowed",
+  "assignmentResponse": "Your answer",
+  "assignmentResponseHint": "Write your answer here",
+  "assignmentCharsLeft": "{used} / {max}",
+  "@assignmentCharsLeft": {
+    "placeholders": {
+      "used": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "assignmentAttachment": "Attachment",
+  "assignmentAttachmentHelp": "Optional. A photo or a PDF, up to 10 MB.",
+  "assignmentTakePhoto": "Take a photo",
+  "assignmentChoosePhoto": "Choose a photo",
+  "assignmentChooseFile": "Choose a PDF",
+  "assignmentUploading": "Uploading…",
+  "assignmentRemoveAttachment": "Remove",
+  "assignmentTooLarge": "The attachment must be smaller than 10 MB.",
+  "assignmentBadType": "The attachment must be a PDF or an image (JPG, PNG, GIF or WebP).",
+  "assignmentUploadFailed": "The attachment didn't upload. Try again.",
+  "assignmentSubmit": "Submit assignment",
+  "assignmentResubmit": "Resubmit",
+  "assignmentEditSubmission": "Change my submission",
+  "assignmentSubmitTitle": "Submit this assignment?",
+  "assignmentResubmitTitle": "Replace your submission?",
+  "assignmentSubmitBody": "Your reviewer will see exactly what is in the form now.",
+  "assignmentSubmitLateBody": "The due date has passed, so this submission will be marked late. Your reviewer will see exactly what is in the form now.",
+  "assignmentKeepEditing": "Keep editing",
+  "assignmentEmpty": "Write an answer or add an attachment first.",
+  "assignmentDraftSaving": "Saving draft…",
+  "assignmentDraftSaved": "Draft saved",
+  "assignmentDraftFailed": "Draft not saved — check your connection",
+  "assignmentDraftUnsaved": "Unsaved changes",
+  "assignmentConflictTitle": "This draft changed on another device",
+  "assignmentConflictBody": "Choose which version to keep.",
+  "assignmentKeepMine": "Keep this version",
+  "assignmentUseTheirs": "Use the other version",
+  "assignmentPastDueTitle": "The due date has passed",
+  "assignmentPastDueBlocked": "This assignment no longer accepts submissions.",
+  "assignmentPastDueAccepted": "You can still submit. Your submission will be marked late.",
+  "assignmentYourSubmission": "Your submission",
+  "assignmentSubmittedAt": "Submitted {date}",
+  "@assignmentSubmittedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "assignmentSubmittedLate": "Submitted late",
+  "assignmentNoText": "No written answer.",
+  "assignmentOpenAttachment": "Open attachment",
+  "assignmentStepSubmitted": "Submitted",
+  "assignmentStepGrading": "Being graded",
+  "assignmentStepGraded": "Graded",
+  "assignmentAwaiting": "Waiting for your reviewer to grade it.",
+  "assignmentScore": "Score: {score}",
+  "@assignmentScore": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "assignmentGradedNoScore": "Graded",
+  "assignmentFeedback": "Feedback",
+  "assignmentGradedAt": "Graded {date}",
+  "@assignmentGradedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "assignmentResubmitClosed": "Resubmitting isn't available for this assignment.",
+  "resultsTitle": "My results",
+  "resultsCoursesCompleted": "Courses completed",
+  "resultsQuizzesPassed": "Quizzes passed",
+  "resultsAverage": "Average quiz score",
+  "resultsNoScores": "No scores yet",
+  "resultsEmptyTitle": "No results yet",
+  "resultsEmptyBody": "Once you submit a quiz or an assignment, your scores appear here.",
+  "resultsAwaiting": "Awaiting grading",
+  "resultsHasFeedback": "Feedback available",
+  "resultsRecent": "Recent results",
+  "resultsSeeAll": "All results",
+  "certificatesTitle": "My certificates",
+  "certificatesOff": "This academy doesn't issue certificates.",
+  "certificatesEmptyTitle": "No certificates yet",
+  "certificatesEmptyBody": "Finish a course that awards one and your certificate appears here.",
+  "certificateSerial": "Serial",
+  "certificateIssued": "Issued {date}",
+  "@certificateIssued": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateScore": "Score {score}%",
+  "@certificateScore": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateRevoked": "Withdrawn",
+  "certificateRevokedOn": "Withdrawn {date}",
+  "@certificateRevokedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateRevokedReason": "Reason: {reason}",
+  "@certificateRevokedReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateCode": "Verification code",
+  "certificateCopyCode": "Copy code",
+  "certificateCopied": "Copied",
+  "certificateShare": "Share verification link",
+  "certificateShareText": "My certificate for {course}: {link}",
+  "@certificateShareText": {
+    "placeholders": {
+      "course": {
+        "type": "String"
+      },
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateDownload": "Open PDF",
+  "certificatePreparing": "Preparing your certificate…",
+  "certificatePreparingHint": "This usually takes under a minute.",
+  "certificateRefresh": "Refresh",
+  "certificateFailed": "The certificate file couldn't be prepared. The academy has been told; try again later.",
+  "courseCertificateIssued": "Your certificate is ready.",
+  "courseOpenCertificates": "View certificate",
+  "accountLearning": "Learning"
 }

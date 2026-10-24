@@ -105,8 +105,21 @@ class _Body extends ConsumerWidget {
                   : '${d.courseTitle}${context.sep}${timeOfDay(context, d.dueAt)}',
               icon: itemIcon(d.type),
               changed: d.overdue,
-              onTap: () => context.push('/course/${d.courseId}'),
+              onTap: () => context.push(switch (d.type) {
+                'quiz' => '/course/${d.courseId}/quiz/${d.id}',
+                'assignment' => '/course/${d.courseId}/assignment/${d.id}',
+                _ => '/course/${d.courseId}',
+              }),
             ),
+        ],
+        if (overview.recentResults.isNotEmpty) ...[
+          SectionHeader(
+            title: l.resultsRecent,
+            action: l.resultsSeeAll,
+            onAction: () => context.push('/account/results'),
+          ),
+          for (final r in overview.recentResults.take(2))
+            RecentResultRow(item: r),
         ],
         if (overview.announcements.isNotEmpty) ...[
           SectionHeader(title: l.homeAnnouncements),

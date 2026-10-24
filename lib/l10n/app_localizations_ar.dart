@@ -394,7 +394,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unitLesson => 'الدرس';
 
   @override
-  String get unitQuiz => 'الكويز';
+  String get unitQuiz => 'الاختبار';
 
   @override
   String get unitAssignment => 'الواجب';
@@ -604,4 +604,730 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get coursesCover => 'كورس';
+
+  @override
+  String get quizInstructions => 'التعليمات';
+
+  @override
+  String get quizInstructionsDefault => 'أجب عن كل الأسئلة، ثم أرسل محاولتك.';
+
+  @override
+  String get quizFactQuestions => 'الأسئلة';
+
+  @override
+  String get quizFactTime => 'الوقت المحدد';
+
+  @override
+  String get quizNoTimeLimit => 'بلا وقت محدد';
+
+  @override
+  String get quizFactAttempts => 'المحاولات';
+
+  @override
+  String quizAttemptsOf(String used, String total) {
+    return '$used من $total مستخدمة';
+  }
+
+  @override
+  String quizAttemptsUnlimited(String used) {
+    return '$used مستخدمة، بلا حد';
+  }
+
+  @override
+  String get quizFactPassing => 'درجة النجاح';
+
+  @override
+  String quizPercent(String value) {
+    return '$value٪';
+  }
+
+  @override
+  String get quizFactOpens => 'يُفتح في';
+
+  @override
+  String get quizFactDue => 'موعد التسليم';
+
+  @override
+  String get quizFactCloses => 'يُغلق في';
+
+  @override
+  String get quizFactCounts => 'المحاولة التي تُحتسب';
+
+  @override
+  String get quizPolicyHighest => 'أعلى نتيجة لك';
+
+  @override
+  String get quizPolicyLatest => 'آخر محاولة لك';
+
+  @override
+  String get quizPolicyFirst => 'أول محاولة لك';
+
+  @override
+  String get quizPolicyAverage => 'متوسط محاولاتك';
+
+  @override
+  String get quizTimerNote =>
+      'يبدأ العدّ عند الضغط على «ابدأ» ويستمر حتى لو أغلقت التطبيق. عند وصوله إلى الصفر تُرسَل الإجابات التي حفظتها تلقائيًا.';
+
+  @override
+  String get quizStart => 'ابدأ الاختبار';
+
+  @override
+  String get quizResume => 'استئناف الاختبار';
+
+  @override
+  String quizAttemptsLeft(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n محاولة متبقية',
+      many: '$n محاولة متبقية',
+      few: '$n محاولات متبقية',
+      two: 'محاولتان متبقيتان',
+      one: 'محاولة واحدة متبقية',
+      zero: 'لا توجد محاولات متبقية',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get quizIntegrityTitle => 'ما يُسجَّل أثناء هذا الاختبار';
+
+  @override
+  String get quizIntegrityRecorded =>
+      'أثناء فتح الاختبار يُسجَّل ما يلي مع وقت حدوثه: الخروج من التطبيق (إلى تطبيق آخر أو الشاشة الرئيسية) والعودة إليه، وفحص للاتصال مرة كل دقيقة. يرى المراجِع ذلك مع تفسيرات واضحة، وهي مدخل للحوار وليست دليلًا على أي شيء.';
+
+  @override
+  String get quizIntegrityMonitor =>
+      'لن تتم مقاطعتك. يُعرض السجل على المراجِع مع محاولتك.';
+
+  @override
+  String quizIntegrityWarn(String n) {
+    return 'سيتم تنبيهك في كل مرة يُسجَّل فيها حدث. الحد هو $n، وعند بلوغه تُعلَّم المحاولة للمراجعة.';
+  }
+
+  @override
+  String quizIntegrityStrict(String n) {
+    return 'سيتم تنبيهك في كل مرة يُسجَّل فيها حدث. عند تسجيل $n أحداث يُرسَل الاختبار تلقائيًا بالإجابات التي حفظتها.';
+  }
+
+  @override
+  String get quizIntegrityFullscreen =>
+      'يعرض التطبيق الاختبار على الشاشة كاملة، ويُسجَّل الخروج من التطبيق.';
+
+  @override
+  String get quizIntegrityHonest =>
+      'لا يستخدم أطلس الكاميرا أو الميكروفون أبدًا، ولا يسجّل شاشتك أو ما تكتبه، ولا يرى شيئًا خارج هذا الاختبار. لا يُمنع أي شيء.';
+
+  @override
+  String get quizIntegrityAck => 'أفهم ما يُسجَّل أثناء هذا الاختبار.';
+
+  @override
+  String quizQuestionOf(String current, String total) {
+    return 'السؤال $current من $total';
+  }
+
+  @override
+  String get quizPrevious => 'السابق';
+
+  @override
+  String get quizNext => 'التالي';
+
+  @override
+  String get quizSubmit => 'إرسال المحاولة';
+
+  @override
+  String get quizSubmitTitle => 'إرسال هذه المحاولة؟';
+
+  @override
+  String get quizSubmitBody => 'لن تتمكن من تغيير إجاباتك بعد الإرسال.';
+
+  @override
+  String quizSubmitUnanswered(int count, String numbers, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'ما زال $n سؤال دون إجابة (الأسئلة $numbers). تُحتسب الأسئلة غير المُجابة إجابات خاطئة. لن تتمكن من تغيير إجاباتك بعد الإرسال.',
+      few:
+          'ما زالت $n أسئلة دون إجابة (الأسئلة $numbers). تُحتسب الأسئلة غير المُجابة إجابات خاطئة. لن تتمكن من تغيير إجاباتك بعد الإرسال.',
+      two:
+          'ما زال هناك سؤالان دون إجابة (السؤالان $numbers). تُحتسب الأسئلة غير المُجابة إجابات خاطئة. لن تتمكن من تغيير إجاباتك بعد الإرسال.',
+      one:
+          'ما زال هناك سؤال واحد دون إجابة (السؤال $numbers). تُحتسب الأسئلة غير المُجابة إجابات خاطئة. لن تتمكن من تغيير إجاباتك بعد الإرسال.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get quizSubmitConfirm => 'إرسال';
+
+  @override
+  String get quizKeepAnswering => 'متابعة الإجابة';
+
+  @override
+  String get quizSaving => 'جارٍ الحفظ…';
+
+  @override
+  String get quizOffline => 'غير متصل، ستتم إعادة المحاولة';
+
+  @override
+  String get quizUnsaved => 'تغييرات غير محفوظة';
+
+  @override
+  String get quizSaved => 'تم الحفظ';
+
+  @override
+  String get quizNotSavedYet => 'لم يُحفظ شيء بعد';
+
+  @override
+  String quizAnswered(String answered, String total) {
+    return 'تمت الإجابة عن $answered من $total';
+  }
+
+  @override
+  String get quizTimeLeft => 'الوقت المتبقي';
+
+  @override
+  String get quizTimerHidden => 'محدد بوقت، والعدّاد مخفي';
+
+  @override
+  String get quizHurry => 'أنهِ الآن';
+
+  @override
+  String quizAnnounceMinutes(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'بقيت $n دقيقة',
+      few: 'بقيت $n دقائق',
+      two: 'بقيت دقيقتان',
+      one: 'بقيت دقيقة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String quizAnnounceSeconds(String n) {
+    return 'بقيت $n ثانية';
+  }
+
+  @override
+  String get quizYourAnswer => 'إجابتك';
+
+  @override
+  String get quizTypeAnswer => 'اكتب إجابتك';
+
+  @override
+  String get quizShortHint => 'إجابة قصيرة. لا يهم حجم الأحرف.';
+
+  @override
+  String get quizEssayHint => 'يقيّم هذا السؤال مراجِع.';
+
+  @override
+  String quizPoints(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n نقطة',
+      few: '$n نقاط',
+      two: 'نقطتان',
+      one: 'نقطة واحدة',
+      zero: 'بلا نقاط',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get quizChooseOne => 'اختر إجابة واحدة';
+
+  @override
+  String get quizChooseAll => 'اختر كل ما ينطبق';
+
+  @override
+  String get quizFlag => 'تعليم للمراجعة';
+
+  @override
+  String get quizUnflag => 'إلغاء التعليم';
+
+  @override
+  String quizNavItem(String number, String state) {
+    return 'السؤال $number، $state';
+  }
+
+  @override
+  String get quizStateAnswered => 'تمت الإجابة';
+
+  @override
+  String get quizStateUnanswered => 'دون إجابة';
+
+  @override
+  String get quizStateFlagged => 'مُعلَّم للمراجعة';
+
+  @override
+  String get quizEventTitle => 'تم تسجيل حدث';
+
+  @override
+  String quizEventWarn(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'تم تسجيل $n حدث في هذه المحاولة. ابقَ في التطبيق حتى الإرسال.',
+      few: 'تم تسجيل $n أحداث في هذه المحاولة. ابقَ في التطبيق حتى الإرسال.',
+      two: 'تم تسجيل حدثين في هذه المحاولة. ابقَ في التطبيق حتى الإرسال.',
+      one: 'تم تسجيل حدث واحد في هذه المحاولة. ابقَ في التطبيق حتى الإرسال.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String quizEventStrict(String n, String max) {
+    return 'تم تسجيل $n من $max أحداث. عند بلوغ الحد يُرسَل الاختبار تلقائيًا.';
+  }
+
+  @override
+  String get quizEventDialogTitle => 'تم تسجيل حدث آخر';
+
+  @override
+  String get quizEventDialogWarn => 'سيرى المراجِع السجل إلى جانب إجاباتك.';
+
+  @override
+  String get quizContinue => 'متابعة الاختبار';
+
+  @override
+  String get quizResultTitle => 'نتيجتك';
+
+  @override
+  String get quizPassed => 'ناجح';
+
+  @override
+  String get quizFailed => 'غير ناجح';
+
+  @override
+  String quizPointsOf(String earned, String total) {
+    return '$earned من $total نقطة';
+  }
+
+  @override
+  String quizPassingLine(String score) {
+    return 'درجة النجاح $score٪';
+  }
+
+  @override
+  String quizCounted(String score) {
+    return 'النتيجة المحتسبة: $score٪';
+  }
+
+  @override
+  String get quizScoreWithheldDue => 'تظهر نتيجتك بعد موعد التسليم.';
+
+  @override
+  String get quizScoreWithheldAttempts =>
+      'تظهر نتيجتك بعد استخدام كل محاولاتك.';
+
+  @override
+  String get quizScoreWithheldNever => 'لا يعرض هذا الاختبار النتائج.';
+
+  @override
+  String get quizScoreWithheldSoon => 'يجري تجهيز نتيجتك.';
+
+  @override
+  String get quizAnswersWithheld =>
+      'لا تظهر الإجابات الصحيحة لهذه المحاولة بعد.';
+
+  @override
+  String get quizSubmittedTitle => 'تم إرسال المحاولة';
+
+  @override
+  String get quizTimeRanOutTitle => 'انتهى الوقت';
+
+  @override
+  String get quizTimeRanOut => 'انتهى الوقت. تم إرسال إجاباتك تلقائيًا.';
+
+  @override
+  String get quizAutoIntegrityTitle => 'تم الإرسال تلقائيًا';
+
+  @override
+  String get quizAutoIntegrity =>
+      'تم إرسال الاختبار لبلوغ حد الأحداث المسجَّلة. قُيِّمت الإجابات التي حفظتها كما هي.';
+
+  @override
+  String get quizInvalidatedTitle => 'أُلغيت هذه المحاولة';
+
+  @override
+  String get quizInvalidated =>
+      'ألغى مراجِع هذه المحاولة. لم تعد تُحتسب، وأُعيدت المحاولة إليك.';
+
+  @override
+  String get quizAwaitingTitle => 'بانتظار التقييم';
+
+  @override
+  String get quizAwaiting =>
+      'بعض الأسئلة يقيّمها مراجِع. تظهر نتيجتك عند انتهائه.';
+
+  @override
+  String get quizLate => 'أُرسلت بعد موعد التسليم';
+
+  @override
+  String get quizVerdictCorrect => 'صحيحة';
+
+  @override
+  String get quizVerdictIncorrect => 'خاطئة';
+
+  @override
+  String get quizVerdictPending => 'بانتظار التقييم';
+
+  @override
+  String get quizVerdictRecorded => 'مسجَّلة';
+
+  @override
+  String get quizNotAnswered => 'دون إجابة';
+
+  @override
+  String get quizCorrectAnswer => 'الإجابة الصحيحة';
+
+  @override
+  String get quizAcceptedAnswers => 'الإجابات المقبولة';
+
+  @override
+  String get quizExplanation => 'الشرح';
+
+  @override
+  String get quizReviewLesson => 'راجع الدرس';
+
+  @override
+  String get quizReviewTitle => 'إجاباتك';
+
+  @override
+  String get quizHistory => 'محاولاتك';
+
+  @override
+  String quizAttemptN(String number) {
+    return 'المحاولة $number';
+  }
+
+  @override
+  String get quizRetake => 'إعادة المحاولة';
+
+  @override
+  String get quizNoMoreAttempts => 'لا توجد محاولات إضافية متاحة';
+
+  @override
+  String get quizNextActivity => 'المتابعة إلى النشاط التالي';
+
+  @override
+  String get quizBackToCourse => 'العودة إلى الكورس';
+
+  @override
+  String get quizLeaveTitle => 'الخروج من الاختبار؟';
+
+  @override
+  String get quizLeaveBody => 'إجاباتك محفوظة. يستمر العدّاد أثناء غيابك.';
+
+  @override
+  String get quizLeaveTimedOff => 'إجاباتك محفوظة. يمكنك الاستئناف لاحقًا.';
+
+  @override
+  String get quizLeave => 'خروج';
+
+  @override
+  String get quizStay => 'البقاء';
+
+  @override
+  String get assignmentInstructions => 'التعليمات';
+
+  @override
+  String get assignmentNoInstructions => 'لم تُضف الأكاديمية تعليمات.';
+
+  @override
+  String get assignmentDue => 'موعد التسليم';
+
+  @override
+  String get assignmentNoDue => 'بلا موعد تسليم';
+
+  @override
+  String get assignmentLate => 'بعد موعد التسليم';
+
+  @override
+  String get assignmentLateBlock => 'لا يُقبل التسليم';
+
+  @override
+  String get assignmentLateAccept => 'يُقبل ويُعلَّم بأنه متأخر';
+
+  @override
+  String get assignmentResubmission => 'إعادة التسليم';
+
+  @override
+  String get assignmentResubmitAllowed => 'مسموحة حتى التقييم';
+
+  @override
+  String get assignmentResubmitNotAllowed => 'غير مسموحة';
+
+  @override
+  String get assignmentResponse => 'إجابتك';
+
+  @override
+  String get assignmentResponseHint => 'اكتب إجابتك هنا';
+
+  @override
+  String assignmentCharsLeft(String used, String max) {
+    return '$used / $max';
+  }
+
+  @override
+  String get assignmentAttachment => 'المرفق';
+
+  @override
+  String get assignmentAttachmentHelp =>
+      'اختياري. صورة أو ملف PDF، بحد أقصى ١٠ ميجابايت.';
+
+  @override
+  String get assignmentTakePhoto => 'التقاط صورة';
+
+  @override
+  String get assignmentChoosePhoto => 'اختيار صورة';
+
+  @override
+  String get assignmentChooseFile => 'اختيار ملف PDF';
+
+  @override
+  String get assignmentUploading => 'جارٍ الرفع…';
+
+  @override
+  String get assignmentRemoveAttachment => 'إزالة';
+
+  @override
+  String get assignmentTooLarge => 'يجب أن يكون حجم المرفق أقل من ١٠ ميجابايت.';
+
+  @override
+  String get assignmentBadType =>
+      'يجب أن يكون المرفق ملف PDF أو صورة (JPG أو PNG أو GIF أو WebP).';
+
+  @override
+  String get assignmentUploadFailed => 'فشل رفع المرفق. حاول مرة أخرى.';
+
+  @override
+  String get assignmentSubmit => 'تسليم الواجب';
+
+  @override
+  String get assignmentResubmit => 'إعادة التسليم';
+
+  @override
+  String get assignmentEditSubmission => 'تعديل التسليم';
+
+  @override
+  String get assignmentSubmitTitle => 'تسليم هذا الواجب؟';
+
+  @override
+  String get assignmentResubmitTitle => 'استبدال تسليمك؟';
+
+  @override
+  String get assignmentSubmitBody => 'سيرى المراجِع ما في النموذج الآن تمامًا.';
+
+  @override
+  String get assignmentSubmitLateBody =>
+      'انقضى موعد التسليم، لذا سيُعلَّم هذا التسليم بأنه متأخر. سيرى المراجِع ما في النموذج الآن تمامًا.';
+
+  @override
+  String get assignmentKeepEditing => 'متابعة التحرير';
+
+  @override
+  String get assignmentEmpty => 'اكتب إجابة أو أضف مرفقًا أولًا.';
+
+  @override
+  String get assignmentDraftSaving => 'جارٍ حفظ المسودة…';
+
+  @override
+  String get assignmentDraftSaved => 'تم حفظ المسودة';
+
+  @override
+  String get assignmentDraftFailed => 'لم تُحفظ المسودة، تحقّق من اتصالك';
+
+  @override
+  String get assignmentDraftUnsaved => 'تغييرات غير محفوظة';
+
+  @override
+  String get assignmentConflictTitle => 'تغيّرت هذه المسودة على جهاز آخر';
+
+  @override
+  String get assignmentConflictBody => 'اختر النسخة التي تريد الاحتفاظ بها.';
+
+  @override
+  String get assignmentKeepMine => 'الاحتفاظ بهذه النسخة';
+
+  @override
+  String get assignmentUseTheirs => 'استخدام النسخة الأخرى';
+
+  @override
+  String get assignmentPastDueTitle => 'انقضى موعد التسليم';
+
+  @override
+  String get assignmentPastDueBlocked => 'لم يعد هذا الواجب يقبل التسليم.';
+
+  @override
+  String get assignmentPastDueAccepted =>
+      'ما زال بإمكانك التسليم. سيُعلَّم تسليمك بأنه متأخر.';
+
+  @override
+  String get assignmentYourSubmission => 'تسليمك';
+
+  @override
+  String assignmentSubmittedAt(String date) {
+    return 'سُلِّم $date';
+  }
+
+  @override
+  String get assignmentSubmittedLate => 'سُلِّم متأخرًا';
+
+  @override
+  String get assignmentNoText => 'لا توجد إجابة مكتوبة.';
+
+  @override
+  String get assignmentOpenAttachment => 'فتح المرفق';
+
+  @override
+  String get assignmentStepSubmitted => 'تم التسليم';
+
+  @override
+  String get assignmentStepGrading => 'قيد التقييم';
+
+  @override
+  String get assignmentStepGraded => 'تم التقييم';
+
+  @override
+  String get assignmentAwaiting => 'بانتظار تقييم المراجِع.';
+
+  @override
+  String assignmentScore(String score) {
+    return 'الدرجة: $score';
+  }
+
+  @override
+  String get assignmentGradedNoScore => 'تم التقييم';
+
+  @override
+  String get assignmentFeedback => 'الملاحظات';
+
+  @override
+  String assignmentGradedAt(String date) {
+    return 'قُيِّم $date';
+  }
+
+  @override
+  String get assignmentResubmitClosed => 'إعادة التسليم غير متاحة لهذا الواجب.';
+
+  @override
+  String get resultsTitle => 'نتائجي';
+
+  @override
+  String get resultsCoursesCompleted => 'الكورسات المكتملة';
+
+  @override
+  String get resultsQuizzesPassed => 'الاختبارات المجتازة';
+
+  @override
+  String get resultsAverage => 'متوسط درجات الاختبارات';
+
+  @override
+  String get resultsNoScores => 'لا توجد درجات بعد';
+
+  @override
+  String get resultsEmptyTitle => 'لا توجد نتائج بعد';
+
+  @override
+  String get resultsEmptyBody =>
+      'بمجرد إرسالك اختبارًا أو واجبًا ستظهر درجاتك هنا.';
+
+  @override
+  String get resultsAwaiting => 'بانتظار التصحيح';
+
+  @override
+  String get resultsHasFeedback => 'تتوفّر ملاحظات';
+
+  @override
+  String get resultsRecent => 'آخر النتائج';
+
+  @override
+  String get resultsSeeAll => 'كل النتائج';
+
+  @override
+  String get certificatesTitle => 'شهاداتي';
+
+  @override
+  String get certificatesOff => 'لا تصدر هذه الأكاديمية شهادات.';
+
+  @override
+  String get certificatesEmptyTitle => 'لا توجد شهادات بعد';
+
+  @override
+  String get certificatesEmptyBody =>
+      'أكمل كورسًا يمنح شهادة وستظهر شهادتك هنا.';
+
+  @override
+  String get certificateSerial => 'الرقم التسلسلي';
+
+  @override
+  String certificateIssued(String date) {
+    return 'صدرت $date';
+  }
+
+  @override
+  String certificateScore(String score) {
+    return 'الدرجة $score٪';
+  }
+
+  @override
+  String get certificateRevoked => 'مسحوبة';
+
+  @override
+  String certificateRevokedOn(String date) {
+    return 'سُحبت $date';
+  }
+
+  @override
+  String certificateRevokedReason(String reason) {
+    return 'السبب: $reason';
+  }
+
+  @override
+  String get certificateCode => 'رمز التحقق';
+
+  @override
+  String get certificateCopyCode => 'نسخ الرمز';
+
+  @override
+  String get certificateCopied => 'تم النسخ';
+
+  @override
+  String get certificateShare => 'مشاركة رابط التحقق';
+
+  @override
+  String certificateShareText(String course, String link) {
+    return 'شهادتي في $course: $link';
+  }
+
+  @override
+  String get certificateDownload => 'فتح ملف PDF';
+
+  @override
+  String get certificatePreparing => 'يجري تجهيز شهادتك…';
+
+  @override
+  String get certificatePreparingHint => 'يستغرق ذلك عادةً أقل من دقيقة.';
+
+  @override
+  String get certificateRefresh => 'تحديث';
+
+  @override
+  String get certificateFailed =>
+      'تعذّر تجهيز ملف الشهادة. أُبلغت الأكاديمية؛ حاول لاحقًا.';
+
+  @override
+  String get courseCertificateIssued => 'شهادتك جاهزة.';
+
+  @override
+  String get courseOpenCertificates => 'عرض الشهادة';
+
+  @override
+  String get accountLearning => 'التعلّم';
 }
