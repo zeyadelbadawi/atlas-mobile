@@ -22,6 +22,18 @@ Future<void> loadGoldenFonts() async {
     await loader.load();
   }
 
+  Directory pkg(String name) => Directory(
+    '${Platform.environment['PUB_CACHE'] ?? '${Platform.environment['HOME']}/.pub-cache'}'
+    '/hosted/pub.dev',
+  ).listSync().whereType<Directory>().firstWhere((d) => d.path.contains('/$name-'));
+  await load(
+    'MaterialIcons',
+    '${Platform.environment['FLUTTER_ROOT'] ?? '/opt/flutter'}/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
+  );
+  await load(
+    'packages/cupertino_icons/CupertinoIcons',
+    '${pkg('cupertino_icons').path}/assets/CupertinoIcons.ttf',
+  );
   final lucide =
       Directory(
         '${Platform.environment['PUB_CACHE'] ?? '${Platform.environment['HOME']}/.pub-cache'}'

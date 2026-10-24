@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../atlas_theme.dart';
+import "../atlas_theme.dart";
 
 /// The academy's logo on a raised tile (logos are often transparent PNGs).
 /// Without a logo, the first letter of the academy name in Readex Pro.
@@ -47,18 +47,24 @@ class AcademyLogo extends StatelessWidget {
         child: image != null
             ? Padding(
                 padding: EdgeInsets.all(size * 0.12),
-                child: Image(image: image!, fit: BoxFit.contain),
-              )
-            : Text(
-                letter.toUpperCase(),
-                style: a.type.title2.copyWith(
-                  color: fg,
-                  fontSize: size * 0.45,
-                  height: 1,
-                  fontWeight: FontWeight.w700,
+                child: Image(
+                  image: image!,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, _, _) => _letter(a, letter, fg),
                 ),
-              ),
+              )
+            : _letter(a, letter, fg),
       ),
     );
   }
+
+  Widget _letter(AtlasThemeAccess a, String letter, Color fg) => Text(
+    letter.toUpperCase(),
+    style: a.type.title2.copyWith(
+      color: fg,
+      fontSize: size * 0.45,
+      height: 1,
+      fontWeight: FontWeight.w700,
+    ),
+  );
 }

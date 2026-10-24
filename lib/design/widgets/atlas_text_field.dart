@@ -28,7 +28,12 @@ class AtlasTextField extends StatefulWidget {
     this.prefix,
     this.inputFormatters,
     this.focusNode,
+    this.showPasswordLabel = 'Show password',
+    this.hidePasswordLabel = 'Hide password',
   });
+
+  final String showPasswordLabel;
+  final String hidePasswordLabel;
 
   final String label;
   final TextEditingController? controller;
@@ -100,56 +105,60 @@ class _AtlasTextFieldState extends State<AtlasTextField> {
               borderRadius: BorderRadius.circular(AtlasRadius.md),
               border: Border.all(color: ring ?? Colors.transparent, width: 2),
             ),
-            child: Row(
-              children: [
-                if (widget.prefix != null) ...[
-                  widget.prefix!,
-                  const SizedBox(width: 8),
-                ],
-                Expanded(
-                  child: TextField(
-                    controller: widget.controller,
-                    focusNode: _focus,
-                    enabled: widget.enabled,
-                    obscureText: widget.password && _obscured,
-                    enableSuggestions: !widget.password,
-                    autocorrect: false,
-                    keyboardType: widget.keyboardType,
-                    textInputAction: widget.textInputAction,
-                    autofillHints: widget.autofillHints,
-                    onSubmitted: widget.onSubmitted,
-                    onChanged: widget.onChanged,
-                    inputFormatters: widget.inputFormatters,
-                    textDirection: widget.ltrValue ? TextDirection.ltr : null,
-                    textAlign:
-                        widget.ltrValue &&
-                            Directionality.of(context) == TextDirection.rtl
-                        ? TextAlign.right
-                        : TextAlign.start,
-                    style: a.type.body.copyWith(color: c.ink),
-                    cursorColor: c.accent,
-                    decoration: InputDecoration(
-                      isCollapsed: true,
-                      border: InputBorder.none,
-                      hintText: widget.hint,
-                      hintStyle: a.type.body.copyWith(color: c.inkTertiary),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 13),
+            child: Directionality(
+              textDirection: widget.ltrValue
+                  ? TextDirection.ltr
+                  : Directionality.of(context),
+              child: Row(
+                children: [
+                  if (widget.prefix != null) ...[
+                    widget.prefix!,
+                    const SizedBox(width: 8),
+                  ],
+                  Expanded(
+                    child: TextField(
+                      controller: widget.controller,
+                      focusNode: _focus,
+                      enabled: widget.enabled,
+                      obscureText: widget.password && _obscured,
+                      enableSuggestions: !widget.password,
+                      autocorrect: false,
+                      keyboardType: widget.keyboardType,
+                      textInputAction: widget.textInputAction,
+                      autofillHints: widget.autofillHints,
+                      onSubmitted: widget.onSubmitted,
+                      onChanged: widget.onChanged,
+                      inputFormatters: widget.inputFormatters,
+                      textAlign: TextAlign.start,
+                      style: a.type.body.copyWith(color: c.ink),
+                      cursorColor: c.accent,
+                      decoration: InputDecoration(
+                        isCollapsed: true,
+                        border: InputBorder.none,
+                        hintText: widget.hint,
+                        hintStyle: a.type.body.copyWith(color: c.inkTertiary),
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 13,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                if (widget.password)
-                  IconButton(
-                    onPressed: () => setState(() => _obscured = !_obscured),
-                    tooltip: _obscured ? 'Show password' : 'Hide password',
-                    icon: Icon(
-                      _obscured ? LucideIcons.eye : LucideIcons.eyeOff,
-                      size: 22,
-                      color: c.inkSecondary,
-                    ),
-                  )
-                else
-                  const SizedBox(width: 8),
-              ],
+                  if (widget.password)
+                    IconButton(
+                      onPressed: () => setState(() => _obscured = !_obscured),
+                      tooltip: _obscured
+                          ? widget.showPasswordLabel
+                          : widget.hidePasswordLabel,
+                      icon: Icon(
+                        _obscured ? LucideIcons.eye : LucideIcons.eyeOff,
+                        size: 22,
+                        color: c.inkSecondary,
+                      ),
+                    )
+                  else
+                    const SizedBox(width: 8),
+                ],
+              ),
             ),
           ),
           if (message != null && message.isNotEmpty) ...[

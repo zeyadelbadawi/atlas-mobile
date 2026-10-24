@@ -105,6 +105,15 @@ ThemeData buildAtlasTheme({
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
     ),
+    // Text-only actions use the contrast-corrected accent, never the raw
+    // button colour (an amber button colour is unreadable as text).
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: c.accent,
+        textStyle: t.subhead.copyWith(fontWeight: FontWeight.w600),
+        minimumSize: const Size(44, 44),
+      ),
+    ),
     snackBarTheme: SnackBarThemeData(
       behavior: SnackBarBehavior.floating,
       backgroundColor: c.ink,

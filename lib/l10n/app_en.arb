@@ -1,0 +1,154 @@
+{
+  "@@locale": "en",
+  "appName": "Atlas",
+  "commonContinue": "Continue",
+  "commonCancel": "Cancel",
+  "commonDone": "Done",
+  "commonRetry": "Try again",
+  "commonClose": "Close",
+  "commonOr": "or",
+  "showPassword": "Show password",
+  "hidePassword": "Hide password",
+  "pickerTitle": "Find your academy",
+  "pickerBody": "Enter the website address your academy gave you, or its short name.",
+  "pickerFieldLabel": "Academy address",
+  "pickerFieldHint": "academy.atlass.dpdns.org",
+  "pickerOpen": "Open academy",
+  "pickerRecent": "Recent academies",
+  "pickerRemoveRecent": "Remove",
+  "pickerEmptyField": "Enter your academy's address.",
+  "pickerInvalid": "That doesn't look like a website address. Check it and try again.",
+  "pickerAboutAtlas": "About Atlas",
+  "signInTitle": "Sign in",
+  "signInEmail": "Email",
+  "signInPassword": "Password",
+  "signInSubmit": "Sign in",
+  "signInForgot": "Forgot password?",
+  "signInNoAccount": "New to this academy?",
+  "signInCreateAccount": "Create an account",
+  "signInChangeAcademy": "Change academy",
+  "signInNotMember": "You don't have access to this academy yet. Join it with your Atlas password.",
+  "signInJoinAcademy": "Join this academy",
+  "validationEmailRequired": "Enter your email.",
+  "validationEmailInvalid": "Enter an email like name@example.com.",
+  "validationPasswordRequired": "Enter your password.",
+  "validationPasswordShort": "Use at least 8 characters.",
+  "validationNameRequired": "Enter your full name.",
+  "validationPhoneRequired": "Enter your mobile number.",
+  "codeTitle": "Check your email",
+  "codeBody": "We sent a 6-digit code to {email}. It works for 10 minutes.",
+  "@codeBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "codeLabel": "Code",
+  "codeRemember": "Remember this device",
+  "codeRememberHint": "You won't need a code here next time.",
+  "codeVerify": "Verify",
+  "codeResend": "Send a new code",
+  "codeResendIn": "Send a new code in {seconds}s",
+  "@codeResendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "codeResent": "A new code is on its way. It can take a minute.",
+  "totpTitle": "Two-step verification",
+  "totpBody": "Enter the 6-digit code from your authenticator app.",
+  "registerTitle": "Create your account",
+  "registerName": "Full name",
+  "registerPhone": "Mobile number",
+  "registerPhoneHint": "The academy can use it to contact you about your courses.",
+  "registerPassword": "Password",
+  "registerPasswordHint": "At least 8 characters.",
+  "registerAge": "I am 13 or older",
+  "registerAgreePrefix": "I agree to the ",
+  "registerAgreeAnd": " and the ",
+  "registerTerms": "Terms of Service",
+  "registerPrivacy": "Privacy Policy",
+  "registerSubmit": "Create account",
+  "registerNeedsConsent": "Confirm your age and accept the terms to continue.",
+  "registerExisting": "This email already has an Atlas account. Sign in with its password.",
+  "registerHaveAccount": "Already have an account?",
+  "forgotTitle": "Reset your password",
+  "forgotBody": "We'll email you a link to choose a new password.",
+  "forgotSubmit": "Send link",
+  "forgotSent": "If {email} has an account here, a reset link is on its way. Open it on this phone or any browser.",
+  "@forgotSent": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "appleLinkTitle": "Connect Apple to your account",
+  "appleLinkBody": "{email} already has an account. Enter its password once to sign in with Apple from now on.",
+  "@appleLinkBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "appleLinkSubmit": "Connect and sign in",
+  "appleCreateTitle": "Finish creating your account",
+  "appleCreateBody": "Your name and email come from Apple. Add your mobile number to finish.",
+  "tabHome": "Home",
+  "tabCourses": "My courses",
+  "tabNotifications": "Notifications",
+  "tabAccount": "Account",
+  "accountTitle": "Account",
+  "accountLanguage": "Language",
+  "accountAppearance": "Appearance",
+  "accountSystem": "Automatic",
+  "accountLight": "Light",
+  "accountDark": "Dark",
+  "accountArabic": "العربية",
+  "accountEnglish": "English",
+  "accountChangeAcademy": "Change academy",
+  "accountSignOut": "Sign out",
+  "accountSignOutConfirm": "Sign out of {academy} on this phone?",
+  "@accountSignOutConfirm": {
+    "placeholders": {
+      "academy": {
+        "type": "String"
+      }
+    }
+  },
+  "accountLegal": "Policies",
+  "accountAbout": "About the app",
+  "legalTitle": "Policies",
+  "legalTerms": "Terms of Service",
+  "legalPrivacy": "Privacy Policy",
+  "legalRefund": "Refund Policy",
+  "legalCookie": "Cookie Policy",
+  "legalLoadFailed": "This page didn't load. Check your connection and try again.",
+  "aboutTitle": "About the app",
+  "aboutBody": "Atlas is the platform your academy uses for its courses. This app shows the courses you are enrolled in and free courses you can join. It sells nothing.",
+  "aboutCompany": "Company",
+  "aboutLegalName": "Legal name",
+  "aboutAddress": "Address",
+  "aboutAddressValue": "6th of October City, Giza, Egypt",
+  "aboutEmail": "Email",
+  "aboutPhone": "Phone",
+  "aboutVersion": "Version",
+  "updateTitle": "Update Atlas to continue",
+  "updateBody": "This version no longer works with your academy. The update keeps your sign-in and progress.",
+  "updateButton": "Update",
+  "maintenanceTitle": "Atlas is being updated",
+  "maintenanceBody": "We'll be back shortly. Your progress is saved.",
+  "signedInTitle": "You're signed in",
+  "signedInBody": "Welcome, {name}.",
+  "@signedInBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
+}

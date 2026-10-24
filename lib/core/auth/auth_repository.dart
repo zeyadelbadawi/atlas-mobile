@@ -39,6 +39,23 @@ class AuthenticatorCodeRequired extends SignInOutcome {
   final int expiresIn;
 }
 
+/// Sign in with Apple needs one more step: `link_required` (an existing
+/// account; ask for its password) or `create_account` (new; ask for phone and
+/// consents).
+class AppleStepRequired extends SignInOutcome {
+  const AppleStepRequired({
+    required this.step,
+    required this.pending,
+    required this.email,
+    this.name,
+  });
+  final String step;
+  final String pending;
+  final String email;
+  final String? name;
+  bool get linkRequired => step == 'link_required';
+}
+
 /// Sign-in, sign-up and code steps on the academy surface.
 ///
 /// Request bodies match the backend DTOs field for field: the backend
@@ -84,12 +101,16 @@ class AuthRepository {
   }
 
   /// `{ "account": "new" | "existing" }`. Does not sign in.
+  ///
+  /// [consents] is what the sign-up screen showed and the learner accepted
+  /// (B4): `{source, termsVersion, privacyVersion, ageConfirmed: true}`.
   Future<String> register({
     required String name,
     required String email,
     required String password,
     required String phoneNumber,
     required String phoneCountry,
+    Map<String, Object>? consents,
   }) async {
     final body = await client.post<Map<String, dynamic>>(
       'auth/register',
@@ -100,9 +121,107 @@ class AuthRepository {
         'academyId': academyId,
         'phoneNumber': phoneNumber,
         'phoneCountry': phoneCountry,
+        'consents': ?consents,
       },
     );
     return body['account'] as String? ?? 'new';
+  }
+
+  /// An existing Atlas account joins this academy with its own password.
+  /// Does not sign in; call [signIn] next.
+  Future<void> joinAcademy({required String email, required String password}) =>
+      client.post<dynamic>(
+        'auth/academy-join',
+        data: {'email': email, 'password': password, 'academyId': academyId},
+      );
+
+  Future<void> requestPasswordReset(String email) => client.post<dynamic>(
+    'auth/password-reset/request',
+    data: {'email': email},
+  );
+
+  /// `{resendAvailableAt, resendsRemaining}`.
+  Future<(DateTime, int)> resendEmailCode(String challengeId) async {
+    final body = await client.post<Map<String, dynamic>>(
+      'auth/otp/resend',
+      data: {'challengeId': challengeId},
+    );
+    return (
+      DateTime.parse(body['resendAvailableAt'] as String),
+      (body['resendsRemaining'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  Future<SignInOutcome> verifyAuthenticatorCode({
+    required String challengeId,
+    String? token,
+    String? recoveryCode,
+  }) async {
+    final body = await client.post<Map<String, dynamic>>(
+      'auth/2fa/verify',
+      data: {
+        'challengeId': challengeId,
+        'token': ?token,
+        'recoveryCode': ?recoveryCode,
+        'surface': 'academy',
+        'academyId': academyId,
+      },
+    );
+    return _outcome(body);
+  }
+
+  /// Sign in with Apple (B2). [rawNonce] is the value whose SHA-256 was
+  /// given to Apple.
+  Future<SignInOutcome> appleNative({
+    required String identityToken,
+    required String rawNonce,
+    String? authorizationCode,
+    String? givenName,
+    String? familyName,
+  }) async {
+    final body = await client.post<Map<String, dynamic>>(
+      'auth/apple/native',
+      data: {
+        'identityToken': identityToken,
+        'rawNonce': rawNonce,
+        'authorizationCode': ?authorizationCode,
+        'givenName': ?givenName,
+        'familyName': ?familyName,
+        'academyId': academyId,
+      },
+    );
+    return _outcome(body);
+  }
+
+  Future<SignInOutcome> appleLink({
+    required String pending,
+    required String password,
+  }) async {
+    final body = await client.post<Map<String, dynamic>>(
+      'auth/apple/link',
+      data: {'pending': pending, 'password': password},
+    );
+    return _outcome(body);
+  }
+
+  Future<SignInOutcome> appleCreateAccount({
+    required String pending,
+    required String name,
+    required String phoneNumber,
+    required String phoneCountry,
+    required Map<String, Object> consents,
+  }) async {
+    final body = await client.post<Map<String, dynamic>>(
+      'auth/apple/create-account',
+      data: {
+        'pending': pending,
+        'name': name,
+        'phoneNumber': phoneNumber,
+        'phoneCountry': phoneCountry,
+        'consents': consents,
+      },
+    );
+    return _outcome(body);
   }
 
   /// Restores a session from the stored cookie (app start).
@@ -116,6 +235,14 @@ class AuthRepository {
   Future<void> signOut() => client.signOut();
 
   SignInOutcome _outcome(Map<String, dynamic> body) {
+    if (body['appleStep'] is String) {
+      return AppleStepRequired(
+        step: body['appleStep'] as String,
+        pending: body['pending'] as String,
+        email: body['email'] as String? ?? '',
+        name: body['name'] as String?,
+      );
+    }
     if (body['emailOtpRequired'] == true) {
       return EmailCodeRequired(
         challengeId: body['challengeId'] as String,

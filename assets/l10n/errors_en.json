@@ -1,0 +1,511 @@
+{
+  "generic": {
+    "title": "Something went wrong",
+    "description": "The action could not be completed. Please try again."
+  },
+  "network": {
+    "title": "Connection problem",
+    "description": "Atlas could not reach the server. Check your connection and try again."
+  },
+  "timeout": {
+    "title": "The request took too long",
+    "description": "The server did not respond in time. Please try again."
+  },
+  "cancelled": {
+    "title": "Request cancelled",
+    "description": "The request was stopped before it completed."
+  },
+  "validation": {
+    "title": "Check the highlighted fields",
+    "description": "Some information needs to be corrected before saving.",
+    "nameInvalid": "Enter a name that includes at least one letter or number.",
+    "failed": "Some of the information isn't valid. Check it and try again.",
+    "field": "Check this field and try again.",
+    "organizationIdRequired": "Choose an organization and try again."
+  },
+  "unauthorized": {
+    "title": "Your session has expired",
+    "description": "Sign in again to continue where you left off."
+  },
+  "forbidden": {
+    "title": "You do not have access",
+    "description": "Your account does not have permission to view this page. If you need access, ask the owner of your academy or organization."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved."
+  },
+  "conflict": {
+    "title": "This item was changed elsewhere",
+    "description": "Reload the page to see the latest version, then try again."
+  },
+  "rateLimited": {
+    "title": "Too many attempts",
+    "description": "Please wait a moment before trying again."
+  },
+  "server": {
+    "title": "Server error",
+    "description": "Something failed on our side. We are looking into it — please try again shortly.",
+    "unexpected": "Something went wrong on our side. Please try again."
+  },
+  "unknown": {
+    "title": "Unexpected error",
+    "description": "An unexpected problem occurred. Please try again."
+  },
+  "boundary": {
+    "title": "This section could not be displayed",
+    "description": "The rest of Atlas is still working. Try reloading this section.",
+    "updatedTitle": "Atlas was updated",
+    "updatedDescription": "A newer version of Atlas is available. Reload to continue — you will stay on this page.",
+    "offlineTitle": "You're offline",
+    "offlineDescription": "This part of Atlas could not be loaded without a connection. It will load as soon as you are back online.",
+    "persistentDescription": "This section keeps failing. Reloading Atlas usually fixes it; your other work is not affected.",
+    "reload": "Reload"
+  },
+  "errorReference": "Reference: {{requestId}}",
+  "entitlement": {
+    "limitReached": "You've reached your plan's limit for this. Upgrade your plan to continue.",
+    "noSubscription": "This organization doesn't have an active subscription yet.",
+    "subscriptionInactive": "Your subscription isn't currently active. Renew or upgrade your plan to continue.",
+    "noPlanAvailable": "No plan is currently available. Please contact support.",
+    "planNotTrialEligible": "This plan isn't available as a trial. You can subscribe to it directly, or start a trial on a plan that offers one.",
+    "trialsDisabled": "Trials aren't available right now.",
+    "videoStorageMinutesExceeded": "Adding this video would take the academy past its plan's video minutes. Upgrade the plan, or remove videos that are no longer needed, to make room.",
+    "videoTierNotEntitled": "Your plan doesn't include Premium video. Upgrade to a Premium plan to use it, or keep new uploads on Normal."
+  },
+  "learning": {
+    "deviceLimit": "You are already learning on the maximum number of devices allowed. Open Devices in your learner dashboard, remove one you no longer use, then try again.",
+    "grantRateLimited": "You are opening content faster than we can check your access. Wait a moment, then try again.",
+    "accessEnded": "Your access to this course has ended, so its content can no longer be opened. Contact the academy if you think this is a mistake.",
+    "lessonScheduled": "This lesson has not opened yet. It becomes available on the date the academy scheduled for it.",
+    "sessionConflict": "You are already learning on another device. Continue here to end that session, or carry on where you left off.",
+    "contentUnavailable": "This content cannot be opened right now. Reload the page, and contact the academy if it keeps happening.",
+    "lessonNoContent": "This lesson has no content yet. The academy has not added anything to it.",
+    "lessonProcessing": "This lesson is not ready to play yet. Its video may still be processing — try again in a few minutes.",
+    "lessonLocked": "Finish the earlier lessons in this course first. This one unlocks when the item before it is complete.",
+    "watermarkUnavailable": "This video couldn’t be prepared securely right now. Please try again in a moment."
+  },
+  "watermark": {
+    "invalidCode": "That isn’t a valid watermark code. A code has 10 letters and digits, shown as XXXXX-XXXXX.",
+    "checksumMismatch": "One symbol of this code looks misread. Re-check the recording, especially 0/O, 1/I/L, 5/S and 8/B.",
+    "notFound": "No watermark was issued with this code. Check that it was read correctly — records are also removed once their retention period ends.",
+    "lookupRateLimited": "You’ve made many lookups in a short time. Wait a few minutes, then try again.",
+    "lookupUnavailable": "Watermark lookup is temporarily unavailable. Try again in a moment."
+  },
+  "provisioning": {
+    "stepFailed": "Something went wrong while setting up your Academy. Please try again or contact support if the problem continues.",
+    "subdomainUnavailable": "This address is already taken. Please choose another one.",
+    "subdomainRequestInProgress": "This address is already being set up.",
+    "brandDataUriRejected": "Branding can't include embedded files. Upload your logo instead.",
+    "brandUnknownField": "The branding you chose couldn't be read. Please choose it again.",
+    "logoAssetInvalid": "That logo couldn't be used. Please upload an image.",
+    "academyNotReady": "Your Academy isn't ready for this yet. Please wait a moment.",
+    "notRetryable": "There's nothing to retry for this setup.",
+    "invalidSubdomain": "Use 3–50 lowercase English letters, numbers and single hyphens, for example my-academy.",
+    "notCancellable": "This setup has already finished, so it can't be cancelled.",
+    "paymentNotFound": "The payment for this setup wasn't found.",
+    "subdomainReserved": "This address is reserved and can't be used. Please choose another one.",
+    "subscriptionRequired": "An active subscription or trial is needed to set up an academy."
+  },
+  "checkout": {
+    "annualPlanChangeViaSupport": "You can’t switch to a different plan from checkout while more than 30 days of your annual plan remain. Contact Atlas support to change plans, or renew your current plan.",
+    "expired": "This checkout has expired. Please start again.",
+    "notPayable": "This checkout can no longer be paid.",
+    "planNotFound": "The selected plan is no longer available.",
+    "pricingUnavailable": "Pricing isn't configured for this plan and billing cycle yet. Please choose a different plan or contact support.",
+    "addOnNotFound": "The selected add-on is no longer available.",
+    "planNoLongerExists": "The plan for this checkout no longer exists.",
+    "addOnNoLongerExists": "The add-on for this checkout no longer exists."
+  },
+  "auth": {
+    "emailNotAcceptable": "Please use a permanent email address you can receive mail at. Temporary or disposable addresses aren't accepted.",
+    "invalidVerificationToken": "This verification link is not valid. Open the full link from your most recent verification email.",
+    "verificationTokenExpired": "This verification link has expired or was replaced by a newer one. Request a new link to continue.",
+    "verificationTokenUsed": "This verification link has already been used. Your email address is verified.",
+    "verificationSignInRequired": "For your security, sign in to the account this verification link was sent to before confirming the email address. The link has not been used.",
+    "studentUseAcademySignIn": "You are a student. Please sign in through your academy’s website.",
+    "academyContextRequired": "We could not tell which academy this request is for. Open your academy’s website and try again.",
+    "academyHostMismatch": "This academy does not belong to this website address.",
+    "academyAccessBlocked": "Your access to this academy has been blocked. Please contact the academy.",
+    "notAMemberOfAcademy": "You are not a member of this academy yet.",
+    "inviteRequired": "This academy accepts new students by invitation only. Use the invitation link you were sent.",
+    "inviteInvalid": "This invitation link is invalid, already used or expired. Ask the academy for a new one.",
+    "managementSurfaceOnly": "This area is for academy staff only.",
+    "rateLimited": "Too many attempts. Please wait a few minutes and try again.",
+    "otpInvalid": "That code didn't work. Check the latest email and try again.",
+    "otpExpired": "That code has expired. Request a new one.",
+    "otpAttemptsExceeded": "Too many wrong codes. Please sign in again.",
+    "otpSuppressedAddress": "We can't deliver email to this address right now.",
+    "otpResendCooldown": "Please wait a moment before requesting another code.",
+    "otpResendExhausted": "No more codes can be sent for this sign-in. Please sign in again.",
+    "otpResendFailed": "We couldn't send a new code. Please try again.",
+    "organizationSignupDisabled": "Creating an organization during sign-up isn't available right now. Please try again.",
+    "signupFieldsNotAllowed": "An organization can't be created from an academy's sign-up page.",
+    "organizationNameRequired": "Enter your organization name to start a trial.",
+    "signupTrialsUnavailable": "Trials aren't available right now. You'll choose a plan after signing in.",
+    "signupPlanUnavailable": "That plan can no longer be trialled. Please choose another.",
+    "emailAlreadyRegistered": "An account with this email already exists. Try signing in instead.",
+    "alreadyLearnerHere": "You already have access to this academy. Sign in instead.",
+    "googleSignInExpired": "This Google sign-in has expired or was already used. Please start again.",
+    "googleEmailUnverified": "Google hasn't verified this email address, so it can't be used to sign in.",
+    "googleIdentityInUse": "This Google account is already connected to another Atlas account.",
+    "googleAlreadyLinked": "This Atlas account is already connected to a different Google account.",
+    "googleLinkFromSettings": "To use Google with this account, sign in with your password and connect Google in your account settings.",
+    "googleOriginRefused": "Google sign-in isn't available on this address.",
+    "setPasswordFirst": "Set a password before disconnecting Google — otherwise you couldn't sign in.",
+    "invalidCurrentPassword": "Your current password is incorrect.",
+    "invalidCredentials": "Invalid email or password.",
+    "crossOriginSession": "Your session couldn't be verified for this site. Please sign in again.",
+    "platformOwnerTwoFactorRequired": "Platform Owner tools need an authenticator app on your account. Set up two-step verification in your security settings, then try again.",
+    "phoneTaken": "This phone number is already used by another account. If it's your number, contact support to reclaim it, or enter a different number.",
+    "setPasswordBeforeTwoFactor": "Your account doesn't have a password yet, and two-factor authentication needs one. Sign out, choose \"Forgot password?\" on the sign-in page to set a password, then turn on two-factor authentication.",
+    "accountSuspended": "This account is suspended. Contact support if you think this is a mistake.",
+    "invalidResetToken": "This link is invalid or has expired. Request a new one.",
+    "invalidTwoFactorCode": "That code isn't right or has expired. Enter the current code from your authenticator app.",
+    "platformOwnerCannotSelfDelete": "A platform owner account can't be deleted from here.",
+    "trustedDeviceNotFound": "This device is no longer on your trusted list. Reload to see the current list.",
+    "twoFactorAlreadyEnabled": "Two-step verification is already on for your account.",
+    "twoFactorNotEnabled": "Two-step verification isn't on for your account.",
+    "twoFactorNotStarted": "Start setting up two-step verification again to get a new code."
+  },
+  "subscription": {
+    "required": "An active subscription is required to make this change."
+  },
+  "concurrency": {
+    "staleVersion": "This content was changed by someone else while you were editing."
+  },
+  "website": {
+    "versionRequired": "This page was open before the editor was updated. Reload the page and make your change again.",
+    "slugTaken": "Another page already uses that address.",
+    "slugReserved": "That address is reserved. Choose a different one.",
+    "invalidSlug": "Page addresses can use lowercase letters, numbers and hyphens only.",
+    "pageNotFound": "That page no longer exists.",
+    "corePageNotDeletable": "Built-in pages can't be deleted. You can hide one instead.",
+    "courseDetailsNotToggleable": "The Course Details page can't be hidden — course pages need it.",
+    "courseNotFound": "That course no longer exists.",
+    "contentArchived": "This item is archived, so it can't be published or archived again. Create a new entry to show this content.",
+    "duplicateSectionId": "Two sections on this page share an identifier. Reload and try again.",
+    "invalidSectionOrder": "The new section order doesn't match the sections on this page. Reload and try again.",
+    "faqEntryNotFound": "That FAQ entry no longer exists.",
+    "testimonialEntryNotFound": "That testimonial no longer exists.",
+    "insufficientRole": "You don't have permission to change this academy's website.",
+    "publishedSlugTaken": "Another live page still uses this page's address. Publish that page first, or publish the whole site.",
+    "pageChangedDuringPublish": "This page was saved again while it was being published. Reload it and publish again.",
+    "chromeLocked": "The header, menu and footer are locked. An owner or administrator has to unlock them first.",
+    "chromeLockForbidden": "Only the academy owner or an administrator can lock or unlock the header, menu and footer.",
+    "versionNoLongerValid": "This version can't be restored as it is: parts of it no longer pass today's checks."
+  },
+  "media": {
+    "unsupportedFileType": "That file type isn't supported. Upload a JPG, PNG, GIF, WebP or PDF.",
+    "invalidDataUrl": "That file couldn't be read. Try choosing it again.",
+    "fileTooLarge": "That file is too large to upload.",
+    "insufficientRole": "You don't have permission to upload files to this academy.",
+    "videoNotEnabled": "Uploading videos to Atlas is not available for this academy yet. Add the lesson as a YouTube link instead.",
+    "uploadNotFound": "This upload could not be found — it may have expired. Start the upload again.",
+    "uploadNotStarted": "The file did not finish uploading before it was submitted. Upload it again.",
+    "completionNotApplicable": "This upload cannot be finished from its current state. Start the upload again.",
+    "inUse": "This file is still in use. Replace or remove it where it's used, then try again.",
+    "videoNotAttachable": "Only a video uploaded to Atlas for lessons can be attached here.",
+    "videoNotReady": "This video has not finished uploading. Upload it again or choose another one.",
+    "uploadAlreadyComplete": "This video has already finished uploading. Remove it from the media library instead.",
+    "previewUnavailable": "This file can't be opened from the library. A hosted video plays only inside its lesson."
+  },
+  "tenancy": {
+    "notAMember": "You don't have access to this workspace.",
+    "organizationRequired": "Choose an organization to continue.",
+    "saasLevelCallerOnly": "This is available to organization accounts only, not to an academy's learners or staff accounts."
+  },
+  "liveSessions": {
+    "addOnNotUsable": "Live Sessions isn't available right now. Check the add-on on the Add-ons page.",
+    "notJoinable": "You can't join this session right now.",
+    "grantInvalid": "That join link has expired. Open the session again to rejoin.",
+    "recordingQuotaExceeded": "You've used every recorded session on your plan. Normal live sessions are still unlimited.",
+    "recordingNotEntitled": "Your plan doesn't include recorded sessions.",
+    "invalidSchedule": "That schedule isn't valid.",
+    "endBeforeStart": "The end time must be after the start time.",
+    "invalidDuration": "A session must be between {{minMinutes}} minutes and {{maxMinutes}} minutes long.",
+    "sectionNotInCourse": "That unit doesn't belong to this course.",
+    "hostNotInAcademy": "The host must be an active member of this academy.",
+    "alreadyEnded": "This session has already ended and can no longer be changed.",
+    "providerConnectionFailed": "We couldn't reach Zoom with this academy's authorization. Try reconnecting.",
+    "providerNotConnected": "This academy's Zoom account isn't connected.",
+    "notPublishable": "This session can't be published.",
+    "providerNotConfigured": "Live Sessions isn't configured on this platform yet. Contact Atlas support.",
+    "providerReconnectRequired": "This academy's Zoom connection needs to be renewed. Ask your organization owner to reconnect.",
+    "authorizationInvalid": "That Zoom authorization has expired or was already used. Press Connect Zoom to start again.",
+    "accountAlreadyConnected": "That Zoom account is already connected to another academy. Connect a different Zoom account, or disconnect it from the other academy first.",
+    "authorizationFailed": "We couldn't finish connecting to Zoom. Please try again."
+  },
+  "addOns": {
+    "comingSoon": "This add-on isn’t available yet, so it can’t be installed.",
+    "purchaseRequired": "This is a paid add-on. Buy it from the Add-ons page; it turns on once your payment is approved.",
+    "incompatiblePlan": "This add-on isn’t available on your current plan."
+  },
+  "academy": {
+    "insufficientRole": "Your role in this academy does not allow that. Ask an academy owner or manager if you need access.",
+    "statusLocked": "This academy's status can't be changed here. If it was suspended, contact Atlas support.",
+    "devicePolicyAboveMaximum": "That limit is higher than the platform allows. Choose a number no higher than the maximum shown.",
+    "nameTaken": "Another academy already uses this name. Please choose a different one.",
+    "learnerNameTaken": "A learner in this academy already has this name. Add a middle or family name so it is unique here.",
+    "learnerNameTakenExistingAccount": "This person's account name matches a learner already in this academy. Ask them to add a middle or family name in their profile, then add them again.",
+    "cannotRemoveOrganizationOwner": "The organization owner can't be removed from an academy.",
+    "registrationRejected": "This academy didn't approve your registration, so you can't buy or join its courses. You can apply again from the academy's sign-up page.",
+    "slugTaken": "This address is already used by another academy. Choose a different one.",
+    "slugReserved": "This address is reserved for Atlas. Choose a different one.",
+    "invalidSlug": "Use 3 to 50 lowercase letters, numbers and hyphens.",
+    "accountUnavailable": "This Atlas account can't be added right now.",
+    "hostUnresolved": "We couldn't tell which academy this is. Open the page from the academy's own website and try again.",
+    "managerAlreadyMember": "This person is already a member of this academy.",
+    "managerUserNotFound": "No Atlas account exists for that email address.",
+    "memberLookupRateLimited": "Too many checks in a short time. Wait a moment and try again.",
+    "nameRequiredForNewAccount": "Enter their full name: this email has no Atlas account yet, so a new one is created.",
+    "notFound": "This academy wasn't found. Check the address and try again.",
+    "studentAlreadyMember": "This person is already a student in this academy.",
+    "studentBlocked": "This student is blocked. Unblock them first.",
+    "studentNotPending": "This registration is no longer awaiting approval.",
+    "slugChangeTooSoon": "You can change the address only once every 60 days. You can change it again on {{date}}."
+  },
+  "course": {
+    "slugTaken": "That web address is already used by another course in this academy. Please choose a different one.",
+    "insufficientRole": "Your role in this academy does not allow you to manage its courses.",
+    "hasLearnerActivity": "Learners already have progress, attempts or submissions for this item, so it can't be deleted — that would erase their records. Unpublish it (set it to draft) to hide it from learners instead.",
+    "idempotencyKeyConflict": "This request was already used to create a different course. Reload the page and try again.",
+    "invalidIdempotencyKey": "This request couldn't be processed. Reload the page and try again.",
+    "notReady": "This course isn't ready to publish yet. Check the Review step for what is missing.",
+    "instructorAlreadyAssigned": "This instructor is already assigned to this course.",
+    "instructorNotAssigned": "This instructor isn't assigned to this course anymore. Reload to see the current list.",
+    "instructorNotEligible": "Only an active instructor of this academy can be assigned to the course.",
+    "invalidReorderSet": "The list changed while you were reordering it. Reload and try again.",
+    "invalidSlug": "Use lowercase English letters, numbers and single hyphens (up to 100), for example intro-to-algebra."
+  },
+  "support": {
+    "caseClosed": "This ticket is closed. Please open a new ticket if you still need help.",
+    "invalidStatus": "Choose one of the listed statuses."
+  },
+  "customerRequest": {
+    "invalidDetails": "Some of the request details aren't valid for this type of request. Check them and try again.",
+    "closed": "This request is closed, so it can't be changed or replied to.",
+    "duplicateClientId": "This request was already sent from another academy. Close the form and start a new request.",
+    "invalidTransition": "The request can't move to that status from where it is now. Refresh to see its current status.",
+    "nothingToUpdate": "Choose a new status or assignee first.",
+    "invalidAssignee": "That person can't be assigned. Choose a Platform Owner.",
+    "duplicateRoutingType": "Each request type can have only one inbox."
+  },
+  "mutation": {
+    "failed": "That action could not be completed. Please try again."
+  },
+  "domain": {
+    "insufficientRole": "You don't have permission to change this academy's domain.",
+    "hostnameTaken": "That domain is already connected to another academy.",
+    "invalidHostname": "Enter a valid domain, like www.example.com.",
+    "noCustomDomain": "There is no custom domain to check.",
+    "unknownProvider": "Unknown infrastructure provider.",
+    "providerUnavailable": "Atlas's infrastructure provider isn't available right now.",
+    "baseDomainManagedByEnvironment": "The platform domain is set by the deployment and can't be changed here.",
+    "hostnameReserved": "This domain can't be connected. Use a domain you own that isn't part of Atlas's own addresses."
+  },
+  "quiz": {
+    "attemptExpired": "Time ran out. Your saved answers were submitted automatically.",
+    "attemptAlreadySubmitted": "This attempt has already been submitted. Open the results to see how it went.",
+    "attemptInvalidated": "A reviewer voided this attempt. Start a new one.",
+    "maxAttemptsReached": "You have used all the attempts allowed for this quiz.",
+    "incompleteAnswers": "Answer every question before submitting.",
+    "windowClosed": "This quiz has closed and no longer accepts attempts.",
+    "notYetAvailable": "This quiz has not opened yet. Check the opening date on the course page.",
+    "pastDue": "The due date for this quiz has passed and late attempts are not accepted.",
+    "invalidOption": "One of your answers does not match this quiz's questions. Reload the page and try again.",
+    "attemptNotSubmitted": "This attempt has not been submitted yet, so it cannot be graded.",
+    "notManuallyGradable": "This attempt has no questions that need manual grading.",
+    "invalidTimeMultiplier": "The time multiplier must be between 1 and 4.",
+    "settingUnavailable": "This setting isn't available for your academy yet, so it can't be saved. Turn it off to save the quiz.",
+    "trueFalseRequiresTwoOptions": "A true/false question needs exactly two options with one correct answer.",
+    "textQuestionHasOptions": "A short-answer or essay question cannot have options.",
+    "singleChoiceRequiresOneCorrectOption": "A single-choice question needs exactly one correct option.",
+    "multipleChoiceRequiresOneCorrectOption": "A multiple-choice question needs at least one correct option.",
+    "choiceRequiresTwoOptions": "A choice question needs at least two options.",
+    "shortAnswerRequiresAcceptedAnswer": "A short-answer question needs at least one accepted answer.",
+    "pointsExceedMaximum": "Points per question cannot exceed 100.",
+    "locked": "This quiz is locked until you finish the item before it in the course.",
+    "windowOrder": "The closing time must be after the opening time.",
+    "dueAfterWindow": "The due date can't be after the closing time.",
+    "questionsPerAttemptExceedsCount": "Questions per attempt can't be more than the {{questionCount}} questions in the quiz.",
+    "sectionNotInCourse": "That unit belongs to a different course.",
+    "answerTooLong": "One of your answers is too long. Shorten it and try again."
+  },
+  "assignment": {
+    "alreadySubmitted": "This assignment has already been submitted and does not allow resubmission.",
+    "responseRequired": "Write a response or attach a file before submitting.",
+    "pastDue": "The due date has passed and this assignment does not accept late submissions.",
+    "attachmentNotOwned": "That attachment is not one you uploaded for this assignment. Upload the file again.",
+    "locked": "This assignment is locked until you finish the item before it in the course.",
+    "submissionChanged": "Your submission changed since you started this one (for example, from another device), so it wasn't sent again. Review the current submission.",
+    "draftConflict": "This draft was changed in another tab or on another device.",
+    "idempotencyKeyReused": "This submission was already sent with different content. Refresh and submit again."
+  },
+  "certificate": {
+    "insufficientRole": "Only the academy's owner or a manager can issue, revoke or regenerate certificates.",
+    "templateNotFound": "The certificate template could not be found.",
+    "revoked": "This certificate has been revoked and cannot be downloaded.",
+    "notReady": "The certificate PDF is still being prepared. Try again in a moment.",
+    "notIssued": "No certificate has been issued for this enrollment.",
+    "notEligible": "This enrollment has not met the course's completion rule, so a certificate cannot be issued yet.",
+    "featureDisabled": "Certificates are not enabled for this academy yet.",
+    "invalidColor": "That colour isn't a valid hex value (for example #1F4E5F).",
+    "backgroundTooDark": "The certificate background must stay light so it prints cleanly. Choose a paler colour.",
+    "textContrastTooLow": "The text colour doesn't contrast enough with the background to stay readable. Pick a darker text or lighter background.",
+    "primaryContrastTooLow": "The primary colour doesn't contrast enough with the background. Choose a stronger primary or a lighter background."
+  },
+  "progress": {
+    "lessonLocked": "This lesson is locked. Finish the item before it in the course to unlock it.",
+    "watchRequirementNotMet": "Watch more of this lesson before marking it complete."
+  },
+  "courseOrder": {
+    "notAcceptingEnrollments": "This academy isn’t accepting new enrollments right now. Please contact the academy.",
+    "refundNotEligible": "This order can't be refunded. Only paid orders that haven't already been refunded are eligible.",
+    "refundWindowElapsed": "The refund period for this order has ended. Refunds are available within 30 days of purchase.",
+    "paymentUnderReview": "A payment for this order is already being reviewed by the academy. You’ll get an email when it’s reviewed.",
+    "refundContactAcademy": "This order was paid to the academy directly. Contact the academy about a refund.",
+    "alreadyEnrolled": "You're already enrolled in this course.",
+    "courseNotPaid": "This course is free, so there is nothing to pay. Open the course page to enroll.",
+    "pricingUnavailable": "This course has no price set yet, so it can't be bought right now. Please contact the academy.",
+    "paymentSetupIncomplete": "This academy isn't taking payments yet. Please contact the academy.",
+    "expired": "This order has expired. Start a new order to buy the course.",
+    "notPayable": "This order can't be paid anymore: it's already paid, cancelled or refunded. Reload to see its current status.",
+    "commissionNotConfigured": "This payment option isn't available for this academy yet. Choose another payment method or contact the academy.",
+    "gatewayNotConfigured": "This payment option isn't available for this academy yet. Choose another payment method or contact the academy.",
+    "alreadyRefunded": "A refund was already recorded for this order."
+  },
+  "payment": {
+    "notPendingReview": "This payment is no longer waiting for review. Reload to see its current status.",
+    "cannotReviewOwnOrganization": "This payment belongs to an organization you're a member of. You can't review your own organization's payments.",
+    "rejectedByReviewer": "Atlas reviewed this payment and couldn't accept it.",
+    "rejectedByAcademy": "The academy reviewed this payment and couldn't accept it.",
+    "alreadyUnderReview": "A payment for this order is already awaiting review. Open it to follow its status — you don't need to pay again.",
+    "collectionModeNotAvailable": "Atlas Payments and connected payment gateways aren't available yet. Learners pay you directly through your academy's own payment methods.",
+    "unsupportedProofFileType": "Upload the payment proof as a PNG, JPEG or PDF file.",
+    "methodNotFound": "This payment method isn't available. Choose another one.",
+    "notEditable": "This payment is already closed, so it can't be changed. Reload to see its current status.",
+    "proofNotSupported": "This payment method doesn't take a payment proof.",
+    "atlasProviderNotConfigured": "No payment provider is set up yet. Save the provider settings first.",
+    "atlasProviderNotVerified": "Test the provider connection successfully before turning it on.",
+    "cancellationNotSupported": "This payment method doesn't support cancelling a payment.",
+    "gatewayNotConfigured": "No payment gateway is set up for this organization yet.",
+    "gatewayNotConnected": "Online payment isn't available right now. Choose another payment method.",
+    "gatewayNotVerified": "Verify the gateway connection before turning it on.",
+    "providerNotAvailable": "This payment provider isn't available.",
+    "webhookFailed": "The payment provider reported that this payment failed."
+  },
+  "paymentMethod": {
+    "incompleteInstructions": "Enter the bank name, account holder name, account number, transfer instructions and reference instructions before saving or enabling this account.",
+    "notBankTransfer": "Bank details can only be set on a bank-transfer method.",
+    "placeholderDetails": "This method still has placeholder details, so it cannot be enabled or paid with. Replace them with the real details first.",
+    "walletProviderNameRequired": "Enter the wallet provider’s name.",
+    "instructionsTypeMismatch": "These details don’t match this payment method’s type. Reload the page and try again."
+  },
+  "academyPayout": {
+    "invalidPeriod": "The payout period is not valid. The end date must be after the start date.",
+    "notPending": "This payout failed and can't be marked as paid."
+  },
+  "onboarding": {
+    "requiredIncomplete": "Finish the required steps before completing setup, or choose Finish for now."
+  },
+  "account": {
+    "deletionCodeInvalid": "That code isn't right. Check the email and try again.",
+    "deletionCodeAttemptsExceeded": "Too many wrong codes. Request a new code to try again.",
+    "deletionCodeExpired": "This code has expired or was already used. Request a new code.",
+    "deletionCodeCooldown": "A code was just sent. Wait a moment before requesting another.",
+    "deletionEmailUnverified": "Verify your email address first — the confirmation code is sent there."
+  },
+  "organization": {
+    "nameUnavailable": "This organization name isn't available. Please try another."
+  },
+  "profile": {
+    "nameTakenInAcademy": "Another learner already uses this name in {{academies}}. Add a middle or family name so your name stays unique there."
+  },
+  "messaging": {
+    "notAllowed": "Only the owner of this academy can send messages.",
+    "academyInactive": "This academy is suspended or archived, so messages can't be sent. Your message history and allowance are still shown.",
+    "audienceChanged": "The number of recipients changed since your preview, so nothing was sent. Preview again, then send.",
+    "audienceInvalid": "Choose who should receive this message.",
+    "bodyEmpty": "Write a message before sending.",
+    "bodyTooLong": "The message is too long. Shorten it and try again.",
+    "confirmationRequired": "Confirm the large send before it goes out.",
+    "idempotencyKeyReused": "This send was already submitted. Refresh the page to see it in your history.",
+    "noChannel": "Choose email, in-app notification, or both.",
+    "noRecipients": "No one matches these recipients yet, so there is nothing to send.",
+    "quotaExceeded": "This message needs more emails than your academy has left this month.",
+    "rateLimited": "You're sending too quickly. Wait a moment, then try again.",
+    "subjectInvalid": "Enter a subject of up to 150 characters.",
+    "unknownCourse": "One of the selected courses isn't part of this academy.",
+    "unknownOrganization": "That organization can't be found.",
+    "unsubscribeInvalid": "This unsubscribe link is invalid or has expired."
+  },
+  "platform": {
+    "subscriptionAdjustment": {
+      "notExtendable": "Only a trial, an active subscription or one in its grace period can be extended. Change the plan instead.",
+      "planArchived": "That plan is archived. Choose a plan that is still offered or hidden, not archived.",
+      "noPaidPeriod": "There is no running paid period to wait for. Apply the plan change now instead.",
+      "daysRange": "Enter a whole number of days from 1 to 365.",
+      "reasonTooShort": "Write a reason of at least 10 characters. It is kept in the audit log."
+    }
+  },
+  "lessonContent": {
+    "bodyRequired": "Write the lesson text before saving.",
+    "unexpectedBody": "Only a text lesson can have lesson text.",
+    "assetNotProtected": "Choose a file uploaded as protected lesson content.",
+    "assetNotVideo": "The selected file isn't a video. Choose a video file.",
+    "externalUrlRequired": "Enter the link for this lesson.",
+    "mediaAssetRequired": "Choose a file for this lesson.",
+    "unexpectedMediaAsset": "A link lesson can't also have a file. Remove the file or change the lesson type."
+  },
+  "platformUsers": {
+    "cannotSuspend": "This account cannot be suspended or reinstated in its current state.",
+    "cannotSuspendSelf": "You cannot suspend your own account.",
+    "cannotSuspendPlatformOwner": "A Platform Owner account cannot be suspended here."
+  },
+  "privacyRequest": {
+    "invalidTransition": "This request has already moved on. Reload to see its current state.",
+    "noteRequired": "Give the person a reason when declining.",
+    "accountGone": "The account behind this request no longer exists."
+  },
+  "analytics": {
+    "invalidDateRange": "Choose a valid date range."
+  },
+  "blog": {
+    "ambiguousAcademy": "Choose which academy this post belongs to.",
+    "invalidScheduledDate": "Choose a publishing date and time in the future.",
+    "slugTaken": "Another post in this academy already uses this address. Choose a different one."
+  },
+  "enrollment": {
+    "academyMembershipRequired": "You need active access to this academy first. If your registration is waiting for approval or you were blocked, contact the academy.",
+    "alreadyEnrolled": "This student is already enrolled in that course.",
+    "expiryInPast": "The expiry date must be in the future.",
+    "paidCourseRequiresPayment": "This is a paid course. Buy it from the course page to get access."
+  },
+  "forum": {
+    "threadLocked": "This discussion is locked, so new replies can't be added."
+  },
+  "observability": {
+    "sourceUnavailable": "This monitoring data can't be loaded right now. Try again in a few minutes."
+  },
+  "plan": {
+    "alreadyArchived": "This plan is already archived.",
+    "giftedDaysRange": "Gifted days must be 0, or a whole number from 5 to 15.",
+    "keyTaken": "Another plan already uses this key. Choose a different one."
+  },
+  "platformSettings": {
+    "invalidSessionTimeout": "Choose one of the session timeout options offered."
+  },
+  "search": {
+    "emptyQuery": "Type something to search for.",
+    "queryTooLong": "Your search is too long. Use up to 200 characters.",
+    "queryTooShort": "Type at least 2 characters to search."
+  },
+  "submission": {
+    "notSubmitted": "This submission hasn't been handed in yet, so it can't be graded."
+  },
+  "tenant": {
+    "noSubscription": "Your organization doesn't have a subscription yet. Choose a plan to start.",
+    "usageNotAvailable": "Usage isn't calculated yet. Check again in a little while."
+  }
+}
