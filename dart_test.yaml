@@ -3,3 +3,6 @@ tags:
     # Needs the local backend stack; see test/integration/*.dart headers.
   production:
     # Runs only on request against production, with an owner-provided account.
+  golden:
+    # Pixel goldens of the design system (test/design/goldens). Regenerate
+    # with: flutter test --tags golden --update-goldens

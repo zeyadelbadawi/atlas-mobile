@@ -39,6 +39,10 @@ dependencies:
   dio_cookie_manager: ^3.5.0
   flutter_secure_storage: ^11.2.0
   webview_flutter: ^4.14.1
+  lucide_icons_flutter: ^4.0.1
+  intl: any
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +66,11 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  fonts:
+    - family: ReadexPro
+      fonts:
+        - asset: assets/fonts/ReadexPro-Variable.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
