@@ -8,8 +8,8 @@ import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../design/design.dart';
 
-/// Where a signed-in learner lands until the learning screens arrive
-/// (phase 3): who is signed in, language, appearance, policies, sign out.
+/// The Account tab: who is signed in, devices, language, appearance,
+/// policies, change academy, sign out.
 class AccountScreen extends ConsumerWidget {
   const AccountScreen({super.key});
 
@@ -58,6 +58,7 @@ class AccountScreen extends ConsumerWidget {
     final email = session.user?['email'] as String? ?? '';
     return Scaffold(
       body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 120),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

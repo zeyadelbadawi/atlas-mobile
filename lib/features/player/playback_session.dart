@@ -18,7 +18,11 @@ class PlaybackSession {
     required this.leaseId,
     required this.heartbeatInterval,
     this.onLeaseLost,
+    this.onHeartbeat,
   });
+
+  /// Each heartbeat's answer (`completionEligible`, `maxWatchedRatio`, …).
+  void Function(Map<String, dynamic>)? onHeartbeat;
 
   /// Builds a session from the `playbackLease` object of a lesson grant.
   /// Returns null when the grant came without a lease (lease store down).
@@ -82,6 +86,7 @@ class PlaybackSession {
           'leaseId': leaseId,
         },
       );
+      onHeartbeat?.call(body);
       if (body['leaseHeld'] == false) {
         pause();
         onLeaseLost?.call(

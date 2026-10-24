@@ -751,6 +751,426 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome, {name}.'**
   String signedInBody(String name);
+
+  /// No description provided for @homeContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get homeContinue;
+
+  /// No description provided for @homeResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume lesson'**
+  String get homeResume;
+
+  /// No description provided for @homeStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the course'**
+  String get homeStart;
+
+  /// No description provided for @homeDueSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Due soon'**
+  String get homeDueSoon;
+
+  /// No description provided for @homeAnnouncements.
+  ///
+  /// In en, this message translates to:
+  /// **'From your academy'**
+  String get homeAnnouncements;
+
+  /// No description provided for @homeMyCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'My courses'**
+  String get homeMyCourses;
+
+  /// No description provided for @homeSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get homeSeeAll;
+
+  /// No description provided for @homeEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No courses yet'**
+  String get homeEmptyTitle;
+
+  /// No description provided for @homeEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses you join at {academy} appear here.'**
+  String homeEmptyBody(String academy);
+
+  /// No description provided for @homeAllDone.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re up to date. Pick a course to review.'**
+  String get homeAllDone;
+
+  /// No description provided for @unitLesson.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson'**
+  String get unitLesson;
+
+  /// No description provided for @unitQuiz.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiz'**
+  String get unitQuiz;
+
+  /// No description provided for @unitAssignment.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment'**
+  String get unitAssignment;
+
+  /// No description provided for @unitLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Live session'**
+  String get unitLive;
+
+  /// No description provided for @countOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total}'**
+  String countOf(String done, String total);
+
+  /// No description provided for @lessonsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} lessons'**
+  String lessonsCount(String count);
+
+  /// No description provided for @percentDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% done'**
+  String percentDone(String percent);
+
+  /// No description provided for @minutesLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min left'**
+  String minutesLeft(String minutes);
+
+  /// No description provided for @minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String minutes(String minutes);
+
+  /// No description provided for @dueAssignment.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignment due {time}'**
+  String dueAssignment(String time);
+
+  /// No description provided for @dueLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Live session {time}'**
+  String dueLive(String time);
+
+  /// No description provided for @overdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get overdue;
+
+  /// No description provided for @coursesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My courses'**
+  String get coursesTitle;
+
+  /// No description provided for @coursesAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get coursesAll;
+
+  /// No description provided for @coursesInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get coursesInProgress;
+
+  /// No description provided for @coursesCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get coursesCompleted;
+
+  /// No description provided for @coursesNotStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Not started'**
+  String get coursesNotStarted;
+
+  /// No description provided for @coursesNoneInFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here.'**
+  String get coursesNoneInFilter;
+
+  /// No description provided for @courseUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit {number}'**
+  String courseUnit(String number);
+
+  /// No description provided for @courseContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get courseContinue;
+
+  /// No description provided for @courseReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Review from the start'**
+  String get courseReview;
+
+  /// No description provided for @courseCompletedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Course complete'**
+  String get courseCompletedTitle;
+
+  /// No description provided for @courseCompletedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You finished every required lesson.'**
+  String get courseCompletedBody;
+
+  /// No description provided for @courseCertificatePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Your certificate is being prepared.'**
+  String get courseCertificatePending;
+
+  /// No description provided for @courseAccessEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Your access to this course has ended.'**
+  String get courseAccessEnded;
+
+  /// No description provided for @lockPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the previous item first'**
+  String get lockPrevious;
+
+  /// No description provided for @lockScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Opens {date}'**
+  String lockScheduled(String date);
+
+  /// No description provided for @lockNotStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Not open yet'**
+  String get lockNotStarted;
+
+  /// No description provided for @lockAccessEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Access ended'**
+  String get lockAccessEnded;
+
+  /// No description provided for @lockQuizNotPassed.
+  ///
+  /// In en, this message translates to:
+  /// **'Pass the quiz before this'**
+  String get lockQuizNotPassed;
+
+  /// No description provided for @itemOnWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Open on the academy website'**
+  String get itemOnWebsite;
+
+  /// No description provided for @lessonMarkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as done'**
+  String get lessonMarkDone;
+
+  /// No description provided for @lessonDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get lessonDone;
+
+  /// No description provided for @lessonNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {title}'**
+  String lessonNext(String title);
+
+  /// No description provided for @lessonBackToCourse.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the course'**
+  String get lessonBackToCourse;
+
+  /// No description provided for @lessonWatchFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch {percent}% of the video to mark it done.'**
+  String lessonWatchFirst(String percent);
+
+  /// No description provided for @lessonResources.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson files'**
+  String get lessonResources;
+
+  /// No description provided for @lessonOpenFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Open file'**
+  String get lessonOpenFile;
+
+  /// No description provided for @lessonOpenLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Open link'**
+  String get lessonOpenLink;
+
+  /// No description provided for @lessonVideoOnWeb.
+  ///
+  /// In en, this message translates to:
+  /// **'This video plays on the academy website for now.'**
+  String get lessonVideoOnWeb;
+
+  /// No description provided for @lessonOpenWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Open website'**
+  String get lessonOpenWebsite;
+
+  /// No description provided for @playerRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop screen recording to keep watching.'**
+  String get playerRecording;
+
+  /// No description provided for @playerFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'This video couldn\'t play. Check your connection and try again.'**
+  String get playerFailed;
+
+  /// No description provided for @takeoverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Watching on another device'**
+  String get takeoverTitle;
+
+  /// No description provided for @takeoverBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{device} is using your lessons now. Continue here instead? The other device will stop.'**
+  String takeoverBody(String device);
+
+  /// No description provided for @takeoverUnknownDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Another device'**
+  String get takeoverUnknownDevice;
+
+  /// No description provided for @takeoverConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue here'**
+  String get takeoverConfirm;
+
+  /// No description provided for @deviceLimitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Device limit reached'**
+  String get deviceLimitTitle;
+
+  /// No description provided for @deviceLimitBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove a device you no longer use, then open the lesson again.'**
+  String get deviceLimitBody;
+
+  /// No description provided for @deviceLimitManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage devices'**
+  String get deviceLimitManage;
+
+  /// No description provided for @devicesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My devices'**
+  String get devicesTitle;
+
+  /// No description provided for @devicesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can learn on up to {count} devices.'**
+  String devicesBody(String count);
+
+  /// No description provided for @devicesThis.
+  ///
+  /// In en, this message translates to:
+  /// **'This device'**
+  String get devicesThis;
+
+  /// No description provided for @devicesLastSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Last used {time}'**
+  String devicesLastSeen(String time);
+
+  /// No description provided for @devicesRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get devicesRemove;
+
+  /// No description provided for @devicesRemoveConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove {device}? It will need a free slot to play lessons again.'**
+  String devicesRemoveConfirm(String device);
+
+  /// No description provided for @accountDevices.
+  ///
+  /// In en, this message translates to:
+  /// **'My devices'**
+  String get accountDevices;
+
+  /// No description provided for @loadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'This didn\'t load. Check your connection and try again.'**
+  String get loadFailed;
+
+  /// No description provided for @homeGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi, {name}'**
+  String homeGreeting(String name);
+
+  /// No description provided for @coursesCover.
+  ///
+  /// In en, this message translates to:
+  /// **'Course'**
+  String get coursesCover;
 }
 
 class _AppLocalizationsDelegate

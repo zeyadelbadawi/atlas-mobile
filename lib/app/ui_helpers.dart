@@ -9,6 +9,16 @@ extension L10nContext on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this);
   String get languageCode => Localizations.localeOf(this).languageCode;
 
+  /// List separator: the Arabic comma in Arabic (a middle dot reads as the
+  /// digit zero there), a middle dot in English.
+  String get sep => languageCode == 'ar' ? '، ' : ' · ';
+
+  /// The backend labels devices in English ("Atlas app on iOS", "Chrome on
+  /// Windows"); in Arabic only the connecting words are translated.
+  String deviceLabel(String label) => languageCode != 'ar'
+      ? label
+      : label.replaceAll('Atlas app', 'تطبيق أطلس').replaceAll(' on ', ' على ');
+
   /// Latin digits → Arabic-Indic digits in an Arabic UI.
   String digits(String s) {
     if (languageCode != 'ar') return s;

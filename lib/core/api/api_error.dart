@@ -11,6 +11,7 @@ class AtlasApiException implements Exception {
     this.requestId,
     this.retryable = false,
     this.fields = const {},
+    this.details = const {},
   });
 
   /// Parses a Dio failure. Never throws.
@@ -26,6 +27,9 @@ class AtlasApiException implements Exception {
         requestId: e['requestId'] as String?,
         retryable: e['retryable'] == true,
         fields: _fields(e['fields']),
+        details: e['details'] is Map
+            ? Map<String, Object?>.from(e['details'] as Map)
+            : const {},
       );
     }
     switch (error.type) {
@@ -63,6 +67,10 @@ class AtlasApiException implements Exception {
 
   /// Field name → message key, for form errors.
   final Map<String, String> fields;
+
+  /// Extra facts some errors carry, e.g. `sessionConflict` →
+  /// `{deviceLabel, since}`.
+  final Map<String, Object?> details;
 
   static Map<String, String> _fields(Object? raw) {
     if (raw is! Map) return const {};

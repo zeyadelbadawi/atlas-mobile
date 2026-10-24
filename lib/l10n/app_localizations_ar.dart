@@ -357,4 +357,251 @@ class AppLocalizationsAr extends AppLocalizations {
   String signedInBody(String name) {
     return 'أهلًا بك يا $name.';
   }
+
+  @override
+  String get homeContinue => 'استكمل';
+
+  @override
+  String get homeResume => 'استكمل الدرس';
+
+  @override
+  String get homeStart => 'ابدأ الكورس';
+
+  @override
+  String get homeDueSoon => 'المطلوب قريبًا';
+
+  @override
+  String get homeAnnouncements => 'من أكاديميتك';
+
+  @override
+  String get homeMyCourses => 'كورساتي';
+
+  @override
+  String get homeSeeAll => 'عرض الكل';
+
+  @override
+  String get homeEmptyTitle => 'لا توجد كورسات بعد';
+
+  @override
+  String homeEmptyBody(String academy) {
+    return 'تظهر هنا الكورسات التي تنضم إليها في $academy.';
+  }
+
+  @override
+  String get homeAllDone => 'أنهيت كل ما هو مطلوب. اختر كورسًا للمراجعة.';
+
+  @override
+  String get unitLesson => 'الدرس';
+
+  @override
+  String get unitQuiz => 'الكويز';
+
+  @override
+  String get unitAssignment => 'الواجب';
+
+  @override
+  String get unitLive => 'جلسة مباشرة';
+
+  @override
+  String countOf(String done, String total) {
+    return '$done من $total';
+  }
+
+  @override
+  String lessonsCount(String count) {
+    return '$count درس';
+  }
+
+  @override
+  String percentDone(String percent) {
+    return 'تم $percent٪';
+  }
+
+  @override
+  String minutesLeft(String minutes) {
+    return 'باقي $minutes دقيقة';
+  }
+
+  @override
+  String minutes(String minutes) {
+    return '$minutes دقيقة';
+  }
+
+  @override
+  String dueAssignment(String time) {
+    return 'تسليم الواجب $time';
+  }
+
+  @override
+  String dueLive(String time) {
+    return 'جلسة مباشرة $time';
+  }
+
+  @override
+  String get overdue => 'متأخر';
+
+  @override
+  String get coursesTitle => 'كورساتي';
+
+  @override
+  String get coursesAll => 'الكل';
+
+  @override
+  String get coursesInProgress => 'جارية';
+
+  @override
+  String get coursesCompleted => 'مكتملة';
+
+  @override
+  String get coursesNotStarted => 'لم يبدأ';
+
+  @override
+  String get coursesNoneInFilter => 'لا يوجد شيء هنا.';
+
+  @override
+  String courseUnit(String number) {
+    return 'الوحدة $number';
+  }
+
+  @override
+  String get courseContinue => 'استكمل';
+
+  @override
+  String get courseReview => 'راجع من البداية';
+
+  @override
+  String get courseCompletedTitle => 'أكملت الكورس';
+
+  @override
+  String get courseCompletedBody => 'أنهيت كل الدروس المطلوبة.';
+
+  @override
+  String get courseCertificatePending => 'يتم تجهيز شهادتك.';
+
+  @override
+  String get courseAccessEnded => 'انتهى وصولك إلى هذا الكورس.';
+
+  @override
+  String get lockPrevious => 'أكمل العنصر السابق أولًا';
+
+  @override
+  String lockScheduled(String date) {
+    return 'يُفتح $date';
+  }
+
+  @override
+  String get lockNotStarted => 'لم يُفتح بعد';
+
+  @override
+  String get lockAccessEnded => 'انتهى الوصول';
+
+  @override
+  String get lockQuizNotPassed => 'اجتز الكويز قبل هذا';
+
+  @override
+  String get itemOnWebsite => 'افتحه على موقع الأكاديمية';
+
+  @override
+  String get lessonMarkDone => 'أكملت الدرس';
+
+  @override
+  String get lessonDone => 'تم';
+
+  @override
+  String lessonNext(String title) {
+    return 'التالي: $title';
+  }
+
+  @override
+  String get lessonBackToCourse => 'العودة إلى الكورس';
+
+  @override
+  String lessonWatchFirst(String percent) {
+    return 'شاهد $percent٪ من الفيديو لتتمكن من إكماله.';
+  }
+
+  @override
+  String get lessonResources => 'ملفات الدرس';
+
+  @override
+  String get lessonOpenFile => 'فتح الملف';
+
+  @override
+  String get lessonOpenLink => 'فتح الرابط';
+
+  @override
+  String get lessonVideoOnWeb =>
+      'يُعرض هذا الفيديو على موقع الأكاديمية حاليًا.';
+
+  @override
+  String get lessonOpenWebsite => 'فتح الموقع';
+
+  @override
+  String get playerRecording => 'أوقف تسجيل الشاشة لمتابعة المشاهدة.';
+
+  @override
+  String get playerFailed =>
+      'تعذّر تشغيل الفيديو. تحقّق من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String get takeoverTitle => 'المشاهدة على جهاز آخر';
+
+  @override
+  String takeoverBody(String device) {
+    return 'يستخدم $device دروسك الآن. هل تريد المتابعة هنا بدلًا منه؟ سيتوقف الجهاز الآخر.';
+  }
+
+  @override
+  String get takeoverUnknownDevice => 'جهاز آخر';
+
+  @override
+  String get takeoverConfirm => 'المتابعة هنا';
+
+  @override
+  String get deviceLimitTitle => 'وصلت إلى الحد الأقصى للأجهزة';
+
+  @override
+  String get deviceLimitBody =>
+      'أزل جهازًا لم تعد تستخدمه، ثم افتح الدرس مرة أخرى.';
+
+  @override
+  String get deviceLimitManage => 'إدارة الأجهزة';
+
+  @override
+  String get devicesTitle => 'أجهزتي';
+
+  @override
+  String devicesBody(String count) {
+    return 'يمكنك التعلّم على $count أجهزة كحد أقصى.';
+  }
+
+  @override
+  String get devicesThis => 'هذا الجهاز';
+
+  @override
+  String devicesLastSeen(String time) {
+    return 'آخر استخدام $time';
+  }
+
+  @override
+  String get devicesRemove => 'إزالة';
+
+  @override
+  String devicesRemoveConfirm(String device) {
+    return 'إزالة $device؟ سيحتاج إلى مكان متاح لتشغيل الدروس مرة أخرى.';
+  }
+
+  @override
+  String get accountDevices => 'أجهزتي';
+
+  @override
+  String get loadFailed => 'لم يتم التحميل. تحقّق من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String homeGreeting(String name) {
+    return 'أهلًا، $name';
+  }
+
+  @override
+  String get coursesCover => 'كورس';
 }

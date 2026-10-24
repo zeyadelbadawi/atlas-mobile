@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:atlas_mobile/app/atlas_app.dart';
+import 'package:atlas_mobile/app/learning_providers.dart';
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/app/router.dart';
 import 'package:atlas_mobile/core/academy/academy.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../design/golden_harness.dart';
+import 'fake_learning.dart';
 
 const ziadd = Academy(
   id: '7857eec7-d94f-4c83-b65f-99652924ae1e',
@@ -93,6 +95,7 @@ Future<ProviderContainer> _pump(
         (ref) async => const MobileConfig(signInWithApple: true),
       ),
       sessionProvider.overrideWith(session),
+      learningRepositoryProvider.overrideWithValue(FakeLearningRepository()),
     ],
   );
   addTearDown(container.dispose);
@@ -101,7 +104,9 @@ Future<ProviderContainer> _pump(
   );
   await tester.pump();
   if (path != null) {
-    container.read(routerProvider).push(path, extra: extra);
+    final router = container.read(routerProvider);
+    const tabs = {'/home', '/courses', '/account'};
+    tabs.contains(path) ? router.go(path) : router.push(path, extra: extra);
   }
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 600));
@@ -164,8 +169,59 @@ void main() {
     await _golden(t, 'code_ar');
   }, variant: ios);
 
+  testWidgets('home_ar', (t) async {
+    await _pump(t, session: _SignedIn.new, size: const Size(393, 1350));
+    await _golden(t, 'home_ar');
+  }, variant: ios);
+
+  testWidgets('home_en_dark_android', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      language: 'en',
+      theme: ThemeMode.dark,
+      size: const Size(412, 1350),
+    );
+    await _golden(t, 'home_en_dark_android');
+  }, variant: TargetPlatformVariant.only(TargetPlatform.android));
+
+  testWidgets('courses_ar', (t) async {
+    await _pump(t, session: _SignedIn.new, path: '/courses');
+    await _golden(t, 'courses_ar');
+  }, variant: ios);
+
+  testWidgets('course_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}',
+      size: const Size(393, 1300),
+    );
+    await _golden(t, 'course_ar');
+  }, variant: ios);
+
+  testWidgets('lesson_text_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}/lesson/l2',
+      size: const Size(393, 1100),
+    );
+    await _golden(t, 'lesson_text_ar');
+  }, variant: ios);
+
+  testWidgets('devices_ar', (t) async {
+    await _pump(t, session: _SignedIn.new, path: '/account/devices');
+    await _golden(t, 'devices_ar');
+  }, variant: ios);
+
   testWidgets('account_ar', (t) async {
-    await _pump(t, session: _SignedIn.new, size: const Size(393, 1100));
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/account',
+      size: const Size(393, 1300),
+    );
     await _golden(t, 'account_ar');
   }, variant: ios);
 

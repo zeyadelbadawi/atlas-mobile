@@ -26,7 +26,15 @@ class YouTubeLessonPlayer extends StatefulWidget {
     this.startSeconds = 0,
     this.protection,
     this.onEnded,
+    this.recordingMessage = 'Stop screen recording to keep watching.',
+    this.failedMessage = 'This video could not be played.',
   });
+
+  /// Shown over the picture while iOS records or mirrors the screen.
+  final String recordingMessage;
+
+  /// Shown when YouTube reports an error.
+  final String failedMessage;
 
   final String videoId;
 
@@ -174,28 +182,31 @@ class _YouTubeLessonPlayerState extends State<YouTubeLessonPlayer>
               // watermark-free message readable.
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
-                child: const ColoredBox(
-                  color: Color(0xCC000000),
+                child: ColoredBox(
+                  color: const Color(0xCC000000),
                   child: Center(
                     child: Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Text(
-                        // Replaced by an l10n key in phase 2.
-                        'Stop screen recording to keep watching.',
+                        widget.recordingMessage,
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
                 ),
               ),
             if (_errorKey != null)
-              const ColoredBox(
+              ColoredBox(
                 color: Colors.black,
                 child: Center(
-                  child: Text(
-                    'This video could not be played.',
-                    style: TextStyle(color: Colors.white),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      widget.failedMessage,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),

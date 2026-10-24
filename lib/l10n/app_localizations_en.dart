@@ -358,4 +358,252 @@ class AppLocalizationsEn extends AppLocalizations {
   String signedInBody(String name) {
     return 'Welcome, $name.';
   }
+
+  @override
+  String get homeContinue => 'Continue';
+
+  @override
+  String get homeResume => 'Resume lesson';
+
+  @override
+  String get homeStart => 'Start the course';
+
+  @override
+  String get homeDueSoon => 'Due soon';
+
+  @override
+  String get homeAnnouncements => 'From your academy';
+
+  @override
+  String get homeMyCourses => 'My courses';
+
+  @override
+  String get homeSeeAll => 'See all';
+
+  @override
+  String get homeEmptyTitle => 'No courses yet';
+
+  @override
+  String homeEmptyBody(String academy) {
+    return 'Courses you join at $academy appear here.';
+  }
+
+  @override
+  String get homeAllDone => 'You\'re up to date. Pick a course to review.';
+
+  @override
+  String get unitLesson => 'Lesson';
+
+  @override
+  String get unitQuiz => 'Quiz';
+
+  @override
+  String get unitAssignment => 'Assignment';
+
+  @override
+  String get unitLive => 'Live session';
+
+  @override
+  String countOf(String done, String total) {
+    return '$done of $total';
+  }
+
+  @override
+  String lessonsCount(String count) {
+    return '$count lessons';
+  }
+
+  @override
+  String percentDone(String percent) {
+    return '$percent% done';
+  }
+
+  @override
+  String minutesLeft(String minutes) {
+    return '$minutes min left';
+  }
+
+  @override
+  String minutes(String minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String dueAssignment(String time) {
+    return 'Assignment due $time';
+  }
+
+  @override
+  String dueLive(String time) {
+    return 'Live session $time';
+  }
+
+  @override
+  String get overdue => 'Overdue';
+
+  @override
+  String get coursesTitle => 'My courses';
+
+  @override
+  String get coursesAll => 'All';
+
+  @override
+  String get coursesInProgress => 'In progress';
+
+  @override
+  String get coursesCompleted => 'Completed';
+
+  @override
+  String get coursesNotStarted => 'Not started';
+
+  @override
+  String get coursesNoneInFilter => 'Nothing here.';
+
+  @override
+  String courseUnit(String number) {
+    return 'Unit $number';
+  }
+
+  @override
+  String get courseContinue => 'Continue';
+
+  @override
+  String get courseReview => 'Review from the start';
+
+  @override
+  String get courseCompletedTitle => 'Course complete';
+
+  @override
+  String get courseCompletedBody => 'You finished every required lesson.';
+
+  @override
+  String get courseCertificatePending => 'Your certificate is being prepared.';
+
+  @override
+  String get courseAccessEnded => 'Your access to this course has ended.';
+
+  @override
+  String get lockPrevious => 'Finish the previous item first';
+
+  @override
+  String lockScheduled(String date) {
+    return 'Opens $date';
+  }
+
+  @override
+  String get lockNotStarted => 'Not open yet';
+
+  @override
+  String get lockAccessEnded => 'Access ended';
+
+  @override
+  String get lockQuizNotPassed => 'Pass the quiz before this';
+
+  @override
+  String get itemOnWebsite => 'Open on the academy website';
+
+  @override
+  String get lessonMarkDone => 'Mark as done';
+
+  @override
+  String get lessonDone => 'Done';
+
+  @override
+  String lessonNext(String title) {
+    return 'Next: $title';
+  }
+
+  @override
+  String get lessonBackToCourse => 'Back to the course';
+
+  @override
+  String lessonWatchFirst(String percent) {
+    return 'Watch $percent% of the video to mark it done.';
+  }
+
+  @override
+  String get lessonResources => 'Lesson files';
+
+  @override
+  String get lessonOpenFile => 'Open file';
+
+  @override
+  String get lessonOpenLink => 'Open link';
+
+  @override
+  String get lessonVideoOnWeb =>
+      'This video plays on the academy website for now.';
+
+  @override
+  String get lessonOpenWebsite => 'Open website';
+
+  @override
+  String get playerRecording => 'Stop screen recording to keep watching.';
+
+  @override
+  String get playerFailed =>
+      'This video couldn\'t play. Check your connection and try again.';
+
+  @override
+  String get takeoverTitle => 'Watching on another device';
+
+  @override
+  String takeoverBody(String device) {
+    return '$device is using your lessons now. Continue here instead? The other device will stop.';
+  }
+
+  @override
+  String get takeoverUnknownDevice => 'Another device';
+
+  @override
+  String get takeoverConfirm => 'Continue here';
+
+  @override
+  String get deviceLimitTitle => 'Device limit reached';
+
+  @override
+  String get deviceLimitBody =>
+      'Remove a device you no longer use, then open the lesson again.';
+
+  @override
+  String get deviceLimitManage => 'Manage devices';
+
+  @override
+  String get devicesTitle => 'My devices';
+
+  @override
+  String devicesBody(String count) {
+    return 'You can learn on up to $count devices.';
+  }
+
+  @override
+  String get devicesThis => 'This device';
+
+  @override
+  String devicesLastSeen(String time) {
+    return 'Last used $time';
+  }
+
+  @override
+  String get devicesRemove => 'Remove';
+
+  @override
+  String devicesRemoveConfirm(String device) {
+    return 'Remove $device? It will need a free slot to play lessons again.';
+  }
+
+  @override
+  String get accountDevices => 'My devices';
+
+  @override
+  String get loadFailed =>
+      'This didn\'t load. Check your connection and try again.';
+
+  @override
+  String homeGreeting(String name) {
+    return 'Hi, $name';
+  }
+
+  @override
+  String get coursesCover => 'Course';
 }

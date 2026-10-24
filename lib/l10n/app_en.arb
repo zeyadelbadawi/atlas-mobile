@@ -150,5 +150,197 @@
         "type": "String"
       }
     }
-  }
+  },
+  "homeContinue": "Continue",
+  "homeResume": "Resume lesson",
+  "homeStart": "Start the course",
+  "homeDueSoon": "Due soon",
+  "homeAnnouncements": "From your academy",
+  "homeMyCourses": "My courses",
+  "homeSeeAll": "See all",
+  "homeEmptyTitle": "No courses yet",
+  "homeEmptyBody": "Courses you join at {academy} appear here.",
+  "@homeEmptyBody": {
+    "placeholders": {
+      "academy": {
+        "type": "String"
+      }
+    }
+  },
+  "homeAllDone": "You're up to date. Pick a course to review.",
+  "unitLesson": "Lesson",
+  "unitQuiz": "Quiz",
+  "unitAssignment": "Assignment",
+  "unitLive": "Live session",
+  "countOf": "{done} of {total}",
+  "@countOf": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonsCount": "{count} lessons",
+  "@lessonsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "percentDone": "{percent}% done",
+  "@percentDone": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "minutesLeft": "{minutes} min left",
+  "@minutesLeft": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "minutes": "{minutes} min",
+  "@minutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "dueAssignment": "Assignment due {time}",
+  "@dueAssignment": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "dueLive": "Live session {time}",
+  "@dueLive": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "overdue": "Overdue",
+  "coursesTitle": "My courses",
+  "coursesAll": "All",
+  "coursesInProgress": "In progress",
+  "coursesCompleted": "Completed",
+  "coursesNotStarted": "Not started",
+  "coursesNoneInFilter": "Nothing here.",
+  "courseUnit": "Unit {number}",
+  "@courseUnit": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "courseContinue": "Continue",
+  "courseReview": "Review from the start",
+  "courseCompletedTitle": "Course complete",
+  "courseCompletedBody": "You finished every required lesson.",
+  "courseCertificatePending": "Your certificate is being prepared.",
+  "courseAccessEnded": "Your access to this course has ended.",
+  "lockPrevious": "Finish the previous item first",
+  "lockScheduled": "Opens {date}",
+  "@lockScheduled": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "lockNotStarted": "Not open yet",
+  "lockAccessEnded": "Access ended",
+  "lockQuizNotPassed": "Pass the quiz before this",
+  "itemOnWebsite": "Open on the academy website",
+  "lessonMarkDone": "Mark as done",
+  "lessonDone": "Done",
+  "lessonNext": "Next: {title}",
+  "@lessonNext": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonBackToCourse": "Back to the course",
+  "lessonWatchFirst": "Watch {percent}% of the video to mark it done.",
+  "@lessonWatchFirst": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonResources": "Lesson files",
+  "lessonOpenFile": "Open file",
+  "lessonOpenLink": "Open link",
+  "lessonVideoOnWeb": "This video plays on the academy website for now.",
+  "lessonOpenWebsite": "Open website",
+  "playerRecording": "Stop screen recording to keep watching.",
+  "playerFailed": "This video couldn't play. Check your connection and try again.",
+  "takeoverTitle": "Watching on another device",
+  "takeoverBody": "{device} is using your lessons now. Continue here instead? The other device will stop.",
+  "@takeoverBody": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      }
+    }
+  },
+  "takeoverUnknownDevice": "Another device",
+  "takeoverConfirm": "Continue here",
+  "deviceLimitTitle": "Device limit reached",
+  "deviceLimitBody": "Remove a device you no longer use, then open the lesson again.",
+  "deviceLimitManage": "Manage devices",
+  "devicesTitle": "My devices",
+  "devicesBody": "You can learn on up to {count} devices.",
+  "@devicesBody": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "devicesThis": "This device",
+  "devicesLastSeen": "Last used {time}",
+  "@devicesLastSeen": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "devicesRemove": "Remove",
+  "devicesRemoveConfirm": "Remove {device}? It will need a free slot to play lessons again.",
+  "@devicesRemoveConfirm": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      }
+    }
+  },
+  "accountDevices": "My devices",
+  "loadFailed": "This didn't load. Check your connection and try again.",
+  "homeGreeting": "Hi, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "coursesCover": "Course"
 }

@@ -5,6 +5,12 @@ import 'package:go_router/go_router.dart';
 import '../core/auth/auth_repository.dart';
 import '../features/academy_picker/academy_picker_screen.dart';
 import '../features/account/account_screen.dart';
+import '../features/account/devices_screen.dart';
+import '../features/courses/course_screen.dart';
+import '../features/courses/my_courses_screen.dart';
+import '../features/home/home_screen.dart';
+import '../features/lesson/lesson_screen.dart';
+import '../features/shell/main_shell.dart';
 import '../features/auth/code_screens.dart';
 import '../features/auth/other_auth_screens.dart';
 import '../features/auth/register_screen.dart';
@@ -15,12 +21,21 @@ import 'providers.dart';
 /// Routes open to everyone, whatever the session.
 bool _public(String path) => path.startsWith('/legal') || path == '/about';
 
+bool _signedInPath(String path) =>
+    path == '/home' ||
+    path.startsWith('/courses') ||
+    path.startsWith('/course/') ||
+    path.startsWith('/account');
+
+final _rootKey = GlobalKey<NavigatorState>();
+
 final routerProvider = Provider<GoRouter>((ref) {
   final refresh = ValueNotifier<int>(0);
   ref.listen(sessionProvider, (_, _) => refresh.value++);
   ref.onDispose(refresh.dispose);
 
   return GoRouter(
+    navigatorKey: _rootKey,
     initialLocation: '/',
     refreshListenable: refresh,
     redirect: (context, state) {
@@ -32,7 +47,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         SessionStatus.restoring => path == '/loading' ? null : '/loading',
         SessionStatus.signedOut =>
           path.startsWith('/academy/') ? null : '/academy/sign-in',
-        SessionStatus.signedIn => path == '/home' ? null : '/home',
+        SessionStatus.signedIn => _signedInPath(path) ? null : '/home',
       };
     },
     routes: [
@@ -71,7 +86,47 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, s) =>
             AppleCreateScreen(step: s.extra! as AppleStepRequired),
       ),
-      GoRoute(path: '/home', builder: (_, _) => const AccountScreen()),
+      StatefulShellRoute.indexedStack(
+        builder: (_, _, shell) => MainShell(shell: shell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/courses',
+                builder: (_, _) => const MyCoursesScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/account',
+                builder: (_, _) => const AccountScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/course/:id',
+        builder: (_, s) => CourseScreen(courseId: s.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/course/:id/lesson/:lessonId',
+        builder: (_, s) => LessonScreen(
+          courseId: s.pathParameters['id']!,
+          lessonId: s.pathParameters['lessonId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/account/devices',
+        builder: (_, _) => const DevicesScreen(),
+      ),
       GoRoute(path: '/legal', builder: (_, _) => const LegalListScreen()),
       GoRoute(
         path: '/legal/:doc',
