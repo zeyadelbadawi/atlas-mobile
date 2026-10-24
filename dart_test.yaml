@@ -1,0 +1,3 @@
+tags:
+  integration:
+    # Needs the local backend stack; see test/integration/*.dart headers.
