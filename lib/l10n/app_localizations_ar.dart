@@ -408,8 +408,17 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String lessonsCount(String count) {
-    return '$count درس';
+  String lessonsCount(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n درس',
+      many: '$n درسًا',
+      few: '$n دروس',
+      two: 'درسان',
+      one: 'درس واحد',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1663,18 +1672,45 @@ class AppLocalizationsAr extends AppLocalizations {
   String get previewCertificate => 'شهادة عند الإتمام';
 
   @override
-  String previewUnits(String count) {
-    return '$count وحدة';
+  String previewUnits(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n وحدة',
+      many: '$n وحدة',
+      few: '$n وحدات',
+      two: 'وحدتان',
+      one: 'وحدة واحدة',
+    );
+    return '$_temp0';
   }
 
   @override
-  String previewQuizzes(String count) {
-    return '$count اختبار';
+  String previewQuizzes(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n اختبار',
+      many: '$n اختبارًا',
+      few: '$n اختبارات',
+      two: 'اختباران',
+      one: 'اختبار واحد',
+    );
+    return '$_temp0';
   }
 
   @override
-  String previewAssignments(String count) {
-    return '$count واجب';
+  String previewAssignments(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n واجب',
+      many: '$n واجبًا',
+      few: '$n واجبات',
+      two: 'واجبان',
+      one: 'واجب واحد',
+    );
+    return '$_temp0';
   }
 
   @override

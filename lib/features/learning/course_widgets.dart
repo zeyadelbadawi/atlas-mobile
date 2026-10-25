@@ -103,7 +103,7 @@ class EnrolledCourseRow extends StatelessWidget {
       title: course.title,
       subtitle: [
         if (course.instructors.isNotEmpty) course.instructors.join(context.sep),
-        l.lessonsCount(context.digits('${course.total}')),
+        l.lessonsCount(course.total, context.digits('${course.total}')),
       ].join(context.sep),
       cover: CourseCover(
         image: course.thumbnailUrl == null

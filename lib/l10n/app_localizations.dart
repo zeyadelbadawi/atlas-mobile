@@ -845,8 +845,8 @@ abstract class AppLocalizations {
   /// No description provided for @lessonsCount.
   ///
   /// In en, this message translates to:
-  /// **'{count} lessons'**
-  String lessonsCount(String count);
+  /// **'{count, plural, =1{{n} lesson} other{{n} lessons}}'**
+  String lessonsCount(int count, String n);
 
   /// No description provided for @percentDone.
   ///
@@ -2987,20 +2987,20 @@ abstract class AppLocalizations {
   /// No description provided for @previewUnits.
   ///
   /// In en, this message translates to:
-  /// **'{count} units'**
-  String previewUnits(String count);
+  /// **'{count, plural, =1{{n} unit} other{{n} units}}'**
+  String previewUnits(int count, String n);
 
   /// No description provided for @previewQuizzes.
   ///
   /// In en, this message translates to:
-  /// **'{count} quizzes'**
-  String previewQuizzes(String count);
+  /// **'{count, plural, =1{{n} quiz} other{{n} quizzes}}'**
+  String previewQuizzes(int count, String n);
 
   /// No description provided for @previewAssignments.
   ///
   /// In en, this message translates to:
-  /// **'{count} assignments'**
-  String previewAssignments(String count);
+  /// **'{count, plural, =1{{n} assignment} other{{n} assignments}}'**
+  String previewAssignments(int count, String n);
 
   /// No description provided for @previewHours.
   ///

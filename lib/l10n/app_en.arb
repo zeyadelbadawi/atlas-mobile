@@ -183,10 +183,13 @@
       }
     }
   },
-  "lessonsCount": "{count} lessons",
+  "lessonsCount": "{count, plural, =1{{n} lesson} other{{n} lessons}}",
   "@lessonsCount": {
     "placeholders": {
       "count": {
+        "type": "int"
+      },
+      "n": {
         "type": "String"
       }
     }
@@ -946,26 +949,35 @@
   "previewRequirements": "Before you start",
   "previewContent": "Course content",
   "previewCertificate": "Certificate on completion",
-  "previewUnits": "{count} units",
+  "previewUnits": "{count, plural, =1{{n} unit} other{{n} units}}",
   "@previewUnits": {
     "placeholders": {
       "count": {
+        "type": "int"
+      },
+      "n": {
         "type": "String"
       }
     }
   },
-  "previewQuizzes": "{count} quizzes",
+  "previewQuizzes": "{count, plural, =1{{n} quiz} other{{n} quizzes}}",
   "@previewQuizzes": {
     "placeholders": {
       "count": {
+        "type": "int"
+      },
+      "n": {
         "type": "String"
       }
     }
   },
-  "previewAssignments": "{count} assignments",
+  "previewAssignments": "{count, plural, =1{{n} assignment} other{{n} assignments}}",
   "@previewAssignments": {
     "placeholders": {
       "count": {
+        "type": "int"
+      },
+      "n": {
         "type": "String"
       }
     }

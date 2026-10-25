@@ -409,8 +409,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String lessonsCount(String count) {
-    return '$count lessons';
+  String lessonsCount(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n lessons',
+      one: '$n lesson',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -1665,18 +1671,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get previewCertificate => 'Certificate on completion';
 
   @override
-  String previewUnits(String count) {
-    return '$count units';
+  String previewUnits(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n units',
+      one: '$n unit',
+    );
+    return '$_temp0';
   }
 
   @override
-  String previewQuizzes(String count) {
-    return '$count quizzes';
+  String previewQuizzes(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n quizzes',
+      one: '$n quiz',
+    );
+    return '$_temp0';
   }
 
   @override
-  String previewAssignments(String count) {
-    return '$count assignments';
+  String previewAssignments(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n assignments',
+      one: '$n assignment',
+    );
+    return '$_temp0';
   }
 
   @override

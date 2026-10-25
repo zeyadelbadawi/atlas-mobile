@@ -74,12 +74,24 @@ class _Preview extends ConsumerWidget {
     final c = a.colors;
     final facts = [
       if (course.totalSections > 0)
-        l.previewUnits(context.digits('${course.totalSections}')),
-      l.lessonsCount(context.digits('${course.totalLessons}')),
+        l.previewUnits(
+          course.totalSections,
+          context.digits('${course.totalSections}'),
+        ),
+      l.lessonsCount(
+        course.totalLessons,
+        context.digits('${course.totalLessons}'),
+      ),
       if (course.totalQuizzes > 0)
-        l.previewQuizzes(context.digits('${course.totalQuizzes}')),
+        l.previewQuizzes(
+          course.totalQuizzes,
+          context.digits('${course.totalQuizzes}'),
+        ),
       if (course.totalAssignments > 0)
-        l.previewAssignments(context.digits('${course.totalAssignments}')),
+        l.previewAssignments(
+          course.totalAssignments,
+          context.digits('${course.totalAssignments}'),
+        ),
       if (course.durationSeconds != null && course.durationSeconds! > 0)
         _duration(context, course.durationSeconds!),
       ?_level(context, course.level),

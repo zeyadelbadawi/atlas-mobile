@@ -197,7 +197,10 @@ class CatalogCourseRow extends StatelessWidget {
       title: course.title,
       subtitle: [
         if (course.instructors.isNotEmpty) course.instructors.join(context.sep),
-        l.lessonsCount(context.digits('${course.totalLessons}')),
+        l.lessonsCount(
+          course.totalLessons,
+          context.digits('${course.totalLessons}'),
+        ),
       ].join(context.sep),
       cover: CourseCover(
         image: course.thumbnailUrl == null
