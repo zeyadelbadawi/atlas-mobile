@@ -25,8 +25,8 @@ abstract final class AtlasRadius {
 }
 
 abstract final class AtlasSize {
-  /// iOS minimum touch target (Android's 48dp is met by padding).
-  static const double touch = 44;
+  /// Minimum touch target: Android's 48dp (also above iOS's 44pt).
+  static const double touch = 48;
   static const double button = 52;
   static const double field = 52;
   static const double hairline = 1;

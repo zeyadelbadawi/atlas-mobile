@@ -283,7 +283,8 @@ class _CertificateCardState extends ConsumerState<CertificateCard> {
                 ),
                 Directionality(
                   textDirection: TextDirection.ltr,
-                  child: SelectableText(
+                  // Copied with the button beside it.
+                  child: Text(
                     cert.codeDisplay,
                     style: a.type.title2.copyWith(
                       color: c.ink,

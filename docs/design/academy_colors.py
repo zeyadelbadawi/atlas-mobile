@@ -9,19 +9,27 @@ def mix(a,b,t): return tuple(a[i]*(1-t)+b[i]*t for i in range(3))
 def hx(c): return '#%02X%02X%02X'%tuple(round(x*255) for x in c)
 PAPER=(0.988,0.988,0.984); NIGHT=(0.075,0.075,0.08)
 INK=(0.07,0.07,0.075); WHITE=(1,1,1)
+def _c(x): x=x.lstrip('#'); return tuple(int(x[i:i+2],16)/255 for i in (0,2,4))
+RAISED_L=_c('#FFFFFF'); RAISED_D=_c('#1E1E20'); SUNKEN_L=_c('#F1F0EC'); SUNKEN_D=_c('#2A2A2C')
+SEC_L=_c('#5B5B60'); SEC_D=_c('#ADADB2')
 def derive(h,s,l):
     p=hsl(h,s,l)
     paperL=mix(PAPER,p,0.035); paperD=mix(NIGHT,p,0.07)
     onCover = WHITE if cr(WHITE,p)>=cr(INK,p) else INK
-    # accent ink light
+    # tinted fill: strongest tint where secondary text still reaches 4.5
+    def tint(ground,most,text):
+        t=most
+        while t>0 and cr(text,mix(ground,p,t))<4.5: t-=0.01
+        return mix(ground,p,max(t,0))
+    tonL=tint(paperL,0.14,SEC_L); tonD=tint(paperD,0.24,SEC_D)
+    # accent text: must pass on paper, cards, fields and the tint
+    gL=[paperL,RAISED_L,SUNKEN_L,tonL]; gD=[paperD,RAISED_D,SUNKEN_D,tonD]
     L=l
-    while cr(hsl(h,s,L),paperL)<4.5 and L>5: L-=1
+    while any(cr(hsl(h,s,L),g)<4.5 for g in gL) and L>5: L-=1
     accL=hsl(h,s,L)
     L=l
-    while cr(hsl(h,s,L),paperD)<4.5 and L<95: L+=1
+    while any(cr(hsl(h,s,L),g)<4.5 for g in gD) and L<95: L+=1
     accD=hsl(h,s,L)
-    # cover on dark: keep primary but if too bright keep; fine
-    tonL=mix(paperL,p,0.14); tonD=mix(paperD,p,0.24)
     # button fill: use cover if onCover contrast>=4.5 else accent
     btnL = p if cr(onCover,p)>=4.5 else accL
     onBtnL = WHITE if cr(WHITE,btnL)>=cr(INK,btnL) else INK
@@ -36,7 +44,7 @@ def derive(h,s,l):
 out={k:derive(*v) for k,v in {'Ziadd':(40,95,54),'Manara':(222,72,46),'Riwaq':(199,64,30)}.items()}
 print(json.dumps(out,indent=1))
 def h2c(s): s=s.lstrip('#'); return tuple(int(s[i:i+2],16)/255 for i in (0,2,4))
-for name,val in [('sec L','#5B5B60'),('ter L','#6E6E74'),('danger L','#B3261E'),('success L','#1D6B35'),('warn L','#8A5A00')]:
+for name,val in [('sec L','#5B5B60'),('ter L','#68686E'),('danger L','#B3261E'),('success L','#1D6B35'),('warn L','#8A5A00')]:
     print(name,[round(cr(h2c(val),h2c(p)),2) for p in ['#FCF9F3','#F4F6F9','#F4F6F7','#FFFFFF']])
 for name,val in [('ink D','#F2F2EF'),('sec D','#ADADB2'),('ter D','#8E8E94'),('danger D','#FF8A80'),('success D','#5FCB85'),('warn D','#F2B544')]:
     print(name,[round(cr(h2c(val),h2c(p)),2) for p in ['#231E15','#141821','#14181C','#1E1E20']])

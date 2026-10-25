@@ -45,8 +45,25 @@ class AcademyPalette {
     final paperLight = _mix(_paper, p, 0.035);
     final paperDark = _mix(_night, p, 0.07);
 
-    final accentLight = _towardContrast(primary, paperLight, darken: true);
-    final accentDark = _towardContrast(primary, paperDark, darken: false);
+    // The tinted fill (cards, secondary buttons): as strong as it can be
+    // while secondary text on it still reaches 4.5:1. Pale academy colours
+    // get a lighter tint in dark mode.
+    final tonalLight = _tint(paperLight, p, 0.14, inkSecondaryLight);
+    final tonalDark = _tint(paperDark, p, 0.24, inkSecondaryDark);
+    // The accent is text on every surface: the paper, cards, fields and the
+    // tonal fill of secondary buttons. It must pass on the hardest of them.
+    final accentLight = _towardContrast(primary, [
+      paperLight,
+      raisedLight,
+      sunkenLight,
+      tonalLight,
+    ], darken: true);
+    final accentDark = _towardContrast(primary, [
+      paperDark,
+      raisedDark,
+      sunkenDark,
+      tonalDark,
+    ], darken: false);
 
     final (buttonLight, onButtonLight) = _readable(HSLColor.fromColor(p));
     final (buttonDark, onButtonDark) = _readable(HSLColor.fromColor(p));
@@ -58,8 +75,8 @@ class AcademyPalette {
       paperDark: paperDark,
       accentLight: accentLight,
       accentDark: accentDark,
-      tonalLight: _mix(paperLight, p, 0.14),
-      tonalDark: _mix(paperDark, p, 0.24),
+      tonalLight: tonalLight,
+      tonalDark: tonalDark,
       buttonLight: buttonLight,
       onButtonLight: onButtonLight,
       buttonDark: buttonDark,
@@ -104,6 +121,16 @@ class AcademyPalette {
   /// are drawn dark (e.g. Ziadd's amber).
   bool get coverIsLight => onCover == ink;
 
+  /// Card and field surfaces (shared with [AtlasColors]).
+  static const Color raisedLight = Color(0xFFFFFFFF);
+  static const Color raisedDark = Color(0xFF1E1E20);
+  static const Color sunkenLight = Color(0xFFF1F0EC);
+  static const Color sunkenDark = Color(0xFF2A2A2C);
+
+  /// Secondary text (shared with [AtlasColors]).
+  static const Color inkSecondaryLight = Color(0xFF5B5B60);
+  static const Color inkSecondaryDark = Color(0xFFADADB2);
+
   static const Color white = Color(0xFFFFFFFF);
   static const Color ink = Color(0xFF121213);
   static const Color _paper = Color(0xFFFCFCFB);
@@ -138,18 +165,28 @@ class AcademyPalette {
 
   static Color _towardContrast(
     HSLColor start,
-    Color ground, {
+    List<Color> grounds, {
     required bool darken,
   }) {
     var l = start.lightness;
     var c = start.toColor();
-    while (contrast(c, ground) < 4.5) {
+    while (grounds.any((g) => contrast(c, g) < 4.5)) {
       l = darken ? l - 0.01 : l + 0.01;
       if (l < 0 || l > 1) {
         // The hue cannot reach 4.5:1 on this ground; use plain ink.
         return darken ? ink : white;
       }
       c = start.withLightness(l).toColor();
+    }
+    return c;
+  }
+
+  static Color _tint(Color ground, Color colour, double most, Color text) {
+    var t = most;
+    var c = _mix(ground, colour, t);
+    while (t > 0 && contrast(text, c) < 4.5) {
+      t -= 0.01;
+      c = _mix(ground, colour, t < 0 ? 0 : t);
     }
     return c;
   }

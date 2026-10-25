@@ -33,11 +33,13 @@ class AtlasColors extends ThemeExtension<AtlasColors> {
     return AtlasColors(
       brightness: brightness,
       paper: light ? p.paperLight : p.paperDark,
-      raised: light ? const Color(0xFFFFFFFF) : const Color(0xFF1E1E20),
-      sunken: light ? const Color(0xFFF1F0EC) : const Color(0xFF2A2A2C),
+      raised: light ? AcademyPalette.raisedLight : AcademyPalette.raisedDark,
+      sunken: light ? AcademyPalette.sunkenLight : AcademyPalette.sunkenDark,
       ink: light ? const Color(0xFF121213) : const Color(0xFFF2F2EF),
-      inkSecondary: light ? const Color(0xFF5B5B60) : const Color(0xFFADADB2),
-      inkTertiary: light ? const Color(0xFF6E6E74) : const Color(0xFF8E8E94),
+      inkSecondary: light
+          ? AcademyPalette.inkSecondaryLight
+          : AcademyPalette.inkSecondaryDark,
+      inkTertiary: light ? const Color(0xFF68686E) : const Color(0xFF96969C),
       rule: light ? const Color(0xFFE3E2DD) : const Color(0xFF33322F),
       ruleStrong: light ? const Color(0xFFC9C8C2) : const Color(0xFF4A4945),
       danger: light ? const Color(0xFFB3261E) : const Color(0xFFFF8A80),

@@ -434,7 +434,9 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen> {
           ],
         ),
         SectionHeader(title: l.assignmentInstructions),
-        SelectableText(instructions, style: a.type.body.copyWith(color: c.ink)),
+        SelectionArea(
+          child: Text(instructions, style: a.type.body.copyWith(color: c.ink)),
+        ),
         if (submitted) ...[
           SectionHeader(title: l.assignmentYourSubmission),
           _Submitted(submission: sub!),
@@ -706,9 +708,11 @@ class _Submitted extends StatelessWidget {
                     l.assignmentFeedback,
                     style: a.type.footnote.copyWith(color: c.inkSecondary),
                   ),
-                  SelectableText(
-                    s.feedback!,
-                    style: a.type.body.copyWith(color: c.ink),
+                  SelectionArea(
+                    child: Text(
+                      s.feedback!,
+                      style: a.type.body.copyWith(color: c.ink),
+                    ),
                   ),
                 ],
               ],
