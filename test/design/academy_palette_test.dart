@@ -15,11 +15,13 @@ void main() {
     expect(AcademyPalette.fromHslString(null), same(AcademyPalette.atlas));
   });
 
-  test('matches the values used in the Figma file', () {
+  // The accent must also pass on cards and the tinted fill (25 Oct 2026),
+  // which made Ziadd's light accent #9A6804 → #906104 (Figma to follow).
+  test('matches docs/design/academy_colors.py', () {
     final z = AcademyPalette.fromHslString('40 95% 54%');
     expect(z.cover, const Color(0xFFF9AF1A));
     expect(z.onCover, AcademyPalette.ink);
-    expect(z.accentLight, const Color(0xFF9A6804));
+    expect(z.accentLight, const Color(0xFF906104));
     final m = AcademyPalette.fromHslString('222 72% 46%');
     expect(m.onCover, AcademyPalette.white);
     expect(m.accentLight, const Color(0xFF2154CA));
