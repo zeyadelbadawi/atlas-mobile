@@ -317,4 +317,14 @@ void main() {
     );
     await _golden(t, 'verify_email_done_ar');
   }, variant: ios);
+
+  testWidgets('home_ar_ipad', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/home',
+      size: const Size(1032, 1376),
+    );
+    await _golden(t, 'home_ar_ipad');
+  }, variant: ios);
 }

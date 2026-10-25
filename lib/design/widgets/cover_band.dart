@@ -62,51 +62,59 @@ class CoverBand extends StatelessWidget {
           top: top + (_compact ? 16 : 8),
           bottom: (_compact ? 28 : 24) + overlap,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
+        // On iPad the band spans the screen; its text lines up with the
+        // readable column below it.
+        child: Align(
+          alignment: AlignmentDirectional.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: AtlasSize.readingWidth),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                AcademyLogo(
-                  academyName: academyName,
-                  image: logo,
-                  size: _compact ? 56 : 40,
+                Row(
+                  children: [
+                    AcademyLogo(
+                      academyName: academyName,
+                      image: logo,
+                      size: _compact ? 56 : 40,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        academyName,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: (_compact ? a.type.title2 : a.type.headline)
+                            .copyWith(color: c.onCover),
+                      ),
+                    ),
+                    ?trailing,
+                  ],
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    academyName,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: (_compact ? a.type.title2 : a.type.headline)
-                        .copyWith(color: c.onCover),
+                if (title != null) ...[
+                  const SizedBox(height: 14),
+                  Semantics(
+                    header: true,
+                    child: Text(
+                      title!,
+                      style: a.type.largeTitle.copyWith(color: c.onCover),
+                    ),
                   ),
-                ),
-                ?trailing,
+                ],
+                if (subtitle != null) ...[
+                  const SizedBox(height: 10),
+                  Text(
+                    subtitle!,
+                    textDirection: TextDirection.ltr,
+                    style: a.type.subhead.copyWith(
+                      color: c.onCover.withValues(alpha: 0.8),
+                    ),
+                  ),
+                ],
               ],
             ),
-            if (title != null) ...[
-              const SizedBox(height: 14),
-              Semantics(
-                header: true,
-                child: Text(
-                  title!,
-                  style: a.type.largeTitle.copyWith(color: c.onCover),
-                ),
-              ),
-            ],
-            if (subtitle != null) ...[
-              const SizedBox(height: 10),
-              Text(
-                subtitle!,
-                textDirection: TextDirection.ltr,
-                style: a.type.subhead.copyWith(
-                  color: c.onCover.withValues(alpha: 0.8),
-                ),
-              ),
-            ],
-          ],
+          ),
         ),
       ),
     );
