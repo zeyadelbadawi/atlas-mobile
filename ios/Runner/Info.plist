@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -72,7 +74,7 @@
 		<string>en</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>Atlas uses the camera only when you take a photo of your work to attach to an assignment.</string>
+	<string>Atlas uses the camera only to scan an academy's QR code or to take a photo of your work for an assignment.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Atlas opens your photos only when you choose one to attach to an assignment.</string>
 	<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS</key>

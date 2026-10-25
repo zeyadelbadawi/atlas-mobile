@@ -132,23 +132,33 @@ class AsyncBody<T> extends StatelessWidget {
           ),
         ),
       ),
-      error: (e, _) => Padding(
-        padding: const EdgeInsets.all(AtlasSpace.gutter),
-        child: Column(
-          children: [
-            AtlasBanner(
-              kind: AtlasBannerKind.error,
-              message: context.l10n.loadFailed,
-            ),
-            const SizedBox(height: AtlasSpace.s12),
-            AtlasButton(
-              label: context.l10n.commonRetry,
-              style: AtlasButtonStyle.tonal,
-              onPressed: onRetry,
-            ),
-          ],
-        ),
-      ),
+      error: (e, _) => LoadError(onRetry: onRetry),
     );
   }
+}
+
+/// A failed load: what went wrong (or the generic text) and Retry.
+class LoadError extends StatelessWidget {
+  const LoadError({super.key, required this.onRetry, this.message});
+  final VoidCallback onRetry;
+  final String? message;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.all(AtlasSpace.gutter),
+    child: Column(
+      children: [
+        AtlasBanner(
+          kind: AtlasBannerKind.error,
+          message: message ?? context.l10n.loadFailed,
+        ),
+        const SizedBox(height: AtlasSpace.s12),
+        AtlasButton(
+          label: context.l10n.commonRetry,
+          style: AtlasButtonStyle.tonal,
+          onPressed: onRetry,
+        ),
+      ],
+    ),
+  );
 }

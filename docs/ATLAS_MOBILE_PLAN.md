@@ -463,7 +463,7 @@ deploy ولا PR.** التفاصيل التقنية في `atlas-backend/docs/mob
 | تحويل لينكات الويب لشاشات التطبيق (`lib/app/web_paths.dart`)، و`/course/:id/item/:itemId` بيعرف نوع النشاط ويفتحه | ✅ |
 | الإعلانات: قائمة وتفاصيل | ✅ |
 | الحساب: الملف الشخصي (الاسم، الموبايل، توثيق البريد)، وكلمة المرور (الباك اند بيخرج كل الجلسات، فالتطبيق بيقول كده ويرجّع لتسجيل الدخول)، وأين سجّلت الدخول (خروج من جلسة أو الكل)، والإشعارات (الموبايل + رسائل البريد)، والخصوصية (Analytics، تنزيل البيانات، حذف الحساب بكود من البريد) | ✅ |
-| الباك اند: `deploy.yml` بيبعت `FCM_*` و`FLAG_PUSH_MODE` للسيرفر | PR [#91](https://github.com/zeyadelbadawi/atlas-backend/pull/91) مستني موافقتك |
+| الباك اند: `deploy.yml` بيبعت `FCM_*` و`FLAG_PUSH_MODE` للسيرفر | ✅ PR [#91](https://github.com/zeyadelbadawi/atlas-backend/pull/91) و[#92](https://github.com/zeyadelbadawi/atlas-backend/pull/92) (المفتاح بين علامتين في `.env`)، و`FLAG_PUSH_MODE=on` على production، والـ push اتجرّب على موبايل أندرويد حقيقي |
 | اختبارات: `test/integration/notifications_account_test.dart` على الباك اند المحلي، وgoldens للإشعارات والإعلانات والحساب، وساعة ثابتة للـ goldens (`lib/core/clock.dart`) | ✅ |
 
 **ملاحظات:**
@@ -472,3 +472,28 @@ deploy ولا PR.** التفاصيل التقنية في `atlas-backend/docs/mob
 - firebase_messaging 17 بيستخدم `getToken` (deprecated) لأن الباك اند بيبعت بالـ registration token. ننقل لـ FID مع الباك اند.
 - iOS: الـ push محتاج `GoogleService-Info.plist` وAPNs key وPush capability في المرحلة 9. من غيرهم التطبيق بيشتغل عادي من غير push وAnalytics.
 - المنتدى متأجل (القرار في §14).
+
+---
+
+## 20. حالة المرحلة 6 (25 أكتوبر)
+
+| الجزء | الحالة |
+|---|---|
+| كتالوج الكورسات المجانية (`/catalog`): بحث وصفحات، من كارت في "كورساتي" وفي الرئيسية لما مفيش كورس. المدفوع مش بيظهر (التطبيق مابيبعش) | ✅ |
+| صفحة الكورس قبل الانضمام (`/catalog/:idOrSlug`): الوصف، اللي هتتعلمه، المتطلبات، المحتوى بالوحدات، الشهادة، و"انضم مجانًا" (`POST /enrollments`، ولو اتضغط مرتين مفيش مشكلة) أو "افتح الكورس" لو منضم | ✅ |
+| فتح لينكات الأكاديمية جوه التطبيق (`lib/app/deep_links.dart` + `app_links`): `/courses`، `/courses/:id`، `/my/*`، `/verify-email`، `/reset-password` بالـ `/ar` و`/en`. لينك أكاديمية تانية بيسأل قبل التبديل. اللينك اللي محتاج تسجيل دخول بيستنى لحد ما الطالب يدخل | ✅ |
+| صفحات الدفع (`/my/purchases`، `/my/payments`، `/my/courses/:id/checkout`) وتحقق الشهادة (`/verify/:code`) وأي host مش أكاديمية: بتفتح في متصفح جوه التطبيق (Custom Tab) | ✅ |
+| تأكيد البريد من اللينك (`/account/verify-email`) وتغيير كلمة المرور من اللينك (`/academy/reset-password`): بيتأكد من اللينك الأول، وبعد التغيير الباك اند بيخرج كل الجلسات فالتطبيق بيرجّع لتسجيل الدخول | ✅ |
+| QR في شاشة اختيار الأكاديمية (`mobile_scanner`، نسخة ML Kit من Google Play services ~600KB). لينك كامل (مثلًا لكورس) بيفتح الأكاديمية وبعدين الصفحة | ✅ |
+| Android App Links: `intent-filter` بـ `autoVerify` على `*.atlass.dpdns.org` للمسارات اللي فوق بس، و`flutter_deeplinking_enabled=false` (الـ host هو اللي بيحدد الأكاديمية) | ✅ |
+| الباك اند: `GET public/mobile/assetlinks.json` و`apple-app-site-association` من `MOBILE_ANDROID_CERT_SHA256` و`MOBILE_IOS_APP_IDS` (404 لحد ما يتحطوا)، وe2e، وroute inventory، و`deploy.yml` بيبعتهم | branch، مستني PR بموافقتك |
+| الويب: Caddy بيوصّل `/.well-known/assetlinks.json` و`apple-app-site-association` للباك اند على الـ platform وكل subdomain، وtest على الـ Caddyfile | branch، مستني PR بموافقتك |
+| اختبارات: `catalog_test`، `email_links_test` على الباك اند المحلي (`tool/local_stack/force_link_token.mjs` للتوكن)، و`deep_links_test`، وgoldens للكتالوج وصفحة الكورس والـ reset والـ verify | ✅ |
+
+**ملاحظات:**
+- اللينكات بتفتح التطبيق لوحدها (من غير سؤال) بس بعد ما `MOBILE_ANDROID_CERT_SHA256` يتحط ببصمة مفتاح التوقيع الحقيقي (المرحلة 9، Play App Signing). لحد كده تقدر تجرّب من الإعدادات: Atlas ← "الفتح بشكل افتراضي" ← "إضافة روابط".
+- الأكاديميات اللي على دومين خاص (custom domain) مش في الـ manifest، فلينكاتها بتفتح في المتصفح. ممكن نضيفهم بعدين لو احتجنا.
+- iOS (المرحلة 9): capability "Associated Domains" بـ `applinks:*.atlass.dpdns.org` في `Runner.entitlements`، و`MOBILE_IOS_APP_IDS=<TEAM_ID>.<bundle id>`.
+- بعض الموبايلات من غير Google Play services (زي بعض أجهزة Huawei) مش هتعرف تمسح QR؛ كتابة اسم الأكاديمية شغالة عادي.
+- "1 assignments" بالإنجليزي: الجمع بالـ ICU في التلميع (المرحلة 7).
+

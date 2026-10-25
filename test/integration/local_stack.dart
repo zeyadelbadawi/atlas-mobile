@@ -20,9 +20,8 @@ AcademyEndpoint get localAcademy =>
     AcademyEndpoint.parse(_env['ATLAS_SPIKE_ORIGIN']!);
 
 /// A fresh learner, signed in on the academy host like the app.
-Future<({AtlasApiClient client, String userId})> newLocalLearner(
-  String label,
-) async {
+Future<({AtlasApiClient client, String userId, String email, String password})>
+newLocalLearner(String label) async {
   final stamp = DateTime.now().microsecondsSinceEpoch;
   final email = '$label-$stamp@example.test';
   const password = 'Probe-Passw0rd!x';
@@ -54,7 +53,25 @@ Future<({AtlasApiClient client, String userId})> newLocalLearner(
       rememberDevice: false,
     );
   }
-  return (client: client, userId: (outcome as SignedIn).user['id'] as String);
+  return (
+    client: client,
+    userId: (outcome as SignedIn).user['id'] as String,
+    email: email,
+    password: password,
+  );
+}
+
+/// Makes the newest emailed reset/verification link of [email] accept
+/// [token] (local database only; see tool/local_stack/force_link_token.mjs).
+Future<void> forceLinkToken(String email, String kind, String token) async {
+  final r = await Process.run('node', [
+    'tool/local_stack/force_link_token.mjs',
+    _env['ATLAS_SPIKE_OTP_ENV']!,
+    email,
+    kind,
+    token,
+  ]);
+  expect(r.exitCode, 0, reason: '${r.stderr}');
 }
 
 /// The seed owner on the management surface.
@@ -81,8 +98,20 @@ Future<AtlasApiClient> localStaff() async {
 
 /// A published course with one text lesson, a quiz with every question
 /// type, an assignment, and a certificate on completion of all three.
-Future<({String courseId, String lessonId, String quizId, String assignmentId})>
-authorAssessedCourse(AtlasApiClient staff, {String integrity = 'warn'}) async {
+Future<
+  ({
+    String courseId,
+    String lessonId,
+    String quizId,
+    String assignmentId,
+    String slug,
+  })
+>
+authorAssessedCourse(
+  AtlasApiClient staff, {
+  String integrity = 'warn',
+  String visibility = 'private',
+}) async {
   final a = localAcademyId;
   final stamp = DateTime.now().microsecondsSinceEpoch;
   final course = await staff.post<Map<String, dynamic>>(
@@ -91,7 +120,7 @@ authorAssessedCourse(AtlasApiClient staff, {String integrity = 'warn'}) async {
       'title': 'أساسيات الجبر $stamp',
       'slug': 'algebra-$stamp',
       'pricing': {'type': 'free'},
-      'visibility': 'private',
+      'visibility': visibility,
       'language': 'ar',
     },
   );
@@ -213,5 +242,6 @@ authorAssessedCourse(AtlasApiClient staff, {String integrity = 'warn'}) async {
     lessonId: lessonId,
     quizId: quizId,
     assignmentId: assignmentId,
+    slug: 'algebra-$stamp',
   );
 }

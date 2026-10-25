@@ -140,6 +140,26 @@ class AuthRepository {
     data: {'email': email},
   );
 
+  /// Whether an emailed reset token can still be used (reveals nothing else).
+  Future<bool> validateResetToken(String token) async {
+    final body = await client.post<Map<String, dynamic>>(
+      'auth/password-reset/validate',
+      data: {'token': token},
+    );
+    return body['valid'] == true;
+  }
+
+  /// Sets the new password. The server then ends every session.
+  Future<void> confirmPasswordReset(String token, String newPassword) =>
+      client.post<dynamic>(
+        'auth/password-reset/confirm',
+        data: {'token': token, 'newPassword': newPassword},
+      );
+
+  /// Completes email verification. Only the account's own session can.
+  Future<void> verifyEmail(String token) =>
+      client.post<dynamic>('auth/verify-email', data: {'token': token});
+
   /// `{resendAvailableAt, resendsRemaining}`.
   Future<(DateTime, int)> resendEmailCode(String challengeId) async {
     final body = await client.post<Map<String, dynamic>>(

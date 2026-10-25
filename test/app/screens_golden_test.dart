@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:atlas_mobile/app/atlas_app.dart';
+import 'package:atlas_mobile/app/deep_links.dart';
 import 'package:atlas_mobile/app/learning_providers.dart';
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/app/push.dart';
@@ -22,6 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../design/golden_harness.dart';
 import 'fake_assessment.dart';
+import 'fake_catalog.dart';
 import 'fake_notifications.dart';
 import 'fake_learning.dart';
 
@@ -48,9 +50,25 @@ class _SignedOut extends SessionController {
       const SessionState(status: SessionStatus.signedOut, academy: ziadd);
 }
 
+class _SignedOutLinks extends _SignedOut {
+  @override
+  AuthRepository? get auth => FakeAuthRepository();
+}
+
+class _SignedInLinks extends _SignedIn {
+  @override
+  AuthRepository? get auth => FakeAuthRepository();
+}
+
 class _NoAcademy extends SessionController {
   @override
   SessionState build() => const SessionState(status: SessionStatus.noAcademy);
+}
+
+/// No platform channel in widget tests: links never arrive.
+class _NoLinks extends DeepLinkController {
+  @override
+  void start() {}
 }
 
 class _PushNotAsked extends PushController {
@@ -114,6 +132,7 @@ Future<ProviderContainer> _pump(
       ),
       sessionProvider.overrideWith(session),
       learningRepositoryProvider.overrideWithValue(FakeLearningRepository()),
+      catalogRepositoryProvider.overrideWithValue(FakeCatalogRepository()),
       assessmentRepositoryProvider.overrideWithValue(
         assessments ?? FakeAssessmentRepository(),
       ),
@@ -123,6 +142,7 @@ Future<ProviderContainer> _pump(
       accountRepositoryProvider.overrideWithValue(FakeAccountRepository()),
       notificationCatalogProvider.overrideWithValue(_notificationCatalog()),
       pushControllerProvider.overrideWith(_PushNotAsked.new),
+      deepLinkProvider.overrideWith(_NoLinks.new),
     ],
   );
   addTearDown(container.dispose);
@@ -398,5 +418,54 @@ void main() {
       size: const Size(393, 1000),
     );
     await _golden(t, 'privacy_ar');
+  }, variant: ios);
+
+  testWidgets('catalog_ar', (t) async {
+    await _pump(t, session: _SignedIn.new, path: '/catalog');
+    await _golden(t, 'catalog_ar');
+  }, variant: ios);
+
+  testWidgets('course_preview_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/catalog/free-algebra',
+      size: const Size(393, 1300),
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    await _golden(t, 'course_preview_ar');
+  }, variant: ios);
+
+  testWidgets('course_preview_en_dark_android', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      language: 'en',
+      theme: ThemeMode.dark,
+      path: '/catalog/free-physics',
+      size: const Size(393, 1300),
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    await _golden(t, 'course_preview_en_dark_android');
+  });
+
+  testWidgets('reset_password_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedOutLinks.new,
+      path: '/academy/reset-password',
+      extra: 'golden-token',
+    );
+    await _golden(t, 'reset_password_ar');
+  }, variant: ios);
+
+  testWidgets('verify_email_done_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedInLinks.new,
+      path: '/account/verify-email',
+      extra: 'golden-token',
+    );
+    await _golden(t, 'verify_email_done_ar');
   }, variant: ios);
 }

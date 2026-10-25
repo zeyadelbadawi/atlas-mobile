@@ -825,7 +825,7 @@
   "profileEmailVerified": "Verified",
   "profileEmailUnverified": "Not verified",
   "profileVerifyEmail": "Send verification email",
-  "profileVerifySent": "We sent a link to {email}. Open it on this phone, sign in on the academy page if asked, and your email is verified.",
+  "profileVerifySent": "We sent a link to {email}. Open it on this phone to verify your email.",
   "@profileVerifySent": {
     "placeholders": {
       "email": {
@@ -914,5 +914,125 @@
   "deleteDone": "Your account was deleted.",
   "academiesTitle": "Your academies",
   "academiesCurrent": "Current",
-  "academiesAdd": "Add another academy"
+  "academiesAdd": "Add another academy",
+  "catalogTitle": "Free courses",
+  "catalogBrowse": "Browse free courses",
+  "catalogBrowseBody": "Join any of {academy}'s free courses and start right away.",
+  "@catalogBrowseBody": {
+    "placeholders": {
+      "academy": {
+        "type": "String"
+      }
+    }
+  },
+  "catalogSearch": "Search free courses",
+  "catalogEmpty": "This academy has no free courses right now.",
+  "catalogNoResults": "No free courses match your search.",
+  "catalogFree": "Free",
+  "catalogLoadMore": "Show more",
+  "catalogJoined": "Joined",
+  "previewJoin": "Join for free",
+  "previewOpen": "Open course",
+  "previewJoinedToast": "You joined {course}.",
+  "@previewJoinedToast": {
+    "placeholders": {
+      "course": {
+        "type": "String"
+      }
+    }
+  },
+  "previewAbout": "About this course",
+  "previewOutcomes": "What you'll learn",
+  "previewRequirements": "Before you start",
+  "previewContent": "Course content",
+  "previewCertificate": "Certificate on completion",
+  "previewUnits": "{count} units",
+  "@previewUnits": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "previewQuizzes": "{count} quizzes",
+  "@previewQuizzes": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "previewAssignments": "{count} assignments",
+  "@previewAssignments": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "previewHours": "{hours} h {minutes} min",
+  "@previewHours": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "previewNotFree": "This course isn't free. You can join it from the academy's website.",
+  "previewNotFound": "This course isn't available. It may have been unpublished.",
+  "enrollLimitReached": "This academy isn't taking new students right now. Contact the academy.",
+  "levelBeginner": "Beginner",
+  "levelIntermediate": "Intermediate",
+  "levelAdvanced": "Advanced",
+  "levelAll": "All levels",
+  "linkOpenFailed": "This link couldn't be opened. Check your connection and try again.",
+  "linkSwitchTitle": "Open {academy}?",
+  "@linkSwitchTitle": {
+    "placeholders": {
+      "academy": {
+        "type": "String"
+      }
+    }
+  },
+  "linkSwitchBody": "This link is for {academy}. You stay signed in to {current} and can switch back from Account.",
+  "@linkSwitchBody": {
+    "placeholders": {
+      "academy": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "linkSwitchOpen": "Open",
+  "verifyTitle": "Verify your email",
+  "verifyWorking": "Verifying your email…",
+  "verifyDone": "Your email is verified.",
+  "verifyInvalid": "This verification link isn't valid. Send a new one from your profile.",
+  "verifyOpenProfile": "Go to profile",
+  "resetTitle": "Choose a new password",
+  "resetBody": "Enter a new password for your account at {academy}.",
+  "@resetBody": {
+    "placeholders": {
+      "academy": {
+        "type": "String"
+      }
+    }
+  },
+  "resetChecking": "Checking the link…",
+  "resetSubmit": "Save new password",
+  "resetInvalid": "This reset link has expired or was already used.",
+  "resetRequestNew": "Request a new link",
+  "resetDoneBody": "Sign in with your new password. You've been signed out on every device.",
+  "pickerScan": "Scan a QR code",
+  "qrTitle": "Scan the academy's code",
+  "qrHint": "Point the camera at the academy's QR code.",
+  "qrTorch": "Flashlight",
+  "qrNoPermission": "Atlas needs the camera to scan the code. Allow it in your phone's settings, or type the academy's address instead.",
+  "qrUnavailable": "The camera isn't available right now. Type the academy's address instead.",
+  "qrNotAcademy": "That code isn't an academy address."
 }

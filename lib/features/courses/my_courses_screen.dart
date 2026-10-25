@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/learning_providers.dart';
+import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/learning/learning_models.dart';
 import '../../design/design.dart';
+import '../catalog/catalog_screen.dart';
 import '../learning/course_widgets.dart';
 import '../learning/learning_ui.dart';
 
@@ -47,6 +49,10 @@ class _MyCoursesScreenState extends ConsumerState<MyCoursesScreen> {
                       l.coursesTitle,
                       style: a.type.largeTitle.copyWith(color: a.colors.ink),
                     ),
+                  ),
+                  const SizedBox(height: AtlasSpace.s16),
+                  BrowseFreeCoursesCard(
+                    academyName: ref.watch(sessionProvider).academy?.name ?? '',
                   ),
                   const SizedBox(height: AtlasSpace.s16),
                   SegmentedButton<String>(

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../core/auth/auth_repository.dart';
 import '../features/academy_picker/academy_picker_screen.dart';
+import '../features/academy_picker/qr_scan_screen.dart';
 import '../features/account/account_screen.dart';
 import '../features/account/account_settings_screens.dart';
 import '../features/account/devices_screen.dart';
@@ -11,6 +12,8 @@ import '../features/courses/course_screen.dart';
 import '../features/courses/my_courses_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/assignment/assignment_screen.dart';
+import '../features/catalog/catalog_screen.dart';
+import '../features/catalog/course_preview_screen.dart';
 import '../features/certificates/certificates_screen.dart';
 import '../features/learning/item_redirect_screen.dart';
 import '../features/lesson/lesson_screen.dart';
@@ -24,6 +27,8 @@ import '../features/auth/other_auth_screens.dart';
 import '../features/auth/register_screen.dart';
 import '../features/auth/sign_in_screen.dart';
 import '../features/legal/legal_screens.dart';
+import '../features/links/link_screens.dart';
+import 'deep_links.dart';
 import 'providers.dart';
 import 'push.dart';
 
@@ -34,11 +39,10 @@ bool _signedInPath(String path) =>
     path == '/home' ||
     path.startsWith('/courses') ||
     path.startsWith('/course/') ||
+    path.startsWith('/catalog') ||
     path.startsWith('/account') ||
     path.startsWith('/notifications') ||
     path.startsWith('/announcements');
-
-final _rootKey = GlobalKey<NavigatorState>();
 
 final routerProvider = Provider<GoRouter>((ref) {
   final refresh = ValueNotifier<int>(0);
@@ -46,7 +50,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   ref.onDispose(refresh.dispose);
 
   return GoRouter(
-    navigatorKey: _rootKey,
+    navigatorKey: rootNavigatorKey,
     initialLocation: '/',
     refreshListenable: refresh,
     redirect: (context, state) {
@@ -55,11 +59,15 @@ final routerProvider = Provider<GoRouter>((ref) {
       final target = _public(path)
           ? null
           : switch (s) {
-              SessionStatus.noAcademy => path == '/picker' ? null : '/picker',
+              SessionStatus.noAcademy =>
+                path.startsWith('/picker') ? null : '/picker',
               SessionStatus.restoring => path == '/loading' ? null : '/loading',
               SessionStatus.signedOut =>
                 path.startsWith('/academy/') ? null : '/academy/sign-in',
-              SessionStatus.signedIn => _signedInPath(path) ? null : '/home',
+              SessionStatus.signedIn =>
+                _signedInPath(path) || path == '/academy/reset-password'
+                    ? null
+                    : '/home',
             };
       // Route templates only (`/course/:id`), never ids or names.
       if (target == null) {
@@ -71,6 +79,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/', builder: (_, _) => const _Loading()),
       GoRoute(path: '/loading', builder: (_, _) => const _Loading()),
       GoRoute(path: '/picker', builder: (_, _) => const AcademyPickerScreen()),
+      GoRoute(path: '/picker/scan', builder: (_, _) => const QrScanScreen()),
       GoRoute(
         path: '/academy/sign-in',
         builder: (_, s) => SignInScreen(email: s.extra as String?),
@@ -93,6 +102,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/academy/forgot',
         builder: (_, s) => ForgotPasswordScreen(email: s.extra as String?),
+      ),
+      GoRoute(
+        path: '/academy/reset-password',
+        builder: (_, s) => ResetPasswordScreen(token: s.extra as String?),
       ),
       GoRoute(
         path: '/academy/apple-link',
@@ -136,6 +149,12 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(path: '/catalog', builder: (_, _) => const CatalogScreen()),
+      GoRoute(
+        path: '/catalog/:id',
+        builder: (_, s) =>
+            CoursePreviewScreen(idOrSlug: s.pathParameters['id']!),
       ),
       GoRoute(
         path: '/course/:id',
@@ -197,6 +216,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/account/notifications',
         builder: (_, _) => const NotificationSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/account/verify-email',
+        builder: (_, s) => VerifyEmailScreen(token: s.extra as String?),
       ),
       GoRoute(
         path: '/account/privacy',

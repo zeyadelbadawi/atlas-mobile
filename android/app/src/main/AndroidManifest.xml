@@ -32,6 +32,33 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Academy links open the app (App Links, verified against
+                 /.well-known/assetlinks.json). Only pages the app shows; the
+                 app sends paying pages and other hosts to a browser tab. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="*.atlass.dpdns.org" />
+                <data android:pathPrefix="/courses" />
+                <data android:pathPrefix="/my/" />
+                <data android:path="/verify-email" />
+                <data android:path="/reset-password" />
+                <data android:pathPrefix="/ar/courses" />
+                <data android:pathPrefix="/ar/my/" />
+                <data android:path="/ar/verify-email" />
+                <data android:path="/ar/reset-password" />
+                <data android:pathPrefix="/en/courses" />
+                <data android:pathPrefix="/en/my/" />
+                <data android:path="/en/verify-email" />
+                <data android:path="/en/reset-password" />
+            </intent-filter>
+            <!-- Links reach lib/app/deep_links.dart (app_links), not the
+                 router directly: the academy is in the host. -->
+            <meta-data
+                android:name="flutter_deeplinking_enabled"
+                android:value="false" />
         </activity>
         <meta-data
             android:name="google_analytics_adid_collection_enabled"

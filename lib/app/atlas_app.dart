@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../design/design.dart';
 import '../features/system/system_screens.dart';
 import '../l10n/app_localizations.dart';
+import 'deep_links.dart';
 import 'providers.dart';
 import 'push.dart';
 import 'router.dart';
@@ -37,6 +38,15 @@ class AtlasApp extends ConsumerWidget {
     ref.watch(pushControllerProvider);
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => ref.read(pushControllerProvider.notifier).attachHandlers(),
+    );
+
+    // Academy links (App Links, QR): opened once the session allows.
+    ref.listen(
+      sessionProvider.select((s) => s.status),
+      (_, _) => ref.read(deepLinkProvider.notifier).consume(),
+    );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ref.read(deepLinkProvider.notifier).start(),
     );
 
     return MaterialApp.router(

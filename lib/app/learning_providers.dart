@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/learning/assessment_models.dart';
 import '../core/learning/assessment_repository.dart';
+import '../core/learning/catalog_repository.dart';
 import '../core/learning/learning_models.dart';
 import '../core/learning/learning_repository.dart';
 import 'providers.dart';
@@ -70,3 +71,30 @@ void refreshAssessments(WidgetRef ref, String courseId) {
   ref.invalidate(studentResultsProvider);
   ref.invalidate(certificatesProvider);
 }
+
+/* ---- free catalog (phase 6) ---- */
+
+final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
+  final academy = ref.watch(sessionProvider.select((s) => s.academy));
+  ref.watch(sessionProvider.select((s) => s.user?['id']));
+  final client = ref.read(sessionProvider.notifier).client;
+  if (client == null || academy == null) {
+    throw StateError('no academy session');
+  }
+  return CatalogRepository(client, academy.id);
+});
+
+final catalogCourseProvider = FutureProvider.autoDispose
+    .family<CatalogCourse, String>(
+      (ref, idOrSlug) => ref.watch(catalogRepositoryProvider).course(idOrSlug),
+    );
+
+final curriculumProvider = FutureProvider.autoDispose
+    .family<List<CurriculumSection>, String>(
+      (ref, courseId) =>
+          ref.watch(catalogRepositoryProvider).curriculum(courseId),
+    );
+
+final isEnrolledProvider = FutureProvider.autoDispose.family<bool, String>(
+  (ref, courseId) => ref.watch(catalogRepositoryProvider).isEnrolled(courseId),
+);

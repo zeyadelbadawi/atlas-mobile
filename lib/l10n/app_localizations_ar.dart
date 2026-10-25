@@ -1444,7 +1444,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String profileVerifySent(String email) {
-    return 'أرسلنا رابطًا إلى $email. افتحه على هذا الهاتف، وسجّل الدخول في صفحة الأكاديمية إن طُلب منك، وسيُوثَّق بريدك.';
+    return 'أرسلنا رابطًا إلى $email. افتحه على هذا الهاتف لتأكيد بريدك الإلكتروني.';
   }
 
   @override
@@ -1606,4 +1606,183 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get academiesAdd => 'إضافة أكاديمية أخرى';
+
+  @override
+  String get catalogTitle => 'الكورسات المجانية';
+
+  @override
+  String get catalogBrowse => 'تصفّح الكورسات المجانية';
+
+  @override
+  String catalogBrowseBody(String academy) {
+    return 'انضم إلى أي كورس مجاني في $academy وابدأ فورًا.';
+  }
+
+  @override
+  String get catalogSearch => 'ابحث في الكورسات المجانية';
+
+  @override
+  String get catalogEmpty => 'لا توجد كورسات مجانية في هذه الأكاديمية حاليًا.';
+
+  @override
+  String get catalogNoResults => 'لا توجد كورسات مجانية تطابق بحثك.';
+
+  @override
+  String get catalogFree => 'مجاني';
+
+  @override
+  String get catalogLoadMore => 'عرض المزيد';
+
+  @override
+  String get catalogJoined => 'منضم';
+
+  @override
+  String get previewJoin => 'انضم مجانًا';
+
+  @override
+  String get previewOpen => 'افتح الكورس';
+
+  @override
+  String previewJoinedToast(String course) {
+    return 'انضممت إلى $course.';
+  }
+
+  @override
+  String get previewAbout => 'عن الكورس';
+
+  @override
+  String get previewOutcomes => 'ما ستتعلّمه';
+
+  @override
+  String get previewRequirements => 'قبل أن تبدأ';
+
+  @override
+  String get previewContent => 'محتوى الكورس';
+
+  @override
+  String get previewCertificate => 'شهادة عند الإتمام';
+
+  @override
+  String previewUnits(String count) {
+    return '$count وحدة';
+  }
+
+  @override
+  String previewQuizzes(String count) {
+    return '$count اختبار';
+  }
+
+  @override
+  String previewAssignments(String count) {
+    return '$count واجب';
+  }
+
+  @override
+  String previewHours(String hours, String minutes) {
+    return '$hours س $minutes د';
+  }
+
+  @override
+  String get previewNotFree =>
+      'هذا الكورس ليس مجانيًا. يمكنك الانضمام إليه من موقع الأكاديمية.';
+
+  @override
+  String get previewNotFound => 'هذا الكورس غير متاح. ربما أُلغي نشره.';
+
+  @override
+  String get enrollLimitReached =>
+      'لا تستقبل هذه الأكاديمية طلابًا جددًا حاليًا. تواصل مع الأكاديمية.';
+
+  @override
+  String get levelBeginner => 'مبتدئ';
+
+  @override
+  String get levelIntermediate => 'متوسط';
+
+  @override
+  String get levelAdvanced => 'متقدّم';
+
+  @override
+  String get levelAll => 'كل المستويات';
+
+  @override
+  String get linkOpenFailed =>
+      'تعذّر فتح هذا الرابط. تحقّق من اتصالك وحاول مرة أخرى.';
+
+  @override
+  String linkSwitchTitle(String academy) {
+    return 'فتح $academy؟';
+  }
+
+  @override
+  String linkSwitchBody(String academy, String current) {
+    return 'هذا الرابط خاص بـ$academy. ستبقى مسجّلًا في $current ويمكنك العودة إليها من حسابي.';
+  }
+
+  @override
+  String get linkSwitchOpen => 'فتح';
+
+  @override
+  String get verifyTitle => 'تأكيد البريد الإلكتروني';
+
+  @override
+  String get verifyWorking => 'جارٍ تأكيد بريدك الإلكتروني…';
+
+  @override
+  String get verifyDone => 'تم تأكيد بريدك الإلكتروني.';
+
+  @override
+  String get verifyInvalid =>
+      'رابط التأكيد هذا غير صالح. أرسل رابطًا جديدًا من ملفك الشخصي.';
+
+  @override
+  String get verifyOpenProfile => 'الانتقال إلى الملف الشخصي';
+
+  @override
+  String get resetTitle => 'اختر كلمة مرور جديدة';
+
+  @override
+  String resetBody(String academy) {
+    return 'أدخل كلمة مرور جديدة لحسابك في $academy.';
+  }
+
+  @override
+  String get resetChecking => 'جارٍ التحقق من الرابط…';
+
+  @override
+  String get resetSubmit => 'حفظ كلمة المرور الجديدة';
+
+  @override
+  String get resetInvalid =>
+      'انتهت صلاحية رابط إعادة التعيين هذا أو استُخدم من قبل.';
+
+  @override
+  String get resetRequestNew => 'اطلب رابطًا جديدًا';
+
+  @override
+  String get resetDoneBody =>
+      'سجّل الدخول بكلمة المرور الجديدة. تم تسجيل خروجك من كل الأجهزة.';
+
+  @override
+  String get pickerScan => 'مسح رمز QR';
+
+  @override
+  String get qrTitle => 'امسح رمز الأكاديمية';
+
+  @override
+  String get qrHint => 'وجّه الكاميرا إلى رمز QR الخاص بالأكاديمية.';
+
+  @override
+  String get qrTorch => 'الكشاف';
+
+  @override
+  String get qrNoPermission =>
+      'يحتاج Atlas إلى الكاميرا لمسح الرمز. اسمح بها من إعدادات هاتفك، أو اكتب عنوان الأكاديمية بدلًا من ذلك.';
+
+  @override
+  String get qrUnavailable =>
+      'الكاميرا غير متاحة حاليًا. اكتب عنوان الأكاديمية بدلًا من ذلك.';
+
+  @override
+  String get qrNotAcademy => 'هذا الرمز ليس عنوان أكاديمية.';
 }

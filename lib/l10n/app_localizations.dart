@@ -2597,7 +2597,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileVerifySent.
   ///
   /// In en, this message translates to:
-  /// **'We sent a link to {email}. Open it on this phone, sign in on the academy page if asked, and your email is verified.'**
+  /// **'We sent a link to {email}. Open it on this phone to verify your email.'**
   String profileVerifySent(String email);
 
   /// No description provided for @securityTitle.
@@ -2881,6 +2881,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add another academy'**
   String get academiesAdd;
+
+  /// No description provided for @catalogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Free courses'**
+  String get catalogTitle;
+
+  /// No description provided for @catalogBrowse.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse free courses'**
+  String get catalogBrowse;
+
+  /// No description provided for @catalogBrowseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Join any of {academy}\'s free courses and start right away.'**
+  String catalogBrowseBody(String academy);
+
+  /// No description provided for @catalogSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search free courses'**
+  String get catalogSearch;
+
+  /// No description provided for @catalogEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This academy has no free courses right now.'**
+  String get catalogEmpty;
+
+  /// No description provided for @catalogNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No free courses match your search.'**
+  String get catalogNoResults;
+
+  /// No description provided for @catalogFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get catalogFree;
+
+  /// No description provided for @catalogLoadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get catalogLoadMore;
+
+  /// No description provided for @catalogJoined.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined'**
+  String get catalogJoined;
+
+  /// No description provided for @previewJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join for free'**
+  String get previewJoin;
+
+  /// No description provided for @previewOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open course'**
+  String get previewOpen;
+
+  /// No description provided for @previewJoinedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'You joined {course}.'**
+  String previewJoinedToast(String course);
+
+  /// No description provided for @previewAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About this course'**
+  String get previewAbout;
+
+  /// No description provided for @previewOutcomes.
+  ///
+  /// In en, this message translates to:
+  /// **'What you\'ll learn'**
+  String get previewOutcomes;
+
+  /// No description provided for @previewRequirements.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you start'**
+  String get previewRequirements;
+
+  /// No description provided for @previewContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Course content'**
+  String get previewContent;
+
+  /// No description provided for @previewCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate on completion'**
+  String get previewCertificate;
+
+  /// No description provided for @previewUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} units'**
+  String previewUnits(String count);
+
+  /// No description provided for @previewQuizzes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} quizzes'**
+  String previewQuizzes(String count);
+
+  /// No description provided for @previewAssignments.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} assignments'**
+  String previewAssignments(String count);
+
+  /// No description provided for @previewHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} h {minutes} min'**
+  String previewHours(String hours, String minutes);
+
+  /// No description provided for @previewNotFree.
+  ///
+  /// In en, this message translates to:
+  /// **'This course isn\'t free. You can join it from the academy\'s website.'**
+  String get previewNotFree;
+
+  /// No description provided for @previewNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This course isn\'t available. It may have been unpublished.'**
+  String get previewNotFound;
+
+  /// No description provided for @enrollLimitReached.
+  ///
+  /// In en, this message translates to:
+  /// **'This academy isn\'t taking new students right now. Contact the academy.'**
+  String get enrollLimitReached;
+
+  /// No description provided for @levelBeginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get levelBeginner;
+
+  /// No description provided for @levelIntermediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get levelIntermediate;
+
+  /// No description provided for @levelAdvanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get levelAdvanced;
+
+  /// No description provided for @levelAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All levels'**
+  String get levelAll;
+
+  /// No description provided for @linkOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'This link couldn\'t be opened. Check your connection and try again.'**
+  String get linkOpenFailed;
+
+  /// No description provided for @linkSwitchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open {academy}?'**
+  String linkSwitchTitle(String academy);
+
+  /// No description provided for @linkSwitchBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This link is for {academy}. You stay signed in to {current} and can switch back from Account.'**
+  String linkSwitchBody(String academy, String current);
+
+  /// No description provided for @linkSwitchOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get linkSwitchOpen;
+
+  /// No description provided for @verifyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your email'**
+  String get verifyTitle;
+
+  /// No description provided for @verifyWorking.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying your email…'**
+  String get verifyWorking;
+
+  /// No description provided for @verifyDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your email is verified.'**
+  String get verifyDone;
+
+  /// No description provided for @verifyInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This verification link isn\'t valid. Send a new one from your profile.'**
+  String get verifyInvalid;
+
+  /// No description provided for @verifyOpenProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to profile'**
+  String get verifyOpenProfile;
+
+  /// No description provided for @resetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a new password'**
+  String get resetTitle;
+
+  /// No description provided for @resetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a new password for your account at {academy}.'**
+  String resetBody(String academy);
+
+  /// No description provided for @resetChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking the link…'**
+  String get resetChecking;
+
+  /// No description provided for @resetSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Save new password'**
+  String get resetSubmit;
+
+  /// No description provided for @resetInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This reset link has expired or was already used.'**
+  String get resetInvalid;
+
+  /// No description provided for @resetRequestNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Request a new link'**
+  String get resetRequestNew;
+
+  /// No description provided for @resetDoneBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with your new password. You\'ve been signed out on every device.'**
+  String get resetDoneBody;
+
+  /// No description provided for @pickerScan.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan a QR code'**
+  String get pickerScan;
+
+  /// No description provided for @qrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan the academy\'s code'**
+  String get qrTitle;
+
+  /// No description provided for @qrHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Point the camera at the academy\'s QR code.'**
+  String get qrHint;
+
+  /// No description provided for @qrTorch.
+  ///
+  /// In en, this message translates to:
+  /// **'Flashlight'**
+  String get qrTorch;
+
+  /// No description provided for @qrNoPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Atlas needs the camera to scan the code. Allow it in your phone\'s settings, or type the academy\'s address instead.'**
+  String get qrNoPermission;
+
+  /// No description provided for @qrUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera isn\'t available right now. Type the academy\'s address instead.'**
+  String get qrUnavailable;
+
+  /// No description provided for @qrNotAcademy.
+  ///
+  /// In en, this message translates to:
+  /// **'That code isn\'t an academy address.'**
+  String get qrNotAcademy;
 }
 
 class _AppLocalizationsDelegate

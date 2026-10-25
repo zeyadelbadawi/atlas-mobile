@@ -1446,7 +1446,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String profileVerifySent(String email) {
-    return 'We sent a link to $email. Open it on this phone, sign in on the academy page if asked, and your email is verified.';
+    return 'We sent a link to $email. Open it on this phone to verify your email.';
   }
 
   @override
@@ -1608,4 +1608,183 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get academiesAdd => 'Add another academy';
+
+  @override
+  String get catalogTitle => 'Free courses';
+
+  @override
+  String get catalogBrowse => 'Browse free courses';
+
+  @override
+  String catalogBrowseBody(String academy) {
+    return 'Join any of $academy\'s free courses and start right away.';
+  }
+
+  @override
+  String get catalogSearch => 'Search free courses';
+
+  @override
+  String get catalogEmpty => 'This academy has no free courses right now.';
+
+  @override
+  String get catalogNoResults => 'No free courses match your search.';
+
+  @override
+  String get catalogFree => 'Free';
+
+  @override
+  String get catalogLoadMore => 'Show more';
+
+  @override
+  String get catalogJoined => 'Joined';
+
+  @override
+  String get previewJoin => 'Join for free';
+
+  @override
+  String get previewOpen => 'Open course';
+
+  @override
+  String previewJoinedToast(String course) {
+    return 'You joined $course.';
+  }
+
+  @override
+  String get previewAbout => 'About this course';
+
+  @override
+  String get previewOutcomes => 'What you\'ll learn';
+
+  @override
+  String get previewRequirements => 'Before you start';
+
+  @override
+  String get previewContent => 'Course content';
+
+  @override
+  String get previewCertificate => 'Certificate on completion';
+
+  @override
+  String previewUnits(String count) {
+    return '$count units';
+  }
+
+  @override
+  String previewQuizzes(String count) {
+    return '$count quizzes';
+  }
+
+  @override
+  String previewAssignments(String count) {
+    return '$count assignments';
+  }
+
+  @override
+  String previewHours(String hours, String minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String get previewNotFree =>
+      'This course isn\'t free. You can join it from the academy\'s website.';
+
+  @override
+  String get previewNotFound =>
+      'This course isn\'t available. It may have been unpublished.';
+
+  @override
+  String get enrollLimitReached =>
+      'This academy isn\'t taking new students right now. Contact the academy.';
+
+  @override
+  String get levelBeginner => 'Beginner';
+
+  @override
+  String get levelIntermediate => 'Intermediate';
+
+  @override
+  String get levelAdvanced => 'Advanced';
+
+  @override
+  String get levelAll => 'All levels';
+
+  @override
+  String get linkOpenFailed =>
+      'This link couldn\'t be opened. Check your connection and try again.';
+
+  @override
+  String linkSwitchTitle(String academy) {
+    return 'Open $academy?';
+  }
+
+  @override
+  String linkSwitchBody(String academy, String current) {
+    return 'This link is for $academy. You stay signed in to $current and can switch back from Account.';
+  }
+
+  @override
+  String get linkSwitchOpen => 'Open';
+
+  @override
+  String get verifyTitle => 'Verify your email';
+
+  @override
+  String get verifyWorking => 'Verifying your email…';
+
+  @override
+  String get verifyDone => 'Your email is verified.';
+
+  @override
+  String get verifyInvalid =>
+      'This verification link isn\'t valid. Send a new one from your profile.';
+
+  @override
+  String get verifyOpenProfile => 'Go to profile';
+
+  @override
+  String get resetTitle => 'Choose a new password';
+
+  @override
+  String resetBody(String academy) {
+    return 'Enter a new password for your account at $academy.';
+  }
+
+  @override
+  String get resetChecking => 'Checking the link…';
+
+  @override
+  String get resetSubmit => 'Save new password';
+
+  @override
+  String get resetInvalid => 'This reset link has expired or was already used.';
+
+  @override
+  String get resetRequestNew => 'Request a new link';
+
+  @override
+  String get resetDoneBody =>
+      'Sign in with your new password. You\'ve been signed out on every device.';
+
+  @override
+  String get pickerScan => 'Scan a QR code';
+
+  @override
+  String get qrTitle => 'Scan the academy\'s code';
+
+  @override
+  String get qrHint => 'Point the camera at the academy\'s QR code.';
+
+  @override
+  String get qrTorch => 'Flashlight';
+
+  @override
+  String get qrNoPermission =>
+      'Atlas needs the camera to scan the code. Allow it in your phone\'s settings, or type the academy\'s address instead.';
+
+  @override
+  String get qrUnavailable =>
+      'The camera isn\'t available right now. Type the academy\'s address instead.';
+
+  @override
+  String get qrNotAcademy => 'That code isn\'t an academy address.';
 }

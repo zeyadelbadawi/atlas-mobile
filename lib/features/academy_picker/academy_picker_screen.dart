@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../../app/deep_links.dart';
 import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/academy/academy.dart';
@@ -46,12 +48,30 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
     try {
       final academy = await dir.resolve(host);
       if (!mounted) return;
+      // A full link (a course, a reset link…) opens that screen next.
+      final link = recent == null
+          ? parseAcademyLink(Uri.tryParse(_field.text.trim()) ?? Uri())
+          : null;
+      if (link != null) ref.read(deepLinkProvider.notifier).queue(link);
       await ref.read(sessionProvider.notifier).chooseAcademy(academy);
     } on Object catch (e) {
       if (mounted) setState(() => _error = errorText(ref, context, e));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
+  }
+
+  Future<void> _scan() async {
+    final value = await context.push<String>('/picker/scan');
+    if (value == null || !mounted) return;
+    final dir = ref.read(academyDirectoryProvider);
+    final uri = Uri.tryParse(value);
+    final host = uri != null && uri.hasScheme ? uri.host : dir.hostFor(value);
+    if (host == null || host.isEmpty || !host.contains('.')) {
+      return setState(() => _error = context.l10n.qrNotAcademy);
+    }
+    _field.text = value;
+    await _open();
   }
 
   @override
@@ -98,6 +118,13 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
                       label: l.pickerOpen,
                       loading: _busy,
                       onPressed: _busy ? null : _open,
+                    ),
+                    const SizedBox(height: AtlasSpace.s8),
+                    AtlasButton(
+                      label: l.pickerScan,
+                      icon: LucideIcons.scanQrCode,
+                      style: AtlasButtonStyle.plain,
+                      onPressed: _busy ? null : _scan,
                     ),
                     if (recent.isNotEmpty) ...[
                       SectionHeader(title: l.pickerRecent),

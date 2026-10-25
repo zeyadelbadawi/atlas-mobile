@@ -8,6 +8,7 @@ import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/learning/learning_models.dart';
 import '../../design/design.dart';
+import '../catalog/catalog_screen.dart';
 import '../learning/learning_ui.dart';
 import '../learning/course_widgets.dart';
 
@@ -93,6 +94,10 @@ class _Body extends ConsumerWidget {
             title: courses.isEmpty ? l.homeEmptyTitle : l.homeAllDone,
             body: courses.isEmpty ? l.homeEmptyBody(academy.name) : null,
           ),
+        if (continueCourseId == null) ...[
+          const SizedBox(height: AtlasSpace.s12),
+          BrowseFreeCoursesCard(academyName: academy.name),
+        ],
         if (overview.deadlines.isNotEmpty) ...[
           SectionHeader(title: l.homeDueSoon),
           for (final d in overview.deadlines.take(4))
