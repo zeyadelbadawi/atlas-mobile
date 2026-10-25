@@ -1,4 +1,7 @@
 import 'package:atlas_mobile/core/api/academy_endpoint.dart';
+
+import '../design/golden_harness.dart' show testNow;
+
 import 'package:atlas_mobile/core/api/atlas_api_client.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/core/learning/learning_repository.dart';
@@ -16,7 +19,7 @@ class FakeLearningRepository extends LearningRepository {
       );
 
   static const courseId = 'c-calc';
-  static final _now = DateTime.now();
+  static final _now = testNow;
 
   static Map<String, dynamic> _item(
     int pos,

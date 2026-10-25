@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../app/push.dart';
 import '../../app/learning_providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/api/api_error.dart';
@@ -311,6 +312,9 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen> {
         baseRevision: _submission?.submittedRevision ?? 0,
       );
       _pendingSubmit = null;
+      ref.read(analyticsProvider).event('assignment_submit', {
+        'attachment': _attachment == null ? 0 : 1,
+      });
       refreshAssessments(ref, widget.courseId);
       if (!mounted) return;
       setState(() {

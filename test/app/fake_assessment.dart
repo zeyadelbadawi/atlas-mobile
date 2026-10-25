@@ -1,4 +1,7 @@
 import 'package:atlas_mobile/core/api/academy_endpoint.dart';
+
+import '../design/golden_harness.dart' show testNow;
+
 import 'package:atlas_mobile/core/api/atlas_api_client.dart';
 import 'package:atlas_mobile/core/learning/assessment_models.dart';
 import 'package:atlas_mobile/core/learning/assessment_repository.dart';
@@ -20,7 +23,7 @@ class FakeAssessmentRepository extends AssessmentRepository {
   final QuizStage stage;
   final bool graded;
 
-  static final _now = DateTime.now().toUtc();
+  static final _now = testNow.toUtc();
 
   static const _questions = [
     {

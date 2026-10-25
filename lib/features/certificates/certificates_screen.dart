@@ -5,6 +5,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../app/push.dart';
 import '../../app/learning_providers.dart';
 import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
@@ -146,6 +147,7 @@ class _CertificateCardState extends ConsumerState<CertificateCard> {
       final link = await ref
           .read(assessmentRepositoryProvider)
           .certificateDownload(widget.certificate.id);
+      ref.read(analyticsProvider).event('certificate_open');
       await launchUrl(Uri.parse(link.url), mode: LaunchMode.inAppBrowserView);
     } on Object catch (e) {
       if (mounted) setState(() => _error = errorText(ref, context, e));

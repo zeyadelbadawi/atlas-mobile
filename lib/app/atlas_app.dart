@@ -6,6 +6,7 @@ import '../design/design.dart';
 import '../features/system/system_screens.dart';
 import '../l10n/app_localizations.dart';
 import 'providers.dart';
+import 'push.dart';
 import 'router.dart';
 
 class AtlasApp extends ConsumerWidget {
@@ -32,8 +33,15 @@ class AtlasApp extends ConsumerWidget {
       bodyFallback: font.fallback,
     );
 
+    // Push taps and foreground messages, once the router exists.
+    ref.watch(pushControllerProvider);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ref.read(pushControllerProvider.notifier).attachHandlers(),
+    );
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: scaffoldMessengerKey,
       onGenerateTitle: (c) => AppLocalizations.of(c).appName,
       routerConfig: router,
       locale: locale,

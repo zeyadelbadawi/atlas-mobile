@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../../app/push.dart';
 import '../../app/learning_providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/api/api_error.dart';
@@ -125,6 +126,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
 
   /// The runner says the attempt is over (submitted, time, integrity).
   Future<void> _finished(String attemptId) async {
+    ref.read(analyticsProvider).event('quiz_submit');
     refreshAssessments(ref, widget.courseId);
     try {
       _attempts = await ref

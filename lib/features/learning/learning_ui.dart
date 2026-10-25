@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../../core/clock.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -89,7 +92,7 @@ String weekdayShort(BuildContext context, DateTime d) =>
     DateFormat.EEEE(context.languageCode).format(d);
 
 String relative(BuildContext context, DateTime d) {
-  final now = DateTime.now();
+  final now = clockNow();
   final days = DateTime(
     d.year,
     d.month,

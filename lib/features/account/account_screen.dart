@@ -106,6 +106,31 @@ class AccountScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
+                    SectionHeader(title: l.accountSettings),
+                    SettingsGroup(
+                      children: [
+                        SettingsRow(
+                          title: l.accountProfile,
+                          icon: LucideIcons.userPen,
+                          onTap: () => context.push('/account/profile'),
+                        ),
+                        SettingsRow(
+                          title: l.accountSecurity,
+                          icon: LucideIcons.keyRound,
+                          onTap: () => context.push('/account/security'),
+                        ),
+                        SettingsRow(
+                          title: l.accountNotifications,
+                          icon: LucideIcons.bellRing,
+                          onTap: () => context.push('/account/notifications'),
+                        ),
+                        SettingsRow(
+                          title: l.accountPrivacy,
+                          icon: LucideIcons.shieldCheck,
+                          onTap: () => context.push('/account/privacy'),
+                        ),
+                      ],
+                    ),
                     SectionHeader(title: l.accountLanguage),
                     _choice<String?>(
                       context,

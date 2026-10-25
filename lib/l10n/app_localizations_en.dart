@@ -1332,4 +1332,280 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountLearning => 'Learning';
+
+  @override
+  String get notificationOpen => 'Open';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get notificationsMarkAll => 'Mark all as read';
+
+  @override
+  String get notificationsEmptyTitle => 'You\'re all caught up';
+
+  @override
+  String get notificationsEmptyBody =>
+      'Grades, certificates, announcements and reminders from your academy appear here.';
+
+  @override
+  String get notificationsUnread => 'Unread';
+
+  @override
+  String get notificationsFallback => 'You have a new notification.';
+
+  @override
+  String get notificationsLoadMore => 'Show more';
+
+  @override
+  String get pushCardTitle => 'Know when your work is graded';
+
+  @override
+  String get pushCardBody =>
+      'Turn on notifications to hear about grades, certificates, announcements and due dates, even when the app is closed.';
+
+  @override
+  String get pushCardAction => 'Turn on notifications';
+
+  @override
+  String get pushCardLater => 'Not now';
+
+  @override
+  String get pushDenied =>
+      'Notifications are off for Atlas. You can turn them on in your phone\'s Settings.';
+
+  @override
+  String get announcementsTitle => 'Announcements';
+
+  @override
+  String get announcementsEmpty => 'No announcements yet.';
+
+  @override
+  String announcementBy(String name) {
+    return 'By $name';
+  }
+
+  @override
+  String get announcementCourse => 'Course announcement';
+
+  @override
+  String get announcementAcademy => 'Academy announcement';
+
+  @override
+  String get itemNotFound => 'This item is no longer in the course.';
+
+  @override
+  String get accountSettings => 'Settings';
+
+  @override
+  String get accountProfile => 'Profile';
+
+  @override
+  String get accountSecurity => 'Password and sign-ins';
+
+  @override
+  String get accountNotifications => 'Notifications';
+
+  @override
+  String get accountPrivacy => 'Privacy and data';
+
+  @override
+  String get profileName => 'Name';
+
+  @override
+  String get profileNameHint => 'Your full name';
+
+  @override
+  String get profileNameRequired => 'Enter your name.';
+
+  @override
+  String get profileEmail => 'Email';
+
+  @override
+  String get profileEmailNote =>
+      'Your email is your sign-in and can\'t be changed here.';
+
+  @override
+  String get profilePhone => 'Mobile number';
+
+  @override
+  String get profileSave => 'Save';
+
+  @override
+  String get profileSaved => 'Saved.';
+
+  @override
+  String get profileEmailVerified => 'Verified';
+
+  @override
+  String get profileEmailUnverified => 'Not verified';
+
+  @override
+  String get profileVerifyEmail => 'Send verification email';
+
+  @override
+  String profileVerifySent(String email) {
+    return 'We sent a link to $email. Open it on this phone, sign in on the academy page if asked, and your email is verified.';
+  }
+
+  @override
+  String get securityTitle => 'Password and sign-ins';
+
+  @override
+  String get securityChangePassword => 'Change password';
+
+  @override
+  String get securityCurrentPassword => 'Current password';
+
+  @override
+  String get securityNewPassword => 'New password';
+
+  @override
+  String get securityConfirmPassword => 'Confirm new password';
+
+  @override
+  String get securityPasswordRule => 'At least 8 characters.';
+
+  @override
+  String get securityPasswordMismatch => 'The passwords don\'t match.';
+
+  @override
+  String get securityPasswordTooShort => 'Use at least 8 characters.';
+
+  @override
+  String get securityPasswordChangedTitle => 'Password changed';
+
+  @override
+  String get securityPasswordChangedBody =>
+      'For your security you\'ve been signed out everywhere, including this phone. Sign in with your new password.';
+
+  @override
+  String get securitySessions => 'Where you\'re signed in';
+
+  @override
+  String get securityThisDevice => 'This phone';
+
+  @override
+  String securityLastActive(String time) {
+    return 'Last active $time';
+  }
+
+  @override
+  String get securitySignOutSession => 'Sign out';
+
+  @override
+  String get securitySignOutOthers => 'Sign out of all other sessions';
+
+  @override
+  String get securitySignOutOthersConfirm =>
+      'Sign out everywhere except this phone?';
+
+  @override
+  String securitySignOutSessionConfirm(String device) {
+    return 'Sign out of $device?';
+  }
+
+  @override
+  String get notificationSettingsTitle => 'Notifications';
+
+  @override
+  String get notificationSettingsPush => 'Notifications on this phone';
+
+  @override
+  String get notificationSettingsPushOn => 'On';
+
+  @override
+  String get notificationSettingsPushOff => 'Off';
+
+  @override
+  String get notificationSettingsEmail => 'Emails about your learning';
+
+  @override
+  String get notificationSettingsEmailHelp =>
+      'Grades, announcements and reminders by email. Security and account emails are always sent.';
+
+  @override
+  String get privacyTitle => 'Privacy and data';
+
+  @override
+  String get privacyAnalytics => 'Share anonymous usage';
+
+  @override
+  String get privacyAnalyticsHelp =>
+      'Which screens are used and when lessons, quizzes and assignments are finished, without your name, email or answers. It helps us improve the app.';
+
+  @override
+  String get privacyExport => 'Download my data';
+
+  @override
+  String get privacyExportHelp =>
+      'We prepare a copy of your Atlas data. You\'ll get an email when it\'s ready, then download it here.';
+
+  @override
+  String privacyExportRequested(String date) {
+    return 'Requested $date';
+  }
+
+  @override
+  String privacyExportReady(String date) {
+    return 'Ready to download until $date';
+  }
+
+  @override
+  String get privacyExportDownload => 'Download';
+
+  @override
+  String get privacyExportShare => 'Save or share the file';
+
+  @override
+  String get privacyDeleteAccount => 'Delete my account';
+
+  @override
+  String get privacyDeleteHelp =>
+      'Deletes your Atlas account in every academy: your courses, progress, results and certificates. This can\'t be undone.';
+
+  @override
+  String get privacyDeleteNotAllowed =>
+      'This account manages an academy, so it can\'t be deleted from the app. Ask for deletion from the Atlas website.';
+
+  @override
+  String get privacyNeedsVerifiedEmail =>
+      'To protect your account we send a code to your email first, so it needs to be verified. Verify it from your profile.';
+
+  @override
+  String get privacyCodeTitle => 'Enter the code we emailed you';
+
+  @override
+  String privacyCodeBody(String email) {
+    return 'We sent a 6-digit code to $email.';
+  }
+
+  @override
+  String get privacyCodeContinue => 'Continue';
+
+  @override
+  String get deleteConfirmTitle => 'Delete your account?';
+
+  @override
+  String get deleteConfirmBody =>
+      'This deletes your Atlas account in every academy. Your progress, results and certificates will be gone, and this can\'t be undone.';
+
+  @override
+  String get deleteConfirmType => 'Type DELETE to confirm';
+
+  @override
+  String get deleteConfirmAction => 'Delete account';
+
+  @override
+  String get deleteDone => 'Your account was deleted.';
+
+  @override
+  String get academiesTitle => 'Your academies';
+
+  @override
+  String get academiesCurrent => 'Current';
+
+  @override
+  String get academiesAdd => 'Add another academy';
 }

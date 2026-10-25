@@ -75,5 +75,9 @@
 	<string>Atlas uses the camera only when you take a photo of your work to attach to an assignment.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Atlas opens your photos only when you choose one to attach to an assignment.</string>
+	<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS</key>
+	<false/>
+	<key>GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED</key>
+	<false/>
 </dict>
 </plist>

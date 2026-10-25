@@ -12,6 +12,7 @@ import '../core/api/atlas_api_client.dart';
 import '../core/api/secure_cookie_storage.dart';
 import '../core/auth/auth_repository.dart';
 import '../core/errors/error_catalog.dart';
+import 'push.dart';
 
 /// Overridden in main() with the loaded instance.
 final sharedPreferencesProvider = Provider<SharedPreferences>(
@@ -237,6 +238,7 @@ class SessionController extends Notifier<SessionState> {
   }
 
   Future<void> signOut() async {
+    await ref.read(pushControllerProvider.notifier).unregister();
     try {
       await _auth?.signOut();
     } on Object {

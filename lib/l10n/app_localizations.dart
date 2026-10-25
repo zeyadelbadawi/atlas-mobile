@@ -2383,6 +2383,504 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Learning'**
   String get accountLearning;
+
+  /// No description provided for @notificationOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get notificationOpen;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @notificationsMarkAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get notificationsMarkAll;
+
+  /// No description provided for @notificationsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all caught up'**
+  String get notificationsEmptyTitle;
+
+  /// No description provided for @notificationsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Grades, certificates, announcements and reminders from your academy appear here.'**
+  String get notificationsEmptyBody;
+
+  /// No description provided for @notificationsUnread.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get notificationsUnread;
+
+  /// No description provided for @notificationsFallback.
+  ///
+  /// In en, this message translates to:
+  /// **'You have a new notification.'**
+  String get notificationsFallback;
+
+  /// No description provided for @notificationsLoadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Show more'**
+  String get notificationsLoadMore;
+
+  /// No description provided for @pushCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Know when your work is graded'**
+  String get pushCardTitle;
+
+  /// No description provided for @pushCardBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on notifications to hear about grades, certificates, announcements and due dates, even when the app is closed.'**
+  String get pushCardBody;
+
+  /// No description provided for @pushCardAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on notifications'**
+  String get pushCardAction;
+
+  /// No description provided for @pushCardLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get pushCardLater;
+
+  /// No description provided for @pushDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are off for Atlas. You can turn them on in your phone\'s Settings.'**
+  String get pushDenied;
+
+  /// No description provided for @announcementsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Announcements'**
+  String get announcementsTitle;
+
+  /// No description provided for @announcementsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No announcements yet.'**
+  String get announcementsEmpty;
+
+  /// No description provided for @announcementBy.
+  ///
+  /// In en, this message translates to:
+  /// **'By {name}'**
+  String announcementBy(String name);
+
+  /// No description provided for @announcementCourse.
+  ///
+  /// In en, this message translates to:
+  /// **'Course announcement'**
+  String get announcementCourse;
+
+  /// No description provided for @announcementAcademy.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy announcement'**
+  String get announcementAcademy;
+
+  /// No description provided for @itemNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This item is no longer in the course.'**
+  String get itemNotFound;
+
+  /// No description provided for @accountSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get accountSettings;
+
+  /// No description provided for @accountProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get accountProfile;
+
+  /// No description provided for @accountSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Password and sign-ins'**
+  String get accountSecurity;
+
+  /// No description provided for @accountNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get accountNotifications;
+
+  /// No description provided for @accountPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy and data'**
+  String get accountPrivacy;
+
+  /// No description provided for @profileName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get profileName;
+
+  /// No description provided for @profileNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your full name'**
+  String get profileNameHint;
+
+  /// No description provided for @profileNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name.'**
+  String get profileNameRequired;
+
+  /// No description provided for @profileEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get profileEmail;
+
+  /// No description provided for @profileEmailNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your email is your sign-in and can\'t be changed here.'**
+  String get profileEmailNote;
+
+  /// No description provided for @profilePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile number'**
+  String get profilePhone;
+
+  /// No description provided for @profileSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get profileSave;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved.'**
+  String get profileSaved;
+
+  /// No description provided for @profileEmailVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified'**
+  String get profileEmailVerified;
+
+  /// No description provided for @profileEmailUnverified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not verified'**
+  String get profileEmailUnverified;
+
+  /// No description provided for @profileVerifyEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Send verification email'**
+  String get profileVerifyEmail;
+
+  /// No description provided for @profileVerifySent.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a link to {email}. Open it on this phone, sign in on the academy page if asked, and your email is verified.'**
+  String profileVerifySent(String email);
+
+  /// No description provided for @securityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Password and sign-ins'**
+  String get securityTitle;
+
+  /// No description provided for @securityChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get securityChangePassword;
+
+  /// No description provided for @securityCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get securityCurrentPassword;
+
+  /// No description provided for @securityNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get securityNewPassword;
+
+  /// No description provided for @securityConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get securityConfirmPassword;
+
+  /// No description provided for @securityPasswordRule.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters.'**
+  String get securityPasswordRule;
+
+  /// No description provided for @securityPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The passwords don\'t match.'**
+  String get securityPasswordMismatch;
+
+  /// No description provided for @securityPasswordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least 8 characters.'**
+  String get securityPasswordTooShort;
+
+  /// No description provided for @securityPasswordChangedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed'**
+  String get securityPasswordChangedTitle;
+
+  /// No description provided for @securityPasswordChangedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'For your security you\'ve been signed out everywhere, including this phone. Sign in with your new password.'**
+  String get securityPasswordChangedBody;
+
+  /// No description provided for @securitySessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Where you\'re signed in'**
+  String get securitySessions;
+
+  /// No description provided for @securityThisDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone'**
+  String get securityThisDevice;
+
+  /// No description provided for @securityLastActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Last active {time}'**
+  String securityLastActive(String time);
+
+  /// No description provided for @securitySignOutSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get securitySignOutSession;
+
+  /// No description provided for @securitySignOutOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out of all other sessions'**
+  String get securitySignOutOthers;
+
+  /// No description provided for @securitySignOutOthersConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out everywhere except this phone?'**
+  String get securitySignOutOthersConfirm;
+
+  /// No description provided for @securitySignOutSessionConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out of {device}?'**
+  String securitySignOutSessionConfirm(String device);
+
+  /// No description provided for @notificationSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationSettingsTitle;
+
+  /// No description provided for @notificationSettingsPush.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications on this phone'**
+  String get notificationSettingsPush;
+
+  /// No description provided for @notificationSettingsPushOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get notificationSettingsPushOn;
+
+  /// No description provided for @notificationSettingsPushOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get notificationSettingsPushOff;
+
+  /// No description provided for @notificationSettingsEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Emails about your learning'**
+  String get notificationSettingsEmail;
+
+  /// No description provided for @notificationSettingsEmailHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Grades, announcements and reminders by email. Security and account emails are always sent.'**
+  String get notificationSettingsEmailHelp;
+
+  /// No description provided for @privacyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy and data'**
+  String get privacyTitle;
+
+  /// No description provided for @privacyAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Share anonymous usage'**
+  String get privacyAnalytics;
+
+  /// No description provided for @privacyAnalyticsHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Which screens are used and when lessons, quizzes and assignments are finished, without your name, email or answers. It helps us improve the app.'**
+  String get privacyAnalyticsHelp;
+
+  /// No description provided for @privacyExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Download my data'**
+  String get privacyExport;
+
+  /// No description provided for @privacyExportHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'We prepare a copy of your Atlas data. You\'ll get an email when it\'s ready, then download it here.'**
+  String get privacyExportHelp;
+
+  /// No description provided for @privacyExportRequested.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested {date}'**
+  String privacyExportRequested(String date);
+
+  /// No description provided for @privacyExportReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to download until {date}'**
+  String privacyExportReady(String date);
+
+  /// No description provided for @privacyExportDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get privacyExportDownload;
+
+  /// No description provided for @privacyExportShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Save or share the file'**
+  String get privacyExportShare;
+
+  /// No description provided for @privacyDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get privacyDeleteAccount;
+
+  /// No description provided for @privacyDeleteHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Deletes your Atlas account in every academy: your courses, progress, results and certificates. This can\'t be undone.'**
+  String get privacyDeleteHelp;
+
+  /// No description provided for @privacyDeleteNotAllowed.
+  ///
+  /// In en, this message translates to:
+  /// **'This account manages an academy, so it can\'t be deleted from the app. Ask for deletion from the Atlas website.'**
+  String get privacyDeleteNotAllowed;
+
+  /// No description provided for @privacyNeedsVerifiedEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'To protect your account we send a code to your email first, so it needs to be verified. Verify it from your profile.'**
+  String get privacyNeedsVerifiedEmail;
+
+  /// No description provided for @privacyCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code we emailed you'**
+  String get privacyCodeTitle;
+
+  /// No description provided for @privacyCodeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a 6-digit code to {email}.'**
+  String privacyCodeBody(String email);
+
+  /// No description provided for @privacyCodeContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get privacyCodeContinue;
+
+  /// No description provided for @deleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account?'**
+  String get deleteConfirmTitle;
+
+  /// No description provided for @deleteConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This deletes your Atlas account in every academy. Your progress, results and certificates will be gone, and this can\'t be undone.'**
+  String get deleteConfirmBody;
+
+  /// No description provided for @deleteConfirmType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type DELETE to confirm'**
+  String get deleteConfirmType;
+
+  /// No description provided for @deleteConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteConfirmAction;
+
+  /// No description provided for @deleteDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account was deleted.'**
+  String get deleteDone;
+
+  /// No description provided for @academiesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your academies'**
+  String get academiesTitle;
+
+  /// No description provided for @academiesCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get academiesCurrent;
+
+  /// No description provided for @academiesAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add another academy'**
+  String get academiesAdd;
 }
 
 class _AppLocalizationsDelegate

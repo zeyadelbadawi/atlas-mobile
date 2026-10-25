@@ -7,7 +7,10 @@ import 'dart:io';
 import 'package:atlas_mobile/app/atlas_app.dart';
 import 'package:atlas_mobile/app/learning_providers.dart';
 import 'package:atlas_mobile/app/providers.dart';
+import 'package:atlas_mobile/app/push.dart';
 import 'package:atlas_mobile/app/router.dart';
+import 'package:atlas_mobile/core/notifications/notification_catalog.dart';
+import 'package:atlas_mobile/features/account/account_settings_screens.dart';
 import 'package:atlas_mobile/core/academy/academy.dart';
 import 'package:atlas_mobile/core/auth/auth_repository.dart';
 import 'package:atlas_mobile/core/errors/error_catalog.dart';
@@ -19,6 +22,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../design/golden_harness.dart';
 import 'fake_assessment.dart';
+import 'fake_notifications.dart';
 import 'fake_learning.dart';
 
 const ziadd = Academy(
@@ -48,6 +52,18 @@ class _NoAcademy extends SessionController {
   @override
   SessionState build() => const SessionState(status: SessionStatus.noAcademy);
 }
+
+class _PushNotAsked extends PushController {
+  @override
+  PushStatus build() => PushStatus.notAsked;
+}
+
+NotificationCatalog _notificationCatalog() => NotificationCatalog({
+  for (final l in ['en', 'ar'])
+    l: jsonDecode(
+      File('assets/l10n/notifications_$l.json').readAsStringSync(),
+    ) as Map<String, dynamic>,
+});
 
 ErrorCatalog _errors() => ErrorCatalog({
   for (final l in ['en', 'ar'])
@@ -101,6 +117,12 @@ Future<ProviderContainer> _pump(
       assessmentRepositoryProvider.overrideWithValue(
         assessments ?? FakeAssessmentRepository(),
       ),
+      notificationsRepositoryProvider.overrideWithValue(
+        FakeNotificationsRepository(),
+      ),
+      accountRepositoryProvider.overrideWithValue(FakeAccountRepository()),
+      notificationCatalogProvider.overrideWithValue(_notificationCatalog()),
+      pushControllerProvider.overrideWith(_PushNotAsked.new),
     ],
   );
   addTearDown(container.dispose);
@@ -110,7 +132,7 @@ Future<ProviderContainer> _pump(
   await tester.pump();
   if (path != null) {
     final router = container.read(routerProvider);
-    const tabs = {'/home', '/courses', '/account'};
+    const tabs = {'/home', '/courses', '/notifications', '/account'};
     tabs.contains(path) ? router.go(path) : router.push(path, extra: extra);
   }
   await tester.pump();
@@ -225,7 +247,7 @@ void main() {
       t,
       session: _SignedIn.new,
       path: '/account',
-      size: const Size(393, 1300),
+      size: const Size(393, 1700),
     );
     await _golden(t, 'account_ar');
   }, variant: ios);
@@ -320,5 +342,61 @@ void main() {
       size: const Size(393, 1150),
     );
     await _golden(t, 'certificates_ar');
+  }, variant: ios);
+  testWidgets('notifications_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/notifications',
+      size: const Size(393, 1250),
+    );
+    await _golden(t, 'notifications_ar');
+  }, variant: ios);
+
+  testWidgets('notifications_en_dark_android', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      language: 'en',
+      theme: ThemeMode.dark,
+      path: '/notifications',
+      size: const Size(393, 1250),
+    );
+    await _golden(t, 'notifications_en_dark_android');
+  }, variant: TargetPlatformVariant.only(TargetPlatform.android));
+
+  testWidgets('announcements_ar', (t) async {
+    await _pump(t, session: _SignedIn.new, path: '/announcements');
+    await _golden(t, 'announcements_ar');
+  }, variant: ios);
+
+  testWidgets('profile_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/account/profile',
+      size: const Size(393, 1100),
+    );
+    await _golden(t, 'profile_ar');
+  }, variant: ios);
+
+  testWidgets('security_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/account/security',
+      size: const Size(393, 1200),
+    );
+    await _golden(t, 'security_ar');
+  }, variant: ios);
+
+  testWidgets('privacy_ar', (t) async {
+    await _pump(
+      t,
+      session: _SignedIn.new,
+      path: '/account/privacy',
+      size: const Size(393, 1000),
+    );
+    await _golden(t, 'privacy_ar');
   }, variant: ios);
 }

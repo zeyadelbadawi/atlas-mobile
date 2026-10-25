@@ -450,3 +450,25 @@ deploy ولا PR.** التفاصيل التقنية في `atlas-backend/docs/mob
   (`resolveAcademyIdForPublishedCourse` بيشترط `visibility: 'public'`). ده بيأثر على الويب كمان. محتاج قرارك.
 - نصوص إذن الكاميرا والصور على iOS بالإنجليزي بس دلوقتي؛ ترجمتها (InfoPlist.strings) في المرحلة 7.
 - الجلسات المباشرة لسه بتفتح على الموقع.
+
+## 19. حالة المرحلة 5 (25 أكتوبر)
+
+| الجزء | الحالة |
+|---|---|
+| Firebase (`atlas-8f7bb`): تطبيق أندرويد `com.atlas.atlas_mobile`، و`google-services.json`، وplugin `com.google.gms.google-services` 4.5.0 | ✅ |
+| Google Analytics: أسماء الشاشات كقوالب (`/course/:id`) بس، وأحداث بدون أي بيانات شخصية (lesson_complete، quiz_submit، assignment_submit، certificate_open، notification_open، push_permission)، ومفتاح لإيقافها في "الخصوصية والبيانات" | ✅ |
+| من غير advertising ID: اتشال `AD_ID` و`ACCESS_ADSERVICES_*` من الـ manifest، و`google_analytics_adid_collection_enabled=false`، ومن غير ad personalization (أندرويد وiOS) | ✅ |
+| تاب الإشعارات (بنقطة لغير المقروء): نفس نصوص الويب (`assets/l10n/notifications_*.json` + `tool/sync_web_notifications.sh`)، وتعليم مقروء/الكل، وكل إشعار بيفتح شاشته | ✅ |
+| Push: طلب الإذن من كارت بيشرح الفايدة (مش أول ما التطبيق يفتح)، وتسجيل الموبايل `PUT users/me/push-devices`، وإلغاؤه عند تسجيل الخروج، والضغط على الإشعار بيفتح الشاشة، وإشعار والتطبيق مفتوح بيظهر رسالة جوه التطبيق | ✅ (التجربة على موبايل حقيقي بعد PR الباك اند وتفعيل `FLAG_PUSH_MODE`) |
+| تحويل لينكات الويب لشاشات التطبيق (`lib/app/web_paths.dart`)، و`/course/:id/item/:itemId` بيعرف نوع النشاط ويفتحه | ✅ |
+| الإعلانات: قائمة وتفاصيل | ✅ |
+| الحساب: الملف الشخصي (الاسم، الموبايل، توثيق البريد)، وكلمة المرور (الباك اند بيخرج كل الجلسات، فالتطبيق بيقول كده ويرجّع لتسجيل الدخول)، وأين سجّلت الدخول (خروج من جلسة أو الكل)، والإشعارات (الموبايل + رسائل البريد)، والخصوصية (Analytics، تنزيل البيانات، حذف الحساب بكود من البريد) | ✅ |
+| الباك اند: `deploy.yml` بيبعت `FCM_*` و`FLAG_PUSH_MODE` للسيرفر | PR [#91](https://github.com/zeyadelbadawi/atlas-backend/pull/91) مستني موافقتك |
+| اختبارات: `test/integration/notifications_account_test.dart` على الباك اند المحلي، وgoldens للإشعارات والإعلانات والحساب، وساعة ثابتة للـ goldens (`lib/core/clock.dart`) | ✅ |
+
+**ملاحظات:**
+- حذف الحساب وتنزيل البيانات محتاجين بريد موثّق (الباك اند بيبعت كود). اللي دخل بكود على البريد بيكون موثّق أصلًا. غير كده التطبيق بيعرض "إرسال رسالة التوثيق"، واللينك بيفتح صفحة الأكاديمية. فتح اللينك جوه التطبيق مباشرة مع deep links في المرحلة 6.
+- الاسم ورقم الموبايل لازم يكونوا مش متكررين في الأكاديمية (`nameTakenInAcademy`، `phoneTaken`)، والتطبيق بيعرض الرسالة تحت الخانة.
+- firebase_messaging 17 بيستخدم `getToken` (deprecated) لأن الباك اند بيبعت بالـ registration token. ننقل لـ FID مع الباك اند.
+- iOS: الـ push محتاج `GoogleService-Info.plist` وAPNs key وPush capability في المرحلة 9. من غيرهم التطبيق بيشتغل عادي من غير push وAnalytics.
+- المنتدى متأجل (القرار في §14).

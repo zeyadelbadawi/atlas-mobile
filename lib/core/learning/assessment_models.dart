@@ -4,6 +4,8 @@
 /// ignored; missing optional ones fall back safely.
 library;
 
+import '../clock.dart';
+
 DateTime? _date(Object? v) =>
     v is String ? DateTime.tryParse(v)?.toLocal() : null;
 int _int(Object? v, [int fallback = 0]) => v is num ? v.toInt() : fallback;
@@ -395,7 +397,7 @@ class Assignment {
   final bool allowResubmission;
   final String latePolicy;
 
-  bool get pastDue => dueAt != null && DateTime.now().isAfter(dueAt!);
+  bool get pastDue => dueAt != null && clockNow().isAfter(dueAt!);
   bool get blockedByDue => pastDue && latePolicy == 'block';
 }
 

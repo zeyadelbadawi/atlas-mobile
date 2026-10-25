@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:atlas_mobile/core/clock.dart';
 import 'package:atlas_mobile/design/design.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,9 +12,14 @@ import 'package:flutter_test/flutter_test.dart';
 const testBodyFamily = 'NotoSansArabic';
 const testBodyFallback = ['Inter'];
 
+/// The moment every golden is drawn at: sample data is built relative to
+/// it and the UI clock is frozen on it, so screenshots never drift.
+final testNow = DateTime(2026, 10, 24, 10, 0);
+
 bool _loaded = false;
 
 Future<void> loadGoldenFonts() async {
+  clockNow = () => testNow;
   if (_loaded) return;
   Future<void> load(String family, String path) async {
     final bytes = File(path).readAsBytesSync();

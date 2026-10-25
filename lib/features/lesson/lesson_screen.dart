@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../app/push.dart';
 import '../../app/learning_providers.dart';
 import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
@@ -139,6 +140,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
       await ref
           .read(learningRepositoryProvider)
           .completeLesson(widget.courseId, widget.lessonId);
+      ref.read(analyticsProvider).event('lesson_complete');
       refreshLearning(ref, widget.courseId);
       if (mounted) setState(() => _done = true);
     } on AtlasApiException catch (e) {

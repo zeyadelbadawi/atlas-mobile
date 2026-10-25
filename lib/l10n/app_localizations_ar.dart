@@ -1330,4 +1330,280 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountLearning => 'التعلّم';
+
+  @override
+  String get notificationOpen => 'فتح';
+
+  @override
+  String get notificationsTitle => 'الإشعارات';
+
+  @override
+  String get notificationsMarkAll => 'تعليم الكل كمقروء';
+
+  @override
+  String get notificationsEmptyTitle => 'لا توجد إشعارات';
+
+  @override
+  String get notificationsEmptyBody =>
+      'تظهر هنا الدرجات والشهادات والإعلانات والتذكيرات من أكاديميتك.';
+
+  @override
+  String get notificationsUnread => 'غير مقروء';
+
+  @override
+  String get notificationsFallback => 'لديك إشعار جديد.';
+
+  @override
+  String get notificationsLoadMore => 'عرض المزيد';
+
+  @override
+  String get pushCardTitle => 'اعرف فور تقييم عملك';
+
+  @override
+  String get pushCardBody =>
+      'فعّل الإشعارات لتصلك الدرجات والشهادات والإعلانات ومواعيد التسليم، حتى والتطبيق مغلق.';
+
+  @override
+  String get pushCardAction => 'تفعيل الإشعارات';
+
+  @override
+  String get pushCardLater => 'ليس الآن';
+
+  @override
+  String get pushDenied =>
+      'الإشعارات متوقفة لتطبيق أطلس. يمكنك تفعيلها من إعدادات هاتفك.';
+
+  @override
+  String get announcementsTitle => 'الإعلانات';
+
+  @override
+  String get announcementsEmpty => 'لا توجد إعلانات بعد.';
+
+  @override
+  String announcementBy(String name) {
+    return 'من $name';
+  }
+
+  @override
+  String get announcementCourse => 'إعلان كورس';
+
+  @override
+  String get announcementAcademy => 'إعلان الأكاديمية';
+
+  @override
+  String get itemNotFound => 'لم يعد هذا العنصر موجودًا في الكورس.';
+
+  @override
+  String get accountSettings => 'الإعدادات';
+
+  @override
+  String get accountProfile => 'الملف الشخصي';
+
+  @override
+  String get accountSecurity => 'كلمة المرور وتسجيلات الدخول';
+
+  @override
+  String get accountNotifications => 'الإشعارات';
+
+  @override
+  String get accountPrivacy => 'الخصوصية والبيانات';
+
+  @override
+  String get profileName => 'الاسم';
+
+  @override
+  String get profileNameHint => 'اسمك بالكامل';
+
+  @override
+  String get profileNameRequired => 'اكتب اسمك.';
+
+  @override
+  String get profileEmail => 'البريد الإلكتروني';
+
+  @override
+  String get profileEmailNote =>
+      'بريدك الإلكتروني هو وسيلة دخولك ولا يمكن تغييره من هنا.';
+
+  @override
+  String get profilePhone => 'رقم الموبايل';
+
+  @override
+  String get profileSave => 'حفظ';
+
+  @override
+  String get profileSaved => 'تم الحفظ.';
+
+  @override
+  String get profileEmailVerified => 'موثّق';
+
+  @override
+  String get profileEmailUnverified => 'غير موثّق';
+
+  @override
+  String get profileVerifyEmail => 'إرسال رسالة التوثيق';
+
+  @override
+  String profileVerifySent(String email) {
+    return 'أرسلنا رابطًا إلى $email. افتحه على هذا الهاتف، وسجّل الدخول في صفحة الأكاديمية إن طُلب منك، وسيُوثَّق بريدك.';
+  }
+
+  @override
+  String get securityTitle => 'كلمة المرور وتسجيلات الدخول';
+
+  @override
+  String get securityChangePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get securityCurrentPassword => 'كلمة المرور الحالية';
+
+  @override
+  String get securityNewPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get securityConfirmPassword => 'تأكيد كلمة المرور الجديدة';
+
+  @override
+  String get securityPasswordRule => '٨ أحرف على الأقل.';
+
+  @override
+  String get securityPasswordMismatch => 'كلمتا المرور غير متطابقتين.';
+
+  @override
+  String get securityPasswordTooShort => 'استخدم ٨ أحرف على الأقل.';
+
+  @override
+  String get securityPasswordChangedTitle => 'تم تغيير كلمة المرور';
+
+  @override
+  String get securityPasswordChangedBody =>
+      'لأمانك تم تسجيل خروجك من كل الأجهزة، ومنها هذا الهاتف. سجّل الدخول بكلمة المرور الجديدة.';
+
+  @override
+  String get securitySessions => 'أين سجّلت الدخول';
+
+  @override
+  String get securityThisDevice => 'هذا الهاتف';
+
+  @override
+  String securityLastActive(String time) {
+    return 'آخر نشاط $time';
+  }
+
+  @override
+  String get securitySignOutSession => 'تسجيل الخروج';
+
+  @override
+  String get securitySignOutOthers => 'تسجيل الخروج من كل الجلسات الأخرى';
+
+  @override
+  String get securitySignOutOthersConfirm =>
+      'تسجيل الخروج من كل مكان عدا هذا الهاتف؟';
+
+  @override
+  String securitySignOutSessionConfirm(String device) {
+    return 'تسجيل الخروج من $device؟';
+  }
+
+  @override
+  String get notificationSettingsTitle => 'الإشعارات';
+
+  @override
+  String get notificationSettingsPush => 'الإشعارات على هذا الهاتف';
+
+  @override
+  String get notificationSettingsPushOn => 'مفعّلة';
+
+  @override
+  String get notificationSettingsPushOff => 'متوقفة';
+
+  @override
+  String get notificationSettingsEmail => 'رسائل البريد عن تعلّمك';
+
+  @override
+  String get notificationSettingsEmailHelp =>
+      'الدرجات والإعلانات والتذكيرات بالبريد. رسائل الأمان والحساب تُرسل دائمًا.';
+
+  @override
+  String get privacyTitle => 'الخصوصية والبيانات';
+
+  @override
+  String get privacyAnalytics => 'مشاركة بيانات استخدام مجهولة';
+
+  @override
+  String get privacyAnalyticsHelp =>
+      'أي الشاشات تُستخدم ومتى تُنهى الدروس والاختبارات والواجبات، دون اسمك أو بريدك أو إجاباتك. يساعدنا ذلك على تحسين التطبيق.';
+
+  @override
+  String get privacyExport => 'تنزيل بياناتي';
+
+  @override
+  String get privacyExportHelp =>
+      'نجهّز نسخة من بياناتك في أطلس. ستصلك رسالة عند جاهزيتها، ثم تنزّلها من هنا.';
+
+  @override
+  String privacyExportRequested(String date) {
+    return 'طُلب $date';
+  }
+
+  @override
+  String privacyExportReady(String date) {
+    return 'جاهز للتنزيل حتى $date';
+  }
+
+  @override
+  String get privacyExportDownload => 'تنزيل';
+
+  @override
+  String get privacyExportShare => 'حفظ الملف أو مشاركته';
+
+  @override
+  String get privacyDeleteAccount => 'حذف حسابي';
+
+  @override
+  String get privacyDeleteHelp =>
+      'يحذف حسابك في أطلس في كل الأكاديميات: كورساتك وتقدّمك ونتائجك وشهاداتك. لا يمكن التراجع عن ذلك.';
+
+  @override
+  String get privacyDeleteNotAllowed =>
+      'هذا الحساب يدير أكاديمية، لذا لا يمكن حذفه من التطبيق. اطلب الحذف من موقع أطلس.';
+
+  @override
+  String get privacyNeedsVerifiedEmail =>
+      'لحماية حسابك نرسل رمزًا إلى بريدك أولًا، لذا يجب أن يكون موثّقًا. وثّقه من ملفك الشخصي.';
+
+  @override
+  String get privacyCodeTitle => 'أدخل الرمز الذي أرسلناه إلى بريدك';
+
+  @override
+  String privacyCodeBody(String email) {
+    return 'أرسلنا رمزًا من ٦ أرقام إلى $email.';
+  }
+
+  @override
+  String get privacyCodeContinue => 'متابعة';
+
+  @override
+  String get deleteConfirmTitle => 'حذف حسابك؟';
+
+  @override
+  String get deleteConfirmBody =>
+      'سيُحذف حسابك في أطلس في كل الأكاديميات. سيضيع تقدّمك ونتائجك وشهاداتك، ولا يمكن التراجع عن ذلك.';
+
+  @override
+  String get deleteConfirmType => 'اكتب DELETE للتأكيد';
+
+  @override
+  String get deleteConfirmAction => 'حذف الحساب';
+
+  @override
+  String get deleteDone => 'تم حذف حسابك.';
+
+  @override
+  String get academiesTitle => 'أكاديمياتك';
+
+  @override
+  String get academiesCurrent => 'الحالية';
+
+  @override
+  String get academiesAdd => 'إضافة أكاديمية أخرى';
 }

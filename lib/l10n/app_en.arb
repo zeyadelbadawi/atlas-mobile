@@ -782,5 +782,137 @@
   "certificateFailed": "The certificate file couldn't be prepared. The academy has been told; try again later.",
   "courseCertificateIssued": "Your certificate is ready.",
   "courseOpenCertificates": "View certificate",
-  "accountLearning": "Learning"
+  "accountLearning": "Learning",
+  "notificationOpen": "Open",
+  "notificationsTitle": "Notifications",
+  "notificationsMarkAll": "Mark all as read",
+  "notificationsEmptyTitle": "You're all caught up",
+  "notificationsEmptyBody": "Grades, certificates, announcements and reminders from your academy appear here.",
+  "notificationsUnread": "Unread",
+  "notificationsFallback": "You have a new notification.",
+  "notificationsLoadMore": "Show more",
+  "pushCardTitle": "Know when your work is graded",
+  "pushCardBody": "Turn on notifications to hear about grades, certificates, announcements and due dates, even when the app is closed.",
+  "pushCardAction": "Turn on notifications",
+  "pushCardLater": "Not now",
+  "pushDenied": "Notifications are off for Atlas. You can turn them on in your phone's Settings.",
+  "announcementsTitle": "Announcements",
+  "announcementsEmpty": "No announcements yet.",
+  "announcementBy": "By {name}",
+  "@announcementBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "announcementCourse": "Course announcement",
+  "announcementAcademy": "Academy announcement",
+  "itemNotFound": "This item is no longer in the course.",
+  "accountSettings": "Settings",
+  "accountProfile": "Profile",
+  "accountSecurity": "Password and sign-ins",
+  "accountNotifications": "Notifications",
+  "accountPrivacy": "Privacy and data",
+  "profileName": "Name",
+  "profileNameHint": "Your full name",
+  "profileNameRequired": "Enter your name.",
+  "profileEmail": "Email",
+  "profileEmailNote": "Your email is your sign-in and can't be changed here.",
+  "profilePhone": "Mobile number",
+  "profileSave": "Save",
+  "profileSaved": "Saved.",
+  "profileEmailVerified": "Verified",
+  "profileEmailUnverified": "Not verified",
+  "profileVerifyEmail": "Send verification email",
+  "profileVerifySent": "We sent a link to {email}. Open it on this phone, sign in on the academy page if asked, and your email is verified.",
+  "@profileVerifySent": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "securityTitle": "Password and sign-ins",
+  "securityChangePassword": "Change password",
+  "securityCurrentPassword": "Current password",
+  "securityNewPassword": "New password",
+  "securityConfirmPassword": "Confirm new password",
+  "securityPasswordRule": "At least 8 characters.",
+  "securityPasswordMismatch": "The passwords don't match.",
+  "securityPasswordTooShort": "Use at least 8 characters.",
+  "securityPasswordChangedTitle": "Password changed",
+  "securityPasswordChangedBody": "For your security you've been signed out everywhere, including this phone. Sign in with your new password.",
+  "securitySessions": "Where you're signed in",
+  "securityThisDevice": "This phone",
+  "securityLastActive": "Last active {time}",
+  "@securityLastActive": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "securitySignOutSession": "Sign out",
+  "securitySignOutOthers": "Sign out of all other sessions",
+  "securitySignOutOthersConfirm": "Sign out everywhere except this phone?",
+  "securitySignOutSessionConfirm": "Sign out of {device}?",
+  "@securitySignOutSessionConfirm": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      }
+    }
+  },
+  "notificationSettingsTitle": "Notifications",
+  "notificationSettingsPush": "Notifications on this phone",
+  "notificationSettingsPushOn": "On",
+  "notificationSettingsPushOff": "Off",
+  "notificationSettingsEmail": "Emails about your learning",
+  "notificationSettingsEmailHelp": "Grades, announcements and reminders by email. Security and account emails are always sent.",
+  "privacyTitle": "Privacy and data",
+  "privacyAnalytics": "Share anonymous usage",
+  "privacyAnalyticsHelp": "Which screens are used and when lessons, quizzes and assignments are finished, without your name, email or answers. It helps us improve the app.",
+  "privacyExport": "Download my data",
+  "privacyExportHelp": "We prepare a copy of your Atlas data. You'll get an email when it's ready, then download it here.",
+  "privacyExportRequested": "Requested {date}",
+  "@privacyExportRequested": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyExportReady": "Ready to download until {date}",
+  "@privacyExportReady": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyExportDownload": "Download",
+  "privacyExportShare": "Save or share the file",
+  "privacyDeleteAccount": "Delete my account",
+  "privacyDeleteHelp": "Deletes your Atlas account in every academy: your courses, progress, results and certificates. This can't be undone.",
+  "privacyDeleteNotAllowed": "This account manages an academy, so it can't be deleted from the app. Ask for deletion from the Atlas website.",
+  "privacyNeedsVerifiedEmail": "To protect your account we send a code to your email first, so it needs to be verified. Verify it from your profile.",
+  "privacyCodeTitle": "Enter the code we emailed you",
+  "privacyCodeBody": "We sent a 6-digit code to {email}.",
+  "@privacyCodeBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyCodeContinue": "Continue",
+  "deleteConfirmTitle": "Delete your account?",
+  "deleteConfirmBody": "This deletes your Atlas account in every academy. Your progress, results and certificates will be gone, and this can't be undone.",
+  "deleteConfirmType": "Type DELETE to confirm",
+  "deleteConfirmAction": "Delete account",
+  "deleteDone": "Your account was deleted.",
+  "academiesTitle": "Your academies",
+  "academiesCurrent": "Current",
+  "academiesAdd": "Add another academy"
 }

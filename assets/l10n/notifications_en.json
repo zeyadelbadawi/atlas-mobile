@@ -1,0 +1,647 @@
+{
+  "title": "Notifications",
+  "subtitle": "Manage your notifications and alerts",
+  "center": {
+    "title": "Notification Center",
+    "empty": "No notifications",
+    "emptyDescription": "You're all caught up! Check back later for new notifications.",
+    "markAllRead": "Mark all as read",
+    "markAsRead": "Mark as read",
+    "markAsUnread": "Mark as unread",
+    "delete": "Delete",
+    "deleteAll": "Delete all",
+    "deleteConfirm": "Are you sure you want to delete this notification?",
+    "deleteAllConfirm": "Are you sure you want to delete all notifications?",
+    "viewAll": "View All",
+    "unreadLabel": "Unread",
+    "latestUnread": "Latest unread notifications",
+    "noUnread": "No unread notifications. You're all caught up.",
+    "loading": "Loading notifications",
+    "markAsReadNamed": "Mark \"{{title}}\" as read",
+    "unreadCount_one": "{{count}} unread",
+    "unreadCount_other": "{{count}} unread"
+  },
+  "filters": {
+    "all": "All",
+    "unread": "Unread",
+    "read": "Read",
+    "type": "Type",
+    "priority": "Priority",
+    "allTypes": "All types",
+    "allPriorities": "All priorities",
+    "status": "Status",
+    "clear": "Clear filters"
+  },
+  "types": {
+    "system": "System",
+    "account": "Account",
+    "billing": "Billing",
+    "security": "Security",
+    "activity": "Activity",
+    "announcement": "Announcement"
+  },
+  "priority": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "actions": {
+    "viewDetails": "View Details",
+    "dismiss": "Dismiss",
+    "takeAction": "Take Action"
+  },
+  "messages": {
+    "markReadSuccess": "Marked as read",
+    "markAllReadSuccess": "All notifications marked as read",
+    "markUnreadSuccess": "Marked as unread",
+    "deleteSuccess": "Notification deleted",
+    "deleteAllSuccess": "All notifications deleted",
+    "loadError": "Failed to load notifications",
+    "actionError": "Failed to perform action"
+  },
+  "summary": {
+    "total": "Total",
+    "unread": "Unread",
+    "today": "Today",
+    "thisWeek": "This Week"
+  },
+  "settings": {
+    "title": "Notification Settings",
+    "description": "Choose which notifications you want to receive",
+    "channels": "Notification Channels",
+    "email": "Email",
+    "push": "Push",
+    "sms": "SMS",
+    "inApp": "In-App",
+    "preferences": "Notification Preferences",
+    "saveSuccess": "Notification settings saved"
+  },
+  "events": {
+    "provisioningCompleted": {
+      "title": "Your academy is ready",
+      "message": "\"{{academyName}}\" has finished provisioning and is ready to use."
+    },
+    "provisioningFailed": {
+      "title": "Academy setup failed",
+      "message": "We ran into a problem provisioning \"{{academyName}}\". Please contact support if this persists."
+    },
+    "courseOrderPaid": {
+      "title": "Purchase confirmed",
+      "message": "Your purchase of \"{{courseTitle}}\" is confirmed."
+    },
+    "courseOrderPaymentFailed": {
+      "title": "Payment failed",
+      "message": "Your payment for \"{{courseTitle}}\" could not be completed."
+    },
+    "courseOrderRefunded": {
+      "title": "Refund recorded",
+      "message": "Your refund for \"{{courseTitle}}\" has been recorded. The amount is returned separately by bank transfer."
+    },
+    "platformPaymentApproved": {
+      "title": "Payment approved",
+      "message": "Your payment of {{amount}} {{currency}} has been approved."
+    },
+    "platformPaymentRejected": {
+      "title": "Payment rejected",
+      "message": "Your payment of {{amount}} {{currency}} was rejected."
+    },
+    "supportCaseStatusChanged": {
+      "title": "Support case updated",
+      "message": "Your support case \"{{subject}}\" is now {{status}}."
+    },
+    "supportCaseReply": {
+      "title": "New reply on your support case",
+      "message": "There's a new reply on \"{{subject}}\"."
+    },
+    "passwordChanged": {
+      "title": "Password changed",
+      "message": "Your account password was just changed. If this wasn't you, contact support immediately."
+    },
+    "quizGraded": {
+      "title": "Quiz graded",
+      "message": "Your attempt at \"{{quizTitle}}\" has been graded: {{score}}%."
+    },
+    "assignmentGraded": {
+      "title": "Assignment graded",
+      "message": "\"{{assignmentTitle}}\" has been graded. Open it to see your score and feedback."
+    },
+    "certificateIssued": {
+      "title": "Certificate issued",
+      "message": "Your certificate for \"{{courseTitle}}\" is ready in Certificates."
+    },
+    "certificateRevoked": {
+      "title": "Certificate revoked",
+      "message": "Your certificate for \"{{courseTitle}}\" has been revoked. Contact the academy if you think this is a mistake."
+    },
+    "enrollmentGranted": {
+      "title": "You've been enrolled",
+      "message": "You now have access to \"{{courseTitle}}\" at {{academyName}}."
+    },
+    "enrollmentRevoked": {
+      "title": "Access removed",
+      "message": "Your access to \"{{courseTitle}}\" at {{academyName}} has been removed."
+    },
+    "enrollmentExpiryChanged": {
+      "title": "Access dates changed",
+      "message": "Your access to \"{{courseTitle}}\" now runs until {{expiresAtDate}}."
+    },
+    "rosterStudentApproved": {
+      "title": "You've been approved",
+      "message": "Your place at {{academyName}} is confirmed. You can start learning now."
+    },
+    "rosterStudentRejected": {
+      "title": "Request not approved",
+      "message": "{{academyName}} could not approve your request to join."
+    },
+    "rosterStudentBlocked": {
+      "title": "Access suspended",
+      "message": "Your access to {{academyName}} has been suspended. Contact the academy if you think this is a mistake."
+    },
+    "rosterStudentUnblocked": {
+      "title": "Access restored",
+      "message": "Your access to {{academyName}} has been restored."
+    },
+    "courseOrderProofSubmitted": {
+      "title": "Payment proof received",
+      "message": "We received your proof of payment for \"{{courseTitle}}\" ({{amount}} {{currency}}). You'll hear from us once it's reviewed."
+    },
+    "reviewModerated": {
+      "title": "Your review was reviewed",
+      "message": "Your review of \"{{courseTitle}}\" was {{status}}."
+    },
+    "emailVerification": {
+      "title": "Confirm your email",
+      "message": "Use the link we emailed you to confirm your address."
+    },
+    "passwordReset": {
+      "title": "Password reset requested",
+      "message": "Use the link we emailed you to choose a new password."
+    },
+    "passwordResetConfirmed": {
+      "title": "Password changed",
+      "message": "Your password was changed. If this wasn't you, contact support immediately."
+    },
+    "accountSignupAttempt": {
+      "title": "Sign-up attempt",
+      "message": "Someone tried to create an account with your email address."
+    },
+    "accountDeletionCode": {
+      "title": "Account deletion code",
+      "message": "A code to confirm deleting your account was sent to your email."
+    },
+    "emailOtp": {
+      "title": "Your sign-in code",
+      "message": "Use the code we emailed you. It expires in {{expiresInMinutes}} minutes."
+    },
+    "enrollmentSelfEnrolled": {
+      "title": "You're enrolled",
+      "message": "You enrolled yourself in “{{courseTitle}}” at {{academyName}}. It's open to you now."
+    },
+    "courseOrderCreated": {
+      "title": "Order started",
+      "message": "Your order for “{{courseTitle}}” ({{amount}} {{currency}}) is waiting for payment."
+    },
+    "courseOrderExpired": {
+      "title": "Order expired",
+      "message": "Your order for “{{courseTitle}}” was not paid in time and has been released. Nothing was charged."
+    },
+    "quizAutoSubmitted": {
+      "title": "Quiz submitted automatically",
+      "message": "Your attempt at “{{quizTitle}}” was submitted for you. The answers you had saved were kept."
+    },
+    "attemptInvalidated": {
+      "title": "Attempt no longer counts",
+      "message": "An attempt at “{{quizTitle}}” was voided and no longer counts toward your result."
+    },
+    "exceptionGranted": {
+      "title": "Exception granted",
+      "message": "You have been given an exception on “{{quizTitle}}”. It is active now and applies to your next attempt."
+    },
+    "exceptionScheduled": {
+      "title": "Exception scheduled",
+      "message": "You have been given an exception on “{{quizTitle}}”. It becomes active on {{availableFromLabel}}; until then the quiz works as it normally does."
+    },
+    "exceptionActivated": {
+      "title": "Exception now active",
+      "message": "Your exception on “{{quizTitle}}” has just become active and applies to your next attempt."
+    },
+    "exceptionRevoked": {
+      "title": "Exception removed",
+      "message": "Your exception on “{{quizTitle}}” has been removed. The usual time limit and number of attempts apply again."
+    },
+    "courseCompleted": {
+      "title": "Course completed",
+      "message": "You've completed “{{courseTitle}}”. Well done."
+    },
+    "deviceRegistered": {
+      "title": "New device added",
+      "message": "{{deviceLabel}} was added to your devices. If this wasn't you, remove it and change your password."
+    },
+    "deviceRemoved": {
+      "title": "Device removed",
+      "message": "{{deviceLabel}} was removed from your devices and signed out."
+    },
+    "deviceLimitReached": {
+      "title": "Device limit reached",
+      "message": "You can use {{maxDevices}} device(s) here, and this one is over the limit. Remove a device to carry on."
+    },
+    "sessionTakenOver": {
+      "title": "Learning moved to another device",
+      "message": "{{deviceLabel}} took over your learning session. Only one device can play lessons at a time."
+    },
+    "announcementPublished": {
+      "title": "New announcement",
+      "message": "{{academyName}} posted: “{{title}}”"
+    },
+    "reviewSubmitted": {
+      "title": "A review needs moderating",
+      "message": "A learner reviewed \"{{courseTitle}}\". It stays hidden until you approve it."
+    },
+    "academyContactSubmissionReceived": {
+      "title": "New website message",
+      "message": "A visitor sent a message through your academy website's Contact form."
+    },
+    "rosterStudentAwaitingApproval": {
+      "title": "Someone is waiting to join",
+      "message": "A new learner signed up and needs approval before they can reach any course."
+    },
+    "lifecycleTrialStarted": {
+      "title": "Your {{planName}} trial has started",
+      "message": "Your trial runs until {{trialEndsAtDate}}. Choose a plan before then to keep your site online."
+    },
+    "lifecycleTrialEndingIn3Days": {
+      "title": "Your trial ends in 3 days",
+      "message": "Your {{planName}} trial ends {{trialEndsAtDate}}. Payments are reviewed by a person, so choose a plan now to keep your site online."
+    },
+    "lifecycleTrialEndingSoon": {
+      "title": "Your trial ends tomorrow",
+      "message": "Your {{planName}} trial ends {{trialEndsAtDate}}. Choose a plan to keep your site online."
+    },
+    "lifecycleTrialExpired": {
+      "title": "Your trial has ended",
+      "message": "Your {{planName}} trial ended {{endedAtDate}} and your site is now offline. Choose a plan to bring it back."
+    },
+    "lifecycleTrialFollowup3d": {
+      "title": "Your site is still offline",
+      "message": "Your trial ended {{endedAtDate}}. Everything you built is safe — choose a plan to put it back online."
+    },
+    "lifecycleTrialFollowup14d": {
+      "title": "Your courses are waiting",
+      "message": "Your trial ended {{endedAtDate}}. Your content is still here and choosing a plan restores it immediately."
+    },
+    "lifecycleTrialReactivation45d": {
+      "title": "Still here whenever you're ready",
+      "message": "Your trial ended {{endedAtDate}}. Your academy can be back online the moment you choose a plan."
+    },
+    "lifecycleSubscriptionActivated": {
+      "title": "Your {{planName}} subscription is active",
+      "message": "Your plan runs until {{periodEndDate}}."
+    },
+    "lifecycleSubscriptionPaymentSubmitted": {
+      "title": "We received your payment proof",
+      "message": "We received {{amount}} {{currency}} on {{submittedAtDate}}. We'll confirm once it's reviewed."
+    },
+    "lifecycleSubscriptionRenewal30d": {
+      "title": "Your yearly plan renews in 30 days",
+      "message": "Your {{planName}} yearly period ends {{periodEndDate}}. You have time to arrange the transfer before it ends."
+    },
+    "lifecycleSubscriptionRenewalDue": {
+      "title": "Your plan renews soon",
+      "message": "Your {{planName}} period ends {{periodEndDate}}. Bank transfers take a few days to clear, so start now."
+    },
+    "lifecycleSubscriptionRenewalTomorrow": {
+      "title": "Your plan renews tomorrow",
+      "message": "Your {{planName}} period ends {{periodEndDate}} and payment hasn't arrived yet."
+    },
+    "lifecycleSubscriptionGraceStarted": {
+      "title": "Payment is late — your site is still online",
+      "message": "Your {{planName}} period ended {{periodEndDate}}. Everything keeps working until {{graceEndsAtDate}}."
+    },
+    "lifecycleSubscriptionGraceEnding": {
+      "title": "Your site goes offline tomorrow",
+      "message": "Payment is still outstanding. Your site stays online until {{graceEndsAtDate}}."
+    },
+    "lifecycleSubscriptionExpired": {
+      "title": "Your subscription has expired",
+      "message": "Your site went offline on {{graceEndsAtDate}}. Nothing has been deleted — pay to restore it."
+    },
+    "lifecycleSubscriptionCancelScheduled": {
+      "title": "Your cancellation is scheduled",
+      "message": "Your subscription ends {{effectiveAtDate}}. Everything keeps working until then."
+    },
+    "lifecycleSubscriptionPriceChangeNotice": {
+      "title": "Your plan changes at renewal",
+      "message": "The {{planName}} plan's price or limits change from your next renewal. Nothing changes before then."
+    },
+    "lifecycleSubscriptionCancelled": {
+      "title": "Your subscription has ended",
+      "message": "Your subscription ended {{effectiveAtDate}}. Your content is safe and resubscribing restores it."
+    },
+    "lifecycleSubscriptionFollowup7d": {
+      "title": "Your site is still offline",
+      "message": "Your subscription ended {{expiredAtDate}}. Everything you built is safe — resubscribe to bring it back."
+    },
+    "lifecycleSubscriptionFollowup30d": {
+      "title": "Your academy is still here",
+      "message": "Your subscription ended {{expiredAtDate}}. Your content is intact and resubscribing restores it immediately."
+    },
+    "lifecycleActivationNoAcademy": {
+      "title": "One step to start designing your academy",
+      "message": "Your account is ready, but your academy has not been created yet. Continue setup to create it."
+    },
+    "lifecycleActivationSiteUnpublished": {
+      "title": "Your site isn't published yet",
+      "message": "Your academy exists, but its website is not published, so students cannot see it yet."
+    },
+    "lifecycleActivationPaymentsAndCourse": {
+      "title": "Set up payments and your first course",
+      "message": "Add the payment methods you accept and create your first course so students can join."
+    },
+    "lifecycleActivationFirstProof": {
+      "title": "Your first payment proof has arrived",
+      "message": "A student uploaded a payment proof. Review it on your academy's Payments page."
+    },
+    "retentionVideoWarning30d": {
+      "title": "Your hosted videos will be deleted on {{deletionAtDate}}",
+      "message": "Your subscription has been inactive since {{anchorAtDate}}. In 30 days we will permanently delete {{videoCount}} video file(s) ({{videoMinutes}} minutes). Your courses, students and certificates are not affected."
+    },
+    "retentionVideoWarning14d": {
+      "title": "14 days until your hosted videos are deleted",
+      "message": "On {{deletionAtDate}} we will permanently delete {{videoCount}} video file(s) across {{courseCount}} course(s). Reactivate your subscription, or download them first."
+    },
+    "retentionVideoWarning7d": {
+      "title": "Final warning: hosted videos deleted on {{deletionAtDate}}",
+      "message": "This is the last notice. In 7 days {{videoCount}} video file(s) ({{videoMinutes}} minutes) will be permanently deleted. This cannot be undone."
+    },
+    "retentionVideoWarning24h": {
+      "title": "Last call: your hosted videos are deleted tomorrow",
+      "message": "Tomorrow, on {{deletionAtDate}}, {{videoCount}} video file(s) will be permanently deleted. Reactivating today stops it."
+    },
+    "retentionVideoDeleted": {
+      "title": "Your hosted videos have been deleted",
+      "message": "{{deletedCount}} video file(s) ({{deletedMinutes}} minutes) were permanently deleted on {{deletedAtDate}}. Everything else was kept, and {{failedCount}} file(s) could not be removed and are still stored."
+    },
+    "retentionVideoDeletionFailed": {
+      "title": "Video retention: deletion failed",
+      "message": "Asset {{assetId}} of organisation {{organizationId}} exhausted all {{attempts}} attempts and was NOT marked deleted. Last error: {{lastError}}"
+    },
+    "academyMessageSent": {
+      "title": "{{subject}}",
+      "message": "{{senderName}}: {{excerpt}}"
+    },
+    "platformBroadcastSent": {
+      "title": "{{subject}}",
+      "message": "{{senderName}}: {{excerpt}}"
+    },
+    "platformContactSubmissionReceived": {
+      "title": "New contact enquiry",
+      "message": "A new message arrived through the Atlas website contact form."
+    },
+    "platformSubscriptionPaymentSubmitted": {
+      "title": "Subscription payment to review",
+      "message": "{{organizationName}} submitted a payment proof of {{amount}} {{currency}}."
+    },
+    "platformSupportCaseCreated": {
+      "title": "New support case",
+      "message": "{{organizationName}} opened a new support case."
+    },
+    "platformSupportCaseCustomerReplied": {
+      "title": "Customer replied on a support case",
+      "message": "{{organizationName}} replied on a support case."
+    },
+    "platformOrganizationSignedUp": {
+      "title": "New organization",
+      "message": "{{organizationName}} signed up for Atlas."
+    },
+    "platformCoursePaymentSubmitted": {
+      "title": "Course payment to review",
+      "message": "A learner at {{academyName}} submitted a payment of {{amount}} {{currency}} for \"{{courseTitle}}\"."
+    },
+    "platformRefundRecorded": {
+      "title": "Refund recorded",
+      "message": "A refund of {{amount}} {{currency}} was recorded for \"{{courseTitle}}\" at {{academyName}}."
+    },
+    "customerRequestRouted": {
+      "title": "Customer request activity",
+      "message": "{{academyName}}: \"{{title}}\" needs the team's attention."
+    },
+    "customerRequestReceived": {
+      "title": "New customer request",
+      "message": "{{academyName}} sent a request: \"{{title}}\"."
+    },
+    "customerRequestCustomerReplied": {
+      "title": "Customer replied",
+      "message": "{{academyName}} replied on \"{{title}}\": {{excerpt}}"
+    },
+    "customerRequestSubmitted": {
+      "title": "We received your request",
+      "message": "Your request \"{{title}}\" has reached the Atlas team. We'll reply here."
+    },
+    "customerRequestStatusChanged": {
+      "title": "Request updated",
+      "message": "Your request \"{{title}}\" has a new status. Open it to see what happens next."
+    },
+    "customerRequestTeamReplied": {
+      "title": "The Atlas team replied",
+      "message": "There's a new reply on your request \"{{title}}\"."
+    },
+    "academyMemberInvited": {
+      "title": "Your account is ready",
+      "message": "An account was created for you at {{academyName}}. Set your password to get started."
+    },
+    "academyLearnerInvited": {
+      "title": "Your account is ready",
+      "message": "An account was created for you at {{academyName}}. Set your password to get started."
+    },
+    "academyJoined": {
+      "title": "Your account joined a new academy",
+      "message": "Your account now has access to {{academyName}}. If this wasn't you, reset your password."
+    },
+    "googleLinked": {
+      "title": "Google sign-in connected",
+      "message": "You can now sign in with Google. If this wasn't you, reset your password."
+    },
+    "googleUnlinked": {
+      "title": "Google sign-in removed",
+      "message": "Google can no longer be used to sign in to your account. If this wasn't you, reset your password."
+    },
+    "twoFactorEnabled": {
+      "title": "Two-factor authentication turned on",
+      "message": "Signing in now asks for a code from your authenticator app. If this wasn't you, reset your password."
+    },
+    "twoFactorDisabled": {
+      "title": "Two-factor authentication turned off",
+      "message": "You were signed out on your other devices. If this wasn't you, reset your password."
+    },
+    "academyMemberAdded": {
+      "title": "You've been added to an academy",
+      "message": "You now have access to {{academyName}}. Sign in with your existing Atlas credentials."
+    },
+    "academyLearnerAdded": {
+      "title": "You've been added to an academy",
+      "message": "You're now a student at {{academyName}}. Sign in with your existing Atlas credentials."
+    },
+    "coursePaymentApproved": {
+      "title": "Payment approved",
+      "message": "Your payment of {{amount}} {{currency}} for \"{{courseTitle}}\" was approved. You now have access."
+    },
+    "coursePaymentRejected": {
+      "title": "Payment not approved",
+      "message": "Your payment for \"{{courseTitle}}\" was not approved. Open My payments to see why and pay again."
+    },
+    "coursePaymentRefunded": {
+      "title": "Refund recorded",
+      "message": "The academy recorded a refund of {{amount}} {{currency}} for \"{{courseTitle}}\". Your access to the course has ended."
+    },
+    "academyPaymentSubmitted": {
+      "title": "New payment to review",
+      "message": "A learner sent {{amount}} {{currency}} for \"{{courseTitle}}\". Check it and approve or reject."
+    },
+    "billingLimitApproaching": {
+      "title": "Close to a plan limit",
+      "message": "You're at {{used}} of {{limit}} on one of your plan limits."
+    },
+    "billingLimitApproachingStudents": {
+      "title": "Close to your student limit",
+      "message": "You have {{used}} of {{limit}} students on your plan."
+    },
+    "billingLimitApproachingCourses": {
+      "title": "Close to your course limit",
+      "message": "You have {{used}} of {{limit}} courses on your plan."
+    },
+    "billingLimitApproachingAcademies": {
+      "title": "Close to your academy limit",
+      "message": "You have {{used}} of {{limit}} academies on your plan."
+    },
+    "billingLimitApproachingStorage": {
+      "title": "Close to your storage limit",
+      "message": "You're using {{used}} of {{limit}} GB of storage on your plan."
+    },
+    "billingLimitReached": {
+      "title": "Plan limit reached",
+      "message": "You reached one of your plan limits ({{used}} of {{limit}}). New additions are refused until you upgrade."
+    },
+    "billingLimitReachedStudents": {
+      "title": "Student limit reached",
+      "message": "You have {{used}} of {{limit}} students. New students cannot join until you upgrade."
+    },
+    "billingLimitReachedCourses": {
+      "title": "Course limit reached",
+      "message": "You have {{used}} of {{limit}} courses. New courses cannot be created until you upgrade."
+    },
+    "billingLimitReachedAcademies": {
+      "title": "Academy limit reached",
+      "message": "You have {{used}} of {{limit}} academies. New academies cannot be created until you upgrade."
+    },
+    "billingLimitReachedStorage": {
+      "title": "Storage limit reached",
+      "message": "You're using {{used}} of {{limit}} GB. New uploads are refused until you upgrade."
+    },
+    "privacyRequestCode": {
+      "title": "Privacy request code",
+      "message": "A code to confirm your privacy request was sent to your email."
+    },
+    "privacyRequestReceived": {
+      "title": "Privacy request received",
+      "message": "We received your privacy request."
+    },
+    "privacyRequestExportReady": {
+      "title": "Your data is ready",
+      "message": "Your copy of your data can be downloaded from your profile."
+    },
+    "privacyRequestRejected": {
+      "title": "Privacy request update",
+      "message": "We could not complete your privacy request."
+    },
+    "privacyRequestDeletionCompleted": {
+      "title": "Account deleted",
+      "message": "Your account was deleted as you requested."
+    },
+    "platformPrivacyRequestCreated": {
+      "title": "New privacy request",
+      "message": "A person filed a privacy request."
+    }
+  },
+  "liveSession": {
+    "scheduled": {
+      "title": "New live session",
+      "message": "\"{{title}}\" has been scheduled in your course."
+    },
+    "rescheduled": {
+      "title": "Live session moved",
+      "message": "\"{{title}}\" has been rescheduled."
+    },
+    "cancelled": {
+      "title": "Live session cancelled",
+      "message": "\"{{title}}\" has been cancelled."
+    },
+    "starting_soon": {
+      "title": "Live session starting soon",
+      "message": "\"{{title}}\" starts shortly."
+    },
+    "recordingAvailable": {
+      "title": "Recording ready",
+      "message": "The recording for \"{{title}}\" is now in your media library."
+    },
+    "action": {
+      "openCourse": "Open course",
+      "openRecordings": "View recordings"
+    }
+  },
+  "liveProvider": {
+    "deauthorized": {
+      "title": "Zoom access was removed",
+      "message": "Your Zoom account no longer authorizes Atlas, so live sessions cannot be created or started until you reconnect."
+    },
+    "action": {
+      "reconnect": "Reconnect Zoom"
+    }
+  },
+  "communication": {
+    "title": "Email preferences",
+    "description": "What we email you about, and how often. Changes save as you make them.",
+    "defaultsTitle": "Platform email defaults",
+    "defaultsDescription": "What a new account receives until the person changes it. Accounts that already chose keep their own settings.",
+    "emailLanguage": "Email language",
+    "emailLanguageDescription": "The language your emails are written in.",
+    "alwaysOn": "Always on",
+    "lockedReason": "Security alerts, receipts and account changes can't be turned off. You need to know when they happen, even if you'd rather not hear from us.",
+    "lockedReasonDefaults": "Security alerts, receipts and account changes are sent to everyone. No default can switch them off.",
+    "emailToggle": "Email for {{category}}",
+    "digestLabel": "Delivery for {{category}}",
+    "digest": {
+      "immediate": "As it happens",
+      "daily": "Daily digest",
+      "off": "Off"
+    },
+    "reminders": "Reminders",
+    "remindersDescription": "Reminders about your trial and subscription renewal.",
+    "categories": {
+      "security": {
+        "title": "Security",
+        "description": "Sign-ins from new devices, password changes and two-factor events."
+      },
+      "transactional": {
+        "title": "Receipts and orders",
+        "description": "Purchases, payments and refunds, including email receipts."
+      },
+      "lifecycle": {
+        "title": "Account and courses",
+        "description": "Enrolments, grades, certificates and academy setup."
+      },
+      "engagement": {
+        "title": "Academy updates",
+        "description": "Messages from your academy, grades and results, and course completion. Announcements appear in your notifications, not by email."
+      },
+      "operational": {
+        "title": "Operations",
+        "description": "Support cases, integrations and academy health for the teams you manage."
+      }
+    },
+    "loading": "Loading email preferences",
+    "loadFailed": "Couldn't load your email preferences",
+    "saved": "Email preferences saved",
+    "saveFailed": "Couldn't save that change. Your previous setting is back."
+  }
+}
