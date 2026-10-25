@@ -86,9 +86,11 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
                 child: CircularProgressIndicator(strokeWidth: 2.5),
               ),
               const SizedBox(width: AtlasSpace.s12),
-              Text(
-                l.verifyWorking,
-                style: a.type.body.copyWith(color: a.colors.inkSecondary),
+              Expanded(
+                child: Text(
+                  l.verifyWorking,
+                  style: a.type.body.copyWith(color: a.colors.inkSecondary),
+                ),
               ),
             ],
           ),

@@ -75,4 +75,24 @@ void main() {
       });
     }
   }
+
+  // Largest common accessibility text size: nothing may overflow.
+  for (final MapEntry(key: name, value: (session, path)) in screens.entries) {
+    testWidgets('$name ar at 200% text', (t) async {
+      t.platformDispatcher.textScaleFactorTestValue = 2.0;
+      addTearDown(t.platformDispatcher.clearTextScaleFactorTestValue);
+      await pumpScreen(
+        t,
+        session: session,
+        path: path,
+        extra:
+            path?.contains('reset') == true || path?.contains('verify') == true
+            ? 'token'
+            : null,
+        assessments: FakeAssessmentRepository(),
+      );
+      await t.pump(const Duration(seconds: 2));
+      expect(t.takeException(), isNull);
+    });
+  }
 }

@@ -206,27 +206,31 @@ class CourseCover extends StatelessWidget {
         ),
         child: image != null
             ? Image(image: image!, fit: BoxFit.cover)
-            : Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    if (kicker != null)
-                      Text(
-                        kicker!,
-                        maxLines: 1,
-                        overflow: TextOverflow.clip,
-                        style: a.type.caption.copyWith(
-                          color: c.onCover.withValues(alpha: 0.75),
+            // A fixed-size graphic, hidden from screen readers: its text
+            // stays at the designed size whatever the system text size.
+            : MediaQuery.withNoTextScaling(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (kicker != null)
+                        Text(
+                          kicker!,
+                          maxLines: 1,
+                          overflow: TextOverflow.clip,
+                          style: a.type.caption.copyWith(
+                            color: c.onCover.withValues(alpha: 0.75),
+                          ),
                         ),
+                      Text(
+                        mark ?? '',
+                        maxLines: 1,
+                        style: a.type.title2.copyWith(color: c.onCover),
                       ),
-                    Text(
-                      mark ?? '',
-                      maxLines: 1,
-                      style: a.type.title2.copyWith(color: c.onCover),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
       ),
