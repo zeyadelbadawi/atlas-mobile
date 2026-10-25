@@ -91,7 +91,7 @@ authorAssessedCourse(AtlasApiClient staff, {String integrity = 'warn'}) async {
       'title': 'أساسيات الجبر $stamp',
       'slug': 'algebra-$stamp',
       'pricing': {'type': 'free'},
-      'visibility': 'public',
+      'visibility': 'private',
       'language': 'ar',
     },
   );
