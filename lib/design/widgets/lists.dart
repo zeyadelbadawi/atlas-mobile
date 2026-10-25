@@ -195,21 +195,21 @@ class CourseCover extends StatelessWidget {
     final a = context.atlas;
     final c = a.colors;
     final h = width * 84 / 64;
-    return ExcludeSemantics(
-      child: Container(
-        width: width,
-        height: h,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: image == null ? c.cover : c.sunken,
-          borderRadius: BorderRadius.circular(AtlasRadius.sm),
-        ),
-        child: image != null
-            ? Image(image: image!, fit: BoxFit.cover)
-            // A fixed-size graphic, hidden from screen readers: its text
-            // stays at the designed size whatever the system text size.
-            : MediaQuery.withNoTextScaling(
-                child: Padding(
+    // A fixed-size graphic, hidden from screen readers: its text stays at
+    // the designed size whatever the system text size.
+    return MediaQuery.withNoTextScaling(
+      child: ExcludeSemantics(
+        child: Container(
+          width: width,
+          height: h,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: image == null ? c.cover : c.sunken,
+            borderRadius: BorderRadius.circular(AtlasRadius.sm),
+          ),
+          child: image != null
+              ? Image(image: image!, fit: BoxFit.cover)
+              : Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,7 +232,7 @@ class CourseCover extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }
