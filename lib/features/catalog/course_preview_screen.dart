@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -278,6 +279,7 @@ class _JoinButtonState extends ConsumerState<_JoinButton> {
     try {
       await ref.read(catalogRepositoryProvider).enroll(course.id);
       ref.read(analyticsProvider).event('course_join');
+      HapticFeedback.lightImpact();
       ref.invalidate(enrollmentsProvider);
       ref.invalidate(overviewProvider);
       ref.invalidate(isEnrolledProvider(course.id));

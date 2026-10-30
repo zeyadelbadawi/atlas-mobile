@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -315,6 +315,7 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen> {
       ref.read(analyticsProvider).event('assignment_submit', {
         'attachment': _attachment == null ? 0 : 1,
       });
+      HapticFeedback.lightImpact();
       refreshAssessments(ref, widget.courseId);
       if (!mounted) return;
       setState(() {

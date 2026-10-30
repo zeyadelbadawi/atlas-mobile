@@ -121,6 +121,33 @@ class AsyncBody<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Content fades in over the loader instead of popping; instant when
+    // the system asks for reduced motion.
+    final still = MediaQuery.disableAnimationsOf(context);
+    return AnimatedSwitcher(
+      duration: still ? Duration.zero : const Duration(milliseconds: 180),
+      switchInCurve: Curves.easeOut,
+      // Passthrough: the content keeps the parent's constraints (stretched
+      // lists stay full width), as it was without the fade.
+      layoutBuilder: (current, previous) => Stack(
+        fit: StackFit.passthrough,
+        alignment: AlignmentDirectional.topCenter,
+        children: [...previous, ?current],
+      ),
+      child: KeyedSubtree(
+        key: ValueKey(
+          value.hasValue
+              ? 'data'
+              : value.hasError
+              ? 'error'
+              : 'loading',
+        ),
+        child: _body(),
+      ),
+    );
+  }
+
+  Widget _body() {
     return value.when(
       data: data,
       loading: () => const Padding(

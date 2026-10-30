@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:go_router/go_router.dart';
@@ -141,6 +142,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           .read(learningRepositoryProvider)
           .completeLesson(widget.courseId, widget.lessonId);
       ref.read(analyticsProvider).event('lesson_complete');
+      HapticFeedback.lightImpact();
       refreshLearning(ref, widget.courseId);
       if (mounted) setState(() => _done = true);
     } on AtlasApiException catch (e) {

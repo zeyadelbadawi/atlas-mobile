@@ -3,6 +3,7 @@ library;
 
 import 'package:atlas_mobile/app/atlas_app.dart';
 import 'package:atlas_mobile/core/auth/auth_repository.dart';
+import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -49,7 +50,8 @@ void main() {
   }, variant: ios);
 
   testWidgets('code_ar', (t) async {
-    final now = DateTime.now();
+    // The test's fake clock: the countdown reads the same every run.
+    final now = clock.now();
     await pumpScreen(
       t,
       session: AsSignedOut.new,

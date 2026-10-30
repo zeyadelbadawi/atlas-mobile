@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:clock/clock.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -82,7 +84,7 @@ class _EmailCodeScreenState extends ConsumerState<EmailCodeScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final a = context.atlas;
-    final wait = _resendAt.difference(DateTime.now()).inSeconds;
+    final wait = _resendAt.difference(clock.now()).inSeconds;
     return FormScreen(
       title: l.codeTitle,
       children: [

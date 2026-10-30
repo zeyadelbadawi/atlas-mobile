@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -127,6 +128,7 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
   /// The runner says the attempt is over (submitted, time, integrity).
   Future<void> _finished(String attemptId) async {
     ref.read(analyticsProvider).event('quiz_submit');
+    HapticFeedback.lightImpact();
     refreshAssessments(ref, widget.courseId);
     try {
       _attempts = await ref
