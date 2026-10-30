@@ -698,6 +698,12 @@ abstract class AppLocalizations {
   /// **'Email'**
   String get aboutEmail;
 
+  /// No description provided for @aboutWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get aboutWhatsapp;
+
   /// No description provided for @aboutPhone.
   ///
   /// In en, this message translates to:

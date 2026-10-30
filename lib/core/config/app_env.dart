@@ -15,5 +15,8 @@ abstract final class AppEnv {
   /// Business details for the About screen (App Store / Play requirement).
   static const legalName = 'Atlas';
   static const supportEmail = 'info@atlas.com';
-  static const supportPhone = '01000510491';
+
+  /// Shown as is; [supportPhoneDial] is what the dialer and WhatsApp get.
+  static const supportPhone = '+20\u00A0100\u00A0051\u00A00491';
+  static const supportPhoneDial = '+201000510491';
 }

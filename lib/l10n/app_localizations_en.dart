@@ -329,6 +329,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutEmail => 'Email';
 
   @override
+  String get aboutWhatsapp => 'WhatsApp';
+
+  @override
   String get aboutPhone => 'Phone';
 
   @override

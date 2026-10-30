@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../app/providers.dart';
@@ -176,12 +177,25 @@ class AboutScreen extends ConsumerWidget {
               icon: LucideIcons.mail,
               value: AppEnv.supportEmail,
               valueLtr: true,
+              onTap: () =>
+                  _open(Uri(scheme: 'mailto', path: AppEnv.supportEmail)),
             ),
             SettingsRow(
               title: l.aboutPhone,
               icon: LucideIcons.phone,
               value: AppEnv.supportPhone,
               valueLtr: true,
+              onTap: () =>
+                  _open(Uri(scheme: 'tel', path: AppEnv.supportPhoneDial)),
+            ),
+            SettingsRow(
+              title: l.aboutWhatsapp,
+              icon: LucideIcons.messageCircle,
+              value: AppEnv.supportPhone,
+              valueLtr: true,
+              onTap: () => _open(
+                Uri.https('wa.me', AppEnv.supportPhoneDial.substring(1)),
+              ),
             ),
             SettingsRow(
               title: l.aboutVersion,
@@ -210,3 +224,9 @@ class AboutScreen extends ConsumerWidget {
     );
   }
 }
+
+/// Mail, dialer or WhatsApp: the system app, never an in-app browser.
+Future<void> _open(Uri uri) => launchUrl(
+  uri,
+  mode: LaunchMode.externalApplication,
+).catchError((_) => false);

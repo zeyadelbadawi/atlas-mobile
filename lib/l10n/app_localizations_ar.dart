@@ -329,6 +329,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aboutEmail => 'البريد الإلكتروني';
 
   @override
+  String get aboutWhatsapp => 'واتساب';
+
+  @override
   String get aboutPhone => 'الهاتف';
 
   @override

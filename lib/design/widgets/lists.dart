@@ -450,19 +450,24 @@ class SettingsRow extends StatelessWidget {
                     const SizedBox(width: 12),
                   ],
                   Expanded(
-                    child: Text(title, style: a.type.body.copyWith(color: fg)),
+                    child: value == null
+                        ? Text(title, style: a.type.body.copyWith(color: fg))
+                        : _TitleAndValue(
+                            title: Text(
+                              title,
+                              style: a.type.body.copyWith(color: fg),
+                            ),
+                            value: Text(
+                              value!,
+                              textDirection: valueLtr
+                                  ? TextDirection.ltr
+                                  : null,
+                              style: a.type.body.copyWith(
+                                color: c.inkSecondary,
+                              ),
+                            ),
+                          ),
                   ),
-                  if (value != null) ...[
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: Text(
-                        value!,
-                        textDirection: valueLtr ? TextDirection.ltr : null,
-                        textAlign: TextAlign.end,
-                        style: a.type.body.copyWith(color: c.inkSecondary),
-                      ),
-                    ),
-                  ],
                   if (showChevron && !destructive && onTap != null) ...[
                     const SizedBox(width: 8),
                     const ForwardChevron(),
@@ -475,4 +480,48 @@ class SettingsRow extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Title and value on one line, the value at the end; when both don't fit
+/// on one line, the value goes under the title instead of wrapping (a phone
+/// number or an address is never broken in the middle).
+class _TitleAndValue extends StatelessWidget {
+  const _TitleAndValue({required this.title, required this.value});
+  final Text title;
+  final Text value;
+
+  double _width(BuildContext context, Text t) {
+    final painter = TextPainter(
+      text: TextSpan(text: t.data, style: t.style),
+      textDirection: t.textDirection ?? Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final w = painter.width;
+    painter.dispose();
+    return w;
+  }
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      const gap = 8.0;
+      final fits =
+          _width(context, title) + gap + _width(context, value) <=
+          constraints.maxWidth;
+      if (fits) {
+        return Row(
+          children: [
+            Expanded(child: title),
+            const SizedBox(width: gap),
+            value,
+          ],
+        );
+      }
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [title, const SizedBox(height: 2), value],
+      );
+    },
+  );
 }
