@@ -39,5 +39,5 @@ const _terms = String.fromEnvironment(
 );
 const _privacy = String.fromEnvironment(
   'ATLAS_PRIVACY_VERSION',
-  defaultValue: 'privacy-2026-10-20',
+  defaultValue: 'privacy-2026-10-30',
 );

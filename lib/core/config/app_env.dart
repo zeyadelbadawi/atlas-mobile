@@ -10,7 +10,7 @@ abstract final class AppEnv {
   /// the consent (B4). Bump when the web's Terms / Privacy Policy change
   /// ("Last updated" on the web page).
   static const termsVersion = 'terms-2026-10-09';
-  static const privacyVersion = 'privacy-2026-10-20';
+  static const privacyVersion = 'privacy-2026-10-30';
 
   /// Business details for the About screen (App Store / Play requirement).
   static const legalName = 'Atlas';
