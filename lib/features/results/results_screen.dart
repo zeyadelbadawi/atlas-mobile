@@ -92,6 +92,11 @@ class _Results extends StatelessWidget {
         ),
       );
     }
+    final graded = [
+      for (final c in r.courses)
+        for (final q in c.quizzes)
+          if (q.score != null) q,
+    ].length;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -105,11 +110,12 @@ class _Results extends StatelessWidget {
                   ? l.resultsNoScores
                   : l.resultsAverage,
             ),
+            // Of the quizzes already graded: one awaiting a teacher is not
+            // a failed one.
             _Metric(
-              value: l.countOf(
-                d('${r.quizzesPassed}'),
-                d('${r.quizzesAttempted}'),
-              ),
+              value: graded == 0
+                  ? '—'
+                  : l.countOf(d('${r.quizzesPassed}'), d('$graded')),
               label: l.resultsQuizzesPassed,
             ),
             _Metric(
@@ -242,7 +248,11 @@ class _ResultRow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: a.type.headline.copyWith(color: c.ink)),
+                    Text(
+                      title,
+                      textDirection: contentDirection(context, title),
+                      style: a.type.headline.copyWith(color: c.ink),
+                    ),
                     if (meta.isNotEmpty)
                       Text(
                         meta,

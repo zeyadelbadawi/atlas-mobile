@@ -72,6 +72,7 @@ class _Course extends ConsumerWidget {
           header: true,
           child: Text(
             s.courseTitle,
+            textDirection: contentDirection(context, s.courseTitle),
             style: a.type.title1.copyWith(color: a.colors.ink),
           ),
         ),
@@ -220,6 +221,7 @@ class CourseOutline extends ConsumerWidget {
           header: true,
           child: Text(
             s.courseTitle,
+            textDirection: contentDirection(context, s.courseTitle),
             style: a.type.title3.copyWith(color: a.colors.ink),
           ),
         ),
@@ -309,6 +311,7 @@ class SyllabusRow extends StatelessWidget {
                       children: [
                         Text(
                           item.title,
+                          textDirection: contentDirection(context, item.title),
                           style: a.type.headline.copyWith(color: fg),
                         ),
                         Text(

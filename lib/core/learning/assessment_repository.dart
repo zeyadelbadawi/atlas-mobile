@@ -5,9 +5,13 @@ import 'assessment_models.dart';
 /// client's host). Every decision — grading, deadlines, what is disclosed,
 /// integrity verdicts — is the server's; this only carries requests.
 class AssessmentRepository {
-  AssessmentRepository(this.client);
+  AssessmentRepository(this.client, {this.academyId});
 
   final AtlasApiClient client;
+
+  /// The signed-in academy: results are narrowed to it (an account can
+  /// learn in several academies).
+  final String? academyId;
 
   String _quiz(String courseId, String quizId) =>
       'courses/$courseId/quizzes/$quizId';
@@ -189,7 +193,10 @@ class AssessmentRepository {
   /* ---- results & certificates ---- */
 
   Future<StudentResults> studentResults() async => StudentResults.fromJson(
-    await client.get<Map<String, dynamic>>('learning/results'),
+    await client.get<Map<String, dynamic>>(
+      'learning/results',
+      query: {'academyId': ?academyId},
+    ),
   );
 
   Future<LearnerCertificates> certificates() async =>

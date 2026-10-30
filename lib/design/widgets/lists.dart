@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../atlas_theme.dart';
+import '../content_direction.dart';
 import 'academy_logo.dart';
 import 'pressable.dart';
 import 'segmented_progress.dart';
@@ -277,7 +278,11 @@ class CourseRow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: a.type.headline.copyWith(color: c.ink)),
+                    Text(
+                      title,
+                      textDirection: contentDirection(context, title),
+                      style: a.type.headline.copyWith(color: c.ink),
+                    ),
                     const SizedBox(height: 2),
                     Text(
                       subtitle,

@@ -136,11 +136,13 @@ class AnnouncementRow extends StatelessWidget {
         children: [
           Text(
             item.title,
+            textDirection: contentDirection(context, item.title),
             style: a.type.headline.copyWith(color: a.colors.ink),
           ),
           const SizedBox(height: 2),
           Text(
             item.body,
+            textDirection: contentDirection(context, item.body),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: a.type.subhead.copyWith(color: a.colors.inkSecondary),
@@ -189,6 +191,7 @@ class RecentResultRow extends StatelessWidget {
                   children: [
                     Text(
                       item.title,
+                      textDirection: contentDirection(context, item.title),
                       style: a.type.headline.copyWith(color: c.ink),
                     ),
                     Text(

@@ -13,7 +13,10 @@ final learningRepositoryProvider = Provider<LearningRepository>((ref) {
   ref.watch(sessionProvider.select((s) => (s.academy, s.user?['id'])));
   final client = ref.read(sessionProvider.notifier).client;
   if (client == null) throw StateError('no academy session');
-  return LearningRepository(client);
+  return LearningRepository(
+    client,
+    academyId: ref.read(sessionProvider).academy?.id,
+  );
 });
 
 final overviewProvider = FutureProvider.autoDispose<LearnerOverview>(
@@ -54,7 +57,10 @@ final assessmentRepositoryProvider = Provider<AssessmentRepository>((ref) {
   ref.watch(sessionProvider.select((s) => (s.academy, s.user?['id'])));
   final client = ref.read(sessionProvider.notifier).client;
   if (client == null) throw StateError('no academy session');
-  return AssessmentRepository(client);
+  return AssessmentRepository(
+    client,
+    academyId: ref.read(sessionProvider).academy?.id,
+  );
 });
 
 final studentResultsProvider = FutureProvider.autoDispose<StudentResults>(

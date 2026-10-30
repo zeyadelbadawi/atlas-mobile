@@ -157,10 +157,15 @@ class _AnnouncementRow extends StatelessWidget {
                   style: a.type.caption.copyWith(color: c.accent),
                 ),
                 const SizedBox(height: 2),
-                Text(item.title, style: a.type.headline.copyWith(color: c.ink)),
+                Text(
+                  item.title,
+                  textDirection: contentDirection(context, item.title),
+                  style: a.type.headline.copyWith(color: c.ink),
+                ),
                 const SizedBox(height: 2),
                 Text(
                   item.body,
+                  textDirection: contentDirection(context, item.body),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: a.type.subhead.copyWith(color: c.inkSecondary),
@@ -220,6 +225,7 @@ class AnnouncementDetailScreen extends ConsumerWidget {
                   header: true,
                   child: Text(
                     x.title,
+                    textDirection: contentDirection(context, x.title),
                     style: a.type.title1.copyWith(color: c.ink),
                   ),
                 ),
@@ -233,6 +239,7 @@ class AnnouncementDetailScreen extends ConsumerWidget {
                 const SizedBox(height: AtlasSpace.s16),
                 SelectableText(
                   x.body,
+                  textDirection: contentDirection(context, x.body),
                   style: a.type.body.copyWith(color: c.ink),
                 ),
               ],

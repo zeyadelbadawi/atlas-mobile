@@ -14,6 +14,10 @@ import 'package:atlas_mobile/features/account/account_settings_screens.dart';
 import 'package:atlas_mobile/core/academy/academy.dart';
 import 'package:atlas_mobile/core/auth/auth_repository.dart';
 import 'package:atlas_mobile/core/errors/error_catalog.dart';
+import 'package:atlas_mobile/core/learning/assessment_repository.dart';
+import 'package:atlas_mobile/core/learning/catalog_repository.dart';
+import 'package:atlas_mobile/core/learning/learning_repository.dart';
+import 'package:atlas_mobile/core/notifications/notifications_repository.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -97,7 +101,10 @@ Future<ProviderContainer> pumpScreen(
   String? path,
   Object? extra,
   Size size = const Size(393, 852),
-  FakeAssessmentRepository? assessments,
+  AssessmentRepository? assessments,
+  LearningRepository? learning,
+  CatalogRepository? catalog,
+  NotificationsRepository? notifications,
 }) async {
   SharedPreferences.setMockInitialValues({
     'settings.language': language,
@@ -130,13 +137,17 @@ Future<ProviderContainer> pumpScreen(
         (ref) async => const MobileConfig(signInWithApple: true),
       ),
       sessionProvider.overrideWith(session),
-      learningRepositoryProvider.overrideWithValue(FakeLearningRepository()),
-      catalogRepositoryProvider.overrideWithValue(FakeCatalogRepository()),
+      learningRepositoryProvider.overrideWithValue(
+        learning ?? FakeLearningRepository(),
+      ),
+      catalogRepositoryProvider.overrideWithValue(
+        catalog ?? FakeCatalogRepository(),
+      ),
       assessmentRepositoryProvider.overrideWithValue(
         assessments ?? FakeAssessmentRepository(),
       ),
       notificationsRepositoryProvider.overrideWithValue(
-        FakeNotificationsRepository(),
+        notifications ?? FakeNotificationsRepository(),
       ),
       accountRepositoryProvider.overrideWithValue(FakeAccountRepository()),
       notificationCatalogProvider.overrideWithValue(notificationCatalog()),

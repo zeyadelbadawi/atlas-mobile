@@ -2,6 +2,7 @@
 library;
 
 export 'atlas_theme.dart';
+export 'content_direction.dart';
 export 'widgets/academy_logo.dart';
 export 'widgets/atlas_banner.dart';
 export 'widgets/atlas_button.dart';

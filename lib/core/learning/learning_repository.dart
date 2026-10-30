@@ -3,9 +3,13 @@ import 'learning_models.dart';
 
 /// Learner reads and writes for one academy (the client's host).
 class LearningRepository {
-  LearningRepository(this.client);
+  LearningRepository(this.client, {this.academyId});
 
   final AtlasApiClient client;
+
+  /// The signed-in academy. One account can learn in several academies, and
+  /// `GET /enrollments` lists all of them unless narrowed to this one.
+  final String? academyId;
 
   Future<LearnerOverview> overview() async => LearnerOverview.fromJson(
     await client.get<Map<String, dynamic>>('learning/overview'),
@@ -14,7 +18,7 @@ class LearningRepository {
   Future<List<EnrolledCourse>> enrollments() async {
     final body = await client.get<Map<String, dynamic>>(
       'enrollments',
-      query: {'pageSize': 100},
+      query: {'pageSize': 100, 'academyId': ?academyId},
     );
     final items = body['items'];
     return items is List

@@ -119,6 +119,7 @@ class _Preview extends ConsumerWidget {
           header: true,
           child: Text(
             course.title,
+            textDirection: contentDirection(context, course.title),
             style: a.type.title1.copyWith(color: c.ink),
           ),
         ),
@@ -152,7 +153,11 @@ class _Preview extends ConsumerWidget {
         if ((course.description ?? course.shortDescription) case final text?
             when text.isNotEmpty) ...[
           SectionHeader(title: l.previewAbout),
-          Text(text, style: a.type.body.copyWith(color: c.ink)),
+          Text(
+            text,
+            textDirection: contentDirection(context, text),
+            style: a.type.body.copyWith(color: c.ink),
+          ),
         ],
         if (course.outcomes.isNotEmpty) ...[
           SectionHeader(title: l.previewOutcomes),
@@ -249,7 +254,11 @@ class _Bullet extends StatelessWidget {
           ),
           const SizedBox(width: AtlasSpace.s8),
           Expanded(
-            child: Text(text, style: a.type.body.copyWith(color: a.colors.ink)),
+            child: Text(
+              text,
+              textDirection: contentDirection(context, text),
+              style: a.type.body.copyWith(color: a.colors.ink),
+            ),
           ),
         ],
       ),
