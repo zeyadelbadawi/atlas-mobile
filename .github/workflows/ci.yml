@@ -51,6 +51,14 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
+      # Firebase iOS SDK 13 (firebase_messaging 17) needs Swift tools 6.2,
+      # i.e. Xcode 26 — also the Xcode the App Store requires. The macOS 15
+      # image ships it beside its default 16.x; pick the newest.
+      - name: Use Xcode 26
+        run: |
+          x=$(ls -d /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$x" ]; then echo "::error::No Xcode 26 on this runner image"; exit 1; fi
+          sudo xcode-select -s "$x"
       - run: xcodebuild -version
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
