@@ -415,6 +415,7 @@ class SettingsRow extends StatelessWidget {
     this.showChevron = true,
     this.onTap,
     this.valueLtr = false,
+    this.selected = false,
   });
 
   final String title;
@@ -425,6 +426,9 @@ class SettingsRow extends StatelessWidget {
   final VoidCallback? onTap;
   final bool valueLtr;
 
+  /// The row whose page is open beside the list (iPad master/detail).
+  final bool selected;
+
   @override
   Widget build(BuildContext context) {
     final a = context.atlas;
@@ -433,9 +437,11 @@ class SettingsRow extends StatelessWidget {
     return MergeSemantics(
       child: Semantics(
         button: onTap != null,
+        selected: selected,
         child: InkWell(
           onTap: onTap,
-          child: ConstrainedBox(
+          child: Container(
+            color: selected ? c.tonal : null,
             constraints: const BoxConstraints(minHeight: AtlasSize.button),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

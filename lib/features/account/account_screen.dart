@@ -7,11 +7,48 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../design/design.dart';
+import '../certificates/certificates_screen.dart';
+import '../legal/legal_screens.dart';
+import '../results/results_screen.dart';
+import 'account_settings_screens.dart';
+import 'devices_screen.dart';
 
 /// The Account tab: who is signed in, devices, language, appearance,
-/// policies, change academy, sign out.
-class AccountScreen extends ConsumerWidget {
+/// policies, change academy, sign out. On a wide screen (iPad) the page a
+/// row opens sits beside the list instead of covering it.
+class AccountScreen extends ConsumerStatefulWidget {
   const AccountScreen({super.key});
+
+  @override
+  ConsumerState<AccountScreen> createState() => _AccountScreenState();
+}
+
+/// The page each row opens, for the side-by-side layout. Phones push the
+/// same paths (router.dart).
+Widget _page(String path) => switch (path) {
+  '/account/results' => const ResultsScreen(),
+  '/account/certificates' => const CertificatesScreen(),
+  '/account/devices' => const DevicesScreen(),
+  '/account/security' => const SecurityScreen(),
+  '/account/notifications' => const NotificationSettingsScreen(),
+  '/account/privacy' => const PrivacyScreen(),
+  '/legal' => const LegalListScreen(),
+  '/about' => const AboutScreen(),
+  _ => const ProfileScreen(),
+};
+
+class _AccountScreenState extends ConsumerState<AccountScreen> {
+  String _open = '/account/profile';
+
+  void _go(String path) =>
+      isSplit(context) ? setState(() => _open = path) : context.push(path);
+
+  SettingsRow _row(String title, IconData icon, String path) => SettingsRow(
+    title: title,
+    icon: icon,
+    selected: isSplit(context) && _open == path,
+    onTap: () => _go(path),
+  );
 
   Future<void> _signOut(
     BuildContext context,
@@ -49,7 +86,17 @@ class AccountScreen extends ConsumerWidget {
         );
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final menu = _menu(context);
+    if (!isSplit(context)) return menu;
+    return SplitView(
+      masterWidth: AtlasSize.masterWidth + 40,
+      master: menu,
+      detail: KeyedSubtree(key: ValueKey(_open), child: _page(_open)),
+    );
+  }
+
+  Widget _menu(BuildContext context) {
     final l = context.l10n;
     final a = context.atlas;
     final session = ref.watch(sessionProvider);
@@ -89,45 +136,45 @@ class AccountScreen extends ConsumerWidget {
                     SectionHeader(title: l.accountLearning),
                     SettingsGroup(
                       children: [
-                        SettingsRow(
-                          title: l.resultsTitle,
-                          icon: LucideIcons.chartColumn,
-                          onTap: () => context.push('/account/results'),
+                        _row(
+                          l.resultsTitle,
+                          LucideIcons.chartColumn,
+                          '/account/results',
                         ),
-                        SettingsRow(
-                          title: l.certificatesTitle,
-                          icon: LucideIcons.award,
-                          onTap: () => context.push('/account/certificates'),
+                        _row(
+                          l.certificatesTitle,
+                          LucideIcons.award,
+                          '/account/certificates',
                         ),
-                        SettingsRow(
-                          title: l.accountDevices,
-                          icon: LucideIcons.smartphone,
-                          onTap: () => context.push('/account/devices'),
+                        _row(
+                          l.accountDevices,
+                          LucideIcons.smartphone,
+                          '/account/devices',
                         ),
                       ],
                     ),
                     SectionHeader(title: l.accountSettings),
                     SettingsGroup(
                       children: [
-                        SettingsRow(
-                          title: l.accountProfile,
-                          icon: LucideIcons.userPen,
-                          onTap: () => context.push('/account/profile'),
+                        _row(
+                          l.accountProfile,
+                          LucideIcons.userPen,
+                          '/account/profile',
                         ),
-                        SettingsRow(
-                          title: l.accountSecurity,
-                          icon: LucideIcons.keyRound,
-                          onTap: () => context.push('/account/security'),
+                        _row(
+                          l.accountSecurity,
+                          LucideIcons.keyRound,
+                          '/account/security',
                         ),
-                        SettingsRow(
-                          title: l.accountNotifications,
-                          icon: LucideIcons.bellRing,
-                          onTap: () => context.push('/account/notifications'),
+                        _row(
+                          l.accountNotifications,
+                          LucideIcons.bellRing,
+                          '/account/notifications',
                         ),
-                        SettingsRow(
-                          title: l.accountPrivacy,
-                          icon: LucideIcons.shieldCheck,
-                          onTap: () => context.push('/account/privacy'),
+                        _row(
+                          l.accountPrivacy,
+                          LucideIcons.shieldCheck,
+                          '/account/privacy',
                         ),
                       ],
                     ),
@@ -159,16 +206,8 @@ class AccountScreen extends ConsumerWidget {
                     const SizedBox(height: AtlasSpace.s24),
                     SettingsGroup(
                       children: [
-                        SettingsRow(
-                          title: l.accountLegal,
-                          icon: LucideIcons.scrollText,
-                          onTap: () => context.push('/legal'),
-                        ),
-                        SettingsRow(
-                          title: l.accountAbout,
-                          icon: LucideIcons.info,
-                          onTap: () => context.push('/about'),
-                        ),
+                        _row(l.accountLegal, LucideIcons.scrollText, '/legal'),
+                        _row(l.accountAbout, LucideIcons.info, '/about'),
                         SettingsRow(
                           title: l.accountChangeAcademy,
                           icon: LucideIcons.building2,

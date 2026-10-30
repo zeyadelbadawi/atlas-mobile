@@ -145,6 +145,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             Padding(
               padding: const EdgeInsets.all(AtlasSpace.gutter),
               child: ReadableWidth(
+                form: true,
                 child: AutofillGroup(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,

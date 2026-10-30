@@ -90,10 +90,12 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
               academyName: l.appName,
               greeting: l.pickerTitle,
               overlap: 0,
+              form: true,
             ),
             Padding(
               padding: const EdgeInsets.all(AtlasSpace.gutter),
               child: ReadableWidth(
+                form: true,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [

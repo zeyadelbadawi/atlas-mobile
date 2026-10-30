@@ -32,16 +32,23 @@ extension L10nContext on BuildContext {
 String errorText(WidgetRef ref, BuildContext context, Object error) =>
     ref.read(errorCatalogProvider).of(error, context.languageCode);
 
-/// Phone and tablet: content keeps a readable width and centres on iPad.
+/// Content width: a readable column on a phone; on a tablet pages use the
+/// room ([AtlasSize.wideWidth]) and forms stay comfortable ([form]).
 class ReadableWidth extends StatelessWidget {
-  const ReadableWidth({super.key, required this.child});
+  const ReadableWidth({super.key, required this.child, this.form = false});
   final Widget child;
+  final bool form;
 
   @override
   Widget build(BuildContext context) => Align(
     alignment: AlignmentDirectional.topCenter,
     child: ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: AtlasSize.readingWidth),
+      constraints: BoxConstraints(
+        maxWidth: AtlasSize.contentWidth(
+          MediaQuery.sizeOf(context).width,
+          form: form,
+        ),
+      ),
       child: child,
     ),
   );
@@ -76,6 +83,7 @@ class FormScreen extends StatelessWidget {
             AtlasSpace.s32,
           ),
           child: ReadableWidth(
+            form: true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

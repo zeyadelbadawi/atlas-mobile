@@ -26,6 +26,7 @@ class SystemGateScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(AtlasSpace.gutter),
           child: ReadableWidth(
+            form: true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

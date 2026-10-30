@@ -16,6 +16,7 @@ import '../../app/ui_helpers.dart';
 import '../../core/api/api_error.dart';
 import '../../core/learning/learning_models.dart';
 import '../../design/design.dart';
+import '../courses/course_screen.dart';
 import '../learning/course_widgets.dart';
 import '../player/playback_session.dart';
 import '../player/youtube_lesson_player.dart';
@@ -164,56 +165,64 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     final item = seq?.items.where((i) => i.id == widget.lessonId).firstOrNull;
     final g = _grant;
     final video = g?.youtubeId != null;
+    final Widget body = _loading
+        ? const Center(
+            child: SizedBox.square(
+              dimension: 26,
+              child: CircularProgressIndicator(strokeWidth: 2.5),
+            ),
+          )
+        : _error != null && g == null
+        ? _ErrorView(error: _error!, onRetry: _load)
+        : ListView(
+            padding: const EdgeInsets.only(bottom: 48),
+            children: [
+              if (video)
+                ReadableWidth(
+                  child: YouTubeLessonPlayer(
+                    videoId: g!.youtubeId!,
+                    academyOrigin: ref
+                        .read(sessionProvider)
+                        .academy!
+                        .endpoint
+                        .originHeader,
+                    watermarkCode: g.watermarkCode ?? '',
+                    watermarkSecondary: g.watermarkIdentity,
+                    session: _session,
+                    startSeconds: g.resumeSeconds,
+                    recordingMessage: context.l10n.playerRecording,
+                    failedMessage: context.l10n.playerFailed,
+                    onEnded: () => setState(() => _eligible = true),
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AtlasSpace.gutter,
+                  0,
+                  AtlasSpace.gutter,
+                  0,
+                ),
+                child: ReadableWidth(child: _content(context, g!, item, seq)),
+              ),
+            ],
+          );
+    // iPad: the course outline beside the lesson.
+    final split = isSplit(context) && seq != null;
     return Scaffold(
       backgroundColor: context.atlas.colors.paper,
       appBar: AppBar(
         title: Text(
-          seq?.courseTitle ?? '',
+          split ? '' : seq?.courseTitle ?? '',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
       ),
-      body: _loading
-          ? const Center(
-              child: SizedBox.square(
-                dimension: 26,
-                child: CircularProgressIndicator(strokeWidth: 2.5),
-              ),
+      body: split
+          ? SplitView(
+              master: CourseOutline(s: seq, openId: widget.lessonId),
+              detail: body,
             )
-          : _error != null && g == null
-          ? _ErrorView(error: _error!, onRetry: _load)
-          : ListView(
-              padding: const EdgeInsets.only(bottom: 48),
-              children: [
-                if (video)
-                  ReadableWidth(
-                    child: YouTubeLessonPlayer(
-                      videoId: g!.youtubeId!,
-                      academyOrigin: ref
-                          .read(sessionProvider)
-                          .academy!
-                          .endpoint
-                          .originHeader,
-                      watermarkCode: g.watermarkCode ?? '',
-                      watermarkSecondary: g.watermarkIdentity,
-                      session: _session,
-                      startSeconds: g.resumeSeconds,
-                      recordingMessage: context.l10n.playerRecording,
-                      failedMessage: context.l10n.playerFailed,
-                      onEnded: () => setState(() => _eligible = true),
-                    ),
-                  ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AtlasSpace.gutter,
-                    0,
-                    AtlasSpace.gutter,
-                    0,
-                  ),
-                  child: ReadableWidth(child: _content(context, g!, item, seq)),
-                ),
-              ],
-            ),
+          : body,
     );
   }
 

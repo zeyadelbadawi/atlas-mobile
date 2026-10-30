@@ -33,6 +33,40 @@ abstract final class AtlasSize {
 
   /// Content stops growing past this on iPad and wide windows.
   static const double readingWidth = 560;
+
+  /// On a tablet: pages use the room (two columns on Home), forms stay a
+  /// comfortable width.
+  static const double wideWidth = 960;
+  static const double formWidth = 600;
+
+  /// Text is a little larger on tablets (on top of the user's own size).
+  static const double tabletTextScale = 1.1;
+
+  /// The page's content width: [readingWidth] on a phone, [wideWidth] (or
+  /// [formWidth] for a form) from [sidebarFrom].
+  static double contentWidth(double screenWidth, {bool form = false}) =>
+      screenWidth < sidebarFrom
+      ? readingWidth
+      : form
+      ? formWidth
+      : wideWidth;
+
+  /// From this width (iPad, Android tablets, a wide Split View pane) the
+  /// tabs become a sidebar. Narrower (phones, Slide Over, a narrow Split
+  /// View pane) keeps the bottom tab bar.
+  static const double sidebarFrom = 700;
+
+  /// iPadOS keeps the floating tab bar on narrower iPads (mini, 11" in
+  /// portrait) and shows the sidebar from here.
+  static const double iosSidebarFrom = 900;
+
+  /// From this width a list and the item it opens sit side by side
+  /// (master/detail): the course outline beside the lesson, the account
+  /// menu beside the setting.
+  static const double splitFrom = 1000;
+
+  static const double sidebarWidth = 260;
+  static const double masterWidth = 340;
 }
 
 /// Motion from the Emil Kowalski guidance: short, ease-out, interruptible.

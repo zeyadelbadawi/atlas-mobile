@@ -192,6 +192,66 @@ class _CompletedCard extends ConsumerWidget {
 
 /// A syllabus line: the item's number, title, kind and length or lock
 /// reason, and its state. The current item carries the bookmark.
+/// The course outline beside a lesson on a wide screen (iPad): every unit
+/// and item, the open one marked; a tap replaces the open item, so Back
+/// still returns to the course.
+class CourseOutline extends ConsumerWidget {
+  const CourseOutline({super.key, required this.s, required this.openId});
+  final CourseSequence s;
+  final String openId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final units = <int, List<SequenceItem>>{};
+    for (final i in s.items) {
+      units.putIfAbsent(i.unitNumber, () => []).add(i);
+    }
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(
+        AtlasSpace.gutter,
+        AtlasSpace.s8,
+        AtlasSpace.gutter,
+        48,
+      ),
+      children: [
+        Semantics(
+          header: true,
+          child: Text(
+            s.courseTitle,
+            style: a.type.title3.copyWith(color: a.colors.ink),
+          ),
+        ),
+        const SizedBox(height: AtlasSpace.s12),
+        SegmentedProgress(segments: segmentsFor(s)),
+        const SizedBox(height: AtlasSpace.s8),
+        Text(
+          l.countOf(
+            context.digits('${s.completedCount}'),
+            context.digits('${s.totalCount}'),
+          ),
+          style: a.type.caption.copyWith(color: a.colors.inkSecondary),
+        ),
+        for (final entry in units.entries) ...[
+          SectionHeader(
+            title:
+                '${l.courseUnit(context.digits('${entry.key}'))}${context.sep}${entry.value.first.sectionTitle}',
+          ),
+          for (final item in entry.value)
+            SyllabusRow(
+              item: item,
+              current: item.id == openId,
+              onTap: item.isLocked || item.id == openId
+                  ? null
+                  : () => openItem(context, ref, s, item, replace: true),
+            ),
+        ],
+      ],
+    );
+  }
+}
+
 class SyllabusRow extends StatelessWidget {
   const SyllabusRow({
     super.key,

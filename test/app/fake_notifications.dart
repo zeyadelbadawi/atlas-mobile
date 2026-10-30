@@ -97,6 +97,10 @@ class FakeNotificationsRepository extends NotificationsRepository {
       'publishedAt': _ago(const Duration(days: 4)),
     }),
   ];
+
+  @override
+  Future<Announcement> announcement(String id) async =>
+      (await announcements()).firstWhere((a) => a.id == id);
 }
 
 class FakeAccountRepository extends AccountRepository {

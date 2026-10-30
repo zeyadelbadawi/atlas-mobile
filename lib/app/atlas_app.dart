@@ -77,9 +77,19 @@ class AtlasApp extends ConsumerWidget {
           ThemeMode.system =>
             MediaQuery.platformBrightnessOf(context) == Brightness.dark,
         };
-        return Theme(
-          data: theme(dark ? Brightness.dark : Brightness.light, l),
-          child: _SystemGate(child: child ?? const SizedBox()),
+        // Tablets: text a little larger, on top of the user's own size.
+        final mq = MediaQuery.of(context);
+        final tablet = mq.size.shortestSide >= 600;
+        return MediaQuery(
+          data: tablet
+              ? mq.copyWith(
+                  textScaler: _Times(mq.textScaler, AtlasSize.tabletTextScale),
+                )
+              : mq,
+          child: Theme(
+            data: theme(dark ? Brightness.dark : Brightness.light, l),
+            child: _SystemGate(child: child ?? const SizedBox()),
+          ),
         );
       },
     );
@@ -102,4 +112,25 @@ class _SystemGate extends ConsumerWidget {
     }
     return child;
   }
+}
+
+/// The user's text scaler, times [factor].
+class _Times extends TextScaler {
+  const _Times(this.base, this.factor);
+  final TextScaler base;
+  final double factor;
+
+  @override
+  double scale(double fontSize) => base.scale(fontSize) * factor;
+
+  @override
+  // ignore: deprecated_member_use
+  double get textScaleFactor => base.textScaleFactor * factor;
+
+  @override
+  bool operator ==(Object other) =>
+      other is _Times && other.base == base && other.factor == factor;
+
+  @override
+  int get hashCode => Object.hash(base, factor);
 }

@@ -84,64 +84,101 @@ class _Body extends ConsumerWidget {
             .firstOrNull
             ?.courseId;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (continueCourseId != null)
-          ContinueForCourse(courseId: continueCourseId)
-        else
-          _EmptyPanel(
-            title: courses.isEmpty ? l.homeEmptyTitle : l.homeAllDone,
-            body: courses.isEmpty ? l.homeEmptyBody(academy.name) : null,
-          ),
-        if (continueCourseId == null) ...[
-          const SizedBox(height: AtlasSpace.s12),
-          BrowseFreeCoursesCard(academyName: academy.name),
-        ],
-        if (overview.deadlines.isNotEmpty) ...[
-          SectionHeader(title: l.homeDueSoon),
-          for (final d in overview.deadlines.take(4))
-            DueRow(
-              day: context.digits('${d.dueAt.day}'),
-              weekday: weekdayShort(context, d.dueAt),
-              title: d.title,
-              meta: d.overdue
-                  ? '${l.overdue}${context.sep}${timeOfDay(context, d.dueAt)}'
-                  : '${d.courseTitle}${context.sep}${timeOfDay(context, d.dueAt)}',
-              icon: itemIcon(d.type),
-              changed: d.overdue,
-              onTap: () => context.push(switch (d.type) {
-                'quiz' => '/course/${d.courseId}/quiz/${d.id}',
-                'assignment' => '/course/${d.courseId}/assignment/${d.id}',
-                _ => '/course/${d.courseId}',
-              }),
-            ),
-        ],
-        if (overview.recentResults.isNotEmpty) ...[
-          SectionHeader(
-            title: l.resultsRecent,
-            action: l.resultsSeeAll,
-            onAction: () => context.push('/account/results'),
-          ),
-          for (final r in overview.recentResults.take(2))
-            RecentResultRow(item: r),
-        ],
-        if (overview.announcements.isNotEmpty) ...[
-          SectionHeader(title: l.homeAnnouncements),
-          for (final n in overview.announcements.take(2))
-            AnnouncementRow(item: n),
-        ],
-        if (courses.isNotEmpty) ...[
-          SectionHeader(
-            title: l.homeMyCourses,
-            action: courses.length > 3 ? l.homeSeeAll : null,
-            onAction: () => context.go('/courses'),
-          ),
-          for (final (i, c) in courses.take(3).indexed)
-            EnrolledCourseRow(course: c, number: i + 1),
-        ],
-        SizedBox(height: 96 + MediaQuery.paddingOf(context).bottom - 40),
+    final main = <Widget>[
+      if (continueCourseId != null)
+        ContinueForCourse(courseId: continueCourseId)
+      else
+        _EmptyPanel(
+          title: courses.isEmpty ? l.homeEmptyTitle : l.homeAllDone,
+          body: courses.isEmpty ? l.homeEmptyBody(academy.name) : null,
+        ),
+      if (continueCourseId == null) ...[
+        const SizedBox(height: AtlasSpace.s12),
+        BrowseFreeCoursesCard(academyName: academy.name),
       ],
+      if (overview.deadlines.isNotEmpty) ...[
+        SectionHeader(title: l.homeDueSoon),
+        for (final d in overview.deadlines.take(4))
+          DueRow(
+            day: context.digits('${d.dueAt.day}'),
+            weekday: weekdayShort(context, d.dueAt),
+            title: d.title,
+            meta: d.overdue
+                ? '${l.overdue}${context.sep}${timeOfDay(context, d.dueAt)}'
+                : '${d.courseTitle}${context.sep}${timeOfDay(context, d.dueAt)}',
+            icon: itemIcon(d.type),
+            changed: d.overdue,
+            onTap: () => context.push(switch (d.type) {
+              'quiz' => '/course/${d.courseId}/quiz/${d.id}',
+              'assignment' => '/course/${d.courseId}/assignment/${d.id}',
+              _ => '/course/${d.courseId}',
+            }),
+          ),
+      ],
+      if (overview.recentResults.isNotEmpty) ...[
+        SectionHeader(
+          title: l.resultsRecent,
+          action: l.resultsSeeAll,
+          onAction: () => context.push('/account/results'),
+        ),
+        for (final r in overview.recentResults.take(2))
+          RecentResultRow(item: r),
+      ],
+    ];
+    final side = <Widget>[
+      if (overview.announcements.isNotEmpty) ...[
+        SectionHeader(title: l.homeAnnouncements),
+        for (final n in overview.announcements.take(2))
+          AnnouncementRow(item: n),
+      ],
+      if (courses.isNotEmpty) ...[
+        SectionHeader(
+          title: l.homeMyCourses,
+          action: courses.length > 3 ? l.homeSeeAll : null,
+          onAction: () => context.go('/courses'),
+        ),
+        for (final (i, c) in courses.take(3).indexed)
+          EnrolledCourseRow(course: c, number: i + 1),
+      ],
+    ];
+    final bottom = SizedBox(
+      height: 96 + MediaQuery.paddingOf(context).bottom - 40,
+    );
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Tablet: two columns. The second starts below the cover band (the
+        // first column's panel overlaps it by 40).
+        if (constraints.maxWidth >= 760) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: main,
+                    ),
+                  ),
+                  const SizedBox(width: AtlasSpace.s32),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [const SizedBox(height: 40), ...side],
+                    ),
+                  ),
+                ],
+              ),
+              bottom,
+            ],
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [...main, ...side, bottom],
+        );
+      },
     );
   }
 }

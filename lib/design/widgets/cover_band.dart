@@ -18,6 +18,7 @@ class CoverBand extends StatelessWidget {
     this.logo,
     this.overlap = 40,
     this.trailing,
+    this.form = false,
   }) : title = greeting,
        subtitle = null,
        _compact = false;
@@ -31,6 +32,7 @@ class CoverBand extends StatelessWidget {
   }) : title = null,
        subtitle = host,
        overlap = 0,
+       form = true,
        _compact = true;
 
   final String academyName;
@@ -42,6 +44,9 @@ class CoverBand extends StatelessWidget {
   /// Optional control at the trailing top (e.g. "Change academy").
   final Widget? trailing;
   final bool _compact;
+
+  /// Above a form: the band's content lines up with the form's width.
+  final bool form;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,12 @@ class CoverBand extends StatelessWidget {
         child: Align(
           alignment: AlignmentDirectional.topCenter,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: AtlasSize.readingWidth),
+            constraints: BoxConstraints(
+              maxWidth: AtlasSize.contentWidth(
+                MediaQuery.sizeOf(context).width,
+                form: form,
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
