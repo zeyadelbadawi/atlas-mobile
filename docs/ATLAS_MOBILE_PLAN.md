@@ -212,7 +212,7 @@ RLS الموجودة، وأي route موجود.
 | Accessibility | VoiceOver/TalkBack labels، وDynamic Type لحد 200%، ولمس 44pt/48dp، وreduce motion، وترتيب focus، وRTL | golden tests بـ text scale 2.0 + جرد يدوي |
 | Alt text | كل صورة ليها `semanticLabel` (غلاف الكورس = اسمه، اللوجو = اسم الأكاديمية)، والزخرفية `excludeFromSemantics` | — |
 | Business details | شاشة "عن التطبيق": الشركة والعنوان والإيميل والموقع، + بيانات تواصل الأكاديمية. ومعلومات الـ trader في الستور (EU DSA) | — |
-| Age / بيانات الأطفال | التسجيل فيه تأكيد سن: "عندي 13 سنة أو أكتر، أو عندي موافقة ولي أمري" + سجل (B4). مش في Kids category. وage rating بالـ questionnaire الجديد | محتاج قرارك في سياسة السن (§12) |
+| Age / بيانات الأطفال | التسجيل فيه تأكيد سن: "عندي 13 سنة أو أكتر، أو عندي موافقة ولي أمري" + سجل (B4). مش في Kids category. وage rating بالـ questionnaire الجديد | ✅ 13+ ومفيش موافقة ولي أمر (§14) |
 | Unsubscribe في الإيميلات | الـ campaigns فيها one-click. نتأكد إن كل إيميل غير ضروري فيه رابط التفضيلات، والإيميلات الأمنية (OTP، reset) بتفضل | جرد لـ `COMMUNICATIONS_EMAIL_NOTIFICATION_CATALOG.md` |
 | Data deletion request | طلب تصدير/حذف (`privacy-requests`) من التطبيق + صفحة ويب | — |
 | Delete account | من الإعدادات ← خطوتين ← تأكيد. مع Apple token revoke (B2) | e2e |
@@ -538,7 +538,7 @@ deploy ولا PR.** التفاصيل التقنية في `atlas-backend/docs/mob
 | شاشة "عن التطبيق" فيها الشركة والعنوان والإيميل والتليفون | ✅ |
 | مفيش advertising ID (أندرويد وiOS)، ومفيش tracking، فمفيش ATT | ✅ |
 | iOS privacy manifest (`ios/Runner/PrivacyInfo.xcprivacy`): مفيش tracking. البيانات: الاسم والإيميل ورقم المستخدم والجهاز (للإشعارات والأجهزة) والصور والملفات اللي بيرفعها في الواجبات، كلها لتشغيل التطبيق؛ والتفاعل مع التطبيق (Analytics) مش مربوط بالشخص. **لازم privacy labels في App Store Connect تطابقه** | ✅ |
-| Analytics: شغال افتراضيًا والطالب يقدر يقفله من الحساب. الخطة (§7) كانت بتقول الاختياري مقفول لحد الموافقة | **محتاج قرارك** |
+| Analytics: شغال افتراضيًا والطالب يقدر يقفله من الحساب (قرارك 30 أكتوبر: يفضل كده) | ✅ |
 | سياسة الخصوصية بتغطي التطبيق (ويب، اتعملها merge) | ✅ |
 | إعدادات حساب المراجع في الـ deploy (باك اند، اتعملها merge) | ✅ |
 | شاشة "عن التطبيق": الإيميل والتليفون `+20 100 051 0491` وواتساب، وكلهم بيفتحوا التطبيق المناسب | ✅ |
