@@ -446,8 +446,7 @@ deploy ولا PR.** التفاصيل التقنية في `atlas-backend/docs/mob
 | **شرط المرحلة:** دورة تعلّم كاملة | ✅ `test/integration/learner_full_cycle_test.dart` على الباك اند المحلي (درس ← اختبار ← واجب ← تقييم ← شهادة ← PDF ← تحقق) |
 
 **ملاحظات:**
-- الباك اند بيرفض بدء الاختبار (404) في كورس **private** حتى لو الطالب مسجّل
-  (`resolveAcademyIdForPublishedCourse` بيشترط `visibility: 'public'`). ده بيأثر على الويب كمان. محتاج قرارك.
+- ~~الباك اند بيرفض بدء الاختبار (404) في كورس **private**~~ اتصلح في atlas-backend#90 (25 أكتوبر)، ومعاه e2e في `test/p64-phase3-assessments.e2e-spec.ts`.
 - نصوص إذن الكاميرا والصور على iOS بالإنجليزي بس دلوقتي؛ ترجمتها (InfoPlist.strings) في المرحلة 7.
 - الجلسات المباشرة لسه بتفتح على الموقع.
 
