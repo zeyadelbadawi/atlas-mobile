@@ -26,6 +26,7 @@ void main() {
     'home': '/home',
     'course': '/course/$course',
     'lesson': '/course/$course/lesson/l2',
+    'tasks': '/tasks',
     'account': '/account',
     'announcements': '/announcements',
   };

@@ -22,6 +22,7 @@ import '../features/notifications/notifications_screen.dart';
 import '../features/quiz/quiz_screen.dart';
 import '../features/results/results_screen.dart';
 import '../features/shell/main_shell.dart';
+import '../features/tasks/tasks_screen.dart';
 import '../features/auth/code_screens.dart';
 import '../features/auth/other_auth_screens.dart';
 import '../features/auth/register_screen.dart';
@@ -38,6 +39,7 @@ bool _public(String path) => path.startsWith('/legal') || path == '/about';
 bool _signedInPath(String path) =>
     path == '/home' ||
     path.startsWith('/courses') ||
+    path == '/tasks' ||
     path.startsWith('/course/') ||
     path.startsWith('/catalog') ||
     path.startsWith('/account') ||
@@ -130,6 +132,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: '/courses',
                 builder: (_, _) => const MyCoursesScreen(),
               ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: '/tasks', builder: (_, _) => const TasksScreen()),
             ],
           ),
           StatefulShellBranch(

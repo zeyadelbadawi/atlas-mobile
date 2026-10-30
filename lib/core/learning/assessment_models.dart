@@ -600,3 +600,43 @@ class CertificateDownload {
   final DateTime? expiresAt;
   final String fileName;
 }
+
+/* -------------------------------------------------------------- tasks */
+
+/// Where a quiz or assignment stands for the learner (the Tasks tab).
+enum TaskGroup { todo, awaiting, graded }
+
+/// One quiz or assignment in the signed-in academy, as
+/// `GET learning/quizzes` and `GET learning/assignments` list them.
+class LearnerTask {
+  LearnerTask.fromJson(Map<String, dynamic> j)
+    : id = _str(j['id']),
+      type = j['type'] as String? ?? 'quiz',
+      title = _str(j['title']),
+      courseId = _str(j['courseId']),
+      courseTitle = _str(j['courseTitle']),
+      state = j['state'] as String? ?? 'not_started',
+      dueAt = _date(j['dueAt']),
+      score = _num(j['score']),
+      submittedAt = _date(j['submittedAt']);
+
+  final String id, type, title, courseId, courseTitle;
+
+  /// Quiz: not_started, in_progress, submitted, passed, failed, expired.
+  /// Assignment: not_started, overdue, draft, submitting, submitted,
+  /// failed (the upload did not finish), graded.
+  final String state;
+  final DateTime? dueAt;
+  final double? score;
+  final DateTime? submittedAt;
+
+  bool get isQuiz => type == 'quiz';
+  bool get overdue => state == 'overdue';
+
+  TaskGroup get group => switch (state) {
+    'passed' || 'graded' => TaskGroup.graded,
+    'failed' when isQuiz => TaskGroup.graded,
+    'submitted' || 'submitting' => TaskGroup.awaiting,
+    _ => TaskGroup.todo,
+  };
+}

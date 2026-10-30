@@ -1824,4 +1824,53 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get qrNotAcademy => 'هذا الرمز ليس عنوان أكاديمية.';
+
+  @override
+  String get tabTasks => 'المهام';
+
+  @override
+  String get tasksTitle => 'المهام';
+
+  @override
+  String get tasksTodo => 'مطلوبة';
+
+  @override
+  String get tasksAwaiting => 'بانتظار التصحيح';
+
+  @override
+  String get tasksGraded => 'مصحّحة';
+
+  @override
+  String get tasksEmptyTodo => 'لا يوجد مطلوب منك الآن.';
+
+  @override
+  String get tasksEmptyAwaiting => 'لا توجد مهام بانتظار التصحيح.';
+
+  @override
+  String get tasksEmptyGraded => 'لم تُصحَّح أي مهمة بعد.';
+
+  @override
+  String get tasksNone => 'لا توجد اختبارات أو واجبات في كورساتك بعد.';
+
+  @override
+  String get tasksInProgress => 'بدأته';
+
+  @override
+  String get tasksDraft => 'مسودة';
+
+  @override
+  String get tasksRetry => 'لم يكتمل التسليم';
+
+  @override
+  String tasksDue(String date) {
+    return 'التسليم $date';
+  }
+
+  @override
+  String tasksSubmitted(String date) {
+    return 'سُلّم $date';
+  }
+
+  @override
+  String get tasksAwaitingShort => 'للتصحيح';
 }

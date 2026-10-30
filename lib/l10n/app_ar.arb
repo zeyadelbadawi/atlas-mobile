@@ -515,5 +515,20 @@
   "qrTorch": "الكشاف",
   "qrNoPermission": "يحتاج Atlas إلى الكاميرا لمسح الرمز. اسمح بها من إعدادات هاتفك، أو اكتب عنوان الأكاديمية بدلًا من ذلك.",
   "qrUnavailable": "الكاميرا غير متاحة حاليًا. اكتب عنوان الأكاديمية بدلًا من ذلك.",
-  "qrNotAcademy": "هذا الرمز ليس عنوان أكاديمية."
+  "qrNotAcademy": "هذا الرمز ليس عنوان أكاديمية.",
+  "tabTasks": "المهام",
+  "tasksTitle": "المهام",
+  "tasksTodo": "مطلوبة",
+  "tasksAwaiting": "بانتظار التصحيح",
+  "tasksGraded": "مصحّحة",
+  "tasksEmptyTodo": "لا يوجد مطلوب منك الآن.",
+  "tasksEmptyAwaiting": "لا توجد مهام بانتظار التصحيح.",
+  "tasksEmptyGraded": "لم تُصحَّح أي مهمة بعد.",
+  "tasksNone": "لا توجد اختبارات أو واجبات في كورساتك بعد.",
+  "tasksInProgress": "بدأته",
+  "tasksDraft": "مسودة",
+  "tasksRetry": "لم يكتمل التسليم",
+  "tasksDue": "التسليم {date}",
+  "tasksSubmitted": "سُلّم {date}",
+  "tasksAwaitingShort": "للتصحيح"
 }

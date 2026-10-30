@@ -104,3 +104,8 @@ final curriculumProvider = FutureProvider.autoDispose
 final isEnrolledProvider = FutureProvider.autoDispose.family<bool, String>(
   (ref, courseId) => ref.watch(catalogRepositoryProvider).isEnrolled(courseId),
 );
+
+/// The Tasks tab: quizzes and assignments with where each stands.
+final tasksProvider = FutureProvider.autoDispose<List<LearnerTask>>(
+  (ref) => ref.watch(assessmentRepositoryProvider).tasks(),
+);

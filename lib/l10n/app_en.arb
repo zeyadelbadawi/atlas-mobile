@@ -1047,5 +1047,22 @@
   "qrTorch": "Flashlight",
   "qrNoPermission": "Atlas needs the camera to scan the code. Allow it in your phone's settings, or type the academy's address instead.",
   "qrUnavailable": "The camera isn't available right now. Type the academy's address instead.",
-  "qrNotAcademy": "That code isn't an academy address."
+  "qrNotAcademy": "That code isn't an academy address.",
+  "tabTasks": "Tasks",
+  "tasksTitle": "Tasks",
+  "tasksTodo": "To do",
+  "tasksAwaiting": "Awaiting grading",
+  "tasksGraded": "Graded",
+  "tasksEmptyTodo": "Nothing to do right now.",
+  "tasksEmptyAwaiting": "Nothing is awaiting grading.",
+  "tasksEmptyGraded": "Nothing has been graded yet.",
+  "tasksNone": "Your courses have no quizzes or assignments yet.",
+  "tasksInProgress": "Started",
+  "tasksDraft": "Draft",
+  "tasksRetry": "Not submitted",
+  "tasksDue": "Due {date}",
+  "tasksSubmitted": "Submitted {date}",
+  "@tasksDue": {"placeholders": {"date": {"type": "String"}}},
+  "@tasksSubmitted": {"placeholders": {"date": {"type": "String"}}},
+  "tasksAwaitingShort": "Awaiting"
 }

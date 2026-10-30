@@ -1814,4 +1814,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qrNotAcademy => 'That code isn\'t an academy address.';
+
+  @override
+  String get tabTasks => 'Tasks';
+
+  @override
+  String get tasksTitle => 'Tasks';
+
+  @override
+  String get tasksTodo => 'To do';
+
+  @override
+  String get tasksAwaiting => 'Awaiting grading';
+
+  @override
+  String get tasksGraded => 'Graded';
+
+  @override
+  String get tasksEmptyTodo => 'Nothing to do right now.';
+
+  @override
+  String get tasksEmptyAwaiting => 'Nothing is awaiting grading.';
+
+  @override
+  String get tasksEmptyGraded => 'Nothing has been graded yet.';
+
+  @override
+  String get tasksNone => 'Your courses have no quizzes or assignments yet.';
+
+  @override
+  String get tasksInProgress => 'Started';
+
+  @override
+  String get tasksDraft => 'Draft';
+
+  @override
+  String get tasksRetry => 'Not submitted';
+
+  @override
+  String tasksDue(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String tasksSubmitted(String date) {
+    return 'Submitted $date';
+  }
+
+  @override
+  String get tasksAwaitingShort => 'Awaiting';
 }

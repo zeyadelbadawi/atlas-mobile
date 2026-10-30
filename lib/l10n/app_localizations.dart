@@ -3193,6 +3193,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That code isn\'t an academy address.'**
   String get qrNotAcademy;
+
+  /// No description provided for @tabTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get tabTasks;
+
+  /// No description provided for @tasksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get tasksTitle;
+
+  /// No description provided for @tasksTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'To do'**
+  String get tasksTodo;
+
+  /// No description provided for @tasksAwaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting grading'**
+  String get tasksAwaiting;
+
+  /// No description provided for @tasksGraded.
+  ///
+  /// In en, this message translates to:
+  /// **'Graded'**
+  String get tasksGraded;
+
+  /// No description provided for @tasksEmptyTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to do right now.'**
+  String get tasksEmptyTodo;
+
+  /// No description provided for @tasksEmptyAwaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is awaiting grading.'**
+  String get tasksEmptyAwaiting;
+
+  /// No description provided for @tasksEmptyGraded.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing has been graded yet.'**
+  String get tasksEmptyGraded;
+
+  /// No description provided for @tasksNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your courses have no quizzes or assignments yet.'**
+  String get tasksNone;
+
+  /// No description provided for @tasksInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Started'**
+  String get tasksInProgress;
+
+  /// No description provided for @tasksDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get tasksDraft;
+
+  /// No description provided for @tasksRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Not submitted'**
+  String get tasksRetry;
+
+  /// No description provided for @tasksDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String tasksDue(String date);
+
+  /// No description provided for @tasksSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted {date}'**
+  String tasksSubmitted(String date);
+
+  /// No description provided for @tasksAwaitingShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting'**
+  String get tasksAwaitingShort;
 }
 
 class _AppLocalizationsDelegate

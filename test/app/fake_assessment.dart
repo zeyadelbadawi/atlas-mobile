@@ -231,6 +231,93 @@ class FakeAssessmentRepository extends AssessmentRepository {
   });
 
   @override
+  Future<List<LearnerTask>> tasks() async {
+    String at(Duration d) => testNow.add(d).toUtc().toIso8601String();
+    Map<String, dynamic> t(
+      String id,
+      String type,
+      String title,
+      String course,
+      String state, {
+      Duration? due,
+      Duration? submitted,
+      num? score,
+    }) => {
+      'id': id,
+      'type': type,
+      'title': title,
+      'courseId': 'c-calc',
+      'courseTitle': course,
+      'state': state,
+      'dueAt': due == null ? null : at(due),
+      'submittedAt': submitted == null ? null : at(submitted),
+      'score': score,
+    };
+    return [
+      t(
+        'a1',
+        'assignment',
+        'واجب الاتصال',
+        'التفاضل والتكامل',
+        'not_started',
+        due: const Duration(days: 3),
+      ),
+      t(
+        'a0',
+        'assignment',
+        'تقرير المعمل',
+        'الفيزياء: الكهربية',
+        'overdue',
+        due: const Duration(days: -2),
+      ),
+      t('q1', 'quiz', 'كويز النهايات', 'التفاضل والتكامل', 'in_progress'),
+      t(
+        'a2',
+        'assignment',
+        'مسائل الدوائر',
+        'الفيزياء: الكهربية',
+        'draft',
+        due: const Duration(days: 6),
+      ),
+      t(
+        'q2',
+        'quiz',
+        'اختبار الوحدة الأولى',
+        'الكيمياء العضوية',
+        'submitted',
+        submitted: const Duration(hours: -5),
+      ),
+      t(
+        'q3',
+        'quiz',
+        'كويز المشتقات',
+        'التفاضل والتكامل',
+        'passed',
+        submitted: const Duration(days: -4),
+        score: 91,
+      ),
+      t(
+        'q4',
+        'quiz',
+        'كويز الروابط',
+        'الكيمياء العضوية',
+        'failed',
+        submitted: const Duration(days: -6),
+        score: 45,
+      ),
+      t(
+        'a3',
+        'assignment',
+        'واجب الحدود',
+        'التفاضل والتكامل',
+        'graded',
+        submitted: const Duration(days: -8),
+        score: 18,
+      ),
+    ].map(LearnerTask.fromJson).toList();
+  }
+
+  @override
   Future<StudentResults> studentResults() async => StudentResults.fromJson({
     'summary': {
       'coursesEnrolled': 3,

@@ -27,6 +27,7 @@ void main() {
     'reset': (AsSignedOutLinks.new, '/academy/reset-password'),
     'home': (AsSignedIn.new, '/home'),
     'courses': (AsSignedIn.new, '/courses'),
+    'tasks': (AsSignedIn.new, '/tasks'),
     'course': (AsSignedIn.new, '/course/$course'),
     'lesson': (AsSignedIn.new, '/course/$course/lesson/l2'),
     'catalog': (AsSignedIn.new, '/catalog'),

@@ -131,7 +131,7 @@ class _Results extends StatelessWidget {
           if (course.quizzes.isNotEmpty || course.assignments.isNotEmpty) ...[
             SectionHeader(title: course.courseTitle),
             for (final q in course.quizzes)
-              _ResultRow(
+              ResultRow(
                 icon: itemIcon('quiz'),
                 title: q.title,
                 meta: [
@@ -140,7 +140,7 @@ class _Results extends StatelessWidget {
                 ].join(context.sep),
                 trailing: q.score == null
                     ? StatusPill(label: l.resultsAwaiting)
-                    : _Score(
+                    : ScoreText(
                         text: percentText(context, q.score!),
                         passed: q.passed,
                       ),
@@ -148,7 +148,7 @@ class _Results extends StatelessWidget {
                     context.push('/course/${course.courseId}/quiz/${q.quizId}'),
               ),
             for (final s in course.assignments)
-              _ResultRow(
+              ResultRow(
                 icon: itemIcon('assignment'),
                 title: s.title,
                 meta: [
@@ -162,7 +162,7 @@ class _Results extends StatelessWidget {
                         label: l.assignmentGradedNoScore,
                         tone: PillTone.success,
                       )
-                    : _Score(text: numberText(context, s.score!)),
+                    : ScoreText(text: numberText(context, s.score!)),
                 onTap: () => context.push(
                   '/course/${course.courseId}/assignment/${s.assignmentId}',
                 ),
@@ -197,8 +197,8 @@ class _Metric extends StatelessWidget {
   }
 }
 
-class _Score extends StatelessWidget {
-  const _Score({required this.text, this.passed});
+class ScoreText extends StatelessWidget {
+  const ScoreText({super.key, required this.text, this.passed});
   final String text;
   final bool? passed;
 
@@ -213,8 +213,9 @@ class _Score extends StatelessWidget {
   }
 }
 
-class _ResultRow extends StatelessWidget {
-  const _ResultRow({
+class ResultRow extends StatelessWidget {
+  const ResultRow({
+    super.key,
     required this.icon,
     required this.title,
     required this.meta,

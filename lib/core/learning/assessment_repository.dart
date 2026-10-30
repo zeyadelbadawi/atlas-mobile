@@ -190,6 +190,23 @@ class AssessmentRepository {
     ),
   );
 
+  /* ---- tasks ---- */
+
+  /// Every quiz and assignment in the signed-in academy's courses (the
+  /// academy comes from the request host), each with where it stands.
+  Future<List<LearnerTask>> tasks() async {
+    final lists = await Future.wait([
+      client.get<dynamic>('learning/quizzes'),
+      client.get<dynamic>('learning/assignments'),
+    ]);
+    return [
+      for (final l in lists)
+        if (l is List)
+          for (final m in l.whereType<Map>())
+            LearnerTask.fromJson(Map<String, dynamic>.from(m)),
+    ];
+  }
+
   /* ---- results & certificates ---- */
 
   Future<StudentResults> studentResults() async => StudentResults.fromJson(

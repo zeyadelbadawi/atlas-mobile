@@ -320,6 +320,29 @@ void main() {
     await _golden(t, 'verify_email_done_ar');
   }, variant: ios);
 
+  for (final (group, name) in [
+    (null, 'tasks_ar'),
+    ('awaiting', 'tasks_awaiting_ar'),
+    ('graded', 'tasks_graded_ar'),
+  ]) {
+    testWidgets(name, (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/tasks',
+        size: const Size(393, 1100),
+        assessments: FakeAssessmentRepository(),
+      );
+      if (group != null) {
+        await t.tap(
+          find.textContaining(group == 'awaiting' ? 'للتصحيح' : 'مصحّحة'),
+        );
+        await t.pump(const Duration(milliseconds: 400));
+      }
+      await _golden(t, name);
+    }, variant: ios);
+  }
+
   testWidgets('home_ar_ipad', (t) async {
     await pumpScreen(
       t,

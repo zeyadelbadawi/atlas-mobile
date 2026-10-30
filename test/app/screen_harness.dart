@@ -162,7 +162,7 @@ Future<ProviderContainer> pumpScreen(
   await tester.pump();
   if (path != null) {
     final router = container.read(routerProvider);
-    const tabs = {'/home', '/courses', '/notifications', '/account'};
+    const tabs = {'/home', '/courses', '/tasks', '/notifications', '/account'};
     tabs.contains(path) ? router.go(path) : router.push(path, extra: extra);
   }
   await tester.pump();
