@@ -530,3 +530,54 @@ deploy ولا PR.** التفاصيل التقنية في `atlas-backend/docs/mob
 | iOS privacy manifest (`ios/Runner/PrivacyInfo.xcprivacy`): مفيش tracking. البيانات: الاسم والإيميل ورقم المستخدم والجهاز (للإشعارات والأجهزة) والصور والملفات اللي بيرفعها في الواجبات، كلها لتشغيل التطبيق؛ والتفاعل مع التطبيق (Analytics) مش مربوط بالشخص. **لازم privacy labels في App Store Connect تطابقه** | ✅ |
 | Analytics: شغال افتراضيًا والطالب يقدر يقفله من الحساب. الخطة (§7) كانت بتقول الاختياري مقفول لحد الموافقة | **محتاج قرارك** |
 | صفحات الويب القانونية، وأكاديمية وحساب الديمو، وreview notes | الجاي (ويب/باك اند: بموافقتك) |
+
+### 22.1 أكاديمية الديمو وحساب المراجعة (خطوات تعملها من الداشبورد)
+
+مفيش بيانات بتتكتب في الإنتاج غير من الداشبورد نفسه. الخطوات:
+
+1. **الأكاديمية:** من حسابك على أطلس، أنشئ أكاديمية اسمها **Atlas Demo Academy**
+   (رابط فرعي زي `demo`). خليها عامة، ولون أساسي عادي.
+2. **المحتوى** (كله حقيقي ومفيش "قريبًا" ولا محتوى فاضي):
+   - كورس مجاني فيه وحدتين و4 دروس: 3 فيديو YouTube (فيديوهات تعليمية مسموح بيها) ودرس نصي وملف PDF.
+   - كويز في الكورس ده (5 أسئلة، متاح من غير ميعاد).
+   - واجب بيقبل صورة أو ملف.
+   - الشهادات مفعّلة للكورس.
+   - كورس مجاني تاني يفضل في الكتالوج من غير اشتراك (عشان المراجع يجرب "انضم مجانًا").
+   - إعلان واحد للأكاديمية.
+   - **من غير** أي كورس مدفوع (التطبيق مش بيبيع، وده بيبعد أسئلة المراجعة عن الدفع).
+3. **حساب الطالب:** سجّل طالب بإيميل حقيقي انت متحكم فيه (مثلًا `appreview@<دومينك>`)
+   وكلمة سر قوية. اشترك في الكورس الأول، وخلّص درس عشان التقدم يبان، وسلّم الكويز مرة
+   وخلّي الواجب متصحّح، عشان النتائج والشهادة تبان. **مفيش** أي دور تاني للحساب ده.
+4. **تخطي الكود بالإيميل** (B3): في GitHub ← Settings ← Variables ← Actions بتاع
+   `atlas-backend`، حط `APP_REVIEW_EMAILS` = إيميل الطالب، و`APP_REVIEW_ACADEMY_ID` = رقم
+   الأكاديمية (UUID من الداشبورد)، وبعدين deploy. بعد ما المراجعة تخلص: الاتنين `off` و deploy.
+5. **QR:** من إعدادات موقع الأكاديمية خُد الرابط وحوّله QR للـ review notes.
+6. **التجربة:** قبل كل submission، ادخل من جهاز جديد خالص بالخطوات اللي في الـ notes بالظبط.
+
+### 22.2 مسودة Review Notes (بالإنجليزي للستورين)
+
+```
+Atlas is the learning app for academies that run on the Atlas platform.
+A learner picks their academy, signs in, and studies the courses they are
+enrolled in. The app sells nothing and has no purchases or payment screens.
+
+Demo access
+1. Open the app and enter the academy address: <demo>.atlass.dpdns.org
+   (or scan the attached QR code).
+2. Sign in with: <review email> / <password>
+   This review account does not need an emailed code.
+
+What to try
+- Home and My courses: an enrolled course with progress.
+- Open a lesson (YouTube video, text, PDF).
+- Quiz and assignment in the same course; Results and Certificates in Account.
+- Catalog: "Browse free courses" lets the learner join a free course.
+- Account > Privacy and data: switch off usage statistics, export data,
+  delete account (deletes the account; please use only at the end).
+- Sign in with Apple is offered on the sign-in screen.
+
+Notes
+- Course content belongs to each academy; paid courses are bought on the
+  academy's website, never in the app, and the app does not link to buying.
+- Push notifications are used for academy announcements and course updates.
+```
