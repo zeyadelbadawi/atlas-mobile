@@ -41,6 +41,7 @@ class SegmentedProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.atlas.colors;
     final rtl = Directionality.of(context) == TextDirection.rtl;
+    final still = MediaQuery.disableAnimationsOf(context);
     return Semantics(
       label: semanticLabel ?? '${(fraction * 100).round()}%',
       child: ExcludeSemantics(
@@ -60,9 +61,21 @@ class SegmentedProgress extends StatelessWidget {
                         alignment: rtl
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
-                        child: FractionallySizedBox(
-                          widthFactor: segments[i].watched.clamp(0.0, 1.0),
-                          heightFactor: 1,
+                        // A change (a lesson completed) grows the fill;
+                        // the first build shows it as is.
+                        child: TweenAnimationBuilder<double>(
+                          tween: Tween(
+                            end: segments[i].watched.clamp(0.0, 1.0),
+                          ),
+                          duration: still
+                              ? Duration.zero
+                              : const Duration(milliseconds: 420),
+                          curve: Curves.easeOutCubic,
+                          builder: (_, value, child) => FractionallySizedBox(
+                            widthFactor: value,
+                            heightFactor: 1,
+                            child: child,
+                          ),
                           child: ColoredBox(color: c.accent),
                         ),
                       ),
