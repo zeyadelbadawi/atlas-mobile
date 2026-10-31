@@ -12,6 +12,9 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../app/push.dart';
 import '../../app/learning_providers.dart';
 import '../../app/lesson_outbox.dart';
+import '../../app/notes.dart';
+import '../../core/clock.dart';
+import '../quiz/assessment_widgets.dart' show AnswerField;
 import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/api/api_error.dart';
@@ -193,6 +196,43 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     }
   }
 
+  LessonNote _note(LessonGrant g, CourseSequence? seq) =>
+      ref.read(notesProvider.notifier).of(widget.lessonId) ??
+      LessonNote(
+        courseId: widget.courseId,
+        lessonId: widget.lessonId,
+        courseTitle: seq?.courseTitle ?? '',
+        lessonTitle: g.title,
+        updatedAt: clockNow(),
+      );
+
+  Future<void> _toggleSave(LessonGrant g, CourseSequence? seq) async {
+    final n = _note(g, seq);
+    HapticFeedback.selectionClick();
+    await ref.read(notesProvider.notifier).put(n.copyWith(saved: !n.saved));
+    ref.read(analyticsProvider).event('lesson_save', {'on': n.saved ? 0 : 1});
+    if (mounted) {
+      _say(
+        n.saved
+            ? context.l10n.lessonUnsavedToast
+            : context.l10n.lessonSavedToast,
+      );
+    }
+  }
+
+  Future<void> _editNote(LessonGrant g, CourseSequence? seq) async {
+    final n = _note(g, seq);
+    final text = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (_) => NoteSheet(initial: n.note),
+    );
+    if (text == null) return;
+    await ref.read(notesProvider.notifier).put(n.copyWith(note: text.trim()));
+    ref.read(analyticsProvider).event('lesson_note');
+  }
+
   void _say(String text) => ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(content: Text(text)));
@@ -205,6 +245,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     final seq = ref.watch(sequenceProvider(widget.courseId)).value;
     final item = seq?.items.where((i) => i.id == widget.lessonId).firstOrNull;
     final g = _grant;
+    final l = context.l10n;
+    final mine = ref.watch(
+      notesProvider.select(
+        (n) => n.where((x) => x.lessonId == widget.lessonId).firstOrNull,
+      ),
+    );
+    final saved = mine?.saved ?? false;
     final video = g?.youtubeId != null;
     final hosted = g?.youtubeId == null && g?.hostedVideoUrl != null;
     final speed = ref.watch(playbackSpeedProvider);
@@ -296,6 +343,26 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
+        actions: [
+          if (g != null) ...[
+            IconButton(
+              key: const ValueKey('lesson-save'),
+              tooltip: saved ? l.lessonUnsave : l.lessonSave,
+              isSelected: saved,
+              onPressed: () => _toggleSave(g, seq),
+              icon: Icon(
+                saved ? LucideIcons.bookmarkCheck : LucideIcons.bookmarkPlus,
+                color: saved ? context.atlas.colors.accent : null,
+              ),
+            ),
+            IconButton(
+              key: const ValueKey('lesson-note'),
+              tooltip: l.lessonNoteAdd,
+              onPressed: () => _editNote(g, seq),
+              icon: const Icon(LucideIcons.notebookPen),
+            ),
+          ],
+        ],
       ),
       body: split
           ? SplitView(
@@ -408,6 +475,18 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             children: _body(context, g),
           ),
         ),
+        if (ref.watch(
+              notesProvider.select(
+                (n) => n
+                    .where((x) => x.lessonId == widget.lessonId)
+                    .firstOrNull
+                    ?.note,
+              ),
+            )
+            case final note? when note.trim().isNotEmpty) ...[
+          const SizedBox(height: AtlasSpace.s20),
+          _NoteCard(note: note, onEdit: () => _editNote(g, seq)),
+        ],
         if (g.resources.isNotEmpty) ...[
           SectionHeader(title: l.lessonResources),
           SettingsGroup(
@@ -562,6 +641,124 @@ class _ErrorView extends StatelessWidget {
                 ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The learner's note on this lesson, inside the lesson.
+class _NoteCard extends StatelessWidget {
+  const _NoteCard({required this.note, required this.onEdit});
+  final String note;
+  final VoidCallback onEdit;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final c = a.colors;
+    return Container(
+      key: const ValueKey('lesson-note-card'),
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 6),
+      decoration: BoxDecoration(
+        color: c.tonal,
+        borderRadius: BorderRadius.circular(AtlasRadius.lg),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Icon(LucideIcons.notebookPen, size: 18, color: c.accent),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  l.lessonNoteTitle,
+                  style: a.type.headline.copyWith(color: c.ink),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            note,
+            textDirection: contentDirection(context, note),
+            style: a.type.body.copyWith(color: c.ink),
+          ),
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: TextButton(onPressed: onEdit, child: Text(l.lessonNoteEdit)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Writing the note: the text, Save, and Delete when there is one. Pops
+/// the new text ('' to delete), or null when dismissed.
+class NoteSheet extends StatefulWidget {
+  const NoteSheet({super.key, required this.initial});
+  final String initial;
+
+  @override
+  State<NoteSheet> createState() => _NoteSheetState();
+}
+
+class _NoteSheetState extends State<NoteSheet> {
+  late final _text = TextEditingController(text: widget.initial);
+
+  @override
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final a = context.atlas;
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        AtlasSpace.gutter,
+        0,
+        AtlasSpace.gutter,
+        MediaQuery.viewInsetsOf(context).bottom + AtlasSpace.s20,
+      ),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              l.lessonNoteTitle,
+              style: a.type.title3.copyWith(color: a.colors.ink),
+            ),
+            const SizedBox(height: 12),
+            AnswerField(
+              controller: _text,
+              label: l.lessonNoteHint,
+              hint: '',
+              helper: l.notesOnPhone,
+              minLines: 4,
+              maxLines: 10,
+            ),
+            const SizedBox(height: 12),
+            AtlasButton(
+              label: l.lessonNoteSave,
+              onPressed: () => Navigator.pop(context, _text.text),
+            ),
+            if (widget.initial.trim().isNotEmpty) ...[
+              const SizedBox(height: 8),
+              AtlasButton(
+                label: l.lessonNoteDelete,
+                style: AtlasButtonStyle.plain,
+                onPressed: () => Navigator.pop(context, ''),
+              ),
+            ],
+          ],
         ),
       ),
     );

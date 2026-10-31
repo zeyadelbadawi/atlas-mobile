@@ -10,6 +10,7 @@ import '../../app/ui_helpers.dart';
 import '../../design/design.dart';
 import '../certificates/certificates_screen.dart';
 import '../legal/legal_screens.dart';
+import '../notes/notes_screen.dart';
 import '../results/results_screen.dart';
 import 'account_settings_screens.dart';
 import 'devices_screen.dart';
@@ -30,6 +31,7 @@ Widget _page(String path) => switch (path) {
   '/account/results' => const ResultsScreen(),
   '/account/certificates' => const CertificatesScreen(),
   '/account/devices' => const DevicesScreen(),
+  '/account/notes' => const NotesScreen(),
   '/account/security' => const SecurityScreen(),
   '/account/notifications' => const NotificationSettingsScreen(),
   '/account/privacy' => const PrivacyScreen(),
@@ -140,6 +142,11 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
                           l.certificatesTitle,
                           LucideIcons.award,
                           '/account/certificates',
+                        ),
+                        _row(
+                          l.notesTitle,
+                          LucideIcons.notebookPen,
+                          '/account/notes',
                         ),
                         _row(
                           l.accountDevices,

@@ -9,6 +9,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../app/providers.dart';
 import '../../app/push.dart';
+import '../../app/notes.dart';
 import '../../app/reminders.dart';
 import '../../core/platform/app_settings.dart';
 import '../../app/ui_helpers.dart';
@@ -779,8 +780,11 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
       ref.read(analyticsProvider).event('account_deleted');
       // The account is gone: forget its email on every academy.
       final prefs = ref.read(sharedPreferencesProvider);
+      // …and the notes it kept on this phone.
       for (final k in prefs.getKeys().where(
-        (k) => k.startsWith(lastEmailKey('')),
+        (k) =>
+            k.startsWith(lastEmailKey('')) ||
+            k.startsWith(NotesController.prefix),
       )) {
         await prefs.remove(k);
       }

@@ -193,6 +193,7 @@ void main() {
   offlineShots();
   myReviewShots();
   moreCoursesShots();
+  notesShots();
 
   shot(
     'lesson_undo',
@@ -577,4 +578,74 @@ void moreCoursesShots() {
       return k.evaluate().isNotEmpty ? k : find.text('عرض كل التقييمات');
     },
   );
+}
+
+/// Batch 3 (B5): notes and saved lessons, kept on the phone.
+void notesShots() {
+  final note = jsonEncode([
+    {
+      'courseId': FakeLearningRepository.courseId,
+      'lessonId': 'l2',
+      'courseTitle': 'التفاضل والتكامل',
+      'lessonTitle': 'النهايات من جهة واحدة',
+      'note': 'النهاية من اليمين لا تكفي وحدها: لازم تساوي النهاية من اليسار.',
+      'saved': true,
+      'updatedAt': '2026-10-24T09:00:00.000',
+    },
+  ]);
+  final prefs = {'notes.${ziadd.id}.u1': note};
+
+  shot(
+    'lesson_note',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/${FakeLearningRepository.courseId}/lesson/l2',
+        size: const Size(393, 1000),
+        prefs: prefs,
+      );
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('lesson-note-card'));
+      return k.evaluate().isNotEmpty ? k : find.text('ملفات الدرس');
+    },
+  );
+
+  shot(
+    'lesson_note_bar',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/${FakeLearningRepository.courseId}/lesson/l2',
+        size: const Size(393, 1000),
+        prefs: prefs,
+      );
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('lesson-save'));
+      return k.evaluate().isNotEmpty ? k : find.byType(AppBar);
+    },
+  );
+
+  shot(
+    'account_notes',
+    (t) async {
+      await pumpScreen(t, session: AsSignedIn.new, path: '/account');
+    },
+    focus: () {
+      final k = find.text('ملاحظاتي');
+      return k.evaluate().isNotEmpty ? k : find.text('أجهزتي');
+    },
+  );
+
+  shot('notes_list', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/account/notes',
+      prefs: prefs,
+    );
+  });
 }

@@ -1292,5 +1292,20 @@
       }
     }
   },
-  "previewMore": "You might also like"
+  "previewMore": "You might also like",
+  "lessonSave": "Save lesson",
+  "lessonUnsave": "Remove from saved",
+  "lessonSavedToast": "Lesson saved. Find it in My notes.",
+  "lessonUnsavedToast": "Removed from saved.",
+  "lessonNoteAdd": "Add a note",
+  "lessonNoteTitle": "Your note",
+  "lessonNoteHint": "What do you want to remember from this lesson?",
+  "lessonNoteSave": "Save note",
+  "lessonNoteDelete": "Delete note",
+  "lessonNoteEdit": "Edit",
+  "notesTitle": "My notes",
+  "notesSaved": "Saved",
+  "notesEmptyTitle": "Nothing here yet",
+  "notesEmptyBody": "Save a lesson or write a note on it, and it will be here.",
+  "notesOnPhone": "Kept on this phone only. Deleting the app deletes them."
 }

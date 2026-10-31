@@ -15,6 +15,7 @@ import '../features/assignment/assignment_screen.dart';
 import '../features/catalog/catalog_screen.dart';
 import '../features/catalog/course_preview_screen.dart';
 import '../features/catalog/reviews.dart';
+import '../features/notes/notes_screen.dart';
 import '../features/certificates/certificates_screen.dart';
 import '../features/learning/item_redirect_screen.dart';
 import '../features/lesson/lesson_screen.dart';
@@ -218,6 +219,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/account/certificates',
         builder: (_, _) => const CertificatesScreen(),
       ),
+      GoRoute(path: '/account/notes', builder: (_, _) => const NotesScreen()),
       GoRoute(
         path: '/account/profile',
         builder: (_, _) => const ProfileScreen(),

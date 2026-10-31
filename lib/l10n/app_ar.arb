@@ -615,5 +615,20 @@
   "myReviewDeleted": "حُذف تقييمك.",
   "myReviewPickStars": "اختر عدد النجوم.",
   "myReviewStar": "{n} من ٥",
-  "previewMore": "كورسات قد تعجبك"
+  "previewMore": "كورسات قد تعجبك",
+  "lessonSave": "حفظ الدرس",
+  "lessonUnsave": "إزالة من المحفوظات",
+  "lessonSavedToast": "حُفظ الدرس. تجده في ملاحظاتي.",
+  "lessonUnsavedToast": "أُزيل من المحفوظات.",
+  "lessonNoteAdd": "إضافة ملاحظة",
+  "lessonNoteTitle": "ملاحظتك",
+  "lessonNoteHint": "ما الذي تريد تذكّره من هذا الدرس؟",
+  "lessonNoteSave": "حفظ الملاحظة",
+  "lessonNoteDelete": "حذف الملاحظة",
+  "lessonNoteEdit": "تعديل",
+  "notesTitle": "ملاحظاتي",
+  "notesSaved": "محفوظ",
+  "notesEmptyTitle": "لا شيء هنا بعد",
+  "notesEmptyBody": "احفظ درسًا أو اكتب ملاحظة عليه، وستجده هنا.",
+  "notesOnPhone": "محفوظة على هذا الهاتف فقط، وتُحذف إذا حذفت التطبيق."
 }

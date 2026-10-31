@@ -3793,6 +3793,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You might also like'**
   String get previewMore;
+
+  /// No description provided for @lessonSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save lesson'**
+  String get lessonSave;
+
+  /// No description provided for @lessonUnsave.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from saved'**
+  String get lessonUnsave;
+
+  /// No description provided for @lessonSavedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson saved. Find it in My notes.'**
+  String get lessonSavedToast;
+
+  /// No description provided for @lessonUnsavedToast.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from saved.'**
+  String get lessonUnsavedToast;
+
+  /// No description provided for @lessonNoteAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note'**
+  String get lessonNoteAdd;
+
+  /// No description provided for @lessonNoteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your note'**
+  String get lessonNoteTitle;
+
+  /// No description provided for @lessonNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to remember from this lesson?'**
+  String get lessonNoteHint;
+
+  /// No description provided for @lessonNoteSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save note'**
+  String get lessonNoteSave;
+
+  /// No description provided for @lessonNoteDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete note'**
+  String get lessonNoteDelete;
+
+  /// No description provided for @lessonNoteEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get lessonNoteEdit;
+
+  /// No description provided for @notesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My notes'**
+  String get notesTitle;
+
+  /// No description provided for @notesSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get notesSaved;
+
+  /// No description provided for @notesEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here yet'**
+  String get notesEmptyTitle;
+
+  /// No description provided for @notesEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a lesson or write a note on it, and it will be here.'**
+  String get notesEmptyBody;
+
+  /// No description provided for @notesOnPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept on this phone only. Deleting the app deletes them.'**
+  String get notesOnPhone;
 }
 
 class _AppLocalizationsDelegate

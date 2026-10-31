@@ -2169,4 +2169,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get previewMore => 'You might also like';
+
+  @override
+  String get lessonSave => 'Save lesson';
+
+  @override
+  String get lessonUnsave => 'Remove from saved';
+
+  @override
+  String get lessonSavedToast => 'Lesson saved. Find it in My notes.';
+
+  @override
+  String get lessonUnsavedToast => 'Removed from saved.';
+
+  @override
+  String get lessonNoteAdd => 'Add a note';
+
+  @override
+  String get lessonNoteTitle => 'Your note';
+
+  @override
+  String get lessonNoteHint => 'What do you want to remember from this lesson?';
+
+  @override
+  String get lessonNoteSave => 'Save note';
+
+  @override
+  String get lessonNoteDelete => 'Delete note';
+
+  @override
+  String get lessonNoteEdit => 'Edit';
+
+  @override
+  String get notesTitle => 'My notes';
+
+  @override
+  String get notesSaved => 'Saved';
+
+  @override
+  String get notesEmptyTitle => 'Nothing here yet';
+
+  @override
+  String get notesEmptyBody =>
+      'Save a lesson or write a note on it, and it will be here.';
+
+  @override
+  String get notesOnPhone =>
+      'Kept on this phone only. Deleting the app deletes them.';
 }

@@ -2178,4 +2178,50 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get previewMore => 'كورسات قد تعجبك';
+
+  @override
+  String get lessonSave => 'حفظ الدرس';
+
+  @override
+  String get lessonUnsave => 'إزالة من المحفوظات';
+
+  @override
+  String get lessonSavedToast => 'حُفظ الدرس. تجده في ملاحظاتي.';
+
+  @override
+  String get lessonUnsavedToast => 'أُزيل من المحفوظات.';
+
+  @override
+  String get lessonNoteAdd => 'إضافة ملاحظة';
+
+  @override
+  String get lessonNoteTitle => 'ملاحظتك';
+
+  @override
+  String get lessonNoteHint => 'ما الذي تريد تذكّره من هذا الدرس؟';
+
+  @override
+  String get lessonNoteSave => 'حفظ الملاحظة';
+
+  @override
+  String get lessonNoteDelete => 'حذف الملاحظة';
+
+  @override
+  String get lessonNoteEdit => 'تعديل';
+
+  @override
+  String get notesTitle => 'ملاحظاتي';
+
+  @override
+  String get notesSaved => 'محفوظ';
+
+  @override
+  String get notesEmptyTitle => 'لا شيء هنا بعد';
+
+  @override
+  String get notesEmptyBody => 'احفظ درسًا أو اكتب ملاحظة عليه، وستجده هنا.';
+
+  @override
+  String get notesOnPhone =>
+      'محفوظة على هذا الهاتف فقط، وتُحذف إذا حذفت التطبيق.';
 }
