@@ -582,5 +582,17 @@
   "reviewsStarsRow": "{stars} نجوم: {count}",
   "playerSpeed": "السرعة",
   "playerSpeedTitle": "سرعة التشغيل",
-  "playerSpeedNormal": "عادية"
+  "playerSpeedNormal": "عادية",
+  "remindersSection": "التذكيرات",
+  "remindersDaily": "تذكير يومي بالمذاكرة",
+  "remindersDailyHelp": "تذكير في نفس الوقت كل يوم.",
+  "remindersTime": "الوقت",
+  "remindersDeadlines": "تذكير بمواعيد التسليم",
+  "remindersDeadlinesHelp": "قبل موعد الاختبار أو الواجب بيوم وبساعة.",
+  "remindersDenied": "الإشعارات مقفلة لهذا التطبيق. فعّلها من إعدادات الهاتف.",
+  "reminderDailyTitle": "وقت المذاكرة",
+  "reminderDailyBody": "أكمل {course} من حيث توقفت.",
+  "reminderDailyBodyGeneric": "خصّص بضع دقائق لكورساتك اليوم.",
+  "reminderDueTomorrow": "موعد التسليم غدًا: {title}",
+  "reminderDueInHour": "باقٍ ساعة على موعد التسليم: {title}"
 }

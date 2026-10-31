@@ -3595,6 +3595,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Normal'**
   String get playerSpeedNormal;
+
+  /// No description provided for @remindersSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get remindersSection;
+
+  /// No description provided for @remindersDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily study reminder'**
+  String get remindersDaily;
+
+  /// No description provided for @remindersDailyHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'A nudge at the same time every day.'**
+  String get remindersDailyHelp;
+
+  /// No description provided for @remindersTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get remindersTime;
+
+  /// No description provided for @remindersDeadlines.
+  ///
+  /// In en, this message translates to:
+  /// **'Due-date reminders'**
+  String get remindersDeadlines;
+
+  /// No description provided for @remindersDeadlinesHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'A day and an hour before a quiz or assignment is due.'**
+  String get remindersDeadlinesHelp;
+
+  /// No description provided for @remindersDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are off for this app. Turn them on in your phone\'s Settings.'**
+  String get remindersDenied;
+
+  /// No description provided for @reminderDailyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Time to study'**
+  String get reminderDailyTitle;
+
+  /// No description provided for @reminderDailyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick up {course} where you left off.'**
+  String reminderDailyBody(String course);
+
+  /// No description provided for @reminderDailyBodyGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Spend a few minutes on your courses today.'**
+  String get reminderDailyBodyGeneric;
+
+  /// No description provided for @reminderDueTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Due tomorrow: {title}'**
+  String reminderDueTomorrow(String title);
+
+  /// No description provided for @reminderDueInHour.
+  ///
+  /// In en, this message translates to:
+  /// **'Due in an hour: {title}'**
+  String reminderDueInHour(String title);
 }
 
 class _AppLocalizationsDelegate

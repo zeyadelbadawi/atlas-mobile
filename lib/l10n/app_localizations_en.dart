@@ -2054,4 +2054,49 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playerSpeedNormal => 'Normal';
+
+  @override
+  String get remindersSection => 'Reminders';
+
+  @override
+  String get remindersDaily => 'Daily study reminder';
+
+  @override
+  String get remindersDailyHelp => 'A nudge at the same time every day.';
+
+  @override
+  String get remindersTime => 'Time';
+
+  @override
+  String get remindersDeadlines => 'Due-date reminders';
+
+  @override
+  String get remindersDeadlinesHelp =>
+      'A day and an hour before a quiz or assignment is due.';
+
+  @override
+  String get remindersDenied =>
+      'Notifications are off for this app. Turn them on in your phone\'s Settings.';
+
+  @override
+  String get reminderDailyTitle => 'Time to study';
+
+  @override
+  String reminderDailyBody(String course) {
+    return 'Pick up $course where you left off.';
+  }
+
+  @override
+  String get reminderDailyBodyGeneric =>
+      'Spend a few minutes on your courses today.';
+
+  @override
+  String reminderDueTomorrow(String title) {
+    return 'Due tomorrow: $title';
+  }
+
+  @override
+  String reminderDueInHour(String title) {
+    return 'Due in an hour: $title';
+  }
 }

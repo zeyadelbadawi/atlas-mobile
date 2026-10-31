@@ -2067,4 +2067,48 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get playerSpeedNormal => 'عادية';
+
+  @override
+  String get remindersSection => 'التذكيرات';
+
+  @override
+  String get remindersDaily => 'تذكير يومي بالمذاكرة';
+
+  @override
+  String get remindersDailyHelp => 'تذكير في نفس الوقت كل يوم.';
+
+  @override
+  String get remindersTime => 'الوقت';
+
+  @override
+  String get remindersDeadlines => 'تذكير بمواعيد التسليم';
+
+  @override
+  String get remindersDeadlinesHelp =>
+      'قبل موعد الاختبار أو الواجب بيوم وبساعة.';
+
+  @override
+  String get remindersDenied =>
+      'الإشعارات مقفلة لهذا التطبيق. فعّلها من إعدادات الهاتف.';
+
+  @override
+  String get reminderDailyTitle => 'وقت المذاكرة';
+
+  @override
+  String reminderDailyBody(String course) {
+    return 'أكمل $course من حيث توقفت.';
+  }
+
+  @override
+  String get reminderDailyBodyGeneric => 'خصّص بضع دقائق لكورساتك اليوم.';
+
+  @override
+  String reminderDueTomorrow(String title) {
+    return 'موعد التسليم غدًا: $title';
+  }
+
+  @override
+  String reminderDueInHour(String title) {
+    return 'باقٍ ساعة على موعد التسليم: $title';
+  }
 }

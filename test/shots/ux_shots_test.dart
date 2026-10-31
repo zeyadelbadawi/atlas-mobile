@@ -186,6 +186,7 @@ void main() {
   completionShots();
   ratingShots();
   speedShots();
+  reminderShots();
 
   shot(
     'lesson_undo',
@@ -429,4 +430,22 @@ class _VideoLesson extends FakeLearningRepository {
         'playbackLease': null,
         'resumePositionSeconds': 0,
       });
+}
+
+/// Batch 2 (B1, B2): reminders in the notification settings.
+void reminderShots() {
+  Finder remindersOr() {
+    final k = find.byKey(const ValueKey('reminders'));
+    return k.evaluate().isNotEmpty ? k : find.byType(SwitchListTile);
+  }
+
+  shot('settings_reminders', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/account/notifications',
+      size: const Size(393, 1000),
+      prefs: {'reminders.daily': true, 'reminders.deadlines': true},
+    );
+  }, focus: remindersOr);
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/learning/assessment_models.dart';
@@ -6,6 +8,7 @@ import '../core/learning/catalog_repository.dart';
 import '../core/learning/learning_models.dart';
 import '../core/learning/learning_repository.dart';
 import 'providers.dart';
+import 'reminders.dart';
 
 /// The learning API for the signed-in academy. Rebuilt when the session
 /// changes academy or user, which also refreshes every read below.
@@ -76,6 +79,8 @@ void refreshAssessments(WidgetRef ref, String courseId) {
   refreshLearning(ref, courseId);
   ref.invalidate(studentResultsProvider);
   ref.invalidate(certificatesProvider);
+  // A submitted quiz or assignment no longer needs its reminders.
+  unawaited(ref.read(remindersProvider.notifier).sync(force: true));
 }
 
 /* ---- free catalog (phase 6) ---- */

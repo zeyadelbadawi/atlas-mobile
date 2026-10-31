@@ -9,6 +9,8 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../app/providers.dart';
 import '../../app/push.dart';
+import '../../app/reminders.dart';
+import '../../core/platform/app_settings.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/account/account_repository.dart';
 import '../../core/api/api_error.dart';
@@ -558,6 +560,8 @@ class NotificationSettingsScreen extends ConsumerWidget {
           ],
           const SizedBox(height: AtlasSpace.s24),
         ],
+        const _Reminders(),
+        const SizedBox(height: AtlasSpace.s24),
         AsyncBody<bool>(
           value: emails,
           onRetry: () => ref.invalidate(_learningEmailsProvider),
@@ -590,6 +594,101 @@ class NotificationSettingsScreen extends ConsumerWidget {
               ),
             ],
           ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The phone's own reminders: a daily nudge to study at a chosen time, and
+/// a day and an hour before a quiz or assignment is due.
+class _Reminders extends ConsumerWidget {
+  const _Reminders();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final c = a.colors;
+    final r = ref.watch(remindersProvider);
+    final ctl = ref.read(remindersProvider.notifier);
+
+    Future<void> toggle(Future<bool> Function(bool) set, bool on) async {
+      final ok = await set(on);
+      if (!ok && context.mounted) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text(l.remindersDenied),
+              action: SnackBarAction(
+                label: l.qrOpenSettings,
+                onPressed: () => unawaited(openAppSettings()),
+              ),
+            ),
+          );
+      }
+    }
+
+    Widget toggleTile({
+      required String title,
+      required String help,
+      required bool value,
+      required Future<bool> Function(bool) set,
+    }) => SwitchListTile.adaptive(
+      contentPadding: EdgeInsets.zero,
+      title: Text(title, style: a.type.body.copyWith(color: c.ink)),
+      subtitle: Text(
+        help,
+        style: a.type.footnote.copyWith(color: c.inkSecondary),
+      ),
+      value: value,
+      onChanged: (v) => unawaited(toggle(set, v)),
+    );
+
+    return Column(
+      key: const ValueKey('reminders'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Semantics(
+          header: true,
+          child: Text(
+            l.remindersSection,
+            style: a.type.headline.copyWith(color: c.ink),
+          ),
+        ),
+        const SizedBox(height: 4),
+        toggleTile(
+          title: l.remindersDaily,
+          help: l.remindersDailyHelp,
+          value: r.daily,
+          set: ctl.setDaily,
+        ),
+        if (r.daily)
+          SettingsGroup(
+            children: [
+              SettingsRow(
+                title: l.remindersTime,
+                icon: LucideIcons.clock,
+                value: context.digits(
+                  MaterialLocalizations.of(context).formatTimeOfDay(r.time),
+                ),
+                onTap: () async {
+                  final t = await showTimePicker(
+                    context: context,
+                    initialTime: r.time,
+                  );
+                  if (t != null) await ctl.setTime(t);
+                },
+              ),
+            ],
+          ),
+        toggleTile(
+          title: l.remindersDeadlines,
+          help: l.remindersDeadlinesHelp,
+          value: r.deadlines,
+          set: ctl.setDeadlines,
         ),
       ],
     );

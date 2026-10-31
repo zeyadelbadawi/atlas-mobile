@@ -1231,5 +1231,38 @@
   },
   "playerSpeed": "Speed",
   "playerSpeedTitle": "Playback speed",
-  "playerSpeedNormal": "Normal"
+  "playerSpeedNormal": "Normal",
+  "remindersSection": "Reminders",
+  "remindersDaily": "Daily study reminder",
+  "remindersDailyHelp": "A nudge at the same time every day.",
+  "remindersTime": "Time",
+  "remindersDeadlines": "Due-date reminders",
+  "remindersDeadlinesHelp": "A day and an hour before a quiz or assignment is due.",
+  "remindersDenied": "Notifications are off for this app. Turn them on in your phone's Settings.",
+  "reminderDailyTitle": "Time to study",
+  "reminderDailyBody": "Pick up {course} where you left off.",
+  "@reminderDailyBody": {
+    "placeholders": {
+      "course": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderDailyBodyGeneric": "Spend a few minutes on your courses today.",
+  "reminderDueTomorrow": "Due tomorrow: {title}",
+  "@reminderDueTomorrow": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderDueInHour": "Due in an hour: {title}",
+  "@reminderDueInHour": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }

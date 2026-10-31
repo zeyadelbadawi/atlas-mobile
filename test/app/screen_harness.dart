@@ -7,6 +7,8 @@ import 'package:atlas_mobile/app/atlas_app.dart';
 import 'package:atlas_mobile/app/deep_links.dart';
 import 'package:atlas_mobile/app/learning_providers.dart';
 import 'package:atlas_mobile/app/providers.dart';
+import 'package:atlas_mobile/app/reminders.dart';
+import 'package:atlas_mobile/core/reminders/local_reminders.dart';
 import 'package:atlas_mobile/core/academy/academy_directory.dart';
 import 'package:atlas_mobile/app/push.dart';
 import 'package:atlas_mobile/app/router.dart';
@@ -26,6 +28,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../design/golden_harness.dart';
+import 'fake_reminders.dart';
 import 'fake_assessment.dart';
 import 'fake_catalog.dart';
 import 'fake_notifications.dart';
@@ -110,6 +113,7 @@ Future<ProviderContainer> pumpScreen(
   AcademyDirectory? directory,
   Map<String, Object> prefs = const {},
   List<Academy>? recent,
+  LocalReminders? reminders,
 }) async {
   SharedPreferences.setMockInitialValues({
     ...prefs,
@@ -162,6 +166,7 @@ Future<ProviderContainer> pumpScreen(
       pushControllerProvider.overrideWith(PushNotAsked.new),
       deepLinkProvider.overrideWith(NoLinks.new),
       splashEnabledProvider.overrideWithValue(false),
+      localRemindersProvider.overrideWithValue(reminders ?? FakeReminders()),
     ],
   );
   addTearDown(container.dispose);

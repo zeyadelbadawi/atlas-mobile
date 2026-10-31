@@ -9,6 +9,7 @@ import '../l10n/app_localizations.dart';
 import 'deep_links.dart';
 import 'providers.dart';
 import 'push.dart';
+import 'reminders.dart';
 import 'router.dart';
 
 class AtlasApp extends ConsumerWidget {
@@ -39,6 +40,12 @@ class AtlasApp extends ConsumerWidget {
     ref.watch(pushControllerProvider);
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => ref.read(pushControllerProvider.notifier).attachHandlers(),
+    );
+
+    // Study and due-date reminders: kept in step with the session.
+    ref.watch(remindersProvider);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ref.read(remindersProvider.notifier).attach(),
     );
 
     // Academy links (App Links, QR): opened once the session allows.
