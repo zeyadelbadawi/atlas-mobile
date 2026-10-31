@@ -48,14 +48,29 @@ class MainShell extends ConsumerWidget {
               onSelect: select,
               header: academy == null
                   ? null
-                  : Semantics(
-                      header: true,
-                      child: Text(
-                        academy.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: a.type.title3.copyWith(color: a.colors.ink),
-                      ),
+                  // The academy's logo and name, as on the phone's cover.
+                  : Row(
+                      children: [
+                        AcademyLogo(
+                          academyName: academy.name,
+                          image: NetworkImage(academy.logoUrl.toString()),
+                          size: 36,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Semantics(
+                            header: true,
+                            child: Text(
+                              academy.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: a.type.title3.copyWith(
+                                color: a.colors.ink,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
             ),
             Expanded(child: shell),

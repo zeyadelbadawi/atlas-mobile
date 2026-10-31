@@ -1,10 +1,14 @@
 @Tags(['shots'])
 library;
 
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:atlas_mobile/app/atlas_app.dart';
+import 'package:atlas_mobile/app/providers.dart';
+import 'package:atlas_mobile/core/academy/academy.dart';
+import 'package:atlas_mobile/design/design.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,10 +20,58 @@ import '../design/golden_harness.dart';
 ///   SHOTS=before flutter test --tags shots test/shots   (on the old code)
 ///   SHOTS=after  flutter test --tags shots test/shots   (on the new code)
 ///
-/// Writes `build/ux_shots/<before|after>/<name>.png` (not committed).
+/// Writes `build/ux_shots/<before|after>/<name>.png`, and `<name>.json`
+/// with the frame (in pixels) of what the change is about, so the
+/// comparison can circle it. Not committed.
 final _label = Platform.environment['SHOTS'];
 
-Future<void> _save(WidgetTester t, String name) async {
+/// Atlas Demo Academy: a yellow academy with a yellow logo, the case where
+/// the logo vanished on a tile of its own colour.
+/// An academy whose logo is white on transparent.
+const whiteLogoAcademy = Academy(
+  id: '00000000-0000-4000-8000-00000000000a',
+  name: 'Nour Academy',
+  host: 'nour.atlass.dpdns.org',
+  primaryColor: '222 72% 46%',
+);
+
+const demo = Academy(
+  id: '9a75db56-d639-4849-a5e2-1295eb02ca75',
+  name: 'Atlas Demo Academy',
+  host: 'demoo.atlass.dpdns.org',
+  primaryColor: '44 100% 53%',
+);
+
+class AsDemoSignedIn extends SessionController {
+  @override
+  SessionState build() => const SessionState(
+    status: SessionStatus.signedIn,
+    academy: demo,
+    user: {'name': 'زياد البدوي', 'email': 'zeyad@example.com'},
+  );
+}
+
+/// Serves the demo academy's real logo for its logo URL (tests have no
+/// network), straight into the image cache.
+Future<void> serveDemoLogo(
+  WidgetTester t, {
+  Academy academy = demo,
+  String fixture = 'demo_logo.png',
+}) async {
+  final bytes = File('test/fixtures/$fixture').readAsBytesSync();
+  final image = await t.runAsync(() async {
+    final codec = await ui.instantiateImageCodec(bytes);
+    return (await codec.getNextFrame()).image;
+  });
+  PaintingBinding.instance.imageCache.putIfAbsent(
+    NetworkImage(academy.logoUrl.toString()),
+    () => OneFrameImageStreamCompleter(
+      Future.value(ImageInfo(image: image!.clone())),
+    ),
+  );
+}
+
+Future<void> _save(WidgetTester t, String name, Finder? focus) async {
   debugDisableShadows = false;
   void dirty(RenderObject o) {
     o.markNeedsPaint();
@@ -29,62 +81,96 @@ Future<void> _save(WidgetTester t, String name) async {
   for (final v in t.binding.renderViews) {
     dirty(v);
   }
-  // Let fades and implicit animations finish before the picture.
-  await t.pump(const Duration(milliseconds: 500));
-  await t.pump(const Duration(milliseconds: 500));
+  // Let fades, implicit animations and off-clock work (logo measuring)
+  // finish before the picture.
+  for (var i = 0; i < 4; i++) {
+    await t.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
+    await t.pump(const Duration(milliseconds: 300));
+  }
   final element = t.element(find.byType(AtlasApp));
+  final dir = 'build/ux_shots/$_label';
+  if (focus != null && focus.evaluate().isNotEmpty) {
+    final r = t.getRect(focus.first);
+    final k = t.view.devicePixelRatio;
+    File('$dir/$name.json')
+      ..createSync(recursive: true)
+      ..writeAsStringSync(
+        jsonEncode([r.left * k, r.top * k, r.right * k, r.bottom * k]),
+      );
+  }
   await t.runAsync(() async {
     final image = await captureImage(element);
     final png = await image.toByteData(format: ui.ImageByteFormat.png);
-    File('build/ux_shots/$_label/$name.png')
+    File('$dir/$name.png')
       ..createSync(recursive: true)
       ..writeAsBytesSync(png!.buffer.asUint8List());
   });
   debugDisableShadows = true;
 }
 
-void shot(String name, Future<void> Function(WidgetTester) arrange) =>
-    testWidgets(name, (t) async {
-      await arrange(t);
-      await _save(t, name);
-    }, skip: _label == null);
+/// One picture; [focus] is the thing the change is about (circled).
+void shot(
+  String name,
+  Future<void> Function(WidgetTester) arrange, {
+  Finder Function()? focus,
+  bool ios = false,
+}) => testWidgets(
+  name,
+  (t) async {
+    await arrange(t);
+    await _save(t, name, focus?.call());
+  },
+  skip: _label == null,
+  variant: ios
+      ? TargetPlatformVariant.only(TargetPlatform.iOS)
+      : TargetPlatformVariant.only(TargetPlatform.android),
+);
 
 void main() {
   setUpAll(loadGoldenFonts);
 
-  shot('results_scrolled', (t) async {
+  shot('picker_recent_logo', (t) async {
+    await serveDemoLogo(t);
+    await serveDemoLogo(
+      t,
+      academy: whiteLogoAcademy,
+      fixture: 'white_logo.png',
+    );
     await pumpScreen(
       t,
-      session: AsSignedIn.new,
-      path: '/account/results',
-      size: const Size(393, 700),
+      session: AsNoAcademy.new,
+      size: const Size(393, 1100),
+      recent: [demo, whiteLogoAcademy, ziadd],
     );
-    await t.drag(find.byType(ListView).first, const Offset(0, -300));
-    await t.pump(const Duration(milliseconds: 400));
-  });
+  }, focus: () => find.byType(AcademyLogo).first);
 
-  shot('profile_scrolled', (t) async {
+  shot('home_dark_logo', (t) async {
+    await serveDemoLogo(t);
     await pumpScreen(
       t,
-      session: AsSignedIn.new,
-      path: '/account/profile',
-      size: const Size(393, 700),
+      session: AsDemoSignedIn.new,
+      path: '/home',
+      theme: ThemeMode.dark,
     );
-    await t.drag(find.byType(Scrollable).first, const Offset(0, -300));
-    await t.pump(const Duration(milliseconds: 400));
-  });
+  }, focus: () => find.byType(AcademyLogo).first);
 
-  shot('picker_removed_recent', (t) async {
-    await pumpScreen(t, session: AsNoAcademy.new, size: const Size(393, 1100));
-    await t.drag(find.text('Manara'), const Offset(500, 0));
-    await t.pumpAndSettle();
-  });
-
-  shot('tasks', (t) async {
-    await pumpScreen(t, session: AsSignedIn.new, path: '/tasks');
-  });
-
-  shot('results', (t) async {
-    await pumpScreen(t, session: AsSignedIn.new, path: '/account/results');
-  });
+  shot(
+    'ipad_sidebar_logo',
+    (t) async {
+      await serveDemoLogo(t);
+      await pumpScreen(
+        t,
+        session: AsDemoSignedIn.new,
+        path: '/home',
+        size: const Size(1032, 1376),
+      );
+    },
+    ios: true,
+    focus: () => find.descendant(
+      of: find.byType(AtlasSidebar),
+      matching: find.text('Atlas Demo Academy'),
+    ),
+  );
 }

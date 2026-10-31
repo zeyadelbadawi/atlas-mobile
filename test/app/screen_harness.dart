@@ -109,22 +109,25 @@ Future<ProviderContainer> pumpScreen(
   MobileConfig config = const MobileConfig(signInWithApple: true),
   AcademyDirectory? directory,
   Map<String, Object> prefs = const {},
+  List<Academy>? recent,
 }) async {
   SharedPreferences.setMockInitialValues({
     ...prefs,
     'settings.language': language,
     'settings.theme': theme.name,
-    'academy.recent': [
-      jsonEncode(ziadd.toJson()),
-      jsonEncode(
-        const Academy(
-          id: 'm',
-          name: 'Manara',
-          host: 'manara.atlass.dpdns.org',
-          primaryColor: '222 72% 46%',
-        ).toJson(),
-      ),
-    ],
+    'academy.recent': recent != null
+        ? [for (final a in recent) jsonEncode(a.toJson())]
+        : [
+            jsonEncode(ziadd.toJson()),
+            jsonEncode(
+              const Academy(
+                id: 'm',
+                name: 'Manara',
+                host: 'manara.atlass.dpdns.org',
+                primaryColor: '222 72% 46%',
+              ).toJson(),
+            ),
+          ],
   });
   final store = await SharedPreferences.getInstance();
   await setDevice(tester, size);
