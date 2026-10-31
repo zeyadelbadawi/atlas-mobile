@@ -1,5 +1,6 @@
 import 'package:atlas_mobile/app/router.dart';
 import 'package:atlas_mobile/design/design.dart';
+import 'package:atlas_mobile/features/notifications/announcements_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -92,5 +93,19 @@ void main() {
     await t.tap(find.widgetWithText(AtlasButton, 'تغيير كلمة المرور'));
     await t.pump();
     expect(find.text('اكتب كلمة المرور الحالية.'), findsOneWidget);
+  });
+
+  testWidgets('an announcement on Home opens in full; "See all" lists them', (
+    t,
+  ) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/home',
+      size: const Size(393, 1800),
+    );
+    await t.tap(find.text('مراجعة ليلة الامتحان'));
+    await t.pumpAndSettle(const Duration(milliseconds: 100));
+    expect(find.byType(AnnouncementDetailScreen), findsOneWidget);
   });
 }

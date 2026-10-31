@@ -126,6 +126,8 @@ class EnrolledCourseRow extends StatelessWidget {
   }
 }
 
+/// An announcement on the home screen: the start of it, opening the whole
+/// announcement on tap.
 class AnnouncementRow extends StatelessWidget {
   const AnnouncementRow({super.key, required this.item});
   final Announcement item;
@@ -133,6 +135,16 @@ class AnnouncementRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final a = context.atlas;
+    return MergeSemantics(
+      child: Pressable(
+        onTap: () => context.push('/announcements/${item.id}'),
+        scale: 0.99,
+        child: _announcementBody(context, a),
+      ),
+    );
+  }
+
+  Widget _announcementBody(BuildContext context, AtlasThemeAccess a) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(

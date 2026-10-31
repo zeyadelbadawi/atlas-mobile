@@ -163,7 +163,11 @@ class _Body extends ConsumerWidget {
     ];
     final side = <Widget>[
       if (overview.announcements.isNotEmpty) ...[
-        SectionHeader(title: l.homeAnnouncements),
+        SectionHeader(
+          title: l.homeAnnouncements,
+          action: l.homeSeeAll,
+          onAction: () => context.push('/announcements'),
+        ),
         for (final n in overview.announcements.take(2))
           AnnouncementRow(item: n),
       ],
