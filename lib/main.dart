@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app/error_view.dart';
 import 'app/atlas_app.dart';
 import 'app/providers.dart';
 import 'app/push.dart';
@@ -25,6 +27,7 @@ Future<bool> _initFirebase() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if (kReleaseMode) ErrorWidget.builder = releaseErrorWidget;
   final (prefs, errors, notifications, info, firebase) = await (
     SharedPreferences.getInstance(),
     ErrorCatalog.load(),
