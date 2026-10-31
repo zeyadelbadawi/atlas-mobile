@@ -99,7 +99,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/academy/register',
-        builder: (_, _) => const RegisterScreen(),
+        builder: (_, s) => RegisterScreen(email: s.extra as String?),
       ),
       GoRoute(
         path: '/academy/forgot',

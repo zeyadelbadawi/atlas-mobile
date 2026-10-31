@@ -8,6 +8,7 @@ import '../../app/deep_links.dart';
 import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/academy/academy.dart';
+import '../../core/api/api_error.dart';
 import '../../core/config/app_env.dart';
 import '../../design/design.dart';
 
@@ -71,6 +72,15 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
           : null;
       if (link != null) ref.read(deepLinkProvider.notifier).queue(link);
       await ref.read(sessionProvider.notifier).chooseAcademy(academy);
+    } on AtlasApiException catch (e) {
+      // Name the address that was tried: the domain was added for them.
+      if (mounted) {
+        setState(
+          () => _error = e.status == 404
+              ? l.pickerNotFound(host!)
+              : errorText(ref, context, e),
+        );
+      }
     } on Object catch (e) {
       if (mounted) setState(() => _error = errorText(ref, context, e));
     } finally {

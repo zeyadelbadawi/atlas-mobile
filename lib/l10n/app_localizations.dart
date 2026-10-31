@@ -200,6 +200,18 @@ abstract class AppLocalizations {
   /// **'Academy on Atlas? Type just its name'**
   String get pickerAtlasName;
 
+  /// No description provided for @catalogClearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get catalogClearSearch;
+
+  /// No description provided for @pickerNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No academy found at {host}. Check the name, or ask your academy for its link.'**
+  String pickerNotFound(String host);
+
   /// No description provided for @pickerOpen.
   ///
   /// In en, this message translates to:

@@ -67,6 +67,23 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   bool _verifySent = false;
   String? _nameError, _phoneError, _banner;
 
+  /// What is saved now; Save stays off until the field differs from it.
+  late String _savedName = _name.text.trim();
+  String _savedPhone = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _name.addListener(_changed);
+    _phone.addListener(_changed);
+  }
+
+  // Not while the saved phone is filled in during build.
+  bool _seeding = false;
+  void _changed() {
+    if (!_seeding) setState(() {});
+  }
+
   @override
   void dispose() {
     _name.dispose();
@@ -88,6 +105,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     try {
       final me = await ref.read(accountRepositoryProvider).updateName(name);
       ref.read(sessionProvider.notifier).signedIn(me.raw);
+      _savedName = name;
       if (mounted) _toast(context, l.profileSaved);
     } on AtlasApiException catch (e) {
       if (mounted) setState(() => _nameError = errorText(ref, context, e));
@@ -110,6 +128,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     try {
       await ref.read(accountRepositoryProvider).setPhone(n, 'EG');
       ref.invalidate(_phoneProvider);
+      _savedPhone = _phone.text.trim();
       if (mounted) _toast(context, l.profileSaved);
     } on AtlasApiException catch (e) {
       if (mounted) {
@@ -144,8 +163,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final phone = ref.watch(_phoneProvider);
     if (!_phoneSeeded && phone.hasValue) {
       _phoneSeeded = true;
-      _phone.text =
+      _seeding = true;
+      _phone.text = _savedPhone =
           phone.value!.nationalNumber?.replaceFirst(RegExp(r'^0?'), '0') ?? '';
+      _seeding = false;
     }
     return FormScreen(
       title: l.accountProfile,
@@ -173,7 +194,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 label: l.profileSave,
                 style: AtlasButtonStyle.tonal,
                 loading: _savingName,
-                onPressed: _savingName ? null : _saveName,
+                onPressed: _savingName || _name.text.trim() == _savedName
+                    ? null
+                    : _saveName,
               ),
             ],
           ),
@@ -234,7 +257,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 label: l.profileSave,
                 style: AtlasButtonStyle.tonal,
                 loading: _savingPhone,
-                onPressed: _savingPhone ? null : _savePhone,
+                onPressed: _savingPhone || _phone.text.trim() == _savedPhone
+                    ? null
+                    : _savePhone,
               ),
             ],
           ),

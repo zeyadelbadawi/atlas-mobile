@@ -259,8 +259,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                               AtlasButton(
                                 label: l.signInCreateAccount,
                                 style: AtlasButtonStyle.tonal,
-                                onPressed: () =>
-                                    context.push('/academy/register'),
+                                onPressed: () => context.push(
+                                  '/academy/register',
+                                  extra: _email.text.trim(),
+                                ),
                               ),
                             ],
                           ),

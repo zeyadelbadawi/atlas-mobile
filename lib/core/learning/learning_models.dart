@@ -274,6 +274,7 @@ class LessonGrant {
   final String? fileName;
   final String? externalUrl;
   final String? youtubeId;
+
   /// A video uploaded to Atlas (not YouTube): a short-lived signed URL.
   final String? hostedVideoUrl;
 

@@ -62,6 +62,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pickerAtlasName => 'أكاديميتك على أطلس؟ اكتب اسمها فقط';
 
   @override
+  String get catalogClearSearch => 'مسح البحث';
+
+  @override
+  String pickerNotFound(String host) {
+    return 'لم نجد أكاديمية على $host. راجع الاسم، أو اطلب رابط الأكاديمية منها.';
+  }
+
+  @override
   String get pickerOpen => 'فتح الأكاديمية';
 
   @override

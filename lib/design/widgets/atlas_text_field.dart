@@ -27,6 +27,7 @@ class AtlasTextField extends StatefulWidget {
     this.enabled = true,
     this.prefix,
     this.suffix,
+    this.trailing,
     this.inputFormatters,
     this.focusNode,
     this.showPasswordLabel = 'Show password',
@@ -54,6 +55,9 @@ class AtlasTextField extends StatefulWidget {
   /// Fixed text after the value, e.g. the domain the learner does not
   /// have to type.
   final Widget? suffix;
+
+  /// An action at the end of the box (e.g. clear the search).
+  final Widget? trailing;
   final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focusNode;
 
@@ -197,6 +201,7 @@ class _AtlasTextFieldState extends State<AtlasTextField> {
                       widget.suffix ?? const SizedBox.shrink(),
                       const Spacer(),
                     ],
+                    ?widget.trailing,
                     if (widget.password)
                       IconButton(
                         onPressed: () => setState(() => _obscured = !_obscured),

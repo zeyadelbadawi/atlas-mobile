@@ -81,6 +81,7 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
   }
 
   void _onSearch(String _) {
+    setState(() {}); // the clear button follows the text
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 350), () {
       setState(_items.clear);
@@ -127,6 +128,20 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                       size: 18,
                       color: a.colors.inkSecondary,
                     ),
+                    trailing: _search.text.isEmpty
+                        ? null
+                        : IconButton(
+                            tooltip: l.catalogClearSearch,
+                            icon: Icon(
+                              LucideIcons.x,
+                              size: 18,
+                              color: a.colors.inkSecondary,
+                            ),
+                            onPressed: () {
+                              _search.clear();
+                              _onSearch('');
+                            },
+                          ),
                     onChanged: _onSearch,
                   ),
                   const SizedBox(height: AtlasSpace.s8),

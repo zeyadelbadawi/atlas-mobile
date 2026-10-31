@@ -63,6 +63,11 @@ void main() {
       await t.testTextInput.receiveAction(TextInputAction.go);
       await t.pump();
       expect(dir.asked.last, 'ziadd.atlass.dpdns.org');
+      // Not found: the message names the address that was tried.
+      expect(
+        find.textContaining('لم نجد أكاديمية على ziadd.atlass.dpdns.org'),
+        findsOneWidget,
+      );
 
       // An academy on its own domain: the suffix steps aside.
       await t.enterText(field, 'learn.my-academy.com');

@@ -96,7 +96,10 @@ Widget phonePrefix(BuildContext context) => Text(
 );
 
 class RegisterScreen extends ConsumerStatefulWidget {
-  const RegisterScreen({super.key});
+  const RegisterScreen({super.key, this.email});
+
+  /// What the learner already typed on the sign-in screen.
+  final String? email;
 
   @override
   ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
@@ -104,7 +107,7 @@ class RegisterScreen extends ConsumerStatefulWidget {
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _name = TextEditingController();
-  final _email = TextEditingController();
+  late final _email = TextEditingController(text: widget.email);
   final _phone = TextEditingController();
   final _password = TextEditingController();
   bool _age = false, _terms = false, _busy = false, _existing = false;
