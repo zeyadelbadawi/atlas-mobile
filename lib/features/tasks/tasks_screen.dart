@@ -135,7 +135,16 @@ class _List extends StatelessWidget {
         ),
       );
     }
-    return Column(children: [for (final t in shown) _TaskRow(task: t)]);
+    return Column(
+      children: [
+        for (final (i, t) in shown.indexed)
+          Entrance(
+            key: ValueKey('${t.type}-${t.id}'),
+            order: i,
+            child: _TaskRow(task: t),
+          ),
+      ],
+    );
   }
 }
 

@@ -27,13 +27,23 @@ class Entrance extends StatefulWidget {
 
 class _EntranceState extends State<Entrance>
     with SingleTickerProviderStateMixin {
+  static const _run = 420;
+
+  // The stagger is part of the animation (an interval), not a timer, so a
+  // list that rebuilds or leaves mid-way never leaves one pending.
+  int get _delay => 60 * widget.order.clamp(0, 6);
+
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 420),
+    duration: Duration(milliseconds: _run + _delay),
   );
   late final Animation<double> _t = CurvedAnimation(
     parent: _c,
-    curve: AtlasMotion.easeOut,
+    curve: Interval(
+      _delay / (_run + _delay),
+      1,
+      curve: AtlasMotion.easeOut,
+    ),
   );
   bool _started = false;
 
@@ -44,12 +54,9 @@ class _EntranceState extends State<Entrance>
     _started = true;
     if (MediaQuery.disableAnimationsOf(context)) {
       _c.value = 1;
-      return;
+    } else {
+      _c.forward();
     }
-    final delay = Duration(milliseconds: 60 * widget.order.clamp(0, 6));
-    Future<void>.delayed(delay, () {
-      if (mounted) _c.forward();
-    });
   }
 
   @override

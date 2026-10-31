@@ -71,7 +71,10 @@ class CertificatesScreen extends ConsumerWidget {
                               padding: const EdgeInsets.only(
                                 bottom: AtlasSpace.s16,
                               ),
-                              child: CertificateCard(certificate: cert),
+                              child: Entrance(
+                                order: list.items.indexOf(cert),
+                                child: CertificateCard(certificate: cert),
+                              ),
                             ),
                         ],
                       );
@@ -185,49 +188,99 @@ class _CertificateCardState extends ConsumerState<CertificateCard> {
     final c = a.colors;
     final cert = widget.certificate;
     final d = context.digits;
+    final live = !cert.revoked;
+    final band = c.brightness == Brightness.light
+        ? AtlasBrand.navy600
+        : AtlasBrand.navy800;
+    final onBand = live ? Colors.white : c.ink;
     return Container(
       decoration: BoxDecoration(
         color: c.raised,
         borderRadius: BorderRadius.circular(AtlasRadius.xl),
         border: Border.all(color: c.rule),
+        boxShadow: [
+          BoxShadow(
+            color: c.shadow,
+            blurRadius: 24,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       clipBehavior: Clip.antiAlias,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // The cover band, like the front of a handout.
+          // Atlas Navy with a gold seal: a certificate is one of the few
+          // gold moments in the app.
           Container(
-            color: cert.revoked ? c.sunken : c.cover,
-            padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            decoration: BoxDecoration(
+              color: live ? band : c.sunken,
+              border: live
+                  ? const Border(
+                      bottom: BorderSide(color: AtlasBrand.gold, width: 3),
+                    )
+                  : null,
+            ),
+            child: Stack(
               children: [
-                Expanded(
-                  child: Column(
+                if (live)
+                  PositionedDirectional(
+                    end: -36,
+                    bottom: -56,
+                    child: ExcludeSemantics(
+                      child: AtlasMark(
+                        size: 150,
+                        color: Colors.white.withValues(alpha: 0.07),
+                      ),
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        cert.courseTitle,
-                        style: a.type.title3.copyWith(
-                          color: cert.revoked ? c.ink : c.onCover,
+                      ExcludeSemantics(
+                        child: Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: live ? AtlasBrand.gold : c.rule,
+                          ),
+                          child: Icon(
+                            LucideIcons.award,
+                            size: 26,
+                            color: live ? AtlasBrand.onGold : c.inkTertiary,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        cert.nameOnCertificate,
-                        style: a.type.subhead.copyWith(
-                          color: (cert.revoked ? c.ink : c.onCover).withValues(
-                            alpha: 0.8,
-                          ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              cert.courseTitle,
+                              textDirection: contentDirection(
+                                context,
+                                cert.courseTitle,
+                              ),
+                              style: a.type.title3.copyWith(color: onBand),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              cert.nameOnCertificate,
+                              style: a.type.subhead.copyWith(
+                                color: live
+                                    ? AtlasBrand.navy100
+                                    : c.inkSecondary,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-                Icon(
-                  LucideIcons.award,
-                  size: 28,
-                  color: cert.revoked ? c.inkTertiary : c.onCover,
                 ),
               ],
             ),

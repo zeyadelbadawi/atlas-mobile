@@ -15,8 +15,9 @@ String numberText(BuildContext context, double value) => context.digits(
       : value.toStringAsFixed(1),
 );
 
-/// Label / value facts, one per line, separated by hairlines. The values
-/// are what the learner decides on, so they are set in ink, labels in grey.
+/// Label / value facts, one per line, on a card with hairlines between.
+/// The values are what the learner decides on, so they are set in ink,
+/// labels in grey.
 class FactList extends StatelessWidget {
   const FactList({super.key, required this.facts});
   final List<(String, String)> facts;
@@ -25,36 +26,99 @@ class FactList extends StatelessWidget {
   Widget build(BuildContext context) {
     final a = context.atlas;
     final c = a.colors;
-    return Column(
-      children: [
-        for (final (label, value) in facts)
-          MergeSemantics(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: c.rule)),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      label,
-                      style: a.type.subhead.copyWith(color: c.inkSecondary),
+    return AtlasCard(
+      padding: const EdgeInsets.symmetric(horizontal: AtlasSpace.s16),
+      child: Column(
+        children: [
+          for (final (i, (label, value)) in facts.indexed)
+            MergeSemantics(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 13),
+                decoration: BoxDecoration(
+                  border: i == facts.length - 1
+                      ? null
+                      : Border(bottom: BorderSide(color: c.rule)),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        label,
+                        style: a.type.subhead.copyWith(color: c.inkSecondary),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Flexible(
-                    child: Text(
-                      value,
-                      textAlign: TextAlign.end,
-                      style: a.type.headline.copyWith(color: c.ink),
+                    const SizedBox(width: 12),
+                    Flexible(
+                      flex: 3,
+                      child: Text(
+                        value,
+                        textAlign: TextAlign.end,
+                        style: a.type.headline.copyWith(color: c.ink),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The top of a quiz or assignment: a tinted icon tile, what it is
+/// (quiz, assignment) and its title.
+class AssessmentHeader extends StatelessWidget {
+  const AssessmentHeader({
+    super.key,
+    required this.icon,
+    required this.kind,
+    required this.title,
+  });
+  final IconData icon;
+  final String kind;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    final a = context.atlas;
+    final c = a.colors;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Entrance(
+          child: Row(
+            children: [
+              ExcludeSemantics(
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: c.tonal,
+                    borderRadius: BorderRadius.circular(AtlasRadius.md),
+                  ),
+                  child: Icon(icon, size: 22, color: c.accent),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(kind, style: a.type.subhead.copyWith(color: c.accent)),
+            ],
           ),
+        ),
+        const SizedBox(height: AtlasSpace.s12),
+        Entrance(
+          order: 1,
+          child: Semantics(
+            header: true,
+            child: Text(
+              title,
+              textDirection: contentDirection(context, title),
+              style: a.type.title1.copyWith(color: c.ink),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -257,12 +321,17 @@ class Panel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.atlas.colors;
+    if (!tonal) {
+      return AtlasCard(
+        padding: const EdgeInsets.all(AtlasSpace.s16),
+        child: child,
+      );
+    }
     return Container(
       padding: const EdgeInsets.all(AtlasSpace.s16),
       decoration: BoxDecoration(
-        color: tonal ? c.tonal : c.raised,
-        borderRadius: BorderRadius.circular(AtlasRadius.lg),
-        border: tonal ? null : Border.all(color: c.rule),
+        color: c.tonal,
+        borderRadius: BorderRadius.circular(AtlasRadius.xl),
       ),
       child: child,
     );

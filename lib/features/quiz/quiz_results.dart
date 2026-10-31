@@ -167,46 +167,63 @@ class _ScoreBlock extends StatelessWidget {
     final a = context.atlas;
     final c = a.colors;
     final r = results;
-    return Panel(
-      tonal: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                percentText(context, r.score!),
-                style: a.type.numeral.copyWith(color: c.ink),
-              ),
-              const SizedBox(width: 12),
-              if (r.passed != null)
-                StatusPill(
-                  label: r.passed! ? l.quizPassed : l.quizFailed,
-                  tone: r.passed! ? PillTone.success : PillTone.danger,
-                ),
-            ],
+    final passed = r.passed;
+    final ringColor = passed == true
+        ? c.gold
+        : passed == false
+        ? c.danger
+        : c.accent;
+    final facts = <Widget>[
+      if (passed != null)
+        StatusPill(
+          label: passed ? l.quizPassed : l.quizFailed,
+          tone: passed ? PillTone.success : PillTone.danger,
+        ),
+      if (r.pointsEarned != null && r.pointsTotal != null) ...[
+        const SizedBox(height: AtlasSpace.s8),
+        Text(
+          l.quizPointsOf(
+            numberText(context, r.pointsEarned!),
+            numberText(context, r.pointsTotal!),
           ),
-          if (r.pointsEarned != null && r.pointsTotal != null)
-            Text(
-              l.quizPointsOf(
-                numberText(context, r.pointsEarned!),
-                numberText(context, r.pointsTotal!),
+          style: a.type.headline.copyWith(color: c.ink),
+        ),
+      ],
+      if (r.passingScore != null)
+        Text(
+          l.quizPassingLine(context.digits('${r.passingScore}')),
+          style: a.type.subhead.copyWith(color: c.inkSecondary),
+        ),
+      if (r.effectiveScore != null &&
+          r.attemptsUsed > 1 &&
+          r.effectiveScore!.round() != r.score!.round())
+        Text(
+          l.quizCounted(context.digits('${r.effectiveScore!.round()}')),
+          style: a.type.subhead.copyWith(color: c.ink),
+        ),
+    ];
+    return AtlasCard(
+      child: Row(
+        children: [
+          Celebration(
+            play: passed == true,
+            child: ScoreRing(
+              value: r.score! / 100,
+              size: 112,
+              color: ringColor,
+              child: Text(
+                percentText(context, r.score!),
+                style: a.type.title2.copyWith(color: c.ink),
               ),
-              style: a.type.subhead.copyWith(color: c.inkSecondary),
             ),
-          if (r.passingScore != null)
-            Text(
-              l.quizPassingLine(context.digits('${r.passingScore}')),
-              style: a.type.subhead.copyWith(color: c.inkSecondary),
+          ),
+          const SizedBox(width: AtlasSpace.s20),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: facts,
             ),
-          if (r.effectiveScore != null &&
-              r.attemptsUsed > 1 &&
-              r.effectiveScore!.round() != r.score!.round())
-            Text(
-              l.quizCounted(context.digits('${r.effectiveScore!.round()}')),
-              style: a.type.subhead.copyWith(color: c.ink),
-            ),
+          ),
         ],
       ),
     );

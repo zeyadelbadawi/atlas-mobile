@@ -402,15 +402,13 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          l.unitAssignment,
-          style: a.type.footnote.copyWith(color: c.accent),
+        const SizedBox(height: AtlasSpace.s8),
+        AssessmentHeader(
+          icon: LucideIcons.fileText,
+          kind: l.unitAssignment,
+          title: asg.title,
         ),
-        Semantics(
-          header: true,
-          child: Text(asg.title, style: a.type.title1.copyWith(color: c.ink)),
-        ),
-        const SizedBox(height: AtlasSpace.s12),
+        const SizedBox(height: AtlasSpace.s16),
         FactList(
           facts: [
             (
@@ -692,11 +690,19 @@ class _Submitted extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  s.score == null
-                      ? l.assignmentGradedNoScore
-                      : l.assignmentScore(numberText(context, s.score!)),
-                  style: a.type.title2.copyWith(color: c.ink),
+                Row(
+                  children: [
+                    Icon(LucideIcons.badgeCheck, size: 26, color: c.goldText),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        s.score == null
+                            ? l.assignmentGradedNoScore
+                            : l.assignmentScore(numberText(context, s.score!)),
+                        style: a.type.title2.copyWith(color: c.ink),
+                      ),
+                    ),
+                  ],
                 ),
                 if (s.gradedAt != null)
                   Text(

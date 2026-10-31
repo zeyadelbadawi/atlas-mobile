@@ -100,32 +100,58 @@ class _Results extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            _Metric(
-              value: r.averageQuizScore == null
-                  ? '—'
-                  : percentText(context, r.averageQuizScore!),
-              label: r.averageQuizScore == null
-                  ? l.resultsNoScores
-                  : l.resultsAverage,
-            ),
-            // Of the quizzes already graded: one awaiting a teacher is not
-            // a failed one.
-            _Metric(
-              value: graded == 0
-                  ? '—'
-                  : l.countOf(d('${r.quizzesPassed}'), d('$graded')),
-              label: l.resultsQuizzesPassed,
-            ),
-            _Metric(
-              value: l.countOf(
-                d('${r.coursesCompleted}'),
-                d('${r.coursesEnrolled}'),
+        Entrance(
+          child: AtlasCard(
+            child: _Summary(
+              ring: MergeSemantics(
+                child: Column(
+                  children: [
+                    ScoreRing(
+                      value: (r.averageQuizScore ?? 0) / 100,
+                      size: 104,
+                      child: Text(
+                        r.averageQuizScore == null
+                            ? '—'
+                            : percentText(context, r.averageQuizScore!),
+                        style: a.type.title2.copyWith(color: c.ink),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      r.averageQuizScore == null
+                          ? l.resultsNoScores
+                          : l.resultsAverage,
+                      textAlign: TextAlign.center,
+                      style: a.type.footnote.copyWith(color: c.inkSecondary),
+                    ),
+                  ],
+                ),
               ),
-              label: l.resultsCoursesCompleted,
+              metrics: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Of the quizzes already graded: one awaiting a teacher
+                  // is not a failed one.
+                  _Metric(
+                    icon: LucideIcons.circleCheck,
+                    value: graded == 0
+                        ? '—'
+                        : l.countOf(d('${r.quizzesPassed}'), d('$graded')),
+                    label: l.resultsQuizzesPassed,
+                  ),
+                  Divider(height: 24, color: c.rule),
+                  _Metric(
+                    icon: LucideIcons.graduationCap,
+                    value: l.countOf(
+                      d('${r.coursesCompleted}'),
+                      d('${r.coursesEnrolled}'),
+                    ),
+                    label: l.resultsCoursesCompleted,
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
         for (final course in r.courses)
           if (course.quizzes.isNotEmpty || course.assignments.isNotEmpty) ...[
@@ -173,25 +199,60 @@ class _Results extends StatelessWidget {
   }
 }
 
+/// The ring beside the two numbers; with large text, the ring above them.
+class _Summary extends StatelessWidget {
+  const _Summary({required this.ring, required this.metrics});
+  final Widget ring, metrics;
+
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.textScalerOf(context).scale(1) > 1.35) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [ring, const SizedBox(height: AtlasSpace.s20), metrics],
+      );
+    }
+    return Row(
+      children: [
+        ring,
+        const SizedBox(width: AtlasSpace.s20),
+        Expanded(child: metrics),
+      ],
+    );
+  }
+}
+
 class _Metric extends StatelessWidget {
-  const _Metric({required this.value, required this.label});
+  const _Metric({
+    required this.icon,
+    required this.value,
+    required this.label,
+  });
+  final IconData icon;
   final String value, label;
 
   @override
   Widget build(BuildContext context) {
     final a = context.atlas;
-    return Expanded(
-      child: MergeSemantics(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(value, style: a.type.title1.copyWith(color: a.colors.ink)),
-            Text(
-              label,
-              style: a.type.footnote.copyWith(color: a.colors.inkSecondary),
+    final c = a.colors;
+    return MergeSemantics(
+      child: Row(
+        children: [
+          ExcludeSemantics(child: Icon(icon, size: 20, color: c.accent)),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(value, style: a.type.title3.copyWith(color: c.ink)),
+                Text(
+                  label,
+                  style: a.type.footnote.copyWith(color: c.inkSecondary),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

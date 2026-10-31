@@ -306,16 +306,11 @@ class _IntroState extends State<_Intro> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                l.unitQuiz,
-                style: a.type.footnote.copyWith(color: c.accent),
-              ),
-              Semantics(
-                header: true,
-                child: Text(
-                  q.title,
-                  style: a.type.title1.copyWith(color: c.ink),
-                ),
+              const SizedBox(height: AtlasSpace.s8),
+              AssessmentHeader(
+                icon: LucideIcons.listChecks,
+                kind: l.unitQuiz,
+                title: q.title,
               ),
               const SizedBox(height: AtlasSpace.s8),
               Text(
