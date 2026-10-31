@@ -185,8 +185,12 @@ class _Undo extends FakeLearningRepository {
   final undone = <String>[];
 
   @override
-  Future<void> undoCompleteLesson(String courseId, String lessonId) async =>
-      undone.add('$courseId/$lessonId');
+  Future<void> undoCompleteLesson(
+    String courseId,
+    String lessonId, {
+    String? opId,
+    int? clientOpAt,
+  }) async => undone.add('$courseId/$lessonId');
 }
 
 /// Every lesson done; the quiz passed only when [completed].

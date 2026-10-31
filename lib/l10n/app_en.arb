@@ -1264,5 +1264,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "lessonQueued": "Saved on this phone. It will be sent when you're back online.",
+  "lessonUndoQueued": "Taken back on this phone. It will be sent when you're back online.",
+  "lessonPending": "Done, waiting for a connection to send.",
+  "coursePending": "Some of your progress is saved on this phone and will be sent when you're back online."
 }

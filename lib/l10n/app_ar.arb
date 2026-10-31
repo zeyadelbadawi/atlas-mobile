@@ -594,5 +594,9 @@
   "reminderDailyBody": "أكمل {course} من حيث توقفت.",
   "reminderDailyBodyGeneric": "خصّص بضع دقائق لكورساتك اليوم.",
   "reminderDueTomorrow": "موعد التسليم غدًا: {title}",
-  "reminderDueInHour": "باقٍ ساعة على موعد التسليم: {title}"
+  "reminderDueInHour": "باقٍ ساعة على موعد التسليم: {title}",
+  "lessonQueued": "حُفظ على الهاتف، وسيُرسل عند عودة الاتصال.",
+  "lessonUndoQueued": "أُلغي على الهاتف، وسيُرسل عند عودة الاتصال.",
+  "lessonPending": "تم، وفي انتظار الاتصال لإرساله.",
+  "coursePending": "جزء من تقدّمك محفوظ على الهاتف، وسيُرسل عند عودة الاتصال."
 }

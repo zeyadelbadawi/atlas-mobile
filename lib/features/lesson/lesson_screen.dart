@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../app/push.dart';
 import '../../app/learning_providers.dart';
+import '../../app/lesson_outbox.dart';
 import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/api/api_error.dart';
@@ -146,18 +147,19 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   Future<void> _complete() async {
     setState(() => _completing = true);
     try {
-      await ref
-          .read(learningRepositoryProvider)
-          .completeLesson(widget.courseId, widget.lessonId);
-      ref.read(analyticsProvider).event('lesson_complete');
+      final result = await ref
+          .read(lessonOutboxProvider.notifier)
+          .complete(widget.courseId, widget.lessonId);
+      ref.read(analyticsProvider).event('lesson_complete', {
+        'queued': result == LessonOpResult.queued ? 1 : 0,
+      });
       HapticFeedback.lightImpact();
-      refreshLearning(ref, widget.courseId);
-      if (mounted) setState(() => _done = true);
+      if (result == LessonOpResult.sent) refreshLearning(ref, widget.courseId);
+      if (!mounted) return;
+      setState(() => _done = true);
+      if (result == LessonOpResult.queued) _say(context.l10n.lessonQueued);
     } on AtlasApiException catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(errorText(ref, context, e))));
-      }
+      if (mounted) _say(errorText(ref, context, e));
     } finally {
       if (mounted) setState(() => _completing = false);
     }
@@ -166,29 +168,34 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   Future<void> _undo() async {
     setState(() => _completing = true);
     try {
-      await ref
-          .read(learningRepositoryProvider)
-          .undoCompleteLesson(widget.courseId, widget.lessonId);
-      ref.read(analyticsProvider).event('lesson_undo_complete');
-      refreshLearning(ref, widget.courseId);
+      final result = await ref
+          .read(lessonOutboxProvider.notifier)
+          .undo(widget.courseId, widget.lessonId);
+      ref.read(analyticsProvider).event('lesson_undo_complete', {
+        'queued': result == LessonOpResult.queued ? 1 : 0,
+      });
+      if (result == LessonOpResult.sent) refreshLearning(ref, widget.courseId);
       if (!mounted) return;
       // What was watched still counts, so it can be marked done again.
       setState(() {
         _done = false;
         _eligible = true;
       });
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(context.l10n.lessonUndone)));
+      _say(
+        result == LessonOpResult.queued
+            ? context.l10n.lessonUndoQueued
+            : context.l10n.lessonUndone,
+      );
     } on AtlasApiException catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(errorText(ref, context, e))));
-      }
+      if (mounted) _say(errorText(ref, context, e));
     } finally {
       if (mounted) setState(() => _completing = false);
     }
   }
+
+  void _say(String text) => ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(content: Text(text)));
 
   void _open(String url) =>
       launchUrl(Uri.parse(url), mode: LaunchMode.inAppBrowserView);
@@ -309,8 +316,15 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     final a = context.atlas;
     final c = a.colors;
     final next = seq?.after(widget.lessonId);
-    final alreadyDone = item?.isDone ?? false;
+    // A choice still waiting for a connection counts over the server's.
+    final queued = ref.watch(
+      lessonOutboxProvider.select(
+        (q) => q.where((o) => o.lessonId == widget.lessonId).lastOrNull,
+      ),
+    );
+    final alreadyDone = queued?.complete ?? item?.isDone ?? false;
     final done = _done ?? alreadyDone;
+    final pending = done && queued?.complete == true;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -426,7 +440,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             ),
           ],
         ] else ...[
-          AtlasBanner(kind: AtlasBannerKind.success, message: l.lessonDone),
+          AtlasBanner(
+            kind: pending ? AtlasBannerKind.info : AtlasBannerKind.success,
+            message: pending ? l.lessonPending : l.lessonDone,
+          ),
           const SizedBox(height: AtlasSpace.s16),
           if (next != null && next.type != 'live_session')
             AtlasButton(

@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 
 import 'package:atlas_mobile/app/atlas_app.dart';
 import 'package:atlas_mobile/app/providers.dart';
+import 'package:atlas_mobile/core/api/api_error.dart';
 import 'package:atlas_mobile/core/academy/academy.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/design/design.dart';
@@ -124,11 +125,13 @@ void shot(
   Future<void> Function(WidgetTester) arrange, {
   Finder Function()? focus,
   bool ios = false,
+  Future<void> Function(WidgetTester)? after,
 }) => testWidgets(
   name,
   (t) async {
     await arrange(t);
     await _save(t, name, focus?.call());
+    await after?.call(t);
   },
   skip: _label == null,
   variant: ios
@@ -187,6 +190,7 @@ void main() {
   ratingShots();
   speedShots();
   reminderShots();
+  offlineShots();
 
   shot(
     'lesson_undo',
@@ -448,4 +452,52 @@ void reminderShots() {
       prefs: {'reminders.daily': true, 'reminders.deadlines': true},
     );
   }, focus: remindersOr);
+}
+
+/// Batch 2 (B4): "lesson done" pressed with no connection.
+void offlineShots() {
+  shot(
+    'lesson_done_offline',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/${FakeLearningRepository.courseId}/lesson/l2',
+        learning: _Offline(),
+      );
+      await t.ensureVisible(find.text('أكملت الدرس'));
+      await t.tap(find.text('أكملت الدرس'));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 600));
+    },
+    focus: () {
+      final k = find.text('تم، وفي انتظار الاتصال لإرساله.');
+      return k.evaluate().isNotEmpty ? k : find.byType(SnackBar);
+    },
+    // Back online, so the waiting retry sends and nothing is left over.
+    after: (t) async {
+      _Offline.online = true;
+      await t.pump(const Duration(seconds: 11));
+    },
+  );
+}
+
+/// No connection: every write fails before reaching the server.
+class _Offline extends FakeLearningRepository {
+  static bool online = false;
+
+  @override
+  Future<double> completeLesson(
+    String courseId,
+    String lessonId, {
+    String? opId,
+    int? clientOpAt,
+  }) async {
+    if (online) return 50;
+    throw const AtlasApiException(
+      kind: 'network',
+      messageKey: 'errors.network.offline',
+      retryable: true,
+    );
+  }
 }

@@ -47,7 +47,7 @@ class AsSignedIn extends SessionController {
   SessionState build() => const SessionState(
     status: SessionStatus.signedIn,
     academy: ziadd,
-    user: {'name': 'زياد البدوي', 'email': 'zeyad@example.com'},
+    user: {'id': 'u1', 'name': 'زياد البدوي', 'email': 'zeyad@example.com'},
   );
 }
 

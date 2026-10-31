@@ -7,6 +7,7 @@ import '../features/system/splash_overlay.dart';
 import '../features/system/system_screens.dart';
 import '../l10n/app_localizations.dart';
 import 'deep_links.dart';
+import 'lesson_outbox.dart';
 import 'providers.dart';
 import 'push.dart';
 import 'reminders.dart';
@@ -41,6 +42,9 @@ class AtlasApp extends ConsumerWidget {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => ref.read(pushControllerProvider.notifier).attachHandlers(),
     );
+
+    // Lessons marked done offline: sent when the connection returns.
+    ref.watch(lessonOutboxProvider);
 
     // Study and due-date reminders: kept in step with the session.
     ref.watch(remindersProvider);

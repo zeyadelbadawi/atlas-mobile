@@ -46,6 +46,14 @@ final devicesProvider = FutureProvider.autoDispose<LearnerDevices>(
   (ref) => ref.watch(learningRepositoryProvider).devices(),
 );
 
+/// The same, from a provider (the offline queue after it sends).
+void refreshCourse(Ref ref, String courseId) {
+  ref.invalidate(sequenceProvider(courseId));
+  ref.invalidate(completionProvider(courseId));
+  ref.invalidate(overviewProvider);
+  ref.invalidate(enrollmentsProvider);
+}
+
 /// After a lesson completes: everything that shows progress reloads.
 void refreshLearning(WidgetRef ref, String courseId) {
   ref.invalidate(sequenceProvider(courseId));

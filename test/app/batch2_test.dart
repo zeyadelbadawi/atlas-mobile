@@ -1,10 +1,14 @@
 import 'package:atlas_mobile/app/providers.dart';
+import 'package:atlas_mobile/app/lesson_outbox.dart';
 import 'package:atlas_mobile/app/reminders.dart';
+import 'package:atlas_mobile/core/api/api_error.dart';
 import 'package:atlas_mobile/core/learning/assessment_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../design/golden_harness.dart';
+import 'fake_learning.dart';
 import 'fake_reminders.dart';
 import 'screen_harness.dart';
 
@@ -114,4 +118,127 @@ void main() {
       expect(fake.scheduled, isEmpty);
     });
   });
+
+  group('lesson done without a connection', () {
+    Future<ProviderContainer> openLesson(WidgetTester t, _Flaky learning) =>
+        pumpScreen(
+          t,
+          session: AsSignedIn.new,
+          path: '/course/${FakeLearningRepository.courseId}/lesson/l2',
+          size: const Size(393, 1400),
+          learning: learning,
+        );
+
+    Future<void> press(WidgetTester t, String label) async {
+      await t.ensureVisible(find.text(label));
+      await t.tap(find.text(label));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 500));
+    }
+
+    testWidgets('is kept on the phone and sent when the connection returns', (
+      t,
+    ) async {
+      final learning = _Flaky();
+      final container = await openLesson(t, learning);
+      await press(t, 'أكملت الدرس');
+      expect(
+        find.text('حُفظ على الهاتف، وسيُرسل عند عودة الاتصال.'),
+        findsOneWidget,
+      );
+      expect(find.text('تم، وفي انتظار الاتصال لإرساله.'), findsOneWidget);
+      final queued = container.read(lessonOutboxProvider);
+      expect(queued.single.lessonId, 'l2');
+      expect(
+        container.read(sharedPreferencesProvider).getKeys(),
+        contains(startsWith('outbox.lessons.')),
+      );
+
+      learning.online = true;
+      await container.read(lessonOutboxProvider.notifier).flush();
+      await t.pump();
+      expect(container.read(lessonOutboxProvider), isEmpty);
+      // Sent with the stamp of when it was pressed, not when it left.
+      expect(learning.sent.single, (
+        'complete',
+        'l2',
+        queued.single.opId,
+        queued.single.at,
+      ));
+    });
+
+    testWidgets('a later choice replaces the waiting one', (t) async {
+      final learning = _Flaky();
+      final container = await openLesson(t, learning);
+      await press(t, 'أكملت الدرس');
+      await press(t, 'إلغاء الإكمال');
+      final q = container.read(lessonOutboxProvider);
+      expect(q.single.complete, isFalse);
+      expect(find.text('أكملت الدرس'), findsOneWidget);
+
+      // Back online: the retry sends only the newest choice.
+      learning.online = true;
+      await t.pump(const Duration(seconds: 31));
+      await t.pump();
+      expect(container.read(lessonOutboxProvider), isEmpty);
+      expect(learning.sent.map((s) => s.$1), ['undo']);
+    });
+
+    testWidgets('a refusal that is not the connection is shown, not kept', (
+      t,
+    ) async {
+      final learning = _Flaky()..refuse = true;
+      final container = await openLesson(t, learning);
+      await press(t, 'أكملت الدرس');
+      expect(container.read(lessonOutboxProvider), isEmpty);
+      expect(find.text('أكملت الدرس'), findsOneWidget);
+    });
+  });
+}
+
+/// A connection that is down until [online]; or a server that refuses.
+class _Flaky extends FakeLearningRepository {
+  bool online = false;
+  bool refuse = false;
+  final sent = <(String, String, String?, int?)>[];
+
+  void _check() {
+    if (refuse) {
+      throw const AtlasApiException(
+        kind: 'forbidden',
+        messageKey: 'errors.forbidden',
+        status: 403,
+      );
+    }
+    if (!online) {
+      throw const AtlasApiException(
+        kind: 'network',
+        messageKey: 'errors.network.offline',
+        retryable: true,
+      );
+    }
+  }
+
+  @override
+  Future<double> completeLesson(
+    String courseId,
+    String lessonId, {
+    String? opId,
+    int? clientOpAt,
+  }) async {
+    _check();
+    sent.add(('complete', lessonId, opId, clientOpAt));
+    return 50;
+  }
+
+  @override
+  Future<void> undoCompleteLesson(
+    String courseId,
+    String lessonId, {
+    String? opId,
+    int? clientOpAt,
+  }) async {
+    _check();
+    sent.add(('undo', lessonId, opId, clientOpAt));
+  }
 }

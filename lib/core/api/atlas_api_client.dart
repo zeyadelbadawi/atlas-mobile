@@ -130,7 +130,8 @@ class AtlasApiClient {
   Future<T> patch<T>(String path, {Object? data}) =>
       _wrap(() => dio.patch<T>(path, data: data ?? const <String, dynamic>{}));
 
-  Future<T> delete<T>(String path) => _wrap(() => dio.delete<T>(path));
+  Future<T> delete<T>(String path, {Map<String, dynamic>? query}) =>
+      _wrap(() => dio.delete<T>(path, queryParameters: query));
 
   Future<T> _wrap<T>(Future<Response<T>> Function() call) async {
     try {

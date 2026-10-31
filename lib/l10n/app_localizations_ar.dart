@@ -2111,4 +2111,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String reminderDueInHour(String title) {
     return 'باقٍ ساعة على موعد التسليم: $title';
   }
+
+  @override
+  String get lessonQueued => 'حُفظ على الهاتف، وسيُرسل عند عودة الاتصال.';
+
+  @override
+  String get lessonUndoQueued => 'أُلغي على الهاتف، وسيُرسل عند عودة الاتصال.';
+
+  @override
+  String get lessonPending => 'تم، وفي انتظار الاتصال لإرساله.';
+
+  @override
+  String get coursePending =>
+      'جزء من تقدّمك محفوظ على الهاتف، وسيُرسل عند عودة الاتصال.';
 }

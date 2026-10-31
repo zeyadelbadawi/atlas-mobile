@@ -2099,4 +2099,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String reminderDueInHour(String title) {
     return 'Due in an hour: $title';
   }
+
+  @override
+  String get lessonQueued =>
+      'Saved on this phone. It will be sent when you\'re back online.';
+
+  @override
+  String get lessonUndoQueued =>
+      'Taken back on this phone. It will be sent when you\'re back online.';
+
+  @override
+  String get lessonPending => 'Done, waiting for a connection to send.';
+
+  @override
+  String get coursePending =>
+      'Some of your progress is saved on this phone and will be sent when you\'re back online.';
 }

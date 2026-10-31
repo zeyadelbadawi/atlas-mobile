@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../app/learning_providers.dart';
+import '../../app/lesson_outbox.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/learning/learning_models.dart';
 import '../../design/design.dart';
@@ -226,9 +227,22 @@ class _Course extends ConsumerWidget {
         completion != null &&
         !completion.completed &&
         (s.finished || completion.hasRequirementsBeyondLessons);
+    final waiting = ref.watch(
+      lessonOutboxProvider.select(
+        (q) => q.any((o) => o.courseId == s.courseId),
+      ),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (waiting) ...[
+          AtlasBanner(
+            key: const ValueKey('course-pending'),
+            kind: AtlasBannerKind.info,
+            message: l.coursePending,
+          ),
+          const SizedBox(height: AtlasSpace.s16),
+        ],
         if (done) _CompletedCard(courseId: s.courseId),
         if (next != null && !s.finished) ...[
           if (done) const SizedBox(height: AtlasSpace.s16),

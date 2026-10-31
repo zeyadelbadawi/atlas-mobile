@@ -3667,6 +3667,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Due in an hour: {title}'**
   String reminderDueInHour(String title);
+
+  /// No description provided for @lessonQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved on this phone. It will be sent when you\'re back online.'**
+  String get lessonQueued;
+
+  /// No description provided for @lessonUndoQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Taken back on this phone. It will be sent when you\'re back online.'**
+  String get lessonUndoQueued;
+
+  /// No description provided for @lessonPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Done, waiting for a connection to send.'**
+  String get lessonPending;
+
+  /// No description provided for @coursePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Some of your progress is saved on this phone and will be sent when you\'re back online.'**
+  String get coursePending;
 }
 
 class _AppLocalizationsDelegate

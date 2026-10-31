@@ -44,20 +44,34 @@ class LearningRepository {
       );
 
   /// Marks a lesson done. Returns the course percentage after it.
-  Future<double> completeLesson(String courseId, String lessonId) async {
+  ///
+  /// [opId] and [clientOpAt] (epoch ms) stamp an operation that may arrive
+  /// late (sent from the offline queue): the server keeps the newest per
+  /// lesson and answers an older one without applying it.
+  Future<double> completeLesson(
+    String courseId,
+    String lessonId, {
+    String? opId,
+    int? clientOpAt,
+  }) async {
     final body = await client.post<Map<String, dynamic>>(
       'courses/$courseId/progress/complete-lesson',
-      data: {'lessonId': lessonId},
+      data: {'lessonId': lessonId, 'opId': ?opId, 'clientOpAt': ?clientOpAt},
     );
     return (body['percentage'] as num?)?.toDouble() ?? 0;
   }
 
   /// Takes back a completion (a lesson marked done by mistake). The
   /// server keeps what was watched and leaves later lessons unlocked.
-  Future<void> undoCompleteLesson(String courseId, String lessonId) =>
-      client.delete<dynamic>(
-        'learning/courses/$courseId/progress/complete-lesson/$lessonId',
-      );
+  Future<void> undoCompleteLesson(
+    String courseId,
+    String lessonId, {
+    String? opId,
+    int? clientOpAt,
+  }) => client.delete<dynamic>(
+    'learning/courses/$courseId/progress/complete-lesson/$lessonId',
+    query: {'opId': ?opId, 'clientOpAt': ?clientOpAt},
+  );
 
   Future<CourseCompletion> completion(String courseId) async =>
       CourseCompletion.fromJson(
