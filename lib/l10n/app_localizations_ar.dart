@@ -2235,4 +2235,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get calendarFailed => 'تعذّر فتح التقويم.';
+
+  @override
+  String get lockSetting => 'قفل التطبيق بالبصمة أو الوجه';
+
+  @override
+  String get lockSettingHelp =>
+      'يُطلب عند فتح التطبيق وبعد الابتعاد عنه أكثر من ٣٠ ثانية. ورمز الهاتف يعمل أيضًا.';
+
+  @override
+  String get lockReason => 'افتح أطلس';
+
+  @override
+  String get lockTitle => 'أطلس مقفل';
+
+  @override
+  String get lockBody => 'افتحه ببصمتك أو وجهك أو رمز الهاتف.';
+
+  @override
+  String get lockUnlock => 'فتح القفل';
+
+  @override
+  String get coursesSearch => 'ابحث في كورساتك ودروسك';
+
+  @override
+  String get coursesSearchCourses => 'الكورسات';
+
+  @override
+  String get coursesSearchLessons => 'الدروس';
+
+  @override
+  String coursesSearchNone(String query) {
+    return 'لا توجد نتائج لـ «$query».';
+  }
 }

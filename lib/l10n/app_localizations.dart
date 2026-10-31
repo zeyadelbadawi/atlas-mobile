@@ -3901,6 +3901,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The calendar could not be opened.'**
   String get calendarFailed;
+
+  /// No description provided for @lockSetting.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock with fingerprint or face'**
+  String get lockSetting;
+
+  /// No description provided for @lockSettingHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Asked when the app opens and after 30 seconds away. Your phone\'s PIN works too.'**
+  String get lockSettingHelp;
+
+  /// No description provided for @lockReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Atlas'**
+  String get lockReason;
+
+  /// No description provided for @lockTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Atlas is locked'**
+  String get lockTitle;
+
+  /// No description provided for @lockBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with your fingerprint, face or phone PIN.'**
+  String get lockBody;
+
+  /// No description provided for @lockUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get lockUnlock;
+
+  /// No description provided for @coursesSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search your courses and lessons'**
+  String get coursesSearch;
+
+  /// No description provided for @coursesSearchCourses.
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get coursesSearchCourses;
+
+  /// No description provided for @coursesSearchLessons.
+  ///
+  /// In en, this message translates to:
+  /// **'Lessons'**
+  String get coursesSearchLessons;
+
+  /// No description provided for @coursesSearchNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches “{query}”.'**
+  String coursesSearchNone(String query);
 }
 
 class _AppLocalizationsDelegate

@@ -9,6 +9,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../app/providers.dart';
 import '../../app/push.dart';
+import '../../app/app_lock.dart';
 import '../../app/notes.dart';
 import '../../app/reminders.dart';
 import '../../core/platform/app_settings.dart';
@@ -391,6 +392,7 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
       title: l.securityTitle,
       icon: LucideIcons.keyRound,
       children: [
+        const _AppLockSwitch(),
         AtlasCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -692,6 +694,48 @@ class _Reminders extends ConsumerWidget {
           set: ctl.setDeadlines,
         ),
       ],
+    );
+  }
+}
+
+/// The optional app lock, where the phone has a way to check its owner.
+class _AppLockSwitch extends ConsumerWidget {
+  const _AppLockSwitch();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final c = a.colors;
+    if (!(ref.watch(appLockAvailableProvider).value ?? false)) {
+      return const SizedBox.shrink();
+    }
+    final on = ref.watch(appLockProvider.select((s) => s.enabled));
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AtlasSpace.s16),
+      child: AtlasCard(
+        key: const ValueKey('app-lock-setting'),
+        padding: const EdgeInsets.symmetric(horizontal: AtlasSpace.s16),
+        // Its own Material, so the tap ripple shows on the card.
+        child: Material(
+          type: MaterialType.transparency,
+          child: SwitchListTile.adaptive(
+            contentPadding: EdgeInsets.zero,
+            secondary: Icon(LucideIcons.fingerprint, color: c.accent),
+            title: Text(
+              l.lockSetting,
+              style: a.type.body.copyWith(color: c.ink),
+            ),
+            subtitle: Text(
+              l.lockSettingHelp,
+              style: a.type.footnote.copyWith(color: c.inkSecondary),
+            ),
+            value: on,
+            onChanged: (v) =>
+                ref.read(appLockProvider.notifier).setEnabled(v, l.lockReason),
+          ),
+        ),
+      ),
     );
   }
 }

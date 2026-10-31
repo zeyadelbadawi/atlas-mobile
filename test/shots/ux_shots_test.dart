@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../app/fake_assessment.dart';
+import '../app/fake_biometrics.dart';
 import '../app/fake_catalog.dart';
 import '../app/fake_learning.dart';
 import '../app/fake_video.dart';
@@ -197,6 +198,7 @@ void main() {
   moreCoursesShots();
   notesShots();
   calendarShots();
+  lockShots();
 
   shot(
     'lesson_undo',
@@ -685,4 +687,33 @@ class _AssignmentToDo extends FakeAssessmentRepository {
   @override
   Future<AssignmentSubmission?> submission(String courseId, String id) async =>
       null;
+}
+
+/// Batch 3 (B7): the optional app lock.
+void lockShots() {
+  shot(
+    'security_lock',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/account/security',
+        biometrics: FakeBiometrics(supported: true),
+      );
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('app-lock-setting'));
+      return k.evaluate().isNotEmpty ? k : find.text('كلمة المرور الحالية');
+    },
+  );
+
+  shot('app_locked', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/home',
+      biometrics: FakeBiometrics(supported: true, passes: false),
+      prefs: {'security.appLock': true},
+    );
+  });
 }

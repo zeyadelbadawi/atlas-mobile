@@ -8,6 +8,8 @@ import 'package:atlas_mobile/app/deep_links.dart';
 import 'package:atlas_mobile/app/learning_providers.dart';
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/app/reminders.dart';
+import 'package:atlas_mobile/app/app_lock.dart';
+import 'package:atlas_mobile/core/platform/biometrics.dart';
 import 'package:atlas_mobile/core/platform/calendar.dart';
 import 'package:atlas_mobile/core/reminders/local_reminders.dart';
 import 'package:atlas_mobile/core/academy/academy_directory.dart';
@@ -29,6 +31,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../design/golden_harness.dart';
+import 'fake_biometrics.dart';
 import 'fake_reminders.dart';
 import 'fake_assessment.dart';
 import 'fake_catalog.dart';
@@ -116,6 +119,7 @@ Future<ProviderContainer> pumpScreen(
   List<Academy>? recent,
   LocalReminders? reminders,
   AddToCalendar? calendar,
+  Biometrics? biometrics,
 }) async {
   SharedPreferences.setMockInitialValues({
     ...prefs,
@@ -170,6 +174,7 @@ Future<ProviderContainer> pumpScreen(
       splashEnabledProvider.overrideWithValue(false),
       localRemindersProvider.overrideWithValue(reminders ?? FakeReminders()),
       addToCalendarProvider.overrideWithValue(calendar ?? (_) async => true),
+      biometricsProvider.overrideWithValue(biometrics ?? FakeBiometrics()),
     ],
   );
   addTearDown(container.dispose);

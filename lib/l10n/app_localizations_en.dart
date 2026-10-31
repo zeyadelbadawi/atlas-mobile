@@ -2227,4 +2227,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calendarFailed => 'The calendar could not be opened.';
+
+  @override
+  String get lockSetting => 'Lock with fingerprint or face';
+
+  @override
+  String get lockSettingHelp =>
+      'Asked when the app opens and after 30 seconds away. Your phone\'s PIN works too.';
+
+  @override
+  String get lockReason => 'Unlock Atlas';
+
+  @override
+  String get lockTitle => 'Atlas is locked';
+
+  @override
+  String get lockBody => 'Unlock with your fingerprint, face or phone PIN.';
+
+  @override
+  String get lockUnlock => 'Unlock';
+
+  @override
+  String get coursesSearch => 'Search your courses and lessons';
+
+  @override
+  String get coursesSearchCourses => 'Courses';
+
+  @override
+  String get coursesSearchLessons => 'Lessons';
+
+  @override
+  String coursesSearchNone(String query) {
+    return 'Nothing matches “$query”.';
+  }
 }

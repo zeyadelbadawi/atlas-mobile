@@ -1317,5 +1317,22 @@
       }
     }
   },
-  "calendarFailed": "The calendar could not be opened."
+  "calendarFailed": "The calendar could not be opened.",
+  "lockSetting": "Lock with fingerprint or face",
+  "lockSettingHelp": "Asked when the app opens and after 30 seconds away. Your phone's PIN works too.",
+  "lockReason": "Unlock Atlas",
+  "lockTitle": "Atlas is locked",
+  "lockBody": "Unlock with your fingerprint, face or phone PIN.",
+  "lockUnlock": "Unlock",
+  "coursesSearch": "Search your courses and lessons",
+  "coursesSearchCourses": "Courses",
+  "coursesSearchLessons": "Lessons",
+  "coursesSearchNone": "Nothing matches “{query}”.",
+  "@coursesSearchNone": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../design/design.dart';
+import '../features/system/lock_screen.dart';
 import '../features/system/splash_overlay.dart';
 import '../features/system/system_screens.dart';
 import '../l10n/app_localizations.dart';
@@ -110,9 +111,13 @@ class AtlasApp extends ConsumerWidget {
                           (s) => s.status != SessionStatus.restoring,
                         ),
                       ),
-                      child: _SystemGate(child: child ?? const SizedBox()),
+                      child: _SystemGate(
+                        child: AppLockGate(child: child ?? const SizedBox()),
+                      ),
                     )
-                  : _SystemGate(child: child ?? const SizedBox()),
+                  : _SystemGate(
+                      child: AppLockGate(child: child ?? const SizedBox()),
+                    ),
             ),
           ),
         );

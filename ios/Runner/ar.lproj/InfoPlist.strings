@@ -3,3 +3,4 @@
 "NSPhotoLibraryUsageDescription" = "يفتح Atlas صورك فقط عندما تختار صورة لإرفاقها بواجب.";
 "NSCalendarsUsageDescription" = "يضيف Atlas موعد التسليم إلى تقويمك فقط عندما تطلب ذلك.";
 "NSCalendarsWriteOnlyAccessUsageDescription" = "يضيف Atlas موعد التسليم إلى تقويمك فقط عندما تطلب ذلك.";
+"NSFaceIDUsageDescription" = "يستخدم Atlas بصمة الوجه فقط لفتح التطبيق، عندما تفعّل قفل التطبيق.";

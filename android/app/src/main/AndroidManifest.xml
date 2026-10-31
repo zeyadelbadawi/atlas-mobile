@@ -6,6 +6,8 @@
     <!-- Study and due-date reminders come back after a restart. Inexact
          timing on purpose: no exact-alarm permission. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- The optional app lock: fingerprint, face or the phone's PIN. -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <!-- No advertising ID: Analytics runs without it (no ads, no tracking). -->
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove" />
     <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" tools:node="remove" />

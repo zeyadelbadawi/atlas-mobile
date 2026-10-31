@@ -1,3 +1,4 @@
+import 'package:atlas_mobile/app/app_lock.dart';
 import 'package:atlas_mobile/app/notes.dart';
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/core/learning/assessment_models.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../design/golden_harness.dart';
 import 'fake_assessment.dart';
+import 'fake_biometrics.dart';
 import 'fake_catalog.dart';
 import 'fake_learning.dart';
 import 'screen_harness.dart';
@@ -178,6 +180,53 @@ void main() {
         size: const Size(393, 1400),
       );
       expect(find.text('إضافة إلى التقويم'), findsNothing);
+    });
+  });
+
+  group('app lock', () {
+    testWidgets('hidden where the phone has no lock', (t) async {
+      await pumpScreen(t, session: AsSignedIn.new, path: '/account/security');
+      expect(find.text('قفل التطبيق بالبصمة أو الوجه'), findsNothing);
+    });
+
+    testWidgets('turned on only after the phone confirms', (t) async {
+      final bio = FakeBiometrics(supported: true, passes: false);
+      final container = await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/account/security',
+        biometrics: bio,
+      );
+      await t.tap(find.text('قفل التطبيق بالبصمة أو الوجه'));
+      await t.pump();
+      expect(bio.asked, 1);
+      expect(container.read(appLockProvider).enabled, isFalse);
+
+      bio.passes = true;
+      await t.tap(find.text('قفل التطبيق بالبصمة أو الوجه'));
+      await t.pump();
+      expect(container.read(appLockProvider).enabled, isTrue);
+      // Turning it on is not a lock in itself.
+      expect(find.byKey(const ValueKey('app-lock')), findsNothing);
+    });
+
+    testWidgets('on: the app opens locked and asks at once', (t) async {
+      final bio = FakeBiometrics(supported: true, passes: false);
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/home',
+        biometrics: bio,
+        prefs: {'security.appLock': true},
+      );
+      expect(find.byKey(const ValueKey('app-lock')), findsOneWidget);
+      expect(bio.asked, 1);
+
+      bio.passes = true;
+      await t.tap(find.text('فتح القفل'));
+      await t.pump();
+      await t.pump();
+      expect(find.byKey(const ValueKey('app-lock')), findsNothing);
     });
   });
 }

@@ -633,5 +633,15 @@
   "notesOnPhone": "محفوظة على هذا الهاتف فقط، وتُحذف إذا حذفت التطبيق.",
   "calendarAdd": "إضافة إلى التقويم",
   "calendarEventTitle": "موعد التسليم: {title}",
-  "calendarFailed": "تعذّر فتح التقويم."
+  "calendarFailed": "تعذّر فتح التقويم.",
+  "lockSetting": "قفل التطبيق بالبصمة أو الوجه",
+  "lockSettingHelp": "يُطلب عند فتح التطبيق وبعد الابتعاد عنه أكثر من ٣٠ ثانية. ورمز الهاتف يعمل أيضًا.",
+  "lockReason": "افتح أطلس",
+  "lockTitle": "أطلس مقفل",
+  "lockBody": "افتحه ببصمتك أو وجهك أو رمز الهاتف.",
+  "lockUnlock": "فتح القفل",
+  "coursesSearch": "ابحث في كورساتك ودروسك",
+  "coursesSearchCourses": "الكورسات",
+  "coursesSearchLessons": "الدروس",
+  "coursesSearchNone": "لا توجد نتائج لـ «{query}»."
 }

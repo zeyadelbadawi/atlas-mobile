@@ -3,3 +3,4 @@
 "NSPhotoLibraryUsageDescription" = "Atlas opens your photos only when you choose one to attach to an assignment.";
 "NSCalendarsUsageDescription" = "Atlas adds a due date to your calendar only when you ask it to.";
 "NSCalendarsWriteOnlyAccessUsageDescription" = "Atlas adds a due date to your calendar only when you ask it to.";
+"NSFaceIDUsageDescription" = "Atlas uses Face ID only to unlock the app, when you turn the app lock on.";
