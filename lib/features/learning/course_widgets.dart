@@ -79,6 +79,9 @@ void openItem(
   );
 }
 
+/// The Hero tag joining a course's cover in lists and on its page.
+String courseCoverTag(String courseId) => 'course-cover-$courseId';
+
 class EnrolledCourseRow extends StatelessWidget {
   const EnrolledCourseRow({
     super.key,
@@ -105,12 +108,16 @@ class EnrolledCourseRow extends StatelessWidget {
         if (course.instructors.isNotEmpty) course.instructors.join(context.sep),
         l.lessonsCount(course.total, context.digits('${course.total}')),
       ].join(context.sep),
-      cover: CourseCover(
-        image: course.thumbnailUrl == null
-            ? null
-            : NetworkImage(course.thumbnailUrl!),
-        kicker: l.coursesCover,
-        mark: context.digits(number.toString().padLeft(2, '0')),
+      // Flies into the course page's cover when the course opens.
+      cover: Hero(
+        tag: courseCoverTag(course.courseId),
+        child: CourseCover(
+          image: course.thumbnailUrl == null
+              ? null
+              : NetworkImage(course.thumbnailUrl!),
+          kicker: l.coursesCover,
+          mark: context.digits(number.toString().padLeft(2, '0')),
+        ),
       ),
       segments: segmentsFromCounts(course.completed, course.total),
       status: course.isActive ? status : l.courseAccessEnded,

@@ -118,3 +118,33 @@ class CompactTitleBar extends StatelessWidget {
     );
   }
 }
+
+/// Back, over a full-bleed cover: a round paper chip that reads on any
+/// cover colour and on the compact bar once it has slid in. Hidden on a
+/// screen that cannot go back.
+class CoverBackButton extends StatelessWidget {
+  const CoverBackButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    if (!(ModalRoute.of(context)?.canPop ?? false)) {
+      return const SizedBox.shrink();
+    }
+    final c = context.atlas.colors;
+    return PositionedDirectional(
+      top: MediaQuery.paddingOf(context).top + 2,
+      start: 8,
+      child: Material(
+        color: c.raised.withValues(alpha: 0.92),
+        shape: const CircleBorder(),
+        elevation: 0,
+        child: IconButton(
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+          color: c.ink,
+          icon: const BackButtonIcon(),
+          onPressed: () => Navigator.maybePop(context),
+        ),
+      ),
+    );
+  }
+}

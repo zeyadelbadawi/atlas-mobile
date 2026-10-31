@@ -10,9 +10,13 @@ extension L10nContext on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this);
   String get languageCode => Localizations.localeOf(this).languageCode;
 
-  /// List separator: the Arabic comma in Arabic (a middle dot reads as the
-  /// digit zero there), a middle dot in English.
-  String get sep => languageCode == 'ar' ? '، ' : ' · ';
+  /// Separator for meta lines: the Arabic comma in Arabic (a middle dot
+  /// reads as the digit zero there), a middle dot in English.
+  /// Separator for meta lines ("course، 12 lessons"). Wrapped in invisible
+  /// direction marks (RLM in Arabic, LRM in English) so a part written in
+  /// the other script (an Arabic instructor in the English app) stays in
+  /// its own place instead of pulling the numbers around it.
+  String get sep => languageCode == 'ar' ? '\u200F، \u200F' : '\u200E · \u200E';
 
   /// The backend labels devices in English ("Atlas app on iOS", "Chrome on
   /// Windows"); in Arabic only the connecting words are translated.
@@ -42,6 +46,7 @@ class ReadableWidth extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Align(
     alignment: AlignmentDirectional.topCenter,
+    heightFactor: 1,
     child: ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: AtlasSize.contentWidth(

@@ -23,7 +23,14 @@ class SegmentedProgress extends StatelessWidget {
     required this.segments,
     this.height = 6,
     this.semanticLabel,
+    this.fill,
+    this.track,
   });
+
+  /// Fill and track colours; default to the academy colour on a hairline.
+  /// On the academy's own cover, pass its readable ink instead.
+  final Color? fill;
+  final Color? track;
 
   final List<ProgressSegment> segments;
   final double height;
@@ -57,7 +64,7 @@ class SegmentedProgress extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(height / 2),
                     child: ColoredBox(
-                      color: c.rule,
+                      color: track ?? c.rule,
                       child: Align(
                         alignment: rtl
                             ? Alignment.centerRight
@@ -77,7 +84,7 @@ class SegmentedProgress extends StatelessWidget {
                             heightFactor: 1,
                             child: child,
                           ),
-                          child: ColoredBox(color: c.academy),
+                          child: ColoredBox(color: fill ?? c.academy),
                         ),
                       ),
                     ),

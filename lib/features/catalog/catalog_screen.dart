@@ -131,10 +131,14 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                   ),
                   const SizedBox(height: AtlasSpace.s8),
                   for (final (i, c) in _items.indexed)
-                    CatalogCourseRow(
-                      course: c,
-                      number: i + 1,
-                      joined: _enrolled.contains(c.id),
+                    Entrance(
+                      key: ValueKey(c.id),
+                      order: i % 20,
+                      child: CatalogCourseRow(
+                        course: c,
+                        number: i + 1,
+                        joined: _enrolled.contains(c.id),
+                      ),
                     ),
                   if (_error != null && _items.isEmpty)
                     LoadError(

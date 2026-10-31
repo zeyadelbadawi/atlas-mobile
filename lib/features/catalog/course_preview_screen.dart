@@ -24,38 +24,132 @@ class CoursePreviewScreen extends ConsumerWidget {
     final l = context.l10n;
     final a = context.atlas;
     final course = ref.watch(catalogCourseProvider(idOrSlug));
+    final c = a.colors;
+    final loaded = course.value;
     return Scaffold(
-      appBar: AppBar(),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(
-          AtlasSpace.gutter,
-          0,
-          AtlasSpace.gutter,
-          48,
-        ),
-        children: [
-          ReadableWidth(
-            child: course.when(
-              data: (c) => _Preview(course: c),
-              loading: () => const Padding(
-                padding: EdgeInsets.all(48),
-                child: Center(child: CircularProgressIndicator.adaptive()),
-              ),
-              error: (e, _) => e is AtlasApiException && e.status == 404
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 40),
-                      child: Text(
-                        l.previewNotFound,
-                        textAlign: TextAlign.center,
-                        style: a.type.body.copyWith(
-                          color: a.colors.inkSecondary,
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: Stack(
+          children: [
+            ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                _Cover(course: loaded),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AtlasSpace.gutter,
+                    AtlasSpace.s20,
+                    AtlasSpace.gutter,
+                    48,
+                  ),
+                  child: ReadableWidth(
+                    child: course.when(
+                      data: (c) => _Preview(course: c),
+                      loading: () => const Padding(
+                        padding: EdgeInsets.all(48),
+                        child: Center(
+                          child: CircularProgressIndicator.adaptive(),
                         ),
                       ),
-                    )
-                  : LoadError(
-                      onRetry: () =>
-                          ref.invalidate(catalogCourseProvider(idOrSlug)),
+                      error: (e, _) => e is AtlasApiException && e.status == 404
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 40),
+                              child: Text(
+                                l.previewNotFound,
+                                textAlign: TextAlign.center,
+                                style: a.type.body.copyWith(
+                                  color: c.inkSecondary,
+                                ),
+                              ),
+                            )
+                          : LoadError(
+                              onRetry: () => ref.invalidate(
+                                catalogCourseProvider(idOrSlug),
+                              ),
+                            ),
                     ),
+                  ),
+                ),
+              ],
+            ),
+            const CoverBackButton(),
+          ],
+        ),
+      ),
+      // Joining stays in reach however far the learner has read.
+      bottomNavigationBar: loaded == null
+          ? null
+          : DecoratedBox(
+              decoration: BoxDecoration(
+                color: c.raised,
+                border: Border(top: BorderSide(color: c.rule)),
+              ),
+              child: SafeArea(
+                top: false,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AtlasSpace.gutter,
+                    AtlasSpace.s12,
+                    AtlasSpace.gutter,
+                    AtlasSpace.s12,
+                  ),
+                  child: ReadableWidth(child: _JoinButton(course: loaded)),
+                ),
+              ),
+            ),
+    );
+  }
+}
+
+/// The course's picture across the top (or, without one, the academy's
+/// cover colour with the Atlas book mark), under a soft scrim so the back
+/// button reads on any image.
+class _Cover extends StatelessWidget {
+  const _Cover({this.course});
+  final CatalogCourse? course;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.atlas.colors;
+    final top = MediaQuery.paddingOf(context).top;
+    final url = course?.thumbnailUrl;
+    return SizedBox(
+      height: top + 220,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          if (url != null)
+            Image.network(
+              url,
+              fit: BoxFit.cover,
+              errorBuilder: (_, _, _) => ColoredBox(color: c.cover),
+            )
+          else
+            ColoredBox(
+              color: c.cover,
+              child: Align(
+                alignment: AlignmentDirectional.bottomEnd,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    end: 20,
+                    bottom: 12,
+                  ),
+                  child: ExcludeSemantics(
+                    child: AtlasMark(
+                      size: 150,
+                      color: c.onCover.withValues(alpha: 0.12),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          const DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.center,
+                colors: [Color(0x59000000), Color(0x00000000)],
+              ),
             ),
           ),
         ],
@@ -101,20 +195,6 @@ class _Preview extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (course.thumbnailUrl != null) ...[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AtlasRadius.lg),
-            child: AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Image.network(
-                course.thumbnailUrl!,
-                fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => ColoredBox(color: c.tonal),
-              ),
-            ),
-          ),
-          const SizedBox(height: AtlasSpace.s16),
-        ],
         Semantics(
           header: true,
           child: Text(
@@ -127,6 +207,10 @@ class _Preview extends ConsumerWidget {
           const SizedBox(height: 4),
           Text(
             course.instructors.join(context.sep),
+            textDirection: contentDirection(
+              context,
+              course.instructors.first,
+            ),
             style: a.type.subhead.copyWith(color: c.inkSecondary),
           ),
         ],
@@ -148,8 +232,6 @@ class _Preview extends ConsumerWidget {
             ],
           ),
         ],
-        const SizedBox(height: AtlasSpace.s20),
-        _JoinButton(course: course),
         if ((course.description ?? course.shortDescription) case final text?
             when text.isNotEmpty) ...[
           SectionHeader(title: l.previewAbout),
@@ -320,6 +402,7 @@ class _JoinButtonState extends ConsumerState<_JoinButton> {
     }
     final enrolled = ref.watch(isEnrolledProvider(course.id)).value ?? false;
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (_error != null) ...[

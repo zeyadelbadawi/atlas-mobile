@@ -106,10 +106,14 @@ class _MyCoursesScreenState extends ConsumerState<MyCoursesScreen> {
                       }
                       return Column(
                         children: [
-                          for (final c in shown)
-                            EnrolledCourseRow(
-                              course: c,
-                              number: list.indexOf(c) + 1,
+                          for (final (i, c) in shown.indexed)
+                            Entrance(
+                              key: ValueKey(c.courseId),
+                              order: i,
+                              child: EnrolledCourseRow(
+                                course: c,
+                                number: list.indexOf(c) + 1,
+                              ),
                             ),
                         ],
                       );

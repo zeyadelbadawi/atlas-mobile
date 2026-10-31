@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -12,35 +13,185 @@ import '../learning/learning_ui.dart';
 
 /// One course: progress, where to continue, and the syllabus by unit with
 /// the bookmark on the current item.
-class CourseScreen extends ConsumerWidget {
+class CourseScreen extends ConsumerStatefulWidget {
   const CourseScreen({super.key, required this.courseId});
   final String courseId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CourseScreen> createState() => _CourseScreenState();
+}
+
+class _CourseScreenState extends ConsumerState<CourseScreen> {
+  final _scroll = ScrollController();
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final courseId = widget.courseId;
     final seq = ref.watch(sequenceProvider(courseId));
+    // The list this course was opened from already knows its cover, title
+    // and place, so the cover is whole from the first frame of the flight.
+    final enrolled = ref.watch(enrollmentsProvider).value ?? const [];
+    final index = enrolled.indexWhere((e) => e.courseId == courseId);
+    final listed = index < 0 ? null : enrolled[index];
+    final title = seq.value?.courseTitle ?? listed?.title ?? '';
+    final c = context.atlas.colors;
     return Scaffold(
-      appBar: AppBar(),
-      body: RefreshIndicator.adaptive(
-        onRefresh: () async {
-          ref.invalidate(sequenceProvider(courseId));
-          await ref.read(sequenceProvider(courseId).future);
-        },
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(
-            AtlasSpace.gutter,
-            0,
-            AtlasSpace.gutter,
-            48,
-          ),
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: c.coverIsLight
+            ? SystemUiOverlayStyle.dark
+            : SystemUiOverlayStyle.light,
+        child: Stack(
           children: [
-            ReadableWidth(
-              child: AsyncBody<CourseSequence>(
-                value: seq,
-                onRetry: () => ref.invalidate(sequenceProvider(courseId)),
-                data: (s) => _Course(s: s),
+            RefreshIndicator.adaptive(
+              edgeOffset: MediaQuery.paddingOf(context).top,
+              onRefresh: () async {
+                ref.invalidate(sequenceProvider(courseId));
+                await ref.read(sequenceProvider(courseId).future);
+              },
+              child: ListView(
+                controller: _scroll,
+                padding: EdgeInsets.zero,
+                children: [
+                  ScrollParallax(
+                    controller: _scroll,
+                    child: _CourseHero(
+                      courseId: courseId,
+                      title: title,
+                      sequence: seq.value,
+                      thumbnail: listed?.thumbnailUrl,
+                      number: index < 0 ? null : index + 1,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AtlasSpace.gutter,
+                      AtlasSpace.s20,
+                      AtlasSpace.gutter,
+                      48,
+                    ),
+                    child: ReadableWidth(
+                      child: AsyncBody<CourseSequence>(
+                        value: seq,
+                        onRetry: () =>
+                            ref.invalidate(sequenceProvider(courseId)),
+                        data: (s) => _Course(s: s),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
+            CompactTitleBar(controller: _scroll, showAfter: 170, title: title),
+            const CoverBackButton(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The course's cover: the academy's colour with the course's own cover,
+/// its title, where the learner is and the progress across its lessons.
+class _CourseHero extends StatelessWidget {
+  const _CourseHero({
+    required this.courseId,
+    required this.title,
+    this.sequence,
+    this.thumbnail,
+    this.number,
+  });
+
+  final String courseId;
+  final String title;
+  final CourseSequence? sequence;
+  final String? thumbnail;
+  final int? number;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final c = a.colors;
+    final s = sequence;
+    final left = s == null ? null : minutesLeft(s);
+    return Container(
+      color: c.cover,
+      padding: EdgeInsetsDirectional.fromSTEB(
+        AtlasSpace.gutter,
+        MediaQuery.paddingOf(context).top + 60,
+        AtlasSpace.gutter,
+        AtlasSpace.s24,
+      ),
+      child: ReadableWidth(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Hero(
+                  tag: courseCoverTag(courseId),
+                  child: CourseCover(
+                    width: 84,
+                    inverted: true,
+                    image: thumbnail == null ? null : NetworkImage(thumbnail!),
+                    kicker: l.coursesCover,
+                    mark: number == null
+                        ? null
+                        : context.digits(number.toString().padLeft(2, '0')),
+                  ),
+                ),
+                const SizedBox(width: AtlasSpace.s16),
+                Expanded(
+                  child: Semantics(
+                    header: true,
+                    child: Text(
+                      title,
+                      textDirection: contentDirection(context, title),
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: a.type.title1.copyWith(color: c.onCover),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if (s != null) ...[
+              const SizedBox(height: AtlasSpace.s20),
+              SegmentedProgress(
+                segments: segmentsFor(s),
+                fill: c.onCover,
+                track: c.onCover.withValues(alpha: 0.22),
+              ),
+              const SizedBox(height: AtlasSpace.s8),
+              Row(
+                children: [
+                  Text(
+                    l.countOf(
+                      context.digits('${s.completedCount}'),
+                      context.digits('${s.totalCount}'),
+                    ),
+                    style: a.type.caption.copyWith(
+                      color: c.onCover.withValues(alpha: 0.85),
+                    ),
+                  ),
+                  const Spacer(),
+                  if (left != null)
+                    Text(
+                      l.minutesLeft(context.digits('$left')),
+                      style: a.type.caption.copyWith(
+                        color: c.onCover.withValues(alpha: 0.85),
+                      ),
+                    ),
+                ],
+              ),
+            ],
           ],
         ),
       ),
@@ -55,11 +206,9 @@ class _Course extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
-    final a = context.atlas;
     final next =
         s.continueItem ??
         s.items.where((i) => !i.isDone && !i.isLocked).firstOrNull;
-    final left = minutesLeft(s);
     // Group by unit, keeping order.
     final units = <int, List<SequenceItem>>{};
     for (final i in s.items) {
@@ -68,35 +217,6 @@ class _Course extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Semantics(
-          header: true,
-          child: Text(
-            s.courseTitle,
-            textDirection: contentDirection(context, s.courseTitle),
-            style: a.type.title1.copyWith(color: a.colors.ink),
-          ),
-        ),
-        const SizedBox(height: AtlasSpace.s16),
-        SegmentedProgress(segments: segmentsFor(s)),
-        const SizedBox(height: AtlasSpace.s8),
-        Row(
-          children: [
-            Text(
-              l.countOf(
-                context.digits('${s.completedCount}'),
-                context.digits('${s.totalCount}'),
-              ),
-              style: a.type.caption.copyWith(color: a.colors.inkSecondary),
-            ),
-            const Spacer(),
-            if (left != null)
-              Text(
-                l.minutesLeft(context.digits('$left')),
-                style: a.type.caption.copyWith(color: a.colors.inkSecondary),
-              ),
-          ],
-        ),
-        const SizedBox(height: AtlasSpace.s20),
         if (s.finished)
           _CompletedCard(courseId: s.courseId)
         else if (next != null)

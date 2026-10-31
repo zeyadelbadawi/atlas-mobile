@@ -9,7 +9,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Body face in goldens: the app's own (Rubik and its subsets).
 const testBodyFamily = 'Rubik';
-const testBodyFallback = ['RubikArabic', 'RubikLatinExt'];
+// After Rubik's subsets, faces standing in for the phone's own fallback
+// fonts (symbols such as ← and superscripts that Rubik does not draw).
+const testBodyFallback = [
+  'RubikArabic',
+  'RubikLatinExt',
+  'NotoSansArabic',
+  'Inter',
+];
 
 /// The moment every golden is drawn at: sample data is built relative to
 /// it and the UI clock is frozen on it, so screenshots never drift.

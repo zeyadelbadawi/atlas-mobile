@@ -18,6 +18,7 @@ import '../../core/learning/learning_models.dart';
 import '../../design/design.dart';
 import '../courses/course_screen.dart';
 import '../learning/course_widgets.dart';
+import '../learning/learning_ui.dart';
 import '../player/playback_session.dart';
 import '../player/youtube_lesson_player.dart';
 
@@ -241,41 +242,73 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Header: the bookmark marks where the learner is.
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.only(start: 34, top: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Text(
-                    context.digits('${(item?.position ?? 0) + 1}'),
-                    style: a.type.numeral.copyWith(color: c.ink),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    l.unitLesson,
-                    style: a.type.footnote.copyWith(color: c.inkSecondary),
-                  ),
-                ],
-              ),
+        // Where this lesson sits in the course, at a glance.
+        // (On iPad the outline beside the lesson already shows it.)
+        if (seq != null && seq.items.isNotEmpty && !isSplit(context)) ...[
+          const SizedBox(height: AtlasSpace.s12),
+          SegmentedProgress(
+            segments: segmentsFor(seq),
+            height: 4,
+            semanticLabel: l.countOf(
+              context.digits('${seq.completedCount}'),
+              context.digits('${seq.totalCount}'),
             ),
-            if (!done)
-              const PositionedDirectional(start: 0, top: 0, child: Bookmark()),
-          ],
-        ),
-        Semantics(
-          header: true,
-          child: Text(g.title, style: a.type.title2.copyWith(color: c.ink)),
-        ),
-        if (item != null)
-          Text(
-            item.sectionTitle,
-            style: a.type.subhead.copyWith(color: c.inkSecondary),
           ),
+          const SizedBox(height: AtlasSpace.s8),
+        ],
+        // Header: the bookmark marks where the learner is.
+        Entrance(
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.only(start: 34, top: 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(
+                      context.digits('${(item?.position ?? 0) + 1}'),
+                      style: a.type.numeral.copyWith(color: c.ink),
+                    ),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        item == null || item.sectionTitle.isEmpty
+                            ? l.unitLesson
+                            : '${l.unitLesson}${context.sep}'
+                                  '${item.sectionTitle}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: a.type.footnote.copyWith(
+                          color: c.inkSecondary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (!done)
+                const PositionedDirectional(
+                  start: 0,
+                  top: 0,
+                  child: Bookmark(),
+                ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AtlasSpace.s8),
+        Entrance(
+          order: 1,
+          child: Semantics(
+            header: true,
+            child: Text(
+              g.title,
+              textDirection: contentDirection(context, g.title),
+              style: a.type.title1.copyWith(color: c.ink),
+            ),
+          ),
+        ),
         const SizedBox(height: AtlasSpace.s20),
         if (_error != null) ...[
           AtlasBanner(
@@ -284,7 +317,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           ),
           const SizedBox(height: AtlasSpace.s16),
         ],
-        ..._body(context, g),
+        Entrance(
+          order: 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: _body(context, g),
+          ),
+        ),
         if (g.resources.isNotEmpty) ...[
           SectionHeader(title: l.lessonResources),
           SettingsGroup(

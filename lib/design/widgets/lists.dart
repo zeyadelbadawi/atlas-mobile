@@ -184,12 +184,17 @@ class CourseCover extends StatelessWidget {
     this.kicker,
     this.mark,
     this.width = 64,
+    this.inverted = false,
   });
 
   final ImageProvider? image;
   final String? kicker;
   final String? mark;
   final double width;
+
+  /// Drawn on the academy's own cover band: the generated cover swaps its
+  /// colours (ink ground, academy-colour lettering) so it stands out there.
+  final bool inverted;
 
   @override
   Widget build(BuildContext context) {
@@ -205,8 +210,21 @@ class CourseCover extends StatelessWidget {
           height: h,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            color: image == null ? c.cover : c.sunken,
+            color: image != null
+                ? c.sunken
+                : inverted
+                ? c.onCover
+                : c.cover,
             borderRadius: BorderRadius.circular(AtlasRadius.sm),
+            boxShadow: inverted
+                ? const [
+                    BoxShadow(
+                      color: Color(0x33000000),
+                      blurRadius: 18,
+                      offset: Offset(0, 8),
+                    ),
+                  ]
+                : null,
           ),
           child: image != null
               ? Image(image: image!, fit: BoxFit.cover)
@@ -222,13 +240,17 @@ class CourseCover extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.clip,
                           style: a.type.caption.copyWith(
-                            color: c.onCover.withValues(alpha: 0.75),
+                            color: (inverted ? c.cover : c.onCover).withValues(
+                              alpha: 0.75,
+                            ),
                           ),
                         ),
                       Text(
                         mark ?? '',
                         maxLines: 1,
-                        style: a.type.title2.copyWith(color: c.onCover),
+                        style: a.type.title2.copyWith(
+                          color: inverted ? c.cover : c.onCover,
+                        ),
                       ),
                     ],
                   ),
