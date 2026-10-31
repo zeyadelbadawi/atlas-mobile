@@ -39,11 +39,7 @@ class _EntranceState extends State<Entrance>
   );
   late final Animation<double> _t = CurvedAnimation(
     parent: _c,
-    curve: Interval(
-      _delay / (_run + _delay),
-      1,
-      curve: AtlasMotion.easeOut,
-    ),
+    curve: Interval(_delay / (_run + _delay), 1, curve: AtlasMotion.easeOut),
   );
   bool _started = false;
 

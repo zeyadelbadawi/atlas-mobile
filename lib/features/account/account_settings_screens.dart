@@ -149,73 +149,95 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
     return FormScreen(
       title: l.accountProfile,
+      icon: LucideIcons.userPen,
       children: [
         if (_banner != null) ...[
           AtlasBanner(kind: AtlasBannerKind.error, message: _banner!),
           const SizedBox(height: AtlasSpace.s16),
         ],
-        AtlasTextField(
-          label: l.profileName,
-          hint: l.profileNameHint,
-          controller: _name,
-          error: _nameError,
-          autofillHints: const [AutofillHints.name],
-          textInputAction: TextInputAction.done,
-          onSubmitted: (_) => _saveName(),
-        ),
-        const SizedBox(height: AtlasSpace.s12),
-        AtlasButton(
-          label: l.profileSave,
-          style: AtlasButtonStyle.tonal,
-          loading: _savingName,
-          onPressed: _savingName ? null : _saveName,
+        AtlasCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AtlasTextField(
+                label: l.profileName,
+                hint: l.profileNameHint,
+                controller: _name,
+                error: _nameError,
+                autofillHints: const [AutofillHints.name],
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) => _saveName(),
+              ),
+              const SizedBox(height: AtlasSpace.s12),
+              AtlasButton(
+                label: l.profileSave,
+                style: AtlasButtonStyle.tonal,
+                loading: _savingName,
+                onPressed: _savingName ? null : _saveName,
+              ),
+            ],
+          ),
         ),
         SectionHeader(title: l.profileEmail),
-        Text(
-          email,
-          textDirection: TextDirection.ltr,
-          textAlign: Directionality.of(context) == TextDirection.rtl
-              ? TextAlign.right
-              : TextAlign.left,
-          style: a.type.body.copyWith(color: c.ink),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          l.profileEmailNote,
-          style: a.type.footnote.copyWith(color: c.inkSecondary),
-        ),
-        const SizedBox(height: 8),
-        if (_verifySent)
-          AtlasBanner(
-            kind: AtlasBannerKind.success,
-            message: l.profileVerifySent(email),
-          )
-        else
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: TextButton(
-              onPressed: _verify,
-              child: Text(l.profileVerifyEmail),
-            ),
+        AtlasCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                email,
+                textDirection: TextDirection.ltr,
+                textAlign: Directionality.of(context) == TextDirection.rtl
+                    ? TextAlign.right
+                    : TextAlign.left,
+                style: a.type.body.copyWith(color: c.ink),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                l.profileEmailNote,
+                style: a.type.footnote.copyWith(color: c.inkSecondary),
+              ),
+              const SizedBox(height: 8),
+              if (_verifySent)
+                AtlasBanner(
+                  kind: AtlasBannerKind.success,
+                  message: l.profileVerifySent(email),
+                )
+              else
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextButton(
+                    onPressed: _verify,
+                    child: Text(l.profileVerifyEmail),
+                  ),
+                ),
+            ],
           ),
-        SectionHeader(title: l.profilePhone),
-        AtlasTextField(
-          label: l.profilePhone,
-          controller: _phone,
-          ltrValue: true,
-          prefix: phonePrefix(context),
-          keyboardType: TextInputType.phone,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          autofillHints: const [AutofillHints.telephoneNumberNational],
-          error: _phoneError,
-          helper: l.registerPhoneHint,
         ),
-        const SizedBox(height: AtlasSpace.s12),
-        AtlasButton(
-          label: l.profileSave,
-          style: AtlasButtonStyle.tonal,
-          loading: _savingPhone,
-          onPressed: _savingPhone ? null : _savePhone,
+        SectionHeader(title: l.profilePhone),
+        AtlasCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AtlasTextField(
+                label: l.profilePhone,
+                controller: _phone,
+                ltrValue: true,
+                prefix: phonePrefix(context),
+                keyboardType: TextInputType.phone,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                autofillHints: const [AutofillHints.telephoneNumberNational],
+                error: _phoneError,
+                helper: l.registerPhoneHint,
+              ),
+              const SizedBox(height: AtlasSpace.s12),
+              AtlasButton(
+                label: l.profileSave,
+                style: AtlasButtonStyle.tonal,
+                loading: _savingPhone,
+                onPressed: _savingPhone ? null : _savePhone,
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -339,57 +361,65 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
     final sessions = ref.watch(_sessionsProvider);
     return FormScreen(
       title: l.securityTitle,
+      icon: LucideIcons.keyRound,
       children: [
-        Text(
-          l.securityChangePassword,
-          style: a.type.title3.copyWith(color: c.ink),
-        ),
-        const SizedBox(height: AtlasSpace.s12),
-        AutofillGroup(
+        AtlasCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              AtlasTextField(
-                label: l.securityCurrentPassword,
-                controller: _current,
-                password: true,
-                ltrValue: true,
-                error: _currentError,
-                autofillHints: const [AutofillHints.password],
-                showPasswordLabel: l.showPassword,
-                hidePasswordLabel: l.hidePassword,
+              Text(
+                l.securityChangePassword,
+                style: a.type.title3.copyWith(color: c.ink),
               ),
               const SizedBox(height: AtlasSpace.s12),
-              AtlasTextField(
-                label: l.securityNewPassword,
-                controller: _next,
-                password: true,
-                ltrValue: true,
-                helper: l.securityPasswordRule,
-                error: _nextError,
-                autofillHints: const [AutofillHints.newPassword],
-                showPasswordLabel: l.showPassword,
-                hidePasswordLabel: l.hidePassword,
+              AutofillGroup(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AtlasTextField(
+                      label: l.securityCurrentPassword,
+                      controller: _current,
+                      password: true,
+                      ltrValue: true,
+                      error: _currentError,
+                      autofillHints: const [AutofillHints.password],
+                      showPasswordLabel: l.showPassword,
+                      hidePasswordLabel: l.hidePassword,
+                    ),
+                    const SizedBox(height: AtlasSpace.s12),
+                    AtlasTextField(
+                      label: l.securityNewPassword,
+                      controller: _next,
+                      password: true,
+                      ltrValue: true,
+                      helper: l.securityPasswordRule,
+                      error: _nextError,
+                      autofillHints: const [AutofillHints.newPassword],
+                      showPasswordLabel: l.showPassword,
+                      hidePasswordLabel: l.hidePassword,
+                    ),
+                    const SizedBox(height: AtlasSpace.s12),
+                    AtlasTextField(
+                      label: l.securityConfirmPassword,
+                      controller: _confirm,
+                      password: true,
+                      ltrValue: true,
+                      error: _confirmError,
+                      autofillHints: const [AutofillHints.newPassword],
+                      showPasswordLabel: l.showPassword,
+                      hidePasswordLabel: l.hidePassword,
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: AtlasSpace.s12),
-              AtlasTextField(
-                label: l.securityConfirmPassword,
-                controller: _confirm,
-                password: true,
-                ltrValue: true,
-                error: _confirmError,
-                autofillHints: const [AutofillHints.newPassword],
-                showPasswordLabel: l.showPassword,
-                hidePasswordLabel: l.hidePassword,
+              const SizedBox(height: AtlasSpace.s16),
+              AtlasButton(
+                label: l.securityChangePassword,
+                loading: _saving,
+                onPressed: _saving ? null : _change,
               ),
             ],
           ),
-        ),
-        const SizedBox(height: AtlasSpace.s16),
-        AtlasButton(
-          label: l.securityChangePassword,
-          loading: _saving,
-          onPressed: _saving ? null : _change,
         ),
         SectionHeader(title: l.securitySessions),
         AsyncBody<List<AccountSession>>(
@@ -398,50 +428,52 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
           data: (list) => Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (final s in list)
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: c.rule)),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        LucideIcons.monitorSmartphone,
-                        size: 20,
-                        color: c.inkSecondary,
+              SettingsGroup(
+                children: [
+                  for (final s in list)
+                    Container(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                        16,
+                        12,
+                        8,
+                        12,
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              s.isCurrent
-                                  ? l.securityThisDevice
-                                  : context.deviceLabel(s.deviceLabel),
-                              style: a.type.headline.copyWith(color: c.ink),
+                      child: Row(
+                        children: [
+                          const IconTile(icon: LucideIcons.monitorSmartphone),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  s.isCurrent
+                                      ? l.securityThisDevice
+                                      : context.deviceLabel(s.deviceLabel),
+                                  style: a.type.headline.copyWith(color: c.ink),
+                                ),
+                                if (s.lastUsedAt != null)
+                                  Text(
+                                    l.securityLastActive(
+                                      relative(context, s.lastUsedAt!),
+                                    ),
+                                    style: a.type.footnote.copyWith(
+                                      color: c.inkSecondary,
+                                    ),
+                                  ),
+                              ],
                             ),
-                            if (s.lastUsedAt != null)
-                              Text(
-                                l.securityLastActive(
-                                  relative(context, s.lastUsedAt!),
-                                ),
-                                style: a.type.footnote.copyWith(
-                                  color: c.inkSecondary,
-                                ),
-                              ),
-                          ],
-                        ),
+                          ),
+                          if (!s.isCurrent)
+                            TextButton(
+                              onPressed: () => _revoke(s),
+                              child: Text(l.securitySignOutSession),
+                            ),
+                        ],
                       ),
-                      if (!s.isCurrent)
-                        TextButton(
-                          onPressed: () => _revoke(s),
-                          child: Text(l.securitySignOutSession),
-                        ),
-                    ],
-                  ),
-                ),
+                    ),
+                ],
+              ),
               if (list.where((s) => !s.isCurrent).length > 1) ...[
                 const SizedBox(height: AtlasSpace.s12),
                 AtlasButton(
@@ -472,6 +504,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
     final emails = ref.watch(_learningEmailsProvider);
     return FormScreen(
       title: l.notificationSettingsTitle,
+      icon: LucideIcons.bellRing,
       children: [
         if (push != PushStatus.unavailable) ...[
           SettingsGroup(
@@ -650,6 +683,7 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
     final firebase = ref.watch(firebaseReadyProvider);
     return FormScreen(
       title: l.privacyTitle,
+      icon: LucideIcons.shieldCheck,
       children: [
         if (_error != null) ...[
           AtlasBanner(kind: AtlasBannerKind.error, message: _error!),
@@ -689,78 +723,97 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
             },
           ),
         SectionHeader(title: l.privacyExport),
-        Text(
-          l.privacyExportHelp,
-          style: a.type.subhead.copyWith(color: c.inkSecondary),
-        ),
-        const SizedBox(height: 8),
-        AsyncBody<List<PrivacyRequest>>(
-          value: requests,
-          onRetry: () => ref.invalidate(_privacyRequestsProvider),
-          data: (list) {
-            final exports = list.where((r) => r.type == 'export').toList();
-            final latest = exports.firstOrNull;
-            final open =
-                latest != null &&
-                latest.status != 'completed' &&
-                latest.status != 'rejected';
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (latest != null && latest.canDownload) ...[
-                  Text(
-                    l.privacyExportReady(
-                      latest.exportAvailableUntil == null
-                          ? ''
-                          : shortDate(context, latest.exportAvailableUntil!),
-                    ),
-                    style: a.type.subhead.copyWith(color: c.ink),
-                  ),
-                  const SizedBox(height: 8),
-                  AtlasButton(
-                    label: l.privacyExportDownload,
-                    icon: LucideIcons.download,
-                    onPressed: () => _download(latest),
-                  ),
-                ] else if (open)
-                  Text(
-                    l.privacyExportRequested(
-                      latest.createdAt == null
-                          ? ''
-                          : shortDate(context, latest.createdAt!),
-                    ),
-                    style: a.type.subhead.copyWith(color: c.ink),
-                  )
-                else
-                  AtlasButton(
-                    label: l.privacyExport,
-                    style: AtlasButtonStyle.tonal,
-                    icon: LucideIcons.fileDown,
-                    loading: _busyExport,
-                    onPressed: _busyExport ? null : _export,
-                  ),
-              ],
-            );
-          },
+        AtlasCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l.privacyExportHelp,
+                style: a.type.subhead.copyWith(color: c.inkSecondary),
+              ),
+              const SizedBox(height: 8),
+              AsyncBody<List<PrivacyRequest>>(
+                value: requests,
+                onRetry: () => ref.invalidate(_privacyRequestsProvider),
+                data: (list) {
+                  final exports = list
+                      .where((r) => r.type == 'export')
+                      .toList();
+                  final latest = exports.firstOrNull;
+                  final open =
+                      latest != null &&
+                      latest.status != 'completed' &&
+                      latest.status != 'rejected';
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (latest != null && latest.canDownload) ...[
+                        Text(
+                          l.privacyExportReady(
+                            latest.exportAvailableUntil == null
+                                ? ''
+                                : shortDate(
+                                    context,
+                                    latest.exportAvailableUntil!,
+                                  ),
+                          ),
+                          style: a.type.subhead.copyWith(color: c.ink),
+                        ),
+                        const SizedBox(height: 8),
+                        AtlasButton(
+                          label: l.privacyExportDownload,
+                          icon: LucideIcons.download,
+                          onPressed: () => _download(latest),
+                        ),
+                      ] else if (open)
+                        Text(
+                          l.privacyExportRequested(
+                            latest.createdAt == null
+                                ? ''
+                                : shortDate(context, latest.createdAt!),
+                          ),
+                          style: a.type.subhead.copyWith(color: c.ink),
+                        )
+                      else
+                        AtlasButton(
+                          label: l.privacyExport,
+                          style: AtlasButtonStyle.tonal,
+                          icon: LucideIcons.fileDown,
+                          loading: _busyExport,
+                          onPressed: _busyExport ? null : _export,
+                        ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
         SectionHeader(title: l.privacyDeleteAccount),
-        Text(
-          l.privacyDeleteHelp,
-          style: a.type.subhead.copyWith(color: c.inkSecondary),
-        ),
-        const SizedBox(height: 8),
-        AsyncBody<bool>(
-          value: canDelete,
-          onRetry: () => ref.invalidate(_canDeleteProvider),
-          data: (allowed) => allowed
-              ? AtlasButton(
-                  label: l.privacyDeleteAccount,
-                  style: AtlasButtonStyle.destructive,
-                  icon: LucideIcons.trash2,
-                  loading: _busyDelete,
-                  onPressed: _busyDelete ? null : _delete,
-                )
-              : AtlasBanner(message: l.privacyDeleteNotAllowed),
+        AtlasCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l.privacyDeleteHelp,
+                style: a.type.subhead.copyWith(color: c.inkSecondary),
+              ),
+              const SizedBox(height: 8),
+              AsyncBody<bool>(
+                value: canDelete,
+                onRetry: () => ref.invalidate(_canDeleteProvider),
+                data: (allowed) => allowed
+                    ? AtlasButton(
+                        label: l.privacyDeleteAccount,
+                        style: AtlasButtonStyle.destructive,
+                        icon: LucideIcons.trash2,
+                        loading: _busyDelete,
+                        onPressed: _busyDelete ? null : _delete,
+                      )
+                    : AtlasBanner(message: l.privacyDeleteNotAllowed),
+              ),
+            ],
+          ),
         ),
       ],
     );

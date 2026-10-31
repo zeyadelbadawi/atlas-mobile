@@ -401,16 +401,27 @@ class SettingsGroup extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(AtlasRadius.lg),
-          child: ColoredBox(
+        DecoratedBox(
+          decoration: BoxDecoration(
             color: c.raised,
+            borderRadius: BorderRadius.circular(AtlasRadius.xl),
+            border: Border.all(color: c.rule),
+            boxShadow: [
+              BoxShadow(
+                color: c.shadow,
+                blurRadius: 16,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AtlasRadius.xl - 1),
             child: Column(
               children: [
                 for (var i = 0; i < children.length; i++) ...[
                   if (i > 0)
                     Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 48),
+                      padding: const EdgeInsetsDirectional.only(start: 60),
                       child: Divider(height: 1, thickness: 1, color: c.rule),
                     ),
                   children[i],
@@ -475,11 +486,7 @@ class SettingsRow extends StatelessWidget {
               child: Row(
                 children: [
                   if (icon != null) ...[
-                    Icon(
-                      icon,
-                      size: 20,
-                      color: destructive ? c.danger : c.inkSecondary,
-                    ),
+                    IconTile(icon: icon!, danger: destructive),
                     const SizedBox(width: 12),
                   ],
                   Expanded(
@@ -557,4 +564,38 @@ class _TitleAndValue extends StatelessWidget {
       );
     },
   );
+}
+
+/// An icon on a small tinted tile, at the start of a row, so a list scans
+/// by its icons.
+class IconTile extends StatelessWidget {
+  const IconTile({
+    super.key,
+    required this.icon,
+    this.danger = false,
+    this.size = 32,
+  });
+  final IconData icon;
+  final bool danger;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.atlas.colors;
+    return ExcludeSemantics(
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: danger ? c.danger.withValues(alpha: 0.1) : c.tonal,
+          borderRadius: BorderRadius.circular(AtlasRadius.md),
+        ),
+        child: Icon(
+          icon,
+          size: size * 0.56,
+          color: danger ? c.danger : c.accent,
+        ),
+      ),
+    );
+  }
 }

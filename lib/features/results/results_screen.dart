@@ -209,7 +209,11 @@ class _Summary extends StatelessWidget {
     if (MediaQuery.textScalerOf(context).scale(1) > 1.35) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [ring, const SizedBox(height: AtlasSpace.s20), metrics],
+        children: [
+          ring,
+          const SizedBox(height: AtlasSpace.s20),
+          metrics,
+        ],
       );
     }
     return Row(
@@ -223,11 +227,7 @@ class _Summary extends StatelessWidget {
 }
 
 class _Metric extends StatelessWidget {
-  const _Metric({
-    required this.icon,
-    required this.value,
-    required this.label,
-  });
+  const _Metric({required this.icon, required this.value, required this.label});
   final IconData icon;
   final String value, label;
 

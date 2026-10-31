@@ -81,8 +81,12 @@ class NotificationsScreen extends ConsumerWidget {
                               ? _Empty(a: a)
                               : Column(
                                   children: [
-                                    for (final n in s.items)
-                                      NotificationRow(notification: n),
+                                    for (final (i, n) in s.items.indexed)
+                                      Entrance(
+                                        key: ValueKey(n.id),
+                                        order: i,
+                                        child: NotificationRow(notification: n),
+                                      ),
                                     if (s.loadingMore)
                                       const Padding(
                                         padding: EdgeInsets.all(20),
@@ -240,8 +244,9 @@ class NotificationRow extends ConsumerWidget {
                     child: Container(
                       width: 9,
                       height: 9,
+                      // Gold: something new is one of the gold moments.
                       decoration: BoxDecoration(
-                        color: c.accent,
+                        color: c.gold,
                         shape: BoxShape.circle,
                       ),
                     ),

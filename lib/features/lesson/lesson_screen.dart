@@ -280,9 +280,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                                   '${item.sectionTitle}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: a.type.footnote.copyWith(
-                          color: c.inkSecondary,
-                        ),
+                        style: a.type.footnote.copyWith(color: c.inkSecondary),
                       ),
                     ),
                   ],

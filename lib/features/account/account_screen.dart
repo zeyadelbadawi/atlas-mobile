@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -98,7 +99,6 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
 
   Widget _menu(BuildContext context) {
     final l = context.l10n;
-    final a = context.atlas;
     final session = ref.watch(sessionProvider);
     final settings = ref.watch(appSettingsProvider);
     final academy = session.academy!;
@@ -109,30 +109,25 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CoverBand.home(
-              academyName: academy.name,
-              greeting: session.displayName.isEmpty
+            _ProfileHeader(
+              name: session.displayName.isEmpty
                   ? l.accountTitle
                   : session.displayName,
+              email: email,
+              academyName: academy.name,
               logo: NetworkImage(academy.logoUrl.toString()),
-              overlap: 0,
             ),
             Padding(
-              padding: const EdgeInsets.all(AtlasSpace.gutter),
+              padding: const EdgeInsets.fromLTRB(
+                AtlasSpace.gutter,
+                0,
+                AtlasSpace.gutter,
+                AtlasSpace.gutter,
+              ),
               child: ReadableWidth(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      email,
-                      textDirection: TextDirection.ltr,
-                      textAlign: Directionality.of(context) == TextDirection.rtl
-                          ? TextAlign.right
-                          : TextAlign.left,
-                      style: a.type.subhead.copyWith(
-                        color: a.colors.inkSecondary,
-                      ),
-                    ),
                     SectionHeader(title: l.accountLearning),
                     SettingsGroup(
                       children: [
@@ -256,6 +251,123 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
         style: SegmentedButton.styleFrom(
           selectedBackgroundColor: context.atlas.colors.tonal,
           selectedForegroundColor: context.atlas.colors.accent,
+        ),
+      ),
+    );
+  }
+}
+
+/// The learner on the academy's cover: their initials, name and email, and
+/// the academy they are signed in to.
+class _ProfileHeader extends StatelessWidget {
+  const _ProfileHeader({
+    required this.name,
+    required this.email,
+    required this.academyName,
+    this.logo,
+  });
+
+  final String name, email, academyName;
+  final ImageProvider? logo;
+
+  /// Two Latin initials ("ZE"); one Arabic letter, because two Arabic
+  /// letters side by side read as a word.
+  static String initials(String name) {
+    final words = name.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+    if (words.isEmpty) return '';
+    if (RegExp(r'[\u0600-\u06FF]').hasMatch(words.first)) {
+      return words.first.characters.first;
+    }
+    return words.take(2).map((w) => w.characters.first).join().toUpperCase();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final a = context.atlas;
+    final c = a.colors;
+    final top = MediaQuery.paddingOf(context).top;
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: c.onCover.computeLuminance() > 0.5
+          ? SystemUiOverlayStyle.light
+          : SystemUiOverlayStyle.dark,
+      child: Container(
+        color: c.cover,
+        padding: EdgeInsetsDirectional.fromSTEB(
+          AtlasSpace.gutter,
+          top + AtlasSpace.s16,
+          AtlasSpace.gutter,
+          AtlasSpace.s24,
+        ),
+        child: ReadableWidth(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  AcademyLogo(academyName: academyName, image: logo, size: 24),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      academyName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: a.type.footnote.copyWith(
+                        color: c.onCover.withValues(alpha: 0.85),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AtlasSpace.s20),
+              Entrance(
+                child: Row(
+                  children: [
+                    ExcludeSemantics(
+                      child: Container(
+                        width: 64,
+                        height: 64,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: c.onCover,
+                        ),
+                        child: Text(
+                          initials(name),
+                          style: a.type.title2.copyWith(color: c.cover),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Semantics(
+                            header: true,
+                            child: Text(
+                              name,
+                              textDirection: contentDirection(context, name),
+                              style: a.type.title1.copyWith(color: c.onCover),
+                            ),
+                          ),
+                          if (email.isNotEmpty)
+                            Text(
+                              email,
+                              textDirection: TextDirection.ltr,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: a.type.subhead.copyWith(
+                                color: c.onCover.withValues(alpha: 0.85),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

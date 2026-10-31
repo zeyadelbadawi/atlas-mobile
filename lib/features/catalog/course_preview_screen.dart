@@ -207,10 +207,7 @@ class _Preview extends ConsumerWidget {
           const SizedBox(height: 4),
           Text(
             course.instructors.join(context.sep),
-            textDirection: contentDirection(
-              context,
-              course.instructors.first,
-            ),
+            textDirection: contentDirection(context, course.instructors.first),
             style: a.type.subhead.copyWith(color: c.inkSecondary),
           ),
         ],

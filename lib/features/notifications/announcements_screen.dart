@@ -90,11 +90,15 @@ class _AnnouncementsScreenState extends ConsumerState<AnnouncementsScreen> {
                         )
                       : Column(
                           children: [
-                            for (final x in items)
-                              _AnnouncementRow(
-                                item: x,
-                                selected: x.id == selected,
-                                onTap: () => _select(x.id),
+                            for (final (i, x) in items.indexed)
+                              Entrance(
+                                key: ValueKey(x.id),
+                                order: i,
+                                child: _AnnouncementRow(
+                                  item: x,
+                                  selected: x.id == selected,
+                                  onTap: () => _select(x.id),
+                                ),
                               ),
                           ],
                         ),

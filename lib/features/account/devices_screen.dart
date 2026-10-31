@@ -68,6 +68,7 @@ class DevicesScreen extends ConsumerWidget {
     final devices = ref.watch(devicesProvider);
     return FormScreen(
       title: l.devicesTitle,
+      icon: LucideIcons.smartphone,
       children: [
         AsyncBody<LearnerDevices>(
           value: devices,
@@ -119,7 +120,7 @@ class _DeviceRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          Icon(icon, size: 22, color: a.colors.inkSecondary),
+          IconTile(icon: icon),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
