@@ -1,11 +1,15 @@
 import 'package:atlas_mobile/core/learning/catalog_repository.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
+import 'package:atlas_mobile/app/providers.dart';
+import 'package:atlas_mobile/features/player/playback_speed.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../design/golden_harness.dart';
 import 'fake_catalog.dart';
 import 'fake_learning.dart';
+import 'fake_video.dart';
 import 'screen_harness.dart';
 
 /// Batch 1 of the features the web and backend already had.
@@ -130,6 +134,32 @@ void main() {
     });
   });
 
+  testWidgets('the chosen speed is shown and kept for the next lesson', (
+    t,
+  ) async {
+    VideoPlayerPlatform.instance = FakeVideo();
+    final container = await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}/lesson/l2',
+      learning: _VideoLesson(),
+    );
+    await t.pump(const Duration(milliseconds: 300));
+    expect(find.text('السرعة ١×'), findsOneWidget);
+    await t.tap(find.text('السرعة ١×'));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await t.tap(find.text('١٫٥×'));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    expect(find.text('السرعة ١٫٥×'), findsOneWidget);
+    expect(container.read(playbackSpeedProvider), 1.5);
+    expect(
+      container.read(sharedPreferencesProvider).getDouble('player.speed'),
+      1.5,
+    );
+  });
+
   testWidgets('a lesson marked done by mistake can be taken back', (t) async {
     final learning = _Undo();
     await pumpScreen(
@@ -191,5 +221,21 @@ class _Course extends FakeLearningRepository {
           },
         ],
         'certificate': {'enabled': false},
+      });
+}
+
+/// A lesson whose video is uploaded to Atlas.
+class _VideoLesson extends FakeLearningRepository {
+  @override
+  Future<LessonGrant> grant(String courseId, String lessonId) async =>
+      LessonGrant.fromJson({
+        'lessonId': lessonId,
+        'courseId': courseId,
+        'title': 'درس فيديو',
+        'kind': 'video',
+        'completionRule': 'manual',
+        'video': {'format': 'mp4', 'url': 'https://videos.example.test/v.mp4'},
+        'watermark': {'enabled': true, 'code': '6SG7A-QKN29'},
+        'playbackLease': null,
       });
 }

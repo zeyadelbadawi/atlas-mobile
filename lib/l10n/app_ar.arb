@@ -579,5 +579,8 @@
   "reviewsSeeAll": "عرض كل التقييمات",
   "reviewsLearner": "طالب",
   "reviewsStars": "{rating} من ٥ نجوم",
-  "reviewsStarsRow": "{stars} نجوم: {count}"
+  "reviewsStarsRow": "{stars} نجوم: {count}",
+  "playerSpeed": "السرعة",
+  "playerSpeedTitle": "سرعة التشغيل",
+  "playerSpeedNormal": "عادية"
 }

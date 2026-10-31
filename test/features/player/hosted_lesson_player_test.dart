@@ -4,85 +4,10 @@ import 'package:atlas_mobile/core/platform/screen_protection.dart';
 import 'package:atlas_mobile/features/player/hosted_lesson_player.dart';
 import 'package:atlas_mobile/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 
-/// A video platform that "plays" a 60-second clip, so the player's own
-/// logic (resume, play / pause, the end of the video) can be tested
-/// without a device.
-class _FakeVideo extends VideoPlayerPlatform {
-  // Single-subscription: it holds the first event until the player listens.
-  final events = StreamController<VideoEvent>();
-  final calls = <String>[];
-  DataSource? source;
-  Duration position = Duration.zero;
-  bool failInit = false;
-
-  @override
-  Future<void> init() async {}
-
-  @override
-  Future<int?> createWithOptions(VideoCreationOptions options) async {
-    source = options.dataSource;
-    scheduleMicrotask(() {
-      if (failInit) {
-        events.addError(
-          PlatformException(code: 'boom', message: 'cannot open'),
-        );
-      } else {
-        events.add(
-          VideoEvent(
-            eventType: VideoEventType.initialized,
-            duration: const Duration(seconds: 60),
-            size: const Size(1280, 720),
-          ),
-        );
-      }
-    });
-    return 1;
-  }
-
-  @override
-  Stream<VideoEvent> videoEventsFor(int playerId) => events.stream;
-
-  @override
-  Future<void> play(int playerId) async => calls.add('play');
-
-  @override
-  Future<void> pause(int playerId) async => calls.add('pause');
-
-  @override
-  Future<void> seekTo(int playerId, Duration to) async {
-    calls.add('seek ${to.inSeconds}');
-    position = to;
-  }
-
-  @override
-  Future<Duration> getPosition(int playerId) async => position;
-
-  @override
-  Future<void> setLooping(int playerId, bool looping) async {}
-
-  @override
-  Future<void> setVolume(int playerId, double volume) async {}
-
-  @override
-  Future<void> setPlaybackSpeed(int playerId, double speed) async {}
-
-  @override
-  Future<void> setMixWithOthers(bool mixWithOthers) async {}
-
-  @override
-  Future<void> setAllowBackgroundPlayback(bool allow) async {}
-
-  @override
-  Future<void> dispose(int playerId) async {}
-
-  @override
-  Widget buildViewWithOptions(VideoViewOptions options) =>
-      const ColoredBox(color: Colors.black);
-}
+import '../../app/fake_video.dart';
 
 class _NoProtection extends ScreenProtection {
   @override
@@ -109,23 +34,39 @@ Future<void> _settle(WidgetTester t) async {
 }
 
 void main() {
-  late _FakeVideo video;
+  late FakeVideo video;
   setUp(() {
-    video = _FakeVideo();
+    video = FakeVideo();
     VideoPlayerPlatform.instance = video;
   });
 
-  HostedLessonPlayer player({VoidCallback? onEnded, int start = 0}) =>
-      HostedLessonPlayer(
-        url: 'https://videos.example.test/v.m3u8',
-        hls: true,
-        academyOrigin: 'https://ziadd.atlass.dpdns.org',
-        watermarkCode: '6SG7A-QKN29',
-        watermarkSecondary: 'g•••@example.test',
-        startSeconds: start,
-        protection: _NoProtection(),
-        onEnded: onEnded,
-      );
+  HostedLessonPlayer player({
+    VoidCallback? onEnded,
+    int start = 0,
+    double speed = 1,
+  }) => HostedLessonPlayer(
+    url: 'https://videos.example.test/v.m3u8',
+    hls: true,
+    academyOrigin: 'https://ziadd.atlass.dpdns.org',
+    watermarkCode: '6SG7A-QKN29',
+    watermarkSecondary: 'g•••@example.test',
+    startSeconds: start,
+    protection: _NoProtection(),
+    onEnded: onEnded,
+    speed: speed,
+  );
+
+  testWidgets('plays at the chosen speed, and follows a change', (t) async {
+    await t.pumpWidget(_host(player(speed: 1.5)));
+    await _settle(t);
+    // video_player hands the speed to the platform once it plays.
+    await t.tap(find.byTooltip('تشغيل'));
+    await _settle(t);
+    expect(video.calls, contains('speed 1.5'));
+    await t.pumpWidget(_host(player(speed: 2)));
+    await _settle(t);
+    expect(video.calls, contains('speed 2.0'));
+  });
 
   testWidgets('plays from the academy origin, resumes, shows the watermark', (
     t,

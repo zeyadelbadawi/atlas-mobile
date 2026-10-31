@@ -11,12 +11,15 @@ import 'package:atlas_mobile/core/academy/academy.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/design/design.dart';
 import 'package:atlas_mobile/features/catalog/reviews.dart';
+import 'package:atlas_mobile/features/player/hosted_lesson_player.dart';
 import 'package:atlas_mobile/features/results/results_screen.dart';
+import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../app/fake_catalog.dart';
 import '../app/fake_learning.dart';
+import '../app/fake_video.dart';
 import '../app/screen_harness.dart';
 import '../design/golden_harness.dart';
 
@@ -182,6 +185,7 @@ void main() {
 
   completionShots();
   ratingShots();
+  speedShots();
 
   shot(
     'lesson_undo',
@@ -365,4 +369,64 @@ void ratingShots() {
       return k.evaluate().isNotEmpty ? k : find.text('ملخص الوحدة');
     },
   );
+}
+
+/// Batch 1 (B3): the playback speed under a lesson video.
+void speedShots() {
+  Finder speedOrVideo() {
+    final k = find.byKey(const ValueKey('speed'));
+    return k.evaluate().isNotEmpty ? k : find.byType(HostedLessonPlayer);
+  }
+
+  Future<void> open(WidgetTester t, {double? speed}) async {
+    VideoPlayerPlatform.instance = FakeVideo();
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}/lesson/l2',
+      learning: _VideoLesson(),
+      prefs: {'player.speed': ?speed},
+    );
+    await t.pump(const Duration(milliseconds: 300));
+  }
+
+  shot('lesson_speed', (t) async {
+    await open(t);
+  }, focus: speedOrVideo);
+
+  shot(
+    'lesson_speed_sheet',
+    (t) async {
+      await open(t, speed: 1.5);
+      final k = find.byKey(const ValueKey('speed'));
+      if (k.evaluate().isNotEmpty) {
+        await t.tap(k);
+        await t.pump(const Duration(milliseconds: 600));
+      }
+    },
+    focus: () {
+      final sheet = find.byType(BottomSheet);
+      return sheet.evaluate().isNotEmpty
+          ? sheet
+          : find.byType(HostedLessonPlayer);
+    },
+  );
+}
+
+/// A lesson whose video is uploaded to Atlas.
+class _VideoLesson extends FakeLearningRepository {
+  @override
+  Future<LessonGrant> grant(String courseId, String lessonId) async =>
+      LessonGrant.fromJson({
+        'lessonId': lessonId,
+        'courseId': courseId,
+        'title': 'النهايات من جهة واحدة',
+        'kind': 'video',
+        'completionRule': 'manual',
+        'video': {'format': 'mp4', 'url': 'https://videos.example.test/v.mp4'},
+        'resources': <Object>[],
+        'watermark': {'enabled': true, 'code': '6SG7A-QKN29'},
+        'playbackLease': null,
+        'resumePositionSeconds': 0,
+      });
 }

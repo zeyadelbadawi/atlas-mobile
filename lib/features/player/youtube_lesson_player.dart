@@ -26,6 +26,7 @@ class YouTubeLessonPlayer extends StatefulWidget {
     this.startSeconds = 0,
     this.protection,
     this.onEnded,
+    this.speed = 1,
     this.recordingMessage = 'Stop screen recording to keep watching.',
     this.failedMessage = 'This video could not be played.',
   });
@@ -46,6 +47,9 @@ class YouTubeLessonPlayer extends StatefulWidget {
   final int startSeconds;
   final ScreenProtection? protection;
   final VoidCallback? onEnded;
+
+  /// Playback speed (1 = normal).
+  final double speed;
 
   @override
   State<YouTubeLessonPlayer> createState() => _YouTubeLessonPlayerState();
@@ -121,6 +125,7 @@ class _YouTubeLessonPlayerState extends State<YouTubeLessonPlayer>
     switch (m['t']) {
       case 'ready':
         setState(() => _ready = true);
+        if (widget.speed != 1) _setSpeed(widget.speed);
       case 'time':
         final v = m['v'];
         if (v is num) widget.session?.positionSeconds = v;
@@ -138,6 +143,15 @@ class _YouTubeLessonPlayerState extends State<YouTubeLessonPlayer>
       case 'error':
         setState(() => _errorKey = 'learning.player.youtubeError');
     }
+  }
+
+  void _setSpeed(double speed) =>
+      unawaited(_web.runJavaScript('atlasRate($speed)').catchError((_) {}));
+
+  @override
+  void didUpdateWidget(YouTubeLessonPlayer old) {
+    super.didUpdateWidget(old);
+    if (old.speed != widget.speed && _ready) _setSpeed(widget.speed);
   }
 
   void _pause() {

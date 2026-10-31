@@ -20,6 +20,7 @@ import '../courses/course_screen.dart';
 import '../learning/course_widgets.dart';
 import '../learning/learning_ui.dart';
 import '../player/hosted_lesson_player.dart';
+import '../player/playback_speed.dart';
 import '../player/playback_session.dart';
 import '../player/youtube_lesson_player.dart';
 
@@ -199,6 +200,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     final g = _grant;
     final video = g?.youtubeId != null;
     final hosted = g?.youtubeId == null && g?.hostedVideoUrl != null;
+    final speed = ref.watch(playbackSpeedProvider);
     final Widget body = _loading
         ? const Center(
             child: SizedBox.square(
@@ -227,6 +229,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                     recordingMessage: context.l10n.playerRecording,
                     failedMessage: context.l10n.playerFailed,
                     onEnded: () => setState(() => _eligible = true),
+                    speed: speed,
                   ),
                 ),
               if (hosted)
@@ -247,6 +250,22 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                     recordingMessage: context.l10n.playerRecording,
                     failedMessage: context.l10n.playerFailed,
                     onEnded: () => setState(() => _eligible = true),
+                    speed: speed,
+                  ),
+                ),
+              if (video || hosted)
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    AtlasSpace.gutter,
+                    AtlasSpace.s4,
+                    AtlasSpace.gutter,
+                    0,
+                  ),
+                  child: ReadableWidth(
+                    child: Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: SpeedButton(key: ValueKey('speed')),
+                    ),
                   ),
                 ),
               Padding(

@@ -28,6 +28,7 @@ class HostedLessonPlayer extends StatefulWidget {
     this.protection,
     this.onEnded,
     this.controller,
+    this.speed = 1,
     this.recordingMessage = 'Stop screen recording to keep watching.',
     this.failedMessage = 'This video could not be played.',
   });
@@ -48,6 +49,9 @@ class HostedLessonPlayer extends StatefulWidget {
 
   /// Tests pass their own controller.
   final VideoPlayerController? controller;
+
+  /// Playback speed (1 = normal).
+  final double speed;
   final String recordingMessage;
   final String failedMessage;
 
@@ -98,9 +102,18 @@ class _HostedLessonPlayerState extends State<HostedLessonPlayer>
       if (widget.startSeconds > 0) {
         await _video.seekTo(Duration(seconds: widget.startSeconds));
       }
+      if (widget.speed != 1) await _video.setPlaybackSpeed(widget.speed);
       if (mounted) setState(() => _ready = true);
     } on Object {
       if (mounted) setState(() => _failed = true);
+    }
+  }
+
+  @override
+  void didUpdateWidget(HostedLessonPlayer old) {
+    super.didUpdateWidget(old);
+    if (old.speed != widget.speed && _ready) {
+      unawaited(_video.setPlaybackSpeed(widget.speed).catchError((_) {}));
     }
   }
 

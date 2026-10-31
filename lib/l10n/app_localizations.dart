@@ -3577,6 +3577,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{stars} stars: {count}'**
   String reviewsStarsRow(String stars, String count);
+
+  /// No description provided for @playerSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get playerSpeed;
+
+  /// No description provided for @playerSpeedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Playback speed'**
+  String get playerSpeedTitle;
+
+  /// No description provided for @playerSpeedNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get playerSpeedNormal;
 }
 
 class _AppLocalizationsDelegate

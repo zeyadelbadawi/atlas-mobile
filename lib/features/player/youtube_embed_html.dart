@@ -59,6 +59,7 @@ String youtubeEmbedHtml({
   }
   function atlasPause(){ if (player && player.pauseVideo) player.pauseVideo(); }
   function atlasPlay(){ if (player && player.playVideo) player.playVideo(); }
+  function atlasRate(r){ if (player && player.setPlaybackRate) player.setPlaybackRate(r); }
 </script>
 <script src="https://www.youtube.com/iframe_api"></script>
 </body>

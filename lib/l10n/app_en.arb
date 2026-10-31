@@ -1228,5 +1228,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "playerSpeed": "Speed",
+  "playerSpeedTitle": "Playback speed",
+  "playerSpeedNormal": "Normal"
 }

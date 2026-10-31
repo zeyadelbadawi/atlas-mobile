@@ -2045,4 +2045,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String reviewsStarsRow(String stars, String count) {
     return '$stars stars: $count';
   }
+
+  @override
+  String get playerSpeed => 'Speed';
+
+  @override
+  String get playerSpeedTitle => 'Playback speed';
+
+  @override
+  String get playerSpeedNormal => 'Normal';
 }
