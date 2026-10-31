@@ -56,6 +56,13 @@ class ContinuePanel extends StatelessWidget {
               color: c.raised,
               borderRadius: BorderRadius.circular(AtlasRadius.xl),
               border: Border.all(color: c.rule),
+              boxShadow: [
+                BoxShadow(
+                  color: c.shadow,
+                  blurRadius: 28,
+                  offset: const Offset(0, 10),
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// The type ramp. Display roles (numbers, titles) use Readex Pro, which the
-/// web already ships and which covers Arabic and Latin. Body and controls use
-/// the platform face (SF / SF Arabic on iOS, Roboto / Noto on Android) so
-/// Dynamic Type and system rendering stay native.
+/// The type ramp, the Atlas brand's two faces (both cover Arabic and Latin,
+/// both shipped by the web): Readex Pro for numbers and titles, Rubik for
+/// body and controls. Sizes follow the user's text size (Dynamic Type /
+/// font scale) like system text.
 ///
 /// Arabic sets taller line heights than English; sizes are identical.
 @immutable
@@ -81,6 +81,8 @@ class AtlasType extends ThemeExtension<AtlasType> {
   }
 
   static const String displayFamily = 'ReadexPro';
+  static const String bodyFamily = 'Rubik';
+  static const List<String> bodyFallback = ['RubikArabic', 'RubikLatinExt'];
 
   final TextStyle numeral;
   final TextStyle largeTitle;

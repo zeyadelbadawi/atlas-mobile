@@ -98,10 +98,10 @@ class AcademyPalette {
     return (c, fg);
   }
 
-  /// Atlas's own palette: the academy picker, first-run and About screens,
-  /// where no academy has been chosen yet.
+  /// Atlas's own cover (Navy 600): the academy picker, first-run and
+  /// About screens, where no academy has been chosen yet.
   static final AcademyPalette atlas = AcademyPalette.derive(
-    const HSLColor.fromAHSL(1, 226, 0.32, 0.18),
+    HSLColor.fromColor(const Color(0xFF1B398D)),
   );
 
   final Color cover;
@@ -123,18 +123,18 @@ class AcademyPalette {
 
   /// Card and field surfaces (shared with [AtlasColors]).
   static const Color raisedLight = Color(0xFFFFFFFF);
-  static const Color raisedDark = Color(0xFF1E1E20);
-  static const Color sunkenLight = Color(0xFFF1F0EC);
-  static const Color sunkenDark = Color(0xFF2A2A2C);
+  static const Color raisedDark = Color(0xFF161B27);
+  static const Color sunkenLight = Color(0xFFF1F3F7);
+  static const Color sunkenDark = Color(0xFF1E2433);
 
   /// Secondary text (shared with [AtlasColors]).
-  static const Color inkSecondaryLight = Color(0xFF5B5B60);
-  static const Color inkSecondaryDark = Color(0xFFADADB2);
+  static const Color inkSecondaryLight = Color(0xFF5C657A);
+  static const Color inkSecondaryDark = Color(0xFF9CA3B4);
 
   static const Color white = Color(0xFFFFFFFF);
-  static const Color ink = Color(0xFF121213);
-  static const Color _paper = Color(0xFFFCFCFB);
-  static const Color _night = Color(0xFF131314);
+  static const Color ink = Color(0xFF141A29);
+  static const Color _paper = Color(0xFFFCFCFD);
+  static const Color _night = Color(0xFF0E121B);
 
   /// Parses `"222 72% 46%"` (the web's CSS-variable format), with or without
   /// commas, `hsl(...)` or percent signs.

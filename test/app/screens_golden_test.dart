@@ -13,7 +13,7 @@ import 'fake_learning.dart';
 import 'screen_harness.dart';
 
 Future<void> _golden(WidgetTester tester, String name) =>
-    expectLater(find.byType(AtlasApp), matchesGoldenFile('goldens/$name.png'));
+    expectGolden(tester, find.byType(AtlasApp), 'goldens/$name.png');
 
 void main() {
   setUpAll(loadGoldenFonts);
@@ -342,6 +342,28 @@ void main() {
       await _golden(t, name);
     }, variant: ios);
   }
+
+  testWidgets('picker_en_dark', (t) async {
+    await pumpScreen(
+      t,
+      session: AsNoAcademy.new,
+      language: 'en',
+      theme: ThemeMode.dark,
+    );
+    await _golden(t, 'picker_en_dark');
+  }, variant: ios);
+
+  testWidgets('picker_ar_ipad', (t) async {
+    await pumpScreen(t, session: AsNoAcademy.new, size: const Size(1032, 1376));
+    await _golden(t, 'picker_ar_ipad');
+  }, variant: ios);
+
+  testWidgets('home_ar_scrolled', (t) async {
+    await pumpScreen(t, session: AsSignedIn.new, path: '/home');
+    await t.drag(find.byType(ListView).first, const Offset(0, -320));
+    await t.pump(const Duration(milliseconds: 400));
+    await _golden(t, 'home_ar_scrolled');
+  }, variant: ios);
 
   testWidgets('home_ar_ipad', (t) async {
     await pumpScreen(

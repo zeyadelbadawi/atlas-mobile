@@ -7,10 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Body face used in goldens instead of the platform font (which the test
-/// engine does not have). The app itself uses the platform face.
-const testBodyFamily = 'NotoSansArabic';
-const testBodyFallback = ['Inter'];
+/// Body face in goldens: the app's own (Rubik and its subsets).
+const testBodyFamily = 'Rubik';
+const testBodyFallback = ['RubikArabic', 'RubikLatinExt'];
 
 /// The moment every golden is drawn at: sample data is built relative to
 /// it and the UI clock is frozen on it, so screenshots never drift.
@@ -48,6 +47,9 @@ Future<void> loadGoldenFonts() async {
         (d) => d.path.contains('lucide_icons_flutter-'),
       );
   await load('ReadexPro', 'assets/fonts/ReadexPro-Variable.ttf');
+  await load('Rubik', 'assets/fonts/Rubik-Latin-Variable.ttf');
+  await load('RubikArabic', 'assets/fonts/Rubik-Arabic-Variable.ttf');
+  await load('RubikLatinExt', 'assets/fonts/Rubik-LatinExt-Variable.ttf');
   await load('NotoSansArabic', 'test/fonts/NotoSansArabic-Variable.ttf');
   await load('Inter', 'test/fonts/Inter-Variable.ttf');
   await load(
@@ -93,4 +95,29 @@ Future<void> setDevice(
     bottom: padding.bottom * 3,
   );
   addTearDown(tester.view.reset);
+}
+
+/// A golden drawn as the device draws it: flutter_test strips shadow blur
+/// (`debugDisableShadows`), which turns soft shadows into hard slabs. This
+/// repaints with real shadows for the capture, then restores the default.
+Future<void> expectGolden(
+  WidgetTester tester,
+  Finder finder,
+  String file,
+) async {
+  debugDisableShadows = false;
+  void dirty(RenderObject o) {
+    o.markNeedsPaint();
+    o.visitChildren(dirty);
+  }
+
+  for (final view in tester.binding.renderViews) {
+    dirty(view);
+  }
+  await tester.pump();
+  try {
+    await expectLater(finder, matchesGoldenFile(file));
+  } finally {
+    debugDisableShadows = true;
+  }
 }

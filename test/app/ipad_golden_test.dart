@@ -43,9 +43,10 @@ void main() {
         );
         // The open item beside a list loads after the list.
         await t.pump(const Duration(milliseconds: 500));
-        await expectLater(
+        await expectGolden(
+          t,
           find.byType(AtlasApp),
-          matchesGoldenFile('goldens/ipad/${screen}_$device.png'),
+          'goldens/ipad/${screen}_$device.png',
         );
       }, variant: ios);
     }
@@ -59,9 +60,10 @@ void main() {
       path: '/home',
       size: const Size(1280, 800),
     );
-    await expectLater(
+    await expectGolden(
+      t,
       find.byType(AtlasApp),
-      matchesGoldenFile('goldens/ipad/home_android_tablet.png'),
+      'goldens/ipad/home_android_tablet.png',
     );
   }, variant: TargetPlatformVariant.only(TargetPlatform.android));
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../atlas_theme.dart';
 
-/// The signature mark: a ribbon in the academy accent that shows where the
+/// The signature mark: a gold ribbon (Atlas Gold) that shows where the
 /// student stopped. Hangs from the top edge of the Continue panel, the
 /// current syllabus row and the player header, at the leading side.
 class Bookmark extends StatelessWidget {
@@ -17,7 +17,7 @@ class Bookmark extends StatelessWidget {
     return ExcludeSemantics(
       child: CustomPaint(
         size: Size(width, height),
-        painter: _RibbonPainter(color ?? context.atlas.colors.accent),
+        painter: _RibbonPainter(color ?? context.atlas.colors.gold),
       ),
     );
   }

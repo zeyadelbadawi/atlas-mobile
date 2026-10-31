@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Atlas Navy 600, the brand primary: app icon and launch screen. -->
+    <color name="atlas_navy">#1B398D</color>
+</resources>

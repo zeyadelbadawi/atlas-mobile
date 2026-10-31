@@ -31,8 +31,10 @@ lesson they were watching within a few seconds, and nothing on the web changes b
 ## Positioning
 
 One Atlas app serves every academy on the platform. The student picks their academy (link, QR code,
-deep link or a recent academy), and from then on the app wears **that academy's identity in full**:
-its name, logo and colours. Atlas itself shows only on the academy picker and on the About screen.
+deep link or a recent academy). The app is built on **Atlas's own brand** (Royal Navy + Gold, Readex
+Pro + Rubik, the "A + open book" mark), and inside an academy it carries **that academy's name, logo and
+colour** where they mean "this is your academy": the cover band, course covers and progress
+(owner's decision, 31 October 2026: hybrid).
 
 ## Operating Context
 
@@ -66,7 +68,9 @@ its name, logo and colours. Atlas itself shows only on the academy picker and on
 
 ## Brand Commitments
 
-- Inside an academy, the academy's identity leads. The app shell has no Atlas colours of its own there.
+- Hybrid identity: Atlas Navy for actions, links, selection and the app frame; Gold only for the moments
+  that matter (where you stopped, a pass, a certificate); the academy's colour on its cover band,
+  course covers and progress, contrast-corrected. The splash, app icon and picker are Atlas.
 - On the academy picker, the first-run screens and About, Atlas appears under its own name. The legal
   name is "Atlas", the address is 6 October (Egypt), the email is info@atlas.com, and the phone is
   01000510491. Before release we still need to confirm the email domain and get a fuller address.

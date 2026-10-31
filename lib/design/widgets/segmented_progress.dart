@@ -14,7 +14,8 @@ class ProgressSegment {
 }
 
 /// One segment per lesson, its width proportional to the lesson's duration.
-/// Fills from the reading start (right in Arabic). Completed = accent,
+/// Fills from the reading start (right in Arabic) in the academy's colour.
+/// Completed = filled,
 /// current = partly filled, upcoming = hairline.
 class SegmentedProgress extends StatelessWidget {
   const SegmentedProgress({
@@ -76,7 +77,7 @@ class SegmentedProgress extends StatelessWidget {
                             heightFactor: 1,
                             child: child,
                           ),
-                          child: ColoredBox(color: c.accent),
+                          child: ColoredBox(color: c.academy),
                         ),
                       ),
                     ),

@@ -67,9 +67,10 @@ void main() {
       await tester.pumpWidget(entry.value());
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
-      await expectLater(
+      await expectGolden(
+        tester,
         find.byType(MaterialApp),
-        matchesGoldenFile('goldens/${entry.key}.png'),
+        'goldens/${entry.key}.png',
       );
     });
   }

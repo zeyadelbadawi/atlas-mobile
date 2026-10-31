@@ -49,6 +49,14 @@ void main() {
         check('accent on tonal (tonal buttons)', c.accent, c.tonal);
         check('label on button', c.onButton, c.button);
         check('text on cover', c.onCover, c.cover);
+        check('gold text on paper', c.goldText, c.paper);
+        check('gold text on raised', c.goldText, c.raised);
+        check('text on gold', c.onGold, c.gold);
+        check('info on paper', c.info, c.paper);
+        // Progress fill is a graphic: WCAG 1.4.11 asks 3:1 against the track.
+        if (AcademyPalette.contrast(c.academy, c.raised) < 3) {
+          failures.add('academy progress on raised');
+        }
         expect(failures, isEmpty);
       });
     }

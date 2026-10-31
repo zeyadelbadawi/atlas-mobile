@@ -1,48 +1,41 @@
 # Design
 
-Atlas learner app design system. Direction: **the handout (الملزمة)**. Product context is in
-`PRODUCT.md`, and the full direction contract is in `.impeccable/surfaces/lib.md`. The original visuals are
-in Figma (`EcFLLpTQHgyZXZIHKpA0RX`). The code in `lib/design/` is now the source of truth.
+Atlas learner app design system: **Atlas's brand with the academy as the cover**. Product context is
+in `PRODUCT.md`; the redesign plan and stages are in `docs/ATLAS_MOBILE_REDESIGN.md`. The code in
+`lib/design/` is the source of truth; the brand comes from the web (`atlas/src/index.css`,
+`atlas/public/brand/` → `assets/brand/`).
 
 ## World
 
-- **Cover band.** Each academy has a cover band in its own colour, placed full-bleed under the status bar.
-  - Home: logo + academy name, with the greeting as the large title.
-  - Sign-in: a larger logo + the academy host.
-  - It carries one message only.
-- **Pages.** Below the band are clean pages: paper tinted 3.5% toward the academy hue (7% in dark mode),
-  with near-black ink.
-- **Numbers lead.** Lessons, quizzes and assignments show their number set large in Readex Pro with
-  tabular figures.
-- **Structure.** Hairlines and type scale separate groups, not cards. The only raised surfaces are the
-  Continue panel and the inset groups.
-- **Signature: the bookmark ribbon.** It is drawn in the academy accent and hangs from the top edge at the
-  leading side. It marks where the student stopped. When a lesson completes it slides to the next lesson
-  (280 ms, `easeInOut`; crossfade under Reduce Motion).
-- **Duration-weighted progress.** There is one segment per lesson, and each segment's width follows that
-  lesson's real duration.
+- **Atlas frame.** Splash (the mark settles, the lettering rises, a gold rule draws), app icon
+  (white mark on Navy 600), academy picker (a Navy band with the lockup and the mark drawn large and
+  faint at its edge, the form on a raised sheet overlapping it).
+- **The academy's cover.** Inside an academy, its colour is the cover band behind the large title
+  (Home, sign-in, account), the generated course covers and the progress fill. It carries one message.
+- **Pages.** Atlas paper (`#FCFCFD` / `#0E121B`), ink `#141A29` / `#ECEEF3`. Raised surfaces are white
+  cards with a hairline and a soft shadow (`shadow` token, 24–28 blur, 8–10 offset).
+- **Numbers lead.** Lesson, quiz and assignment numbers in Readex Pro with tabular figures.
+- **Signature: the gold ribbon.** It marks where the student stopped and slides to the next lesson.
+- **Duration-weighted progress** in the academy's colour.
 
 ## Colour
 
-All colours come from `AcademyPalette.derive(primaryColor)` in `lib/design/tokens/academy_palette.dart`.
-The input is the academy's web `primaryColor`, an HSL string.
+`AtlasColors.of(palette, brightness)` in `lib/design/tokens/atlas_colors.dart`; brand constants in
+`AtlasBrand` (Navy 50–900, Gold).
 
-| Role | Rule |
-|---|---|
-| cover | The academy colour. Its lightness is nudged only when neither black nor white text reaches 4.5:1 on it. |
-| onCover | Black (`#121213`) or white, whichever has the higher contrast. |
-| accent | The hue, darkened (light mode) or lightened (dark mode) until it reaches 4.5:1 on paper. Used for links, icons, the bookmark and active tabs. |
-| button / onButton | The cover colour and its readable label. |
-| tonal | Paper mixed with 14% of the cover (24% in dark mode). Used for secondary buttons and the selected tab. |
-| neutrals | Fixed: raised, sunken, ink, ink secondary, ink tertiary, rule, rule strong, danger, success, warning (light and dark). |
+| Role | Light / dark | Use |
+|---|---|---|
+| accent, button / onButton | Navy 600 `#1B398D` / `#709DFF` on `#07132F` | actions, links, icons, selection |
+| tonal | `#E8EDFA` / `#1C2A4F` | secondary buttons, selected tab |
+| paper, raised, sunken | `#FCFCFD` `#FFFFFF` `#F1F3F7` / `#0E121B` `#161B27` `#1E2433` | ground, cards, fields |
+| ink, inkSecondary, inkTertiary | `#141A29` `#5C657A` `#606A7E` / `#ECEEF3` `#9CA3B4` `#8E95A7` | text |
+| gold, goldText, onGold | `#E0A424`, `#8A5A00` / `#F0BF4C`, `#1B1303` | ribbon, badges, pass, certificate |
+| cover, onCover | the academy colour, black or white on it | cover band, course covers |
+| academy | the academy hue at ≥3:1 on cards | progress fill |
+| success, warning, danger, info | Atlas status colours, AA on paper | states |
 
-`test/design/academy_palette_test.dart` checks 2,000 random colours against AA.
-
-Never use the raw cover colour as text. Text actions use `accent`; the theme's `TextButton` is set up for
-this.
-
-Atlas's own palette (`AcademyPalette.atlas`, a deep ink blue) is used only on the picker and the
-first-run screens.
+`test/design/contrast_test.dart` checks every text colour on every surface for 8 academy colours in
+both themes; `academy_palette_test.dart` checks 2,000 random academy colours.
 
 ## Type
 
@@ -51,11 +44,11 @@ first-run screens.
 | numeral | Readex Pro 600, tabular | 44 / 52 · 48 |
 | largeTitle | Readex Pro 700 | 34 / 46 · 41 |
 | title1–3 | Readex Pro 600/600/500 | 28, 22, 20 |
-| headline, body, callout, subhead, footnote, caption | Platform face | 17, 17, 16, 15, 13, 12 (Arabic lines are taller) |
-| button | Platform face 600 | 17 |
+| headline, body, callout, subhead, footnote, caption | Rubik | 17, 17, 16, 15, 13, 12 (Arabic lines are taller) |
+| button | Rubik 600 | 17 |
 
-- Readex Pro is bundled (`assets/fonts`, OFL).
-- Body text uses SF / SF Arabic on iOS and Roboto / Noto on Android, so system text scaling stays native.
+- Readex Pro and Rubik are bundled (`assets/fonts`, OFL; Rubik as Latin, Arabic and Latin Extended
+  subsets chained as fallbacks). Both follow the user's text size.
 
 ### Arabic copy rules
 
@@ -66,19 +59,24 @@ first-run screens.
 
 ## Space, shape, motion
 
-- **Spacing:** 2, 4, 8, 12, 16, 20, 24, 32, 40, 48. Gutter 20. Reading width 560 (iPad).
-- **Radius:** sm 6, md 10 (fields), lg 14 (buttons, groups), xl 22 (Continue panel).
-- **Sizes:** touch target 44; button and field height 52.
-- **Motion** (Emil Kowalski):
-  - press: scale 0.97, 120 ms, `Cubic(0.23, 1, 0.32, 1)`;
-  - state changes: 180–240 ms;
-  - no ripple;
-  - Reduce Motion swaps scale for an opacity dip.
+- **Spacing:** 2, 4, 8, 12, 16, 20, 24, 32, 40, 48. Gutter 20. Content width 560 on phones; on
+  tablets pages 960 and forms 600 (`AtlasSize.contentWidth`).
+- **Radius:** sm 6, md 10 (fields), lg 14 (buttons, groups), xl 22 (Continue panel, sheets).
+- **Sizes:** touch target 48; button and field height 52.
+- **Motion** (Emil Kowalski; one authored moment per screen):
+  - launch: `SplashOverlay`, ~0.8 s, never longer than the app takes to be ready;
+  - entrance: `Entrance` fades and lifts blocks 14 pt, 420 ms, 60 ms stagger (capped at 6);
+  - scroll: `ScrollParallax` (cover at half speed, fading to 55%), `CompactTitleBar` (frosted bar with
+    the academy's logo and name once the cover has gone);
+  - press: scale 0.97, 120 ms, `Cubic(0.23, 1, 0.32, 1)`; state changes 180–240 ms; no ripple;
+  - Reduce Motion: no movement anywhere; things appear in place.
 
 ## Components (`lib/design/widgets`)
 
 | Component | Notes |
 |---|---|
+| `AtlasMark`, `AtlasWordmark`, `AtlasLockup` | The brand mark and lettering (`assets/brand`), lettering in the reading language. |
+| `Entrance`, `ScrollParallax`, `CompactTitleBar` | Motion building blocks. |
 | `AtlasButton` | Primary, tonal, plain, destructive. Disabled when `onPressed` is null. Loading keeps the width. |
 | `AtlasTextField` | Label above. Focused or error shows a 2 pt ring; the error message names the fix. `ltrValue` for email, phone and password. |
 | `CodeInput` | 6 cells over one hidden field with OTP autofill. Always left to right. |

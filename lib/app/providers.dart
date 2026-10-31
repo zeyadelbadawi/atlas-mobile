@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/academy/academy.dart';
+import '../design/design.dart';
 import '../core/academy/academy_directory.dart';
 import '../core/academy/academy_store.dart';
 import '../core/api/atlas_api_client.dart';
@@ -27,11 +28,14 @@ final appVersionProvider = Provider<({String version, String build})>(
   (ref) => (version: '0.0.0', build: '0'),
 );
 
-/// Body face for the theme. Null in the app (platform face); goldens set a
-/// bundled face because the test engine has no system fonts.
+/// Body face for the theme: Rubik (bundled, the web's body face), its
+/// Arabic and Latin Extended subsets as fallbacks.
 final bodyFontProvider = Provider<({String? family, List<String>? fallback})>(
-  (ref) => (family: null, fallback: null),
+  (ref) => (family: AtlasType.bodyFamily, fallback: AtlasType.bodyFallback),
 );
+
+/// The animated launch layer (off in screen tests, which start mid-app).
+final splashEnabledProvider = Provider<bool>((ref) => true);
 
 final cookieJarProvider = Provider<CookieJar>(
   (ref) => PersistCookieJar(storage: SecureCookieStorage()),

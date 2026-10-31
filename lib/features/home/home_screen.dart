@@ -14,8 +14,21 @@ import '../learning/course_widgets.dart';
 
 /// Home: the academy's cover, the bookmark on where the learner stopped,
 /// what is due, the academy's latest announcements and the courses.
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final _scroll = ScrollController();
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
 
   Future<void> _refresh(WidgetRef ref) async {
     ref.invalidate(overviewProvider);
@@ -24,7 +37,7 @@ class HomeScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l = context.l10n;
     final session = ref.watch(sessionProvider);
     final academy = session.academy!;
@@ -32,36 +45,59 @@ class HomeScreen extends ConsumerWidget {
     final overview = ref.watch(overviewProvider);
     final courses = ref.watch(enrollmentsProvider);
 
+    final logo = NetworkImage(academy.logoUrl.toString());
     return Scaffold(
-      body: RefreshIndicator.adaptive(
-        onRefresh: () => _refresh(ref),
-        edgeOffset: MediaQuery.paddingOf(context).top,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            CoverBand.home(
-              academyName: academy.name,
-              greeting: name.isEmpty ? academy.name : l.homeGreeting(name),
-              logo: NetworkImage(academy.logoUrl.toString()),
-            ),
-            Transform.translate(
-              offset: const Offset(0, -40),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AtlasSpace.gutter,
-                ),
-                child: ReadableWidth(
-                  child: AsyncBody<LearnerOverview>(
-                    value: overview,
-                    onRetry: () => ref.invalidate(overviewProvider),
-                    data: (o) =>
-                        _Body(overview: o, courses: courses.value ?? const []),
+      body: Stack(
+        children: [
+          RefreshIndicator.adaptive(
+            onRefresh: () => _refresh(ref),
+            edgeOffset: MediaQuery.paddingOf(context).top,
+            child: ListView(
+              controller: _scroll,
+              padding: EdgeInsets.zero,
+              children: [
+                // The cover drifts at half speed and fades as the page
+                // rises over it.
+                ScrollParallax(
+                  controller: _scroll,
+                  child: CoverBand.home(
+                    academyName: academy.name,
+                    greeting: name.isEmpty
+                        ? academy.name
+                        : l.homeGreeting(name),
+                    logo: logo,
                   ),
                 ),
-              ),
+                Transform.translate(
+                  offset: const Offset(0, -40),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AtlasSpace.gutter,
+                    ),
+                    child: ReadableWidth(
+                      child: AsyncBody<LearnerOverview>(
+                        value: overview,
+                        onRetry: () => ref.invalidate(overviewProvider),
+                        data: (o) => _Body(
+                          overview: o,
+                          courses: courses.value ?? const [],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          // Once the cover has scrolled away, a compact bar keeps the
+          // academy in view.
+          CompactTitleBar(
+            controller: _scroll,
+            showAfter: 150,
+            title: academy.name,
+            logo: logo,
+          ),
+        ],
       ),
     );
   }
@@ -158,14 +194,17 @@ class _Body extends ConsumerWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: main,
+                      children: _staggered(main),
                     ),
                   ),
                   const SizedBox(width: AtlasSpace.s32),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [const SizedBox(height: 40), ...side],
+                      children: [
+                        const SizedBox(height: 40),
+                        ..._staggered(side, from: 1),
+                      ],
                     ),
                   ),
                 ],
@@ -176,7 +215,10 @@ class _Body extends ConsumerWidget {
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [...main, ...side, bottom],
+          children: [
+            ..._staggered([...main, ...side]),
+            bottom,
+          ],
         );
       },
     );
@@ -216,3 +258,9 @@ class _EmptyPanel extends StatelessWidget {
     );
   }
 }
+
+/// Each block rises into place a beat after the one before it.
+List<Widget> _staggered(List<Widget> blocks, {int from = 0}) => [
+  for (final (i, w) in blocks.indexed)
+    w is SizedBox ? w : Entrance(order: from + i, child: w),
+];

@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../design/design.dart';
+import '../features/system/splash_overlay.dart';
 import '../features/system/system_screens.dart';
 import '../l10n/app_localizations.dart';
 import 'deep_links.dart';
@@ -88,7 +89,16 @@ class AtlasApp extends ConsumerWidget {
               : mq,
           child: Theme(
             data: theme(dark ? Brightness.dark : Brightness.light, l),
-            child: _SystemGate(child: child ?? const SizedBox()),
+            child: ref.watch(splashEnabledProvider)
+                ? SplashOverlay(
+                    ready: ref.watch(
+                      sessionProvider.select(
+                        (s) => s.status != SessionStatus.restoring,
+                      ),
+                    ),
+                    child: _SystemGate(child: child ?? const SizedBox()),
+                  )
+                : _SystemGate(child: child ?? const SizedBox()),
           ),
         );
       },

@@ -153,6 +153,7 @@ Future<ProviderContainer> pumpScreen(
       notificationCatalogProvider.overrideWithValue(notificationCatalog()),
       pushControllerProvider.overrideWith(PushNotAsked.new),
       deepLinkProvider.overrideWith(NoLinks.new),
+      splashEnabledProvider.overrideWithValue(false),
     ],
   );
   addTearDown(container.dispose);
