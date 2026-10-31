@@ -303,6 +303,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get legalCookie => 'Cookie Policy';
 
   @override
+  String get legalContents => 'Contents';
+
+  @override
+  String legalLastUpdated(String date) {
+    return 'Last updated: $date';
+  }
+
+  @override
+  String legalEffective(String date) {
+    return 'Effective: $date';
+  }
+
+  @override
+  String get legalBackToTop => 'Back to top';
+
+  @override
   String get legalLoadFailed =>
       'This page didn\'t load. Check your connection and try again.';
 

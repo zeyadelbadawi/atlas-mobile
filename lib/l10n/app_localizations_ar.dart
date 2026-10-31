@@ -303,6 +303,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get legalCookie => 'سياسة ملفات تعريف الارتباط';
 
   @override
+  String get legalContents => 'المحتويات';
+
+  @override
+  String legalLastUpdated(String date) {
+    return 'آخر تحديث: $date';
+  }
+
+  @override
+  String legalEffective(String date) {
+    return 'سارية من: $date';
+  }
+
+  @override
+  String get legalBackToTop => 'العودة للأعلى';
+
+  @override
   String get legalLoadFailed =>
       'لم يتم تحميل الصفحة. تحقّق من اتصالك وحاول مرة أخرى.';
 

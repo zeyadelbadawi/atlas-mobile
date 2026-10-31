@@ -125,6 +125,38 @@ void main() {
     await _golden(t, 'account_ar');
   }, variant: ios);
 
+  testWidgets('legal_privacy_ar', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/legal/privacy',
+      size: const Size(393, 1600),
+    );
+    await t.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    await _golden(t, 'legal_privacy_ar');
+  }, variant: ios);
+
+  testWidgets('legal_terms_en_dark', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      language: 'en',
+      theme: ThemeMode.dark,
+      path: '/legal/terms',
+      size: const Size(393, 1600),
+    );
+    await t.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 800));
+    await _golden(t, 'legal_terms_en_dark');
+  }, variant: ios);
+
   testWidgets('about_ar', (t) async {
     await pumpScreen(
       t,

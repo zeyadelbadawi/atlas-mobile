@@ -650,6 +650,30 @@ abstract class AppLocalizations {
   /// **'Cookie Policy'**
   String get legalCookie;
 
+  /// No description provided for @legalContents.
+  ///
+  /// In en, this message translates to:
+  /// **'Contents'**
+  String get legalContents;
+
+  /// No description provided for @legalLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {date}'**
+  String legalLastUpdated(String date);
+
+  /// No description provided for @legalEffective.
+  ///
+  /// In en, this message translates to:
+  /// **'Effective: {date}'**
+  String legalEffective(String date);
+
+  /// No description provided for @legalBackToTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to top'**
+  String get legalBackToTop;
+
   /// No description provided for @legalLoadFailed.
   ///
   /// In en, this message translates to:
