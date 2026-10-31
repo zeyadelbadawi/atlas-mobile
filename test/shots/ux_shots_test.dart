@@ -8,10 +8,12 @@ import 'dart:ui' as ui;
 import 'package:atlas_mobile/app/atlas_app.dart';
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/core/academy/academy.dart';
+import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/design/design.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../app/fake_learning.dart';
 import '../app/screen_harness.dart';
 import '../design/golden_harness.dart';
 
@@ -173,4 +175,44 @@ void main() {
       matching: find.text('Atlas Demo Academy'),
     ),
   );
+
+  shot('courses_broken_cover', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/courses',
+      learning: _BrokenCovers(),
+    );
+  }, focus: () => find.byType(CourseCover).first);
+}
+
+/// The first course has a cover image whose link does not load.
+class _BrokenCovers extends FakeLearningRepository {
+  @override
+  Future<List<EnrolledCourse>> enrollments() async {
+    final list = await super.enrollments();
+    return [
+      for (final (i, c) in list.indexed)
+        i == 0
+            ? EnrolledCourse.fromJson({
+                'id': 'e-${c.courseId}',
+                'courseId': c.courseId,
+                'course': {
+                  'title': c.title,
+                  'thumbnail': 'https://cdn.example.test/missing.jpg',
+                  'instructors': [
+                    for (final n in c.instructors) {'name': n},
+                  ],
+                },
+                'progress': {
+                  'completedItems': c.completed,
+                  'totalItems': c.total,
+                  'percentage': c.total == 0 ? 0 : c.completed * 100 / c.total,
+                  'learningState': 'in_progress',
+                },
+                'isActive': true,
+              })
+            : c,
+    ];
+  }
 }

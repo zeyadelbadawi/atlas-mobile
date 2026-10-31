@@ -170,7 +170,12 @@ class _AcademyLogoState extends State<AcademyLogo> {
           ),
         ),
         child: Image(
-          image: image,
+          // Decoded at the size it is drawn (logos are small here).
+          image: ResizeImage.resizeIfNeeded(
+            (size * MediaQuery.devicePixelRatioOf(context)).round(),
+            null,
+            image,
+          ),
           fit: BoxFit.contain,
           frameBuilder: (context, child, frame, sync) =>
               Padding(padding: EdgeInsets.all(size * 0.12), child: child),

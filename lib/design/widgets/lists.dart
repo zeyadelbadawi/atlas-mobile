@@ -201,6 +201,31 @@ class CourseCover extends StatelessWidget {
     final a = context.atlas;
     final c = a.colors;
     final h = width * 84 / 64;
+    Widget generated() => Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (kicker != null)
+            Text(
+              kicker!,
+              maxLines: 1,
+              overflow: TextOverflow.clip,
+              style: a.type.caption.copyWith(
+                color: (inverted ? c.cover : c.onCover).withValues(alpha: 0.75),
+              ),
+            ),
+          Text(
+            mark ?? '',
+            maxLines: 1,
+            style: a.type.title2.copyWith(
+              color: inverted ? c.cover : c.onCover,
+            ),
+          ),
+        ],
+      ),
+    );
     // A fixed-size graphic, hidden from screen readers: its text stays at
     // the designed size whatever the system text size.
     return MediaQuery.withNoTextScaling(
@@ -226,35 +251,22 @@ class CourseCover extends StatelessWidget {
                   ]
                 : null,
           ),
+          // Decoded at the size it is drawn, not the upload's full size;
+          // a cover that fails to load falls back to the generated one.
           child: image != null
-              ? Image(image: image!, fit: BoxFit.cover)
-              : Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (kicker != null)
-                        Text(
-                          kicker!,
-                          maxLines: 1,
-                          overflow: TextOverflow.clip,
-                          style: a.type.caption.copyWith(
-                            color: (inverted ? c.cover : c.onCover).withValues(
-                              alpha: 0.75,
-                            ),
-                          ),
-                        ),
-                      Text(
-                        mark ?? '',
-                        maxLines: 1,
-                        style: a.type.title2.copyWith(
-                          color: inverted ? c.cover : c.onCover,
-                        ),
-                      ),
-                    ],
+              ? Image(
+                  image: ResizeImage.resizeIfNeeded(
+                    (width * MediaQuery.devicePixelRatioOf(context)).round(),
+                    null,
+                    image!,
                   ),
-                ),
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, _, _) => ColoredBox(
+                    color: inverted ? c.onCover : c.cover,
+                    child: generated(),
+                  ),
+                )
+              : generated(),
         ),
       ),
     );
