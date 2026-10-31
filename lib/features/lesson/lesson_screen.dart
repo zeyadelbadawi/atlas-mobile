@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../app/push.dart';
 import '../../app/learning_providers.dart';
+import '../../app/lesson_cache.dart';
 import '../../app/lesson_outbox.dart';
 import '../../app/notes.dart';
 import '../../app/streak.dart';
@@ -64,6 +65,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
 
   Timer? _reading;
 
+  /// Showing the copy kept on the phone (no connection).
+  bool _offlineCopy = false;
+
   void _studied() =>
       unawaited(ref.read(studyDaysProvider.notifier).markToday());
 
@@ -97,11 +101,27 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             };
       setState(() {
         _grant = grant;
+        _offlineCopy = false;
         _eligible = grant.completionRule != 'watched_ratio';
         _loading = false;
       });
+      // Kept for reading without a connection (text lessons only).
+      unawaited(ref.read(lessonCacheProvider).save(grant));
     } on AtlasApiException catch (e) {
       if (!mounted) return;
+      // No connection: the copy kept on the phone, when there is one.
+      final kept = e.kind == 'network' || e.kind == 'timeout'
+          ? ref.read(lessonCacheProvider).load(widget.lessonId)
+          : null;
+      if (kept != null) {
+        setState(() {
+          _grant = kept;
+          _offlineCopy = true;
+          _eligible = kept.completionRule != 'watched_ratio';
+          _loading = false;
+        });
+        return;
+      }
       setState(() {
         _error = e;
         _loading = false;
@@ -418,6 +438,14 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             ),
           ),
           const SizedBox(height: AtlasSpace.s8),
+        ],
+        if (_offlineCopy) ...[
+          const SizedBox(height: AtlasSpace.s12),
+          AtlasBanner(
+            key: const ValueKey('lesson-offline-copy'),
+            kind: AtlasBannerKind.info,
+            message: l.lessonOfflineCopy,
+          ),
         ],
         // Header: the bookmark marks where the learner is.
         Entrance(

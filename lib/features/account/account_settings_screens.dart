@@ -10,6 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../app/providers.dart';
 import '../../app/push.dart';
 import '../../app/app_lock.dart';
+import '../../app/lesson_cache.dart';
 import '../../app/notes.dart';
 import '../../app/reminders.dart';
 import '../../core/platform/app_settings.dart';
@@ -828,7 +829,8 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
       for (final k in prefs.getKeys().where(
         (k) =>
             k.startsWith(lastEmailKey('')) ||
-            k.startsWith(NotesController.prefix),
+            k.startsWith(NotesController.prefix) ||
+            k.startsWith(LessonCache.prefix),
       )) {
         await prefs.remove(k);
       }

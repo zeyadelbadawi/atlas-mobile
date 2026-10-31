@@ -4045,6 +4045,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{day}: not studied'**
   String streakDayNot(String day);
+
+  /// No description provided for @lessonOfflineCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection. This is the copy saved on your phone when you last opened the lesson.'**
+  String get lessonOfflineCopy;
 }
 
 class _AppLocalizationsDelegate

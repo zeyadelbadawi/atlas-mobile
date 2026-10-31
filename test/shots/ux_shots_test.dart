@@ -201,6 +201,7 @@ void main() {
   lockShots();
   searchShots();
   streakShots();
+  offlineLessonShots();
 
   shot(
     'lesson_undo',
@@ -781,4 +782,42 @@ void streakShots() {
       return k.evaluate().isNotEmpty ? k : find.text('مواعيد قريبة');
     },
   );
+}
+
+/// Batch 4 (B10): a text lesson opened again with no connection.
+void offlineLessonShots() {
+  shot(
+    'lesson_offline_copy',
+    (t) async {
+      final kept = (await FakeLearningRepository().grant(
+        FakeLearningRepository.courseId,
+        'l2',
+      )).raw;
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/${FakeLearningRepository.courseId}/lesson/l2',
+        size: const Size(393, 1000),
+        learning: _NoConnection(),
+        prefs: {
+          'offline.lessons.${ziadd.id}.u1': jsonEncode([kept]),
+        },
+      );
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('lesson-offline-copy'));
+      return k.evaluate().isNotEmpty ? k : find.text('إعادة المحاولة');
+    },
+  );
+}
+
+/// The lesson content cannot be fetched: no connection.
+class _NoConnection extends FakeLearningRepository {
+  @override
+  Future<LessonGrant> grant(String courseId, String lessonId) async =>
+      throw const AtlasApiException(
+        kind: 'network',
+        messageKey: 'errors.network.offline',
+        retryable: true,
+      );
 }

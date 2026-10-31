@@ -1396,5 +1396,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "lessonOfflineCopy": "No connection. This is the copy saved on your phone when you last opened the lesson."
 }

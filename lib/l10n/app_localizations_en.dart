@@ -2320,4 +2320,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String streakDayNot(String day) {
     return '$day: not studied';
   }
+
+  @override
+  String get lessonOfflineCopy =>
+      'No connection. This is the copy saved on your phone when you last opened the lesson.';
 }

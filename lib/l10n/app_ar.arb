@@ -657,5 +657,6 @@
   "streakKeep": "ذاكر اليوم لتستمر السلسلة.",
   "streakWeek": "هذا الأسبوع",
   "streakDayDone": "{day}: ذاكرت",
-  "streakDayNot": "{day}: لم تذاكر"
+  "streakDayNot": "{day}: لم تذاكر",
+  "lessonOfflineCopy": "لا يوجد اتصال. هذه النسخة المحفوظة على هاتفك من آخر مرة فتحت فيها الدرس."
 }

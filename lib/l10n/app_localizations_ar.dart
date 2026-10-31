@@ -2331,4 +2331,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String streakDayNot(String day) {
     return '$day: لم تذاكر';
   }
+
+  @override
+  String get lessonOfflineCopy =>
+      'لا يوجد اتصال. هذه النسخة المحفوظة على هاتفك من آخر مرة فتحت فيها الدرس.';
 }

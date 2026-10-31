@@ -1,11 +1,14 @@
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/app/router.dart';
 import 'package:atlas_mobile/app/streak.dart';
+import 'package:atlas_mobile/core/api/api_error.dart';
+import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../design/golden_harness.dart';
 import 'fake_home_widgets.dart';
+import 'fake_learning.dart';
 import 'fake_shortcuts.dart';
 import 'screen_harness.dart';
 
@@ -148,4 +151,61 @@ void main() {
       expect(container.read(streakProvider), 1);
     });
   });
+
+  group('text lessons without a connection', () {
+    testWidgets('a lesson read once opens again offline, saying so', (t) async {
+      final learning = _Connection();
+      final container = await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/c-calc/lesson/l2',
+        size: const Size(393, 1400),
+        learning: learning,
+      );
+      expect(find.text('ملفات الدرس'), findsOneWidget);
+      expect(find.byKey(const ValueKey('lesson-offline-copy')), findsNothing);
+
+      // Offline now; open it again.
+      learning.online = false;
+      final router = container.read(routerProvider);
+      router.pop();
+      await t.pumpAndSettle(const Duration(milliseconds: 100));
+      router.push('/course/c-calc/lesson/l2');
+      await t.pumpAndSettle(const Duration(milliseconds: 100));
+      expect(find.byKey(const ValueKey('lesson-offline-copy')), findsOneWidget);
+      expect(
+        find.textContaining('النهاية من اليمين', findRichText: true),
+        findsWidgets,
+      );
+    });
+
+    testWidgets('never read before: the usual offline message', (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/c-calc/lesson/l2',
+        learning: _Connection()..online = false,
+      );
+      expect(find.byKey(const ValueKey('lesson-offline-copy')), findsNothing);
+      expect(find.text('إعادة المحاولة'), findsOneWidget);
+    });
+  });
+}
+
+/// The lesson content needs the network; [online] says whether there is
+/// one.
+class _Connection extends FakeLearningRepository {
+  bool online = true;
+
+  @override
+  Future<LessonGrant> grant(String courseId, String lessonId) async {
+    if (!online) {
+      throw const AtlasApiException(
+        kind: 'network',
+        messageKey: 'errors.network.offline',
+        retryable: true,
+      );
+    }
+    return super.grant(courseId, lessonId);
+  }
 }
