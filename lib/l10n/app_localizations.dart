@@ -1040,6 +1040,12 @@ abstract class AppLocalizations {
   /// **'Your access to this course has ended.'**
   String get courseAccessEnded;
 
+  /// No description provided for @syllabusCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'You are here'**
+  String get syllabusCurrent;
+
   /// No description provided for @lockPrevious.
   ///
   /// In en, this message translates to:

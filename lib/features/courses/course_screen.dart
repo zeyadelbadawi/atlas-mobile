@@ -402,75 +402,83 @@ class SyllabusRow extends StatelessWidget {
       if (item.type == 'live_session' && !item.isLocked) l.itemOnWebsite,
     ].join(context.sep);
     final fg = item.isLocked ? c.inkTertiary : c.ink;
+    // The bookmark is a picture; a screen reader hears "You are here".
     return MergeSemantics(
-      child: Pressable(
-        onTap: onTap,
-        scale: 0.99,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: c.rule)),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 44,
-                    child: Text(
-                      context.digits('${item.position + 1}'),
-                      textAlign: TextAlign.center,
-                      style: a.type.title2.copyWith(
-                        color: item.isDone ? c.inkTertiary : fg,
+      child: Semantics(
+        selected: current,
+        value: current ? l.syllabusCurrent : null,
+        child: Pressable(
+          onTap: onTap,
+          scale: 0.99,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: c.rule)),
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 44,
+                      child: Text(
+                        context.digits('${item.position + 1}'),
+                        textAlign: TextAlign.center,
+                        style: a.type.title2.copyWith(
+                          color: item.isDone ? c.inkTertiary : fg,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.title,
-                          textDirection: contentDirection(context, item.title),
-                          style: a.type.headline.copyWith(color: fg),
-                        ),
-                        Text(
-                          meta,
-                          style: a.type.footnote.copyWith(
-                            color: c.inkSecondary,
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.title,
+                            textDirection: contentDirection(
+                              context,
+                              item.title,
+                            ),
+                            style: a.type.headline.copyWith(color: fg),
                           ),
-                        ),
-                      ],
+                          Text(
+                            meta,
+                            style: a.type.footnote.copyWith(
+                              color: c.inkSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  if (item.isDone)
-                    Icon(
-                      LucideIcons.circleCheck,
-                      size: 22,
-                      color: c.success,
-                      semanticLabel: l.lessonDone,
-                    )
-                  else if (item.isLocked)
-                    Icon(LucideIcons.lock, size: 20, color: c.inkTertiary)
-                  else
-                    Icon(
-                      itemIcon(item.type),
-                      size: 20,
-                      color: current ? c.accent : c.inkSecondary,
-                    ),
-                ],
+                    const SizedBox(width: 8),
+                    if (item.isDone)
+                      Icon(
+                        LucideIcons.circleCheck,
+                        size: 22,
+                        color: c.success,
+                        semanticLabel: l.lessonDone,
+                      )
+                    else if (item.isLocked)
+                      Icon(LucideIcons.lock, size: 20, color: c.inkTertiary)
+                    else
+                      Icon(
+                        itemIcon(item.type),
+                        size: 20,
+                        color: current ? c.accent : c.inkSecondary,
+                      ),
+                  ],
+                ),
               ),
-            ),
-            if (current)
-              const PositionedDirectional(
-                start: 0,
-                top: -1,
-                child: Bookmark(width: 14, height: 24),
-              ),
-          ],
+              if (current)
+                const PositionedDirectional(
+                  start: 0,
+                  top: -1,
+                  child: Bookmark(width: 14, height: 24),
+                ),
+            ],
+          ),
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/core/academy/academy.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/design/design.dart';
+import 'package:atlas_mobile/features/results/results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -132,6 +133,7 @@ void shot(
 
 void main() {
   setUpAll(loadGoldenFonts);
+  resultsShot();
 
   shot('picker_recent_logo', (t) async {
     await serveDemoLogo(t);
@@ -185,6 +187,11 @@ void main() {
     );
   }, focus: () => find.byType(CourseCover).first);
 }
+
+/// The scores in My results: passed and not passed.
+void resultsShot() => shot('results_scores', (t) async {
+  await pumpScreen(t, session: AsSignedIn.new, path: '/account/results');
+}, focus: () => find.byType(ScoreText).at(1));
 
 /// The first course has a cover image whose link does not load.
 class _BrokenCovers extends FakeLearningRepository {

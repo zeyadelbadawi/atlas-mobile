@@ -139,4 +139,20 @@ void main() {
     await t.pumpAndSettle();
     expect(find.text('Manara'), findsOneWidget);
   });
+
+  testWidgets('the screen reader hears which lesson is "you are here"', (
+    t,
+  ) async {
+    final handle = t.ensureSemantics();
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}',
+      size: const Size(393, 1600),
+    );
+    // Lesson 3 carries the bookmark in the demo course.
+    final node = t.getSemantics(find.text('النهايات من جهة واحدة').last);
+    expect(node.value, 'أنت هنا');
+    handle.dispose();
+  });
 }

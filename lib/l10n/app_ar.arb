@@ -157,6 +157,7 @@
   "courseCompletedBody": "أنهيت كل الدروس المطلوبة.",
   "courseCertificatePending": "يتم تجهيز شهادتك.",
   "courseAccessEnded": "انتهى وصولك إلى هذا الكورس.",
+  "syllabusCurrent": "أنت هنا",
   "lockPrevious": "أكمل العنصر السابق أولًا",
   "lockScheduled": "يُفتح {date}",
   "lockNotStarted": "لم يُفتح بعد",

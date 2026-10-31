@@ -272,6 +272,7 @@
   "courseCompletedBody": "You finished every required lesson.",
   "courseCertificatePending": "Your certificate is being prepared.",
   "courseAccessEnded": "Your access to this course has ended.",
+  "syllabusCurrent": "You are here",
   "lockPrevious": "Finish the previous item first",
   "lockScheduled": "Opens {date}",
   "@lockScheduled": {

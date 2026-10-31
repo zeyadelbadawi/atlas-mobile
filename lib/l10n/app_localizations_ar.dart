@@ -539,6 +539,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get courseAccessEnded => 'انتهى وصولك إلى هذا الكورس.';
 
   @override
+  String get syllabusCurrent => 'أنت هنا';
+
+  @override
   String get lockPrevious => 'أكمل العنصر السابق أولًا';
 
   @override

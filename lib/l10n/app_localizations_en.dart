@@ -536,6 +536,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get courseAccessEnded => 'Your access to this course has ended.';
 
   @override
+  String get syllabusCurrent => 'You are here';
+
+  @override
   String get lockPrevious => 'Finish the previous item first';
 
   @override

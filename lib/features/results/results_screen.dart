@@ -251,11 +251,30 @@ class ScoreText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final a = context.atlas;
     final c = a.colors;
-    return Text(
-      text,
-      style: a.type.title3.copyWith(color: passed == false ? c.danger : c.ink),
+    final style = a.type.title3.copyWith(
+      color: passed == false ? c.danger : c.ink,
+    );
+    if (passed == null) return Text(text, style: style);
+    // Passed or not is said by an icon and to the screen reader, not by
+    // the colour alone.
+    return Semantics(
+      label: '$text, ${passed! ? l.quizPassed : l.quizFailed}',
+      excludeSemantics: true,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            passed! ? LucideIcons.circleCheck : LucideIcons.circleX,
+            size: 18,
+            color: passed! ? c.success : c.danger,
+          ),
+          const SizedBox(width: 6),
+          Text(text, style: style),
+        ],
+      ),
     );
   }
 }
