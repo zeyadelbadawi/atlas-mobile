@@ -9,6 +9,7 @@ import 'package:atlas_mobile/app/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../app/demo_text.dart';
 import '../app/fake_assessment.dart';
 import '../app/fake_learning.dart';
 import '../app/screen_harness.dart';
@@ -23,6 +24,16 @@ import '../design/golden_harness.dart';
 /// iPhone 6.9" 1320×2868 and iPad 13" 2064×2752, the sizes App Store
 /// Connect asks for; the iPhone set also serves Google Play.
 final _enabled = Platform.environment['STORE_SHOTS'] == '1';
+
+/// The English screenshots: the learner's own name in English too.
+class _SignedInEn extends SessionController {
+  @override
+  SessionState build() => const SessionState(
+    status: SessionStatus.signedIn,
+    academy: ziadd,
+    user: {'name': 'Ziad Elbadawy', 'email': 'ziad@example.com'},
+  );
+}
 
 const _course = FakeLearningRepository.courseId;
 final _shots = <(String, SessionController Function(), String?, QuizStage?)>[
@@ -75,9 +86,13 @@ void main() {
         testWidgets(
           '$device $lang $name',
           (t) async {
+            demoEnglish = lang == 'en';
+            addTearDown(() => demoEnglish = false);
             await pumpScreen(
               t,
-              session: session,
+              session: lang == 'en' && session == AsSignedIn.new
+                  ? _SignedInEn.new
+                  : session,
               path: path,
               language: lang,
               assessments: FakeAssessmentRepository(

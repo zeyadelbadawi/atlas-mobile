@@ -7,6 +7,8 @@ import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/core/learning/learning_repository.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
+import 'demo_text.dart';
+
 /// Sample data for screen goldens (illustrative, not real learners).
 class FakeLearningRepository extends LearningRepository {
   FakeLearningRepository()
@@ -48,17 +50,41 @@ class FakeLearningRepository extends LearningRepository {
     'availableAt': null,
   };
 
-  static final sequenceJson = {
+  static Map<String, dynamic> get sequenceJson => {
     'courseId': courseId,
-    'courseTitle': 'التفاضل والتكامل',
+    'courseTitle': demo('التفاضل والتكامل'),
     'items': [
-      _item(0, 'مقدمة عن النهايات', 'النهايات', 1, 1, 'completed', 12),
-      _item(1, 'النهايات بالتعويض المباشر', 'النهايات', 1, 2, 'completed', 18),
-      _item(2, 'النهايات من جهة واحدة', 'النهايات', 1, 3, 'available', 22),
+      _item(
+        0,
+        demo('مقدمة عن النهايات'),
+        demo('النهايات'),
+        1,
+        1,
+        'completed',
+        12,
+      ),
+      _item(
+        1,
+        demo('النهايات بالتعويض المباشر'),
+        demo('النهايات'),
+        1,
+        2,
+        'completed',
+        18,
+      ),
+      _item(
+        2,
+        demo('النهايات من جهة واحدة'),
+        demo('النهايات'),
+        1,
+        3,
+        'available',
+        22,
+      ),
       _item(
         3,
-        'كويز النهايات',
-        'النهايات',
+        demo('كويز النهايات'),
+        demo('النهايات'),
         1,
         4,
         'locked',
@@ -68,8 +94,8 @@ class FakeLearningRepository extends LearningRepository {
       ),
       _item(
         4,
-        'تعريف الاتصال',
-        'الاتصال',
+        demo('تعريف الاتصال'),
+        demo('الاتصال'),
         2,
         1,
         'locked',
@@ -78,8 +104,8 @@ class FakeLearningRepository extends LearningRepository {
       ),
       _item(
         5,
-        'أنواع عدم الاتصال',
-        'الاتصال',
+        demo('أنواع عدم الاتصال'),
+        demo('الاتصال'),
         2,
         2,
         'locked',
@@ -88,8 +114,8 @@ class FakeLearningRepository extends LearningRepository {
       ),
       _item(
         6,
-        'واجب الاتصال',
-        'الاتصال',
+        demo('واجب الاتصال'),
+        demo('الاتصال'),
         2,
         3,
         'locked',
@@ -108,12 +134,12 @@ class FakeLearningRepository extends LearningRepository {
     'continueLearning': [
       {
         'courseId': courseId,
-        'courseTitle': 'التفاضل والتكامل',
+        'courseTitle': demo('التفاضل والتكامل'),
         'percentage': 28.6,
         'completedItems': 2,
         'totalItems': 7,
         'nextItemId': 'l2',
-        'nextItemTitle': 'النهايات من جهة واحدة',
+        'nextItemTitle': demo('النهايات من جهة واحدة'),
       },
     ],
     'courseCounts': {'all': 3},
@@ -121,9 +147,9 @@ class FakeLearningRepository extends LearningRepository {
       {
         'id': 'd1',
         'type': 'assignment',
-        'title': 'واجب الاتصال',
+        'title': demo('واجب الاتصال'),
         'courseId': courseId,
-        'courseTitle': 'التفاضل والتكامل',
+        'courseTitle': demo('التفاضل والتكامل'),
         'dueAt': _now.add(const Duration(days: 2)).toIso8601String(),
         'overdue': false,
       },
@@ -131,8 +157,10 @@ class FakeLearningRepository extends LearningRepository {
     'announcements': [
       {
         'id': 'a1',
-        'title': 'مراجعة ليلة الامتحان',
-        'body': 'مراجعة مباشرة يوم الخميس الساعة ٨ مساءً على المنهج كله. جهّز أسئلتك.',
+        'title': demo('مراجعة ليلة الامتحان'),
+        'body': demo(
+          'مراجعة مباشرة يوم الخميس الساعة ٨ مساءً على المنهج كله. جهّز أسئلتك.',
+        ),
         'publishedAt': _now.subtract(const Duration(days: 1)).toIso8601String(),
         'courseId': courseId,
       },
@@ -143,24 +171,24 @@ class FakeLearningRepository extends LearningRepository {
   Future<List<EnrolledCourse>> enrollments() async => [
     _enrollment(
       courseId,
-      'التفاضل والتكامل',
-      'أ. أحمد سمير',
+      demo('التفاضل والتكامل'),
+      demo('أ. أحمد سمير'),
       2,
       7,
       'in_progress',
     ),
     _enrollment(
       'c-phys',
-      'الفيزياء: الكهربية',
-      'أ. منى عادل',
+      demo('الفيزياء: الكهربية'),
+      demo('أ. منى عادل'),
       0,
       14,
       'not_started',
     ),
     _enrollment(
       'c-chem',
-      'الكيمياء العضوية',
-      'د. خالد فؤاد',
+      demo('الكيمياء العضوية'),
+      demo('د. خالد فؤاد'),
       12,
       12,
       'completed',
@@ -205,16 +233,20 @@ class FakeLearningRepository extends LearningRepository {
       LessonGrant.fromJson({
         'lessonId': lessonId,
         'courseId': courseId,
-        'title': 'النهايات من جهة واحدة',
+        'title': demo('النهايات من جهة واحدة'),
         'kind': 'text',
         'completionRule': 'manual',
         'bodyHtml':
-            '<p>النهاية من اليمين هي القيمة التي تقترب منها الدالة عندما تقترب <b>س</b> من العدد من جهة اليمين.</p>'
-            '<ul><li>نكتبها: نهـا س←أ⁺ د(س)</li><li>وتوجد النهاية إذا تساوت النهايتان من اليمين واليسار.</li></ul>',
+            demo(
+              '<p>النهاية من اليمين هي القيمة التي تقترب منها الدالة عندما تقترب <b>س</b> من العدد من جهة اليمين.</p>',
+            ) +
+            demo(
+              '<ul><li>نكتبها: نهـا س←أ⁺ د(س)</li><li>وتوجد النهاية إذا تساوت النهايتان من اليمين واليسار.</li></ul>',
+            ),
         'resources': [
           {
             'id': 'r1',
-            'title': 'ملخص الدرس (PDF)',
+            'title': demo('ملخص الدرس (PDF)'),
             'url': 'https://example.test/r1.pdf',
           },
         ],

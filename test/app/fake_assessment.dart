@@ -7,6 +7,8 @@ import 'package:atlas_mobile/core/learning/assessment_models.dart';
 import 'package:atlas_mobile/core/learning/assessment_repository.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
+import 'demo_text.dart';
+
 enum QuizStage { intro, running, results }
 
 /// Sample assessments for screen goldens (illustrative, not real learners).
@@ -25,33 +27,36 @@ class FakeAssessmentRepository extends AssessmentRepository {
 
   static final _now = testNow.toUtc();
 
-  static const _questions = [
+  // A getter, not a constant: the English store run switches the text.
+  static List<Map<String, dynamic>> get _questions => [
     {
       'id': 'q1',
       'type': 'single_choice',
-      'prompt': 'ما قيمة النهاية عندما تقترب س من ٢ للدالة د(س) = س² + ١؟',
+      'prompt': demo(
+        'ما قيمة النهاية عندما تقترب س من ٢ للدالة د(س) = س² + ١؟',
+      ),
       'points': 2,
       'options': [
-        {'id': 'o1', 'label': '٣'},
-        {'id': 'o2', 'label': '٥'},
-        {'id': 'o3', 'label': 'غير موجودة'},
+        {'id': 'o1', 'label': demo('٣')},
+        {'id': 'o2', 'label': demo('٥')},
+        {'id': 'o3', 'label': demo('غير موجودة')},
       ],
     },
     {
       'id': 'q2',
       'type': 'multiple_choice',
-      'prompt': 'أي الدوال التالية متصلة عند س = ٠؟',
+      'prompt': demo('أي الدوال التالية متصلة عند س = ٠؟'),
       'points': 2,
       'options': [
-        {'id': 'o4', 'label': 'د(س) = س²'},
-        {'id': 'o5', 'label': 'د(س) = ١ ÷ س'},
-        {'id': 'o6', 'label': 'د(س) = |س|'},
+        {'id': 'o4', 'label': demo('د(س) = س²')},
+        {'id': 'o5', 'label': demo('د(س) = ١ ÷ س')},
+        {'id': 'o6', 'label': demo('د(س) = |س|')},
       ],
     },
     {
       'id': 'q3',
       'type': 'short_answer',
-      'prompt': 'اكتب اسم القاعدة المستخدمة في حالة ٠ ÷ ٠.',
+      'prompt': demo('اكتب اسم القاعدة المستخدمة في حالة ٠ ÷ ٠.'),
       'points': 1,
       'options': <Map>[],
     },
@@ -61,8 +66,10 @@ class FakeAssessmentRepository extends AssessmentRepository {
   Future<Quiz> quiz(String courseId, String quizId) async => Quiz.fromJson({
     'id': quizId,
     'courseId': courseId,
-    'title': 'اختبار الوحدة الأولى: النهايات',
-    'description': 'ثلاثة أسئلة عن النهايات والاتصال. راجع درس «النهايات من جهة واحدة» قبل البدء.',
+    'title': demo('اختبار الوحدة الأولى: النهايات'),
+    'description': demo(
+      'ثلاثة أسئلة عن النهايات والاتصال. راجع درس «النهايات من جهة واحدة» قبل البدء.',
+    ),
     'questionCount': 3,
     'passingScore': 60,
     'attemptsAllowed': 3,
@@ -172,7 +179,7 @@ class FakeAssessmentRepository extends AssessmentRepository {
           'selectedOptionIds': ['o2'],
         },
         'correctOptionIds': ['o2'],
-        'explanation': 'نعوّض مباشرة: ٢² + ١ = ٥.',
+        'explanation': demo('نعوّض مباشرة: ٢² + ١ = ٥.'),
       },
       {
         'questionId': 'q2',
@@ -196,8 +203,10 @@ class FakeAssessmentRepository extends AssessmentRepository {
       Assignment.fromJson({
         'id': id,
         'courseId': courseId,
-        'title': 'واجب: تمارين النهايات',
-        'instructions': 'حل التمارين من ١ إلى ٥ في الملزمة، ثم صوّر الحل وارفعه هنا. اكتب الناتج النهائي لكل تمرين في خانة الإجابة.',
+        'title': demo('واجب: تمارين النهايات'),
+        'instructions': demo(
+          'حل التمارين من ١ إلى ٥ في الملزمة، ثم صوّر الحل وارفعه هنا. اكتب الناتج النهائي لكل تمرين في خانة الإجابة.',
+        ),
         'dueAt': _now.add(const Duration(days: 3)).toIso8601String(),
         'allowResubmission': true,
         'latePolicy': 'accept_flagged',
@@ -210,7 +219,7 @@ class FakeAssessmentRepository extends AssessmentRepository {
   ) async => AssignmentSubmission.fromJson({
     'id': 's1',
     'status': 'submitted',
-    'response': '١) ٥  ٢) ٠  ٣) غير موجودة  ٤) ٢  ٥) ١',
+    'response': demo('١) ٥  ٢) ٠  ٣) غير موجودة  ٤) ٢  ٥) ١'),
     'attachment': {
       'assetId': 'f1',
       'fileName': 'solution.jpg',
@@ -224,8 +233,9 @@ class FakeAssessmentRepository extends AssessmentRepository {
     if (graded)
       'grade': {
         'score': 9,
-        'feedback':
-            'حل ممتاز. راجع التمرين الثالث: النهاية موجودة من جهة اليمين فقط.',
+        'feedback': demo(
+          'حل ممتاز. راجع التمرين الثالث: النهاية موجودة من جهة اليمين فقط.',
+        ),
         'gradedAt': _now.toIso8601String(),
       },
   });
@@ -257,41 +267,47 @@ class FakeAssessmentRepository extends AssessmentRepository {
       t(
         'a1',
         'assignment',
-        'واجب الاتصال',
-        'التفاضل والتكامل',
+        demo('واجب الاتصال'),
+        demo('التفاضل والتكامل'),
         'not_started',
         due: const Duration(days: 3),
       ),
       t(
         'a0',
         'assignment',
-        'تقرير المعمل',
-        'الفيزياء: الكهربية',
+        demo('تقرير المعمل'),
+        demo('الفيزياء: الكهربية'),
         'overdue',
         due: const Duration(days: -2),
       ),
-      t('q1', 'quiz', 'كويز النهايات', 'التفاضل والتكامل', 'in_progress'),
+      t(
+        'q1',
+        'quiz',
+        demo('كويز النهايات'),
+        demo('التفاضل والتكامل'),
+        'in_progress',
+      ),
       t(
         'a2',
         'assignment',
-        'مسائل الدوائر',
-        'الفيزياء: الكهربية',
+        demo('مسائل الدوائر'),
+        demo('الفيزياء: الكهربية'),
         'draft',
         due: const Duration(days: 6),
       ),
       t(
         'q2',
         'quiz',
-        'اختبار الوحدة الأولى',
-        'الكيمياء العضوية',
+        demo('اختبار الوحدة الأولى'),
+        demo('الكيمياء العضوية'),
         'submitted',
         submitted: const Duration(hours: -5),
       ),
       t(
         'q3',
         'quiz',
-        'كويز المشتقات',
-        'التفاضل والتكامل',
+        demo('كويز المشتقات'),
+        demo('التفاضل والتكامل'),
         'passed',
         submitted: const Duration(days: -4),
         score: 91,
@@ -299,8 +315,8 @@ class FakeAssessmentRepository extends AssessmentRepository {
       t(
         'q4',
         'quiz',
-        'كويز الروابط',
-        'الكيمياء العضوية',
+        demo('كويز الروابط'),
+        demo('الكيمياء العضوية'),
         'failed',
         submitted: const Duration(days: -6),
         score: 45,
@@ -308,8 +324,8 @@ class FakeAssessmentRepository extends AssessmentRepository {
       t(
         'a3',
         'assignment',
-        'واجب الحدود',
-        'التفاضل والتكامل',
+        demo('واجب الحدود'),
+        demo('التفاضل والتكامل'),
         'graded',
         submitted: const Duration(days: -8),
         score: 18,
@@ -330,11 +346,11 @@ class FakeAssessmentRepository extends AssessmentRepository {
     'courses': [
       {
         'courseId': 'c-calc',
-        'courseTitle': 'التفاضل والتكامل: الصف الثالث الثانوي',
+        'courseTitle': demo('التفاضل والتكامل: الصف الثالث الثانوي'),
         'quizResults': [
           {
             'quizId': 'l3',
-            'quizTitle': 'اختبار الوحدة الأولى: النهايات',
+            'quizTitle': demo('اختبار الوحدة الأولى: النهايات'),
             'attemptNumber': 2,
             'score': 80,
             'passed': true,
@@ -342,7 +358,7 @@ class FakeAssessmentRepository extends AssessmentRepository {
           },
           {
             'quizId': 'l7',
-            'quizTitle': 'اختبار قصير: الاتصال',
+            'quizTitle': demo('اختبار قصير: الاتصال'),
             'attemptNumber': 1,
             'score': 45,
             'passed': false,
@@ -354,7 +370,7 @@ class FakeAssessmentRepository extends AssessmentRepository {
         'assignmentResults': [
           {
             'assignmentId': 'l6',
-            'assignmentTitle': 'واجب: تمارين النهايات',
+            'assignmentTitle': demo('واجب: تمارين النهايات'),
             'gradingStatus': 'graded',
             'score': 9,
             'hasFeedback': true,
@@ -362,7 +378,7 @@ class FakeAssessmentRepository extends AssessmentRepository {
           },
           {
             'assignmentId': 'l9',
-            'assignmentTitle': 'واجب: رسم الدوال',
+            'assignmentTitle': demo('واجب: رسم الدوال'),
             'gradingStatus': 'ungraded',
             'submittedAt': _now.toIso8601String(),
           },
@@ -379,7 +395,7 @@ class FakeAssessmentRepository extends AssessmentRepository {
           {
             'id': 'cert1',
             'courseId': 'c-phys',
-            'courseTitle': 'الفيزياء: الكهربية الحديثة',
+            'courseTitle': demo('الفيزياء: الكهربية الحديثة'),
             'serial': 'ZIA-2026-000014',
             'verificationCode': '7K2QH9TMX4RB',
             'verificationCodeDisplay': '7K2Q-H9TM-X4RB',
@@ -387,19 +403,19 @@ class FakeAssessmentRepository extends AssessmentRepository {
             'renderStatus': 'ready',
             'issuedAt': _now.toIso8601String(),
             'overallScore': 91,
-            'learnerNameOnCertificate': 'زياد البدوي',
+            'learnerNameOnCertificate': demo('زياد البدوي'),
           },
           {
             'id': 'cert2',
             'courseId': 'c-chem',
-            'courseTitle': 'الكيمياء العضوية',
+            'courseTitle': demo('الكيمياء العضوية'),
             'serial': 'ZIA-2026-000015',
             'verificationCode': 'P8W3N6ZC2LFA',
             'verificationCodeDisplay': 'P8W3-N6ZC-2LFA',
             'status': 'issued',
             'renderStatus': 'pending',
             'issuedAt': _now.toIso8601String(),
-            'learnerNameOnCertificate': 'زياد البدوي',
+            'learnerNameOnCertificate': demo('زياد البدوي'),
           },
         ],
       });
