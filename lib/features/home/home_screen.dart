@@ -41,7 +41,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final l = context.l10n;
     final session = ref.watch(sessionProvider);
     final academy = session.academy!;
-    final name = session.displayName.split(' ').first;
+    final name = session.firstName;
     final overview = ref.watch(overviewProvider);
     final courses = ref.watch(enrollmentsProvider);
 

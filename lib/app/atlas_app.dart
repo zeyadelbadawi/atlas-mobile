@@ -87,18 +87,22 @@ class AtlasApp extends ConsumerWidget {
                   textScaler: _Times(mq.textScaler, AtlasSize.tabletTextScale),
                 )
               : mq,
-          child: Theme(
-            data: theme(dark ? Brightness.dark : Brightness.light, l),
-            child: ref.watch(splashEnabledProvider)
-                ? SplashOverlay(
-                    ready: ref.watch(
-                      sessionProvider.select(
-                        (s) => s.status != SessionStatus.restoring,
+          // Reduce Motion: no cover flying between screens either.
+          child: HeroMode(
+            enabled: !mq.disableAnimations,
+            child: Theme(
+              data: theme(dark ? Brightness.dark : Brightness.light, l),
+              child: ref.watch(splashEnabledProvider)
+                  ? SplashOverlay(
+                      ready: ref.watch(
+                        sessionProvider.select(
+                          (s) => s.status != SessionStatus.restoring,
+                        ),
                       ),
-                    ),
-                    child: _SystemGate(child: child ?? const SizedBox()),
-                  )
-                : _SystemGate(child: child ?? const SizedBox()),
+                      child: _SystemGate(child: child ?? const SizedBox()),
+                    )
+                  : _SystemGate(child: child ?? const SizedBox()),
+            ),
           ),
         );
       },

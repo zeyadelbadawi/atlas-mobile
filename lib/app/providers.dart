@@ -155,6 +155,20 @@ class SessionState {
   final Map<String, dynamic>? user;
 
   String get displayName => (user?['name'] as String?)?.trim() ?? '';
+
+  /// The name to greet by. Usually the first word; a compound first name
+  /// keeps its second word ("عبد الرحمن", "أبو بكر", "Abdel Rahman"),
+  /// because "Hello, Abd" is not anyone's name.
+  String get firstName {
+    final words = displayName.split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+    if (words.isEmpty) return '';
+    final first = words.first;
+    const compound = {'عبد', 'أبو', 'ابو', 'abd', 'abdel', 'abdul', 'abu'};
+    if (words.length > 1 && compound.contains(first.toLowerCase())) {
+      return '$first ${words.elementAt(1)}';
+    }
+    return first;
+  }
 }
 
 /// The chosen academy, its API client, and whether the learner is signed in

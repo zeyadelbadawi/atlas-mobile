@@ -97,3 +97,9 @@ both themes; `academy_palette_test.dart` checks 2,000 random academy colours.
 - `test/app/goldens`: picker, sign-in (Arabic, English dark, iPad), register, code, account, about, home, courses, course, lesson, devices, quiz (intro, running, results Arabic and English dark), assignment, results and certificates.
 - Regenerate with `flutter test --tags golden --update-goldens`.
 - Goldens render the body text in Noto Sans Arabic (`test/fonts`); on devices it is the platform face.
+
+### States
+
+- **EmptyState**: one shape for an empty list, a failed load and no connection: a tinted disc with the icon, a title, an optional line and an optional action. Errors use the danger tint; "offline" is its own message.
+- A failed load shows its error at once, even while Riverpod retries in the background.
+- Maintenance and force-update are Atlas's own screens (lockup, icon disc, centred text).

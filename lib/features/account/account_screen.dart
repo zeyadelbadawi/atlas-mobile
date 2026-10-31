@@ -354,7 +354,7 @@ class _ProfileHeader extends StatelessWidget {
                             Text(
                               email,
                               textDirection: TextDirection.ltr,
-                              maxLines: 1,
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: a.type.subhead.copyWith(
                                 color: c.onCover.withValues(alpha: 0.85),

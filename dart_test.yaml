@@ -6,3 +6,5 @@ tags:
   golden:
     # Pixel goldens of the design system (test/design/goldens). Regenerate
     # with: flutter test --tags golden --update-goldens
+  store:
+    # App Store / Play screenshots: STORE_SHOTS=1 flutter test --tags store test/store
