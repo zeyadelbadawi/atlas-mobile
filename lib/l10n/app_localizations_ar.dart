@@ -2295,4 +2295,40 @@ class AppLocalizationsAr extends AppLocalizations {
   String widgetDue(String title, String when) {
     return 'التسليم $when: $title';
   }
+
+  @override
+  String streakDays(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n يوم متتالٍ',
+      many: '$n يومًا متتاليًا',
+      few: '$n أيام متتالية',
+      two: 'يومان متتاليان',
+      one: 'يوم واحد متتالٍ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakStart => 'ذاكر اليوم لتبدأ سلسلة أيامك.';
+
+  @override
+  String get streakToday => 'احتُسب يومك. واصل غدًا.';
+
+  @override
+  String get streakKeep => 'ذاكر اليوم لتستمر السلسلة.';
+
+  @override
+  String get streakWeek => 'هذا الأسبوع';
+
+  @override
+  String streakDayDone(String day) {
+    return '$day: ذاكرت';
+  }
+
+  @override
+  String streakDayNot(String day) {
+    return '$day: لم تذاكر';
+  }
 }

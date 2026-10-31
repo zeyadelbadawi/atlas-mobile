@@ -2287,4 +2287,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String widgetDue(String title, String when) {
     return 'Due $when: $title';
   }
+
+  @override
+  String streakDays(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n days in a row',
+      one: '$n day in a row',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get streakStart => 'Study today to start a streak.';
+
+  @override
+  String get streakToday => 'Today counts. Keep it going tomorrow.';
+
+  @override
+  String get streakKeep => 'Study today to keep it going.';
+
+  @override
+  String get streakWeek => 'This week';
+
+  @override
+  String streakDayDone(String day) {
+    return '$day: studied';
+  }
+
+  @override
+  String streakDayNot(String day) {
+    return '$day: not studied';
+  }
 }

@@ -10,6 +10,7 @@ import '../../core/learning/learning_models.dart';
 import '../../design/design.dart';
 import '../catalog/catalog_screen.dart';
 import '../learning/learning_ui.dart';
+import 'streak_card.dart';
 import '../learning/course_widgets.dart';
 
 /// Home: the academy's cover, the bookmark on where the learner stopped,
@@ -131,6 +132,10 @@ class _Body extends ConsumerWidget {
       if (continueCourseId == null) ...[
         const SizedBox(height: AtlasSpace.s12),
         BrowseFreeCoursesCard(academyName: academy.name),
+      ],
+      if (courses.isNotEmpty) ...[
+        const SizedBox(height: AtlasSpace.s12),
+        const StreakCard(),
       ],
       if (overview.deadlines.isNotEmpty) ...[
         SectionHeader(title: l.homeDueSoon),

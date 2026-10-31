@@ -650,5 +650,12 @@
   "widgetNothing": "لا يوجد كورس جارٍ. افتح أطلس لتبدأ.",
   "widgetNext": "التالي: {title}",
   "widgetPercent": "تم {percent}٪",
-  "widgetDue": "التسليم {when}: {title}"
+  "widgetDue": "التسليم {when}: {title}",
+  "streakDays": "{count, plural, =1{يوم واحد متتالٍ} =2{يومان متتاليان} few{{n} أيام متتالية} many{{n} يومًا متتاليًا} other{{n} يوم متتالٍ}}",
+  "streakStart": "ذاكر اليوم لتبدأ سلسلة أيامك.",
+  "streakToday": "احتُسب يومك. واصل غدًا.",
+  "streakKeep": "ذاكر اليوم لتستمر السلسلة.",
+  "streakWeek": "هذا الأسبوع",
+  "streakDayDone": "{day}: ذاكرت",
+  "streakDayNot": "{day}: لم تذاكر"
 }

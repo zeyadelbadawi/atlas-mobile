@@ -225,6 +225,14 @@ class FakeLearningRepository extends LearningRepository {
   Future<CourseSequence> sequence(String courseId) async =>
       CourseSequence.fromJson(sequenceJson);
 
+  @override
+  Future<double> completeLesson(
+    String courseId,
+    String lessonId, {
+    String? opId,
+    int? clientOpAt,
+  }) async => 42.9;
+
   /// The learner's own review (none by default).
   CourseReview? review;
 

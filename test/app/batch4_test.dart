@@ -1,5 +1,7 @@
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/app/router.dart';
+import 'package:atlas_mobile/app/streak.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../design/golden_harness.dart';
@@ -102,6 +104,48 @@ void main() {
       w.tapped.add('/course/c-calc');
       await t.pumpAndSettle(const Duration(milliseconds: 100));
       expect(find.text('استكمل'), findsOneWidget);
+    });
+  });
+
+  group('study streak', () {
+    String d(int daysAgo) =>
+        StudyDays.day(testNow.subtract(Duration(days: daysAgo)));
+
+    test('counts days in a row; today not yet studied does not break it', () {
+      expect(streakOf({}, testNow), 0);
+      expect(streakOf({d(0), d(1), d(2)}, testNow), 3);
+      expect(streakOf({d(1), d(2)}, testNow), 2); // not yet today
+      expect(streakOf({d(0), d(2), d(3)}, testNow), 1); // a gap
+      expect(streakOf({d(2), d(3)}, testNow), 0); // missed yesterday
+    });
+
+    testWidgets('Home shows the streak and the week', (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/home',
+        size: const Size(393, 1400),
+        prefs: {
+          'study.days.${ziadd.id}.u1': [d(0), d(1), d(2)],
+        },
+      );
+      expect(find.text('٣ أيام متتالية'), findsOneWidget);
+      expect(find.text('احتُسب يومك. واصل غدًا.'), findsOneWidget);
+    });
+
+    testWidgets('finishing a lesson counts today', (t) async {
+      final container = await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/c-calc/lesson/l2',
+        size: const Size(393, 1400),
+      );
+      expect(container.read(streakProvider), 0);
+      await t.ensureVisible(find.text('أكملت الدرس'));
+      await t.tap(find.text('أكملت الدرس'));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 300));
+      expect(container.read(streakProvider), 1);
     });
   });
 }

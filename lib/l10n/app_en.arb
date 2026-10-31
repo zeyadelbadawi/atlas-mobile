@@ -1365,5 +1365,36 @@
         "type": "String"
       }
     }
+  },
+  "streakDays": "{count, plural, =1{{n} day in a row} other{{n} days in a row}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "streakStart": "Study today to start a streak.",
+  "streakToday": "Today counts. Keep it going tomorrow.",
+  "streakKeep": "Study today to keep it going.",
+  "streakWeek": "This week",
+  "streakDayDone": "{day}: studied",
+  "@streakDayDone": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "streakDayNot": "{day}: not studied",
+  "@streakDayNot": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
   }
 }

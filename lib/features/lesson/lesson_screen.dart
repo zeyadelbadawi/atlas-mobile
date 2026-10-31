@@ -13,6 +13,7 @@ import '../../app/push.dart';
 import '../../app/learning_providers.dart';
 import '../../app/lesson_outbox.dart';
 import '../../app/notes.dart';
+import '../../app/streak.dart';
 import '../../core/clock.dart';
 import '../quiz/assessment_widgets.dart' show AnswerField;
 import '../../app/providers.dart';
@@ -57,10 +58,18 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   void initState() {
     super.initState();
     unawaited(_load());
+    // A minute on a lesson counts as studying today.
+    _reading = Timer(const Duration(minutes: 1), _studied);
   }
+
+  Timer? _reading;
+
+  void _studied() =>
+      unawaited(ref.read(studyDaysProvider.notifier).markToday());
 
   @override
   void dispose() {
+    _reading?.cancel();
     unawaited(_session?.release());
     super.dispose();
   }
@@ -160,6 +169,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
       if (result == LessonOpResult.sent) refreshLearning(ref, widget.courseId);
       if (!mounted) return;
       setState(() => _done = true);
+      _studied();
       if (result == LessonOpResult.queued) _say(context.l10n.lessonQueued);
     } on AtlasApiException catch (e) {
       if (mounted) _say(errorText(ref, context, e));

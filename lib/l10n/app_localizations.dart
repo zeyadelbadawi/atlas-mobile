@@ -4003,6 +4003,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Due {when}: {title}'**
   String widgetDue(String title, String when);
+
+  /// No description provided for @streakDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{n} day in a row} other{{n} days in a row}}'**
+  String streakDays(int count, String n);
+
+  /// No description provided for @streakStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Study today to start a streak.'**
+  String get streakStart;
+
+  /// No description provided for @streakToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today counts. Keep it going tomorrow.'**
+  String get streakToday;
+
+  /// No description provided for @streakKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Study today to keep it going.'**
+  String get streakKeep;
+
+  /// No description provided for @streakWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get streakWeek;
+
+  /// No description provided for @streakDayDone.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: studied'**
+  String streakDayDone(String day);
+
+  /// No description provided for @streakDayNot.
+  ///
+  /// In en, this message translates to:
+  /// **'{day}: not studied'**
+  String streakDayNot(String day);
 }
 
 class _AppLocalizationsDelegate

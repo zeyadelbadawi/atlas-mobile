@@ -200,6 +200,7 @@ void main() {
   calendarShots();
   lockShots();
   searchShots();
+  streakShots();
 
   shot(
     'lesson_undo',
@@ -751,6 +752,33 @@ void searchShots() {
     focus: () {
       final k = find.byKey(const ValueKey('courses-search-results'));
       return k.evaluate().isNotEmpty ? k : find.text('الكل');
+    },
+  );
+}
+
+/// Batch 4 (B8): days studied in a row, on Home.
+void streakShots() {
+  String d(int daysAgo) => testNow
+      .subtract(Duration(days: daysAgo))
+      .toIso8601String()
+      .substring(0, 10);
+
+  shot(
+    'home_streak',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/home',
+        size: const Size(393, 1200),
+        prefs: {
+          'study.days.${ziadd.id}.u1': [d(0), d(1), d(2), d(4)],
+        },
+      );
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('streak'));
+      return k.evaluate().isNotEmpty ? k : find.text('مواعيد قريبة');
     },
   );
 }

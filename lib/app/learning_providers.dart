@@ -10,6 +10,7 @@ import '../core/learning/learning_repository.dart';
 import 'providers.dart';
 import 'home_widgets.dart';
 import 'reminders.dart';
+import 'streak.dart';
 
 /// The learning API for the signed-in academy. Rebuilt when the session
 /// changes academy or user, which also refreshes every read below.
@@ -61,6 +62,8 @@ void refreshLearning(WidgetRef ref, String courseId) {
   ref.invalidate(completionProvider(courseId));
   ref.invalidate(overviewProvider);
   ref.invalidate(enrollmentsProvider);
+  // A lesson finished: today is a study day.
+  unawaited(ref.read(studyDaysProvider.notifier).markToday());
   // The home-screen widget shows the progress too.
   unawaited(ref.read(homeWidgetSyncProvider.notifier).refresh(force: true));
 }
