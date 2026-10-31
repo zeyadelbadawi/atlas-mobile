@@ -143,6 +143,7 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                   if (_error != null && _items.isEmpty)
                     LoadError(
                       message: errorText(ref, context, _error!),
+                      error: _error,
                       onRetry: _reload,
                     )
                   else if (_loading)
@@ -153,15 +154,11 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                       ),
                     )
                   else if (_items.isEmpty)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 40),
-                      child: Text(
-                        searching ? l.catalogNoResults : l.catalogEmpty,
-                        textAlign: TextAlign.center,
-                        style: a.type.body.copyWith(
-                          color: a.colors.inkSecondary,
-                        ),
-                      ),
+                    EmptyState(
+                      icon: searching
+                          ? LucideIcons.searchX
+                          : LucideIcons.libraryBig,
+                      title: searching ? l.catalogNoResults : l.catalogEmpty,
                     )
                   else if (_hasMore)
                     Padding(

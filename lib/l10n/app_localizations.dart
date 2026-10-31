@@ -1208,6 +1208,24 @@ abstract class AppLocalizations {
   /// **'My devices'**
   String get accountDevices;
 
+  /// No description provided for @offlineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re offline'**
+  String get offlineTitle;
+
+  /// No description provided for @offlineBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your Wi-Fi or mobile data, then try again.'**
+  String get offlineBody;
+
+  /// No description provided for @loadFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this'**
+  String get loadFailedTitle;
+
   /// No description provided for @loadFailed.
   ///
   /// In en, this message translates to:

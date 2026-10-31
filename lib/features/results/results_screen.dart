@@ -72,24 +72,10 @@ class _Results extends StatelessWidget {
     final r = results;
     final d = context.digits;
     if (r.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 32),
-        child: Column(
-          children: [
-            Icon(LucideIcons.chartColumn, size: 36, color: c.inkTertiary),
-            const SizedBox(height: 12),
-            Text(
-              l.resultsEmptyTitle,
-              style: a.type.title3.copyWith(color: c.ink),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              l.resultsEmptyBody,
-              textAlign: TextAlign.center,
-              style: a.type.subhead.copyWith(color: c.inkSecondary),
-            ),
-          ],
-        ),
+      return EmptyState(
+        icon: LucideIcons.chartColumn,
+        title: l.resultsEmptyTitle,
+        body: l.resultsEmptyBody,
       );
     }
     final graded = [

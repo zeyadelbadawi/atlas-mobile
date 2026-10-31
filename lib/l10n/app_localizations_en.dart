@@ -633,6 +633,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountDevices => 'My devices';
 
   @override
+  String get offlineTitle => 'You\'re offline';
+
+  @override
+  String get offlineBody => 'Check your Wi-Fi or mobile data, then try again.';
+
+  @override
+  String get loadFailedTitle => 'Couldn\'t load this';
+
+  @override
   String get loadFailed =>
       'This didn\'t load. Check your connection and try again.';
 

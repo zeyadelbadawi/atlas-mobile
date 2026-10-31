@@ -114,29 +114,11 @@ class _Empty extends StatelessWidget {
   final AtlasThemeAccess a;
 
   @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final c = a.colors;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 40),
-      child: Column(
-        children: [
-          Icon(LucideIcons.bellOff, size: 36, color: c.inkTertiary),
-          const SizedBox(height: 12),
-          Text(
-            l.notificationsEmptyTitle,
-            style: a.type.title3.copyWith(color: c.ink),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            l.notificationsEmptyBody,
-            textAlign: TextAlign.center,
-            style: a.type.subhead.copyWith(color: c.inkSecondary),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => EmptyState(
+    icon: LucideIcons.bellOff,
+    title: context.l10n.notificationsEmptyTitle,
+    body: context.l10n.notificationsEmptyBody,
+  );
 }
 
 IconData notificationIcon(AppNotification n) {

@@ -347,6 +347,9 @@
     }
   },
   "accountDevices": "My devices",
+  "offlineTitle": "You're offline",
+  "offlineBody": "Check your Wi-Fi or mobile data, then try again.",
+  "loadFailedTitle": "Couldn't load this",
   "loadFailed": "This didn't load. Check your connection and try again.",
   "homeGreeting": "Hi, {name}",
   "@homeGreeting": {

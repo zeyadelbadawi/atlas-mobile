@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/push.dart';
@@ -78,15 +79,9 @@ class _AnnouncementsScreenState extends ConsumerState<AnnouncementsScreen> {
                   value: value,
                   onRetry: () => ref.invalidate(announcementsProvider),
                   data: (items) => items.isEmpty
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 32),
-                          child: Text(
-                            l.announcementsEmpty,
-                            textAlign: TextAlign.center,
-                            style: a.type.subhead.copyWith(
-                              color: a.colors.inkSecondary,
-                            ),
-                          ),
+                      ? EmptyState(
+                          icon: LucideIcons.megaphone,
+                          title: l.announcementsEmpty,
                         )
                       : Column(
                           children: [

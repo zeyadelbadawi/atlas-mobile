@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/learning_providers.dart';
@@ -104,7 +105,6 @@ class _List extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final a = context.atlas;
     final shown = all.where((t) => t.group == group).toList()
       ..sort(switch (group) {
         // Overdue first, then the nearest due date; no date last.
@@ -120,19 +120,19 @@ class _List extends StatelessWidget {
         ),
       });
     if (shown.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40),
-        child: Text(
-          all.isEmpty
-              ? l.tasksNone
-              : switch (group) {
-                  TaskGroup.todo => l.tasksEmptyTodo,
-                  TaskGroup.awaiting => l.tasksEmptyAwaiting,
-                  TaskGroup.graded => l.tasksEmptyGraded,
-                },
-          textAlign: TextAlign.center,
-          style: a.type.body.copyWith(color: a.colors.inkSecondary),
-        ),
+      return EmptyState(
+        icon: switch (group) {
+          TaskGroup.todo => LucideIcons.partyPopper,
+          TaskGroup.awaiting => LucideIcons.hourglass,
+          TaskGroup.graded => LucideIcons.clipboardCheck,
+        },
+        title: all.isEmpty
+            ? l.tasksNone
+            : switch (group) {
+                TaskGroup.todo => l.tasksEmptyTodo,
+                TaskGroup.awaiting => l.tasksEmptyAwaiting,
+                TaskGroup.graded => l.tasksEmptyGraded,
+              },
       );
     }
     return Column(

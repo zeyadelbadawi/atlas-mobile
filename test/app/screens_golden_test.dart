@@ -2,6 +2,10 @@
 library;
 
 import 'package:atlas_mobile/app/atlas_app.dart';
+import 'package:atlas_mobile/app/providers.dart';
+import 'package:atlas_mobile/core/api/api_error.dart';
+import 'package:atlas_mobile/core/learning/assessment_models.dart';
+import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/core/auth/auth_repository.dart';
 import 'package:atlas_mobile/design/design.dart';
 import 'package:atlas_mobile/features/academy_picker/qr_scan_screen.dart';
@@ -155,6 +159,52 @@ void main() {
     await t.pump();
     await t.pump(const Duration(milliseconds: 800));
     await _golden(t, 'legal_terms_en_dark');
+  }, variant: ios);
+
+  testWidgets('state_offline_ar', (t) async {
+    final container = await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/courses',
+      learning: _OfflineLearning(),
+    );
+    await _golden(t, 'state_offline_ar');
+    // The failed load schedules a retry; stop it before the test ends.
+    await t.pumpWidget(const SizedBox());
+    container.dispose();
+  }, variant: ios);
+
+  testWidgets('state_tasks_empty_ar', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/tasks',
+      assessments: _NoTasks(),
+    );
+    await _golden(t, 'state_tasks_empty_ar');
+  }, variant: ios);
+
+  testWidgets('state_maintenance_ar', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      config: const MobileConfig(maintenance: true),
+    );
+    await _golden(t, 'state_maintenance_ar');
+  }, variant: ios);
+
+  testWidgets('state_update_en_dark', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      language: 'en',
+      theme: ThemeMode.dark,
+      config: const MobileConfig(
+        minimumVersion: '9.0.0',
+        storeUrl: 'https://apps.apple.com/app/id0',
+      ),
+    );
+    await _golden(t, 'state_update_en_dark');
   }, variant: ios);
 
   testWidgets('about_ar', (t) async {
@@ -435,4 +485,19 @@ void main() {
     );
     await _golden(t, 'home_ar_ipad');
   }, variant: ios);
+}
+
+class _OfflineLearning extends FakeLearningRepository {
+  @override
+  Future<List<EnrolledCourse>> enrollments() async =>
+      throw const AtlasApiException(
+        kind: 'network',
+        messageKey: 'errors.network.offline',
+        retryable: true,
+      );
+}
+
+class _NoTasks extends FakeAssessmentRepository {
+  @override
+  Future<List<LearnerTask>> tasks() async => const [];
 }

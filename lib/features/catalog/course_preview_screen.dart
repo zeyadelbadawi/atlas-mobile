@@ -43,31 +43,42 @@ class CoursePreviewScreen extends ConsumerWidget {
                     48,
                   ),
                   child: ReadableWidth(
-                    child: course.when(
-                      data: (c) => _Preview(course: c),
-                      loading: () => const Padding(
-                        padding: EdgeInsets.all(48),
-                        child: Center(
-                          child: CircularProgressIndicator.adaptive(),
-                        ),
-                      ),
-                      error: (e, _) => e is AtlasApiException && e.status == 404
-                          ? Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 40),
-                              child: Text(
-                                l.previewNotFound,
-                                textAlign: TextAlign.center,
-                                style: a.type.body.copyWith(
-                                  color: c.inkSecondary,
+                    // Errors show at once, not after the background retries.
+                    child:
+                        (course.hasError && !course.hasValue
+                                ? AsyncValue<CatalogCourse>.error(
+                                    course.error!,
+                                    course.stackTrace ?? StackTrace.empty,
+                                  )
+                                : course)
+                            .when(
+                              data: (c) => _Preview(course: c),
+                              loading: () => const Padding(
+                                padding: EdgeInsets.all(48),
+                                child: Center(
+                                  child: CircularProgressIndicator.adaptive(),
                                 ),
                               ),
-                            )
-                          : LoadError(
-                              onRetry: () => ref.invalidate(
-                                catalogCourseProvider(idOrSlug),
-                              ),
+                              error: (e, _) =>
+                                  e is AtlasApiException && e.status == 404
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 40,
+                                      ),
+                                      child: Text(
+                                        l.previewNotFound,
+                                        textAlign: TextAlign.center,
+                                        style: a.type.body.copyWith(
+                                          color: c.inkSecondary,
+                                        ),
+                                      ),
+                                    )
+                                  : LoadError(
+                                      onRetry: () => ref.invalidate(
+                                        catalogCourseProvider(idOrSlug),
+                                      ),
+                                    ),
                             ),
-                    ),
                   ),
                 ),
               ],

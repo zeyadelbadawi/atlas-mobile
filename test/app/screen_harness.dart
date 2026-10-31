@@ -105,6 +105,7 @@ Future<ProviderContainer> pumpScreen(
   LearningRepository? learning,
   CatalogRepository? catalog,
   NotificationsRepository? notifications,
+  MobileConfig config = const MobileConfig(signInWithApple: true),
 }) async {
   SharedPreferences.setMockInitialValues({
     'settings.language': language,
@@ -133,9 +134,7 @@ Future<ProviderContainer> pumpScreen(
         family: testBodyFamily,
         fallback: testBodyFallback,
       )),
-      mobileConfigProvider.overrideWith(
-        (ref) async => const MobileConfig(signInWithApple: true),
-      ),
+      mobileConfigProvider.overrideWith((ref) async => config),
       sessionProvider.overrideWith(session),
       learningRepositoryProvider.overrideWithValue(
         learning ?? FakeLearningRepository(),

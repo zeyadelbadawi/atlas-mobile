@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../core/api/api_error.dart';
 import '../../core/clock.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -148,6 +149,12 @@ class AsyncBody<T> extends StatelessWidget {
   }
 
   Widget _body() {
+    // Riverpod keeps retrying a failed load in the background (up to ~40 s)
+    // and reports "loading" meanwhile. Show the failure straight away,
+    // with Retry; a background retry that succeeds still replaces it.
+    if (!value.hasValue && value.hasError) {
+      return LoadError(onRetry: onRetry, error: value.error);
+    }
     return value.when(
       data: data,
       loading: () => const Padding(
@@ -159,33 +166,31 @@ class AsyncBody<T> extends StatelessWidget {
           ),
         ),
       ),
-      error: (e, _) => LoadError(onRetry: onRetry),
+      error: (e, _) => LoadError(onRetry: onRetry, error: e),
     );
   }
 }
 
-/// A failed load: what went wrong (or the generic text) and Retry.
+/// A failed load: "you're offline" when the device has no connection,
+/// otherwise what went wrong (or the generic text), with Retry.
 class LoadError extends StatelessWidget {
-  const LoadError({super.key, required this.onRetry, this.message});
+  const LoadError({super.key, required this.onRetry, this.message, this.error});
   final VoidCallback onRetry;
   final String? message;
+  final Object? error;
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(AtlasSpace.gutter),
-    child: Column(
-      children: [
-        AtlasBanner(
-          kind: AtlasBannerKind.error,
-          message: message ?? context.l10n.loadFailed,
-        ),
-        const SizedBox(height: AtlasSpace.s12),
-        AtlasButton(
-          label: context.l10n.commonRetry,
-          style: AtlasButtonStyle.tonal,
-          onPressed: onRetry,
-        ),
-      ],
-    ),
-  );
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final e = error;
+    final offline = e is AtlasApiException && e.kind == 'network';
+    return EmptyState(
+      icon: offline ? LucideIcons.wifiOff : LucideIcons.cloudAlert,
+      danger: !offline,
+      title: offline ? l.offlineTitle : l.loadFailedTitle,
+      body: offline ? l.offlineBody : message ?? l.loadFailed,
+      actionLabel: l.commonRetry,
+      onAction: onRetry,
+    );
+  }
 }

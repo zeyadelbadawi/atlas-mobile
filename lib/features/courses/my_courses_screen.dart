@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../app/learning_providers.dart';
 import '../../app/providers.dart';
@@ -91,17 +92,13 @@ class _MyCoursesScreenState extends ConsumerState<MyCoursesScreen> {
                         _ => list,
                       }.toList();
                       if (shown.isEmpty) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 40),
-                          child: Text(
-                            list.isEmpty
-                                ? l.homeEmptyTitle
-                                : l.coursesNoneInFilter,
-                            textAlign: TextAlign.center,
-                            style: a.type.body.copyWith(
-                              color: a.colors.inkSecondary,
-                            ),
-                          ),
+                        return EmptyState(
+                          icon: list.isEmpty
+                              ? LucideIcons.bookOpen
+                              : LucideIcons.listFilter,
+                          title: list.isEmpty
+                              ? l.homeEmptyTitle
+                              : l.coursesNoneInFilter,
                         );
                       }
                       return Column(

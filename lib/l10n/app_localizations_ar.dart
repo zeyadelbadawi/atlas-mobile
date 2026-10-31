@@ -635,6 +635,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountDevices => 'أجهزتي';
 
   @override
+  String get offlineTitle => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get offlineBody =>
+      'تحقّق من اتصال الواي فاي أو بيانات الهاتف، ثم أعد المحاولة.';
+
+  @override
+  String get loadFailedTitle => 'تعذّر التحميل';
+
+  @override
   String get loadFailed => 'لم يتم التحميل. تحقّق من اتصالك وحاول مرة أخرى.';
 
   @override

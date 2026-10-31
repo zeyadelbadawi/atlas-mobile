@@ -96,32 +96,8 @@ class _Empty extends StatelessWidget {
   final String? body;
 
   @override
-  Widget build(BuildContext context) {
-    final a = context.atlas;
-    final c = a.colors;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 32),
-      child: Column(
-        children: [
-          Icon(LucideIcons.award, size: 36, color: c.inkTertiary),
-          const SizedBox(height: 12),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: a.type.title3.copyWith(color: c.ink),
-          ),
-          if (body != null) ...[
-            const SizedBox(height: 4),
-            Text(
-              body!,
-              textAlign: TextAlign.center,
-              style: a.type.subhead.copyWith(color: c.inkSecondary),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) =>
+      EmptyState(icon: LucideIcons.award, title: title, body: body);
 }
 
 class CertificateCard extends ConsumerStatefulWidget {
