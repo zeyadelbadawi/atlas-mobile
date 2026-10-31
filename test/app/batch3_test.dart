@@ -1,10 +1,12 @@
 import 'package:atlas_mobile/app/notes.dart';
 import 'package:atlas_mobile/app/providers.dart';
+import 'package:atlas_mobile/core/learning/assessment_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../design/golden_harness.dart';
+import 'fake_assessment.dart';
 import 'fake_catalog.dart';
 import 'fake_learning.dart';
 import 'screen_harness.dart';
@@ -127,4 +129,62 @@ void main() {
       expect(n.copyWith(saved: true).isEmpty, isFalse);
     });
   });
+
+  group('due dates in the calendar', () {
+    testWidgets('an assignment still to do: its due date goes in', (t) async {
+      final added = <({String title, String description, DateTime dueAt})>[];
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/c-calc/assignment/a1',
+        size: const Size(393, 1400),
+        assessments: _NotSubmitted(),
+        calendar: (e) async {
+          added.add(e);
+          return true;
+        },
+      );
+      await t.tap(find.text('إضافة إلى التقويم'));
+      await t.pump();
+      expect(added.single.title, 'موعد التسليم: واجب: تمارين النهايات');
+      expect(added.single.description, 'الواجب');
+      expect(
+        added.single.dueAt.isAtSameMomentAs(
+          testNow.add(const Duration(days: 3)),
+        ),
+        isTrue,
+      );
+    });
+
+    testWidgets('says so when the calendar cannot open', (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/c-calc/assignment/a1',
+        size: const Size(393, 1400),
+        assessments: _NotSubmitted(),
+        calendar: (_) async => false,
+      );
+      await t.tap(find.text('إضافة إلى التقويم'));
+      await t.pump();
+      expect(find.text('تعذّر فتح التقويم.'), findsOneWidget);
+    });
+
+    testWidgets('not offered once the work is submitted', (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/c-calc/assignment/a1',
+        size: const Size(393, 1400),
+      );
+      expect(find.text('إضافة إلى التقويم'), findsNothing);
+    });
+  });
+}
+
+/// An assignment not handed in yet.
+class _NotSubmitted extends FakeAssessmentRepository {
+  @override
+  Future<AssignmentSubmission?> submission(String courseId, String id) async =>
+      null;
 }

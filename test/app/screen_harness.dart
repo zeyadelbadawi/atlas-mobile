@@ -8,6 +8,7 @@ import 'package:atlas_mobile/app/deep_links.dart';
 import 'package:atlas_mobile/app/learning_providers.dart';
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/app/reminders.dart';
+import 'package:atlas_mobile/core/platform/calendar.dart';
 import 'package:atlas_mobile/core/reminders/local_reminders.dart';
 import 'package:atlas_mobile/core/academy/academy_directory.dart';
 import 'package:atlas_mobile/app/push.dart';
@@ -114,6 +115,7 @@ Future<ProviderContainer> pumpScreen(
   Map<String, Object> prefs = const {},
   List<Academy>? recent,
   LocalReminders? reminders,
+  AddToCalendar? calendar,
 }) async {
   SharedPreferences.setMockInitialValues({
     ...prefs,
@@ -167,6 +169,7 @@ Future<ProviderContainer> pumpScreen(
       deepLinkProvider.overrideWith(NoLinks.new),
       splashEnabledProvider.overrideWithValue(false),
       localRemindersProvider.overrideWithValue(reminders ?? FakeReminders()),
+      addToCalendarProvider.overrideWithValue(calendar ?? (_) async => true),
     ],
   );
   addTearDown(container.dispose);

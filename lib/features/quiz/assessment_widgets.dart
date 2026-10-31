@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../../app/push.dart';
 import '../../app/ui_helpers.dart';
+import '../../core/clock.dart';
+import '../../core/platform/calendar.dart';
 import '../../design/design.dart';
 
 /// `85٪` in Arabic, `85%` in English.
@@ -334,6 +338,49 @@ class Panel extends StatelessWidget {
         borderRadius: BorderRadius.circular(AtlasRadius.xl),
       ),
       child: child,
+    );
+  }
+}
+
+/// Under a due date that is still ahead: puts it in the phone's calendar.
+class AddToCalendarButton extends ConsumerWidget {
+  const AddToCalendarButton({
+    super.key,
+    required this.title,
+    required this.kind,
+    required this.dueAt,
+  });
+
+  final String title;
+
+  /// "Assignment" / "Quiz", as the event's note.
+  final String kind;
+  final DateTime dueAt;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    if (!dueAt.isAfter(clockNow())) return const SizedBox.shrink();
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: TextButton.icon(
+        key: const ValueKey('add-to-calendar'),
+        icon: const Icon(LucideIcons.calendarPlus, size: 18),
+        label: Text(l.calendarAdd),
+        onPressed: () async {
+          final ok = await ref.read(addToCalendarProvider)((
+            title: l.calendarEventTitle(title),
+            description: kind,
+            dueAt: dueAt,
+          ));
+          ref.read(analyticsProvider).event('calendar_add', {'ok': ok ? 1 : 0});
+          if (!ok && context.mounted) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(SnackBar(content: Text(l.calendarFailed)));
+          }
+        },
+      ),
     );
   }
 }

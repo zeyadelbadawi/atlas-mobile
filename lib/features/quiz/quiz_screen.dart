@@ -321,6 +321,12 @@ class _IntroState extends State<_Intro> {
               ),
               const SizedBox(height: AtlasSpace.s16),
               FactList(facts: facts),
+              if (s.dueAt != null && !noneLeft)
+                AddToCalendarButton(
+                  title: q.title,
+                  kind: l.unitQuiz,
+                  dueAt: s.dueAt!,
+                ),
               if (s.timeLimitSeconds != null) ...[
                 const SizedBox(height: AtlasSpace.s12),
                 Row(

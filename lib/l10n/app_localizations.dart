@@ -3883,6 +3883,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Kept on this phone only. Deleting the app deletes them.'**
   String get notesOnPhone;
+
+  /// No description provided for @calendarAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to calendar'**
+  String get calendarAdd;
+
+  /// No description provided for @calendarEventTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Due: {title}'**
+  String calendarEventTitle(String title);
+
+  /// No description provided for @calendarFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The calendar could not be opened.'**
+  String get calendarFailed;
 }
 
 class _AppLocalizationsDelegate

@@ -432,6 +432,12 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen> {
             ),
           ],
         ),
+        if (asg.dueAt != null && !submitted)
+          AddToCalendarButton(
+            title: asg.title,
+            kind: l.unitAssignment,
+            dueAt: asg.dueAt!,
+          ),
         SectionHeader(title: l.assignmentInstructions),
         SelectionArea(
           child: Text(instructions, style: a.type.body.copyWith(color: c.ink)),

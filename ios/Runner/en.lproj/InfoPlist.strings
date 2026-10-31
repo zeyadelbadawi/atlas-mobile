@@ -1,3 +1,5 @@
 /* Permission prompts (English). Keep in step with Info.plist. */
 "NSCameraUsageDescription" = "Atlas uses the camera only to scan an academy's QR code or to take a photo of your work for an assignment.";
 "NSPhotoLibraryUsageDescription" = "Atlas opens your photos only when you choose one to attach to an assignment.";
+"NSCalendarsUsageDescription" = "Atlas adds a due date to your calendar only when you ask it to.";
+"NSCalendarsWriteOnlyAccessUsageDescription" = "Atlas adds a due date to your calendar only when you ask it to.";

@@ -2224,4 +2224,15 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get notesOnPhone =>
       'محفوظة على هذا الهاتف فقط، وتُحذف إذا حذفت التطبيق.';
+
+  @override
+  String get calendarAdd => 'إضافة إلى التقويم';
+
+  @override
+  String calendarEventTitle(String title) {
+    return 'موعد التسليم: $title';
+  }
+
+  @override
+  String get calendarFailed => 'تعذّر فتح التقويم.';
 }

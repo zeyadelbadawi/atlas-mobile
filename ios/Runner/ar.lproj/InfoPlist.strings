@@ -1,3 +1,5 @@
 /* رسائل طلب الأذونات (العربية). */
 "NSCameraUsageDescription" = "يستخدم Atlas الكاميرا فقط لمسح رمز QR الخاص بالأكاديمية أو لتصوير عملك وإرفاقه بواجب.";
 "NSPhotoLibraryUsageDescription" = "يفتح Atlas صورك فقط عندما تختار صورة لإرفاقها بواجب.";
+"NSCalendarsUsageDescription" = "يضيف Atlas موعد التسليم إلى تقويمك فقط عندما تطلب ذلك.";
+"NSCalendarsWriteOnlyAccessUsageDescription" = "يضيف Atlas موعد التسليم إلى تقويمك فقط عندما تطلب ذلك.";

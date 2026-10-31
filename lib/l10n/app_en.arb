@@ -1307,5 +1307,15 @@
   "notesSaved": "Saved",
   "notesEmptyTitle": "Nothing here yet",
   "notesEmptyBody": "Save a lesson or write a note on it, and it will be here.",
-  "notesOnPhone": "Kept on this phone only. Deleting the app deletes them."
+  "notesOnPhone": "Kept on this phone only. Deleting the app deletes them.",
+  "calendarAdd": "Add to calendar",
+  "calendarEventTitle": "Due: {title}",
+  "@calendarEventTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "calendarFailed": "The calendar could not be opened."
 }

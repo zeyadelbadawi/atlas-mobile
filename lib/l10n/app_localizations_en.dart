@@ -2216,4 +2216,15 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notesOnPhone =>
       'Kept on this phone only. Deleting the app deletes them.';
+
+  @override
+  String get calendarAdd => 'Add to calendar';
+
+  @override
+  String calendarEventTitle(String title) {
+    return 'Due: $title';
+  }
+
+  @override
+  String get calendarFailed => 'The calendar could not be opened.';
 }

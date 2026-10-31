@@ -9,6 +9,7 @@ import 'package:atlas_mobile/app/atlas_app.dart';
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/core/api/api_error.dart';
 import 'package:atlas_mobile/core/academy/academy.dart';
+import 'package:atlas_mobile/core/learning/assessment_models.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/design/design.dart';
 import 'package:atlas_mobile/features/catalog/reviews.dart';
@@ -18,6 +19,7 @@ import 'package:video_player_platform_interface/video_player_platform_interface.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../app/fake_assessment.dart';
 import '../app/fake_catalog.dart';
 import '../app/fake_learning.dart';
 import '../app/fake_video.dart';
@@ -194,6 +196,7 @@ void main() {
   myReviewShots();
   moreCoursesShots();
   notesShots();
+  calendarShots();
 
   shot(
     'lesson_undo',
@@ -648,4 +651,38 @@ void notesShots() {
       prefs: prefs,
     );
   });
+}
+
+/// Batch 3 (B6): a due date into the phone's calendar.
+void calendarShots() {
+  Finder buttonOr(String fallback) {
+    final k = find.byKey(const ValueKey('add-to-calendar'));
+    return k.evaluate().isNotEmpty ? k : find.text(fallback);
+  }
+
+  shot('assignment_calendar', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/c-calc/assignment/a1',
+      size: const Size(393, 1000),
+      assessments: _AssignmentToDo(),
+    );
+  }, focus: () => buttonOr('التعليمات'));
+
+  shot('quiz_calendar', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/c-calc/quiz/q1',
+      size: const Size(393, 1100),
+    );
+  }, focus: () => buttonOr('موعد التسليم'));
+}
+
+/// An assignment not handed in yet.
+class _AssignmentToDo extends FakeAssessmentRepository {
+  @override
+  Future<AssignmentSubmission?> submission(String courseId, String id) async =>
+      null;
 }
