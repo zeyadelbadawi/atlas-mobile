@@ -79,4 +79,12 @@ void main() {
     await t.drag(find.text('Manara'), const Offset(500, 0));
     await t.pumpAndSettle();
   });
+
+  shot('tasks', (t) async {
+    await pumpScreen(t, session: AsSignedIn.new, path: '/tasks');
+  });
+
+  shot('results', (t) async {
+    await pumpScreen(t, session: AsSignedIn.new, path: '/account/results');
+  });
 }

@@ -311,6 +311,12 @@ class ResultRow extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               trailing,
+              // Every row that opens something says so, not only the ones
+              // without a status or a score.
+              if (onTap != null && trailing is! ForwardChevron) ...[
+                const SizedBox(width: 4),
+                const ForwardChevron(),
+              ],
             ],
           ),
         ),
