@@ -1865,6 +1865,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qrTorch => 'Flashlight';
 
   @override
+  String get qrOpenSettings => 'Open Settings';
+
+  @override
+  String get qrTypeInstead => 'Type the academy\'s name';
+
+  @override
   String get qrNoPermission =>
       'Atlas needs the camera to scan the code. Allow it in your phone\'s settings, or type the academy\'s address instead.';
 

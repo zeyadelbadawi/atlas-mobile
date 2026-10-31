@@ -3284,6 +3284,18 @@ abstract class AppLocalizations {
   /// **'Flashlight'**
   String get qrTorch;
 
+  /// No description provided for @qrOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get qrOpenSettings;
+
+  /// No description provided for @qrTypeInstead.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the academy\'s name'**
+  String get qrTypeInstead;
+
   /// No description provided for @qrNoPermission.
   ///
   /// In en, this message translates to:

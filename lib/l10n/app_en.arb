@@ -1066,6 +1066,8 @@
   "qrTitle": "Scan the academy's code",
   "qrHint": "Point the camera at the academy's QR code.",
   "qrTorch": "Flashlight",
+  "qrOpenSettings": "Open Settings",
+  "qrTypeInstead": "Type the academy's name",
   "qrNoPermission": "Atlas needs the camera to scan the code. Allow it in your phone's settings, or type the academy's address instead.",
   "qrUnavailable": "The camera isn't available right now. Type the academy's address instead.",
   "qrNotAcademy": "That code isn't an academy address.",

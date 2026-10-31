@@ -4,6 +4,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../../app/ui_helpers.dart';
+import '../../core/platform/app_settings.dart';
 import '../../design/design.dart';
 
 /// Scans an academy's QR code (its website address, or any page of it)
@@ -62,18 +63,40 @@ class _QrScanScreenState extends State<QrScanScreen> {
       body: MobileScanner(
         controller: _controller,
         onDetect: _onDetect,
-        errorBuilder: (context, error) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(AtlasSpace.gutter),
-            child: Text(
-              error.errorCode == MobileScannerErrorCode.permissionDenied
-                  ? l.qrNoPermission
-                  : l.qrUnavailable,
-              textAlign: TextAlign.center,
-              style: a.type.body.copyWith(color: Colors.white),
+        errorBuilder: (context, error) {
+          final denied =
+              error.errorCode == MobileScannerErrorCode.permissionDenied;
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AtlasSpace.gutter),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    denied ? l.qrNoPermission : l.qrUnavailable,
+                    textAlign: TextAlign.center,
+                    style: a.type.body.copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(height: AtlasSpace.s20),
+                  // A way out in both directions: allow the camera, or go
+                  // back and type the name.
+                  if (denied)
+                    AtlasButton(
+                      label: l.qrOpenSettings,
+                      icon: LucideIcons.settings,
+                      onPressed: openAppSettings,
+                    ),
+                  const SizedBox(height: AtlasSpace.s8),
+                  TextButton(
+                    style: TextButton.styleFrom(foregroundColor: Colors.white),
+                    onPressed: () => Navigator.maybePop(context),
+                    child: Text(l.qrTypeInstead),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
         overlayBuilder: (context, constraints) =>
             ScanViewfinder(size: constraints.biggest, hint: l.qrHint),
       ),

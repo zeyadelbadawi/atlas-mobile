@@ -1877,6 +1877,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get qrTorch => 'الكشاف';
 
   @override
+  String get qrOpenSettings => 'فتح الإعدادات';
+
+  @override
+  String get qrTypeInstead => 'كتابة اسم الأكاديمية';
+
+  @override
   String get qrNoPermission =>
       'يحتاج Atlas إلى الكاميرا لمسح الرمز. اسمح بها من إعدادات هاتفك، أو اكتب عنوان الأكاديمية بدلًا من ذلك.';
 

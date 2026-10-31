@@ -1,5 +1,8 @@
 package com.atlas.atlas_mobile
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.view.WindowManager
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -26,6 +29,19 @@ class MainActivity : FlutterActivity() {
                     }
                     "isCaptured" -> result.success(false)
                     else -> result.notImplemented()
+                }
+            }
+        // "Open settings" where a permission was refused (the QR camera).
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "atlas/app_settings")
+            .setMethodCallHandler { call, result ->
+                if (call.method == "open") {
+                    val intent = Intent(
+                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts("package", packageName, null),
+                    ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    result.success(runCatching { startActivity(intent) }.isSuccess)
+                } else {
+                    result.notImplemented()
                 }
             }
     }
