@@ -643,5 +643,12 @@
   "coursesSearch": "ابحث في كورساتك ودروسك",
   "coursesSearchCourses": "الكورسات",
   "coursesSearchLessons": "الدروس",
-  "coursesSearchNone": "لا توجد نتائج لـ «{query}»."
+  "coursesSearchNone": "لا توجد نتائج لـ «{query}».",
+  "shortcutContinue": "متابعة التعلّم",
+  "widgetContinue": "متابعة التعلّم",
+  "widgetSignIn": "سجّل الدخول إلى أطلس لترى كورساتك هنا.",
+  "widgetNothing": "لا يوجد كورس جارٍ. افتح أطلس لتبدأ.",
+  "widgetNext": "التالي: {title}",
+  "widgetPercent": "تم {percent}٪",
+  "widgetDue": "التسليم {when}: {title}"
 }

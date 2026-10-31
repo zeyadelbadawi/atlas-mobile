@@ -8,10 +8,12 @@ import '../features/system/splash_overlay.dart';
 import '../features/system/system_screens.dart';
 import '../l10n/app_localizations.dart';
 import 'deep_links.dart';
+import 'home_widgets.dart';
 import 'lesson_outbox.dart';
 import 'providers.dart';
 import 'push.dart';
 import 'reminders.dart';
+import 'shortcuts.dart';
 import 'router.dart';
 
 class AtlasApp extends ConsumerWidget {
@@ -46,6 +48,18 @@ class AtlasApp extends ConsumerWidget {
 
     // Lessons marked done offline: sent when the connection returns.
     ref.watch(lessonOutboxProvider);
+
+    // The home-screen widget: kept current, and its taps opened.
+    ref.watch(homeWidgetSyncProvider);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ref.read(homeWidgetSyncProvider.notifier).attach(),
+    );
+
+    // App icon shortcuts (long press): kept in step with the session.
+    ref.watch(shortcutsProvider);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ref.read(shortcutsProvider.notifier).attach(),
+    );
 
     // Study and due-date reminders: kept in step with the session.
     ref.watch(remindersProvider);

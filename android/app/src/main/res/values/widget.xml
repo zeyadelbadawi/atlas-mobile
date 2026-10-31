@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The "Continue learning" home-screen widget: Atlas's own tokens
+     (lib/design/tokens), light. Dark is in values-night/widget.xml. -->
+<resources>
+    <color name="widget_surface">#FFFFFF</color>
+    <color name="widget_ink">#141A29</color>
+    <color name="widget_ink_secondary">#5C657A</color>
+    <color name="widget_accent">#1B398D</color>
+    <color name="widget_gold">#8A5A00</color>
+    <color name="widget_track">#E8EDFA</color>
+    <color name="widget_progress">#E0A424</color>
+
+    <string name="widget_label">Continue learning</string>
+    <string name="widget_description">Your course in progress, its next lesson and your nearest due date.</string>
+    <string name="widget_preview_course">Calculus</string>
+    <string name="widget_preview_lesson">Next: One-sided limits</string>
+    <string name="widget_preview_percent">29% done</string>
+    <string name="widget_preview_due">Due Tue 8:00 PM: Continuity homework</string>
+</resources>

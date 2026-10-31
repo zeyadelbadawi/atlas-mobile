@@ -3961,6 +3961,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing matches “{query}”.'**
   String coursesSearchNone(String query);
+
+  /// No description provided for @shortcutContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue learning'**
+  String get shortcutContinue;
+
+  /// No description provided for @widgetContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue learning'**
+  String get widgetContinue;
+
+  /// No description provided for @widgetSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to Atlas to see your courses here.'**
+  String get widgetSignIn;
+
+  /// No description provided for @widgetNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No course in progress. Open Atlas to start one.'**
+  String get widgetNothing;
+
+  /// No description provided for @widgetNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {title}'**
+  String widgetNext(String title);
+
+  /// No description provided for @widgetPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% done'**
+  String widgetPercent(String percent);
+
+  /// No description provided for @widgetDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {when}: {title}'**
+  String widgetDue(String title, String when);
 }
 
 class _AppLocalizationsDelegate

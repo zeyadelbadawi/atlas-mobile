@@ -2268,4 +2268,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String coursesSearchNone(String query) {
     return 'لا توجد نتائج لـ «$query».';
   }
+
+  @override
+  String get shortcutContinue => 'متابعة التعلّم';
+
+  @override
+  String get widgetContinue => 'متابعة التعلّم';
+
+  @override
+  String get widgetSignIn => 'سجّل الدخول إلى أطلس لترى كورساتك هنا.';
+
+  @override
+  String get widgetNothing => 'لا يوجد كورس جارٍ. افتح أطلس لتبدأ.';
+
+  @override
+  String widgetNext(String title) {
+    return 'التالي: $title';
+  }
+
+  @override
+  String widgetPercent(String percent) {
+    return 'تم $percent٪';
+  }
+
+  @override
+  String widgetDue(String title, String when) {
+    return 'التسليم $when: $title';
+  }
 }

@@ -75,6 +75,19 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Atlas uses the camera only to scan an academy's QR code or to take a photo of your work for an assignment.</string>
+	<!-- Taps on the home-screen widget (AtlasWidget) come back as
+	     atlaswidget://open?homeWidget&path=…, read by home_widget. -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.atlas.atlasMobile.widget</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>atlaswidget</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Atlas adds a due date to your calendar only when you ask it to.</string>
 	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>

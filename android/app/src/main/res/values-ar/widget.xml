@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_label">متابعة التعلّم</string>
+    <string name="widget_description">الكورس الجاري، ودرسك التالي، وأقرب موعد تسليم.</string>
+    <string name="widget_preview_course">التفاضل والتكامل</string>
+    <string name="widget_preview_lesson">التالي: النهايات من جهة واحدة</string>
+    <string name="widget_preview_percent">تم ٢٩٪</string>
+    <string name="widget_preview_due">التسليم الثلاثاء ٨:٠٠ م: واجب الاتصال</string>
+</resources>

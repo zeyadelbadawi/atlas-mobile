@@ -1334,5 +1334,36 @@
         "type": "String"
       }
     }
+  },
+  "shortcutContinue": "Continue learning",
+  "widgetContinue": "Continue learning",
+  "widgetSignIn": "Sign in to Atlas to see your courses here.",
+  "widgetNothing": "No course in progress. Open Atlas to start one.",
+  "widgetNext": "Next: {title}",
+  "@widgetNext": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetPercent": "{percent}% done",
+  "@widgetPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetDue": "Due {when}: {title}",
+  "@widgetDue": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
   }
 }

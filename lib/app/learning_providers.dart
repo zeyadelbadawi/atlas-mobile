@@ -8,6 +8,7 @@ import '../core/learning/catalog_repository.dart';
 import '../core/learning/learning_models.dart';
 import '../core/learning/learning_repository.dart';
 import 'providers.dart';
+import 'home_widgets.dart';
 import 'reminders.dart';
 
 /// The learning API for the signed-in academy. Rebuilt when the session
@@ -60,6 +61,8 @@ void refreshLearning(WidgetRef ref, String courseId) {
   ref.invalidate(completionProvider(courseId));
   ref.invalidate(overviewProvider);
   ref.invalidate(enrollmentsProvider);
+  // The home-screen widget shows the progress too.
+  unawaited(ref.read(homeWidgetSyncProvider.notifier).refresh(force: true));
 }
 
 /* ---- assessments (phase 4) ---- */

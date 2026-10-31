@@ -2260,4 +2260,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String coursesSearchNone(String query) {
     return 'Nothing matches “$query”.';
   }
+
+  @override
+  String get shortcutContinue => 'Continue learning';
+
+  @override
+  String get widgetContinue => 'Continue learning';
+
+  @override
+  String get widgetSignIn => 'Sign in to Atlas to see your courses here.';
+
+  @override
+  String get widgetNothing => 'No course in progress. Open Atlas to start one.';
+
+  @override
+  String widgetNext(String title) {
+    return 'Next: $title';
+  }
+
+  @override
+  String widgetPercent(String percent) {
+    return '$percent% done';
+  }
+
+  @override
+  String widgetDue(String title, String when) {
+    return 'Due $when: $title';
+  }
 }
