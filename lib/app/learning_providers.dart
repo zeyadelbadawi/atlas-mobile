@@ -148,3 +148,20 @@ final recommendationsProvider = FutureProvider.autoDispose
       (ref, courseId) =>
           ref.watch(catalogRepositoryProvider).recommendations(courseId),
     );
+
+/// Every enrolled course's outline, for searching lessons by name. Read
+/// only while the learner searches.
+final searchIndexProvider = FutureProvider.autoDispose<List<CourseSequence>>((
+  ref,
+) async {
+  final courses = await ref.watch(enrollmentsProvider.future);
+  final repo = ref.watch(learningRepositoryProvider);
+  final outlines = await Future.wait(
+    courses.map(
+      (c) => repo
+          .sequence(c.courseId)
+          .then<CourseSequence?>((s) => s, onError: (Object _) => null),
+    ),
+  );
+  return outlines.whereType<CourseSequence>().toList();
+});

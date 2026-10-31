@@ -199,6 +199,7 @@ void main() {
   notesShots();
   calendarShots();
   lockShots();
+  searchShots();
 
   shot(
     'lesson_undo',
@@ -716,4 +717,40 @@ void lockShots() {
       prefs: {'security.appLock': true},
     );
   });
+}
+
+/// Batch 3 (B9): search in My courses.
+void searchShots() {
+  shot(
+    'courses_search',
+    (t) async {
+      await pumpScreen(t, session: AsSignedIn.new, path: '/courses');
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('courses-search'));
+      return k.evaluate().isNotEmpty ? k : find.text('الكل');
+    },
+  );
+
+  shot(
+    'courses_search_results',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/courses',
+        size: const Size(393, 1300),
+      );
+      final field = find.byType(TextField);
+      if (field.evaluate().isNotEmpty) {
+        await t.enterText(field.first, 'نهايات');
+        await t.pump();
+        await t.pump(const Duration(milliseconds: 300));
+      }
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('courses-search-results'));
+      return k.evaluate().isNotEmpty ? k : find.text('الكل');
+    },
+  );
 }

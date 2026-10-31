@@ -2,6 +2,7 @@ import 'package:atlas_mobile/app/app_lock.dart';
 import 'package:atlas_mobile/app/notes.dart';
 import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/core/learning/assessment_models.dart';
+import 'package:atlas_mobile/core/text/search_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -227,6 +228,48 @@ void main() {
       await t.pump();
       await t.pump();
       expect(find.byKey(const ValueKey('app-lock')), findsNothing);
+    });
+  });
+
+  group('search in My courses', () {
+    test('Arabic is matched the way people type it', () {
+      expect(searchMatches('النهايات من جهة واحدة', 'نهايات واحده'), isTrue);
+      expect(searchMatches('إحصاء', 'احصاء'), isTrue);
+      expect(searchMatches('مُقَدِّمَة', 'مقدمه'), isTrue);
+      expect(searchMatches('Organic Chemistry', 'chem org'), isTrue);
+      expect(searchMatches('الفيزياء', 'كيمياء'), isFalse);
+    });
+
+    testWidgets('finds courses and lessons; a lesson opens', (t) async {
+      await pumpScreen(t, session: AsSignedIn.new, path: '/courses');
+      await t.enterText(find.byType(TextField).first, 'النهايات');
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 300));
+      expect(find.text('الدروس'), findsOneWidget);
+      // Every course has the same sample outline: one hit per course.
+      expect(find.text('النهايات من جهة واحدة'), findsWidgets);
+      await t.tap(find.text('مقدمة عن النهايات').first);
+      await t.pumpAndSettle(const Duration(milliseconds: 100));
+      // The lesson screen (its files section).
+      expect(find.text('ملفات الدرس'), findsOneWidget);
+    });
+
+    testWidgets('a course by its teacher; nothing found says so', (t) async {
+      await pumpScreen(t, session: AsSignedIn.new, path: '/courses');
+      await t.enterText(find.byType(TextField).first, 'منى');
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 300));
+      expect(find.text('الكورسات'), findsOneWidget);
+      expect(find.text('الفيزياء: الكهربية'), findsOneWidget);
+
+      await t.enterText(find.byType(TextField).first, 'تاريخ');
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 300));
+      expect(find.text('لا توجد نتائج لـ «تاريخ».'), findsOneWidget);
+
+      await t.tap(find.byTooltip('مسح البحث'));
+      await t.pump();
+      expect(find.text('الكل'), findsOneWidget);
     });
   });
 }
