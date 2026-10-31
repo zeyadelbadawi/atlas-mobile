@@ -2720,6 +2720,12 @@ abstract class AppLocalizations {
   /// **'Change password'**
   String get securityChangePassword;
 
+  /// No description provided for @securityCurrentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Type your current password.'**
+  String get securityCurrentRequired;
+
   /// No description provided for @securityCurrentPassword.
   ///
   /// In en, this message translates to:

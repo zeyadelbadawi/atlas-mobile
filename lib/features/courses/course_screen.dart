@@ -235,7 +235,7 @@ class _Course extends ConsumerWidget {
               item: item,
               current: item.id == next?.id && !s.finished,
               onTap: item.isLocked
-                  ? null
+                  ? () => explainLocked(context, item)
                   : () => openItem(context, ref, s, item),
             ),
         ],
@@ -364,8 +364,10 @@ class CourseOutline extends ConsumerWidget {
             SyllabusRow(
               item: item,
               current: item.id == openId,
-              onTap: item.isLocked || item.id == openId
+              onTap: item.id == openId
                   ? null
+                  : item.isLocked
+                  ? () => explainLocked(context, item)
                   : () => openItem(context, ref, s, item, replace: true),
             ),
         ],
@@ -473,4 +475,14 @@ class SyllabusRow extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A tap on a locked item says why it is locked, instead of doing nothing.
+void explainLocked(BuildContext context, SequenceItem item) {
+  final why = lockText(context, item);
+  if (why == null) return;
+  HapticFeedback.selectionClick();
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(SnackBar(content: Text(why)));
 }

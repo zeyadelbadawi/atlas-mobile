@@ -108,8 +108,10 @@ Future<ProviderContainer> pumpScreen(
   NotificationsRepository? notifications,
   MobileConfig config = const MobileConfig(signInWithApple: true),
   AcademyDirectory? directory,
+  Map<String, Object> prefs = const {},
 }) async {
   SharedPreferences.setMockInitialValues({
+    ...prefs,
     'settings.language': language,
     'settings.theme': theme.name,
     'academy.recent': [
@@ -124,11 +126,11 @@ Future<ProviderContainer> pumpScreen(
       ),
     ],
   });
-  final prefs = await SharedPreferences.getInstance();
+  final store = await SharedPreferences.getInstance();
   await setDevice(tester, size);
   final container = ProviderContainer(
     overrides: [
-      sharedPreferencesProvider.overrideWithValue(prefs),
+      sharedPreferencesProvider.overrideWithValue(store),
       errorCatalogProvider.overrideWithValue(errorCatalog()),
       appVersionProvider.overrideWithValue((version: '1.0.0', build: '1')),
       cookieJarProvider.overrideWithValue(CookieJar()),

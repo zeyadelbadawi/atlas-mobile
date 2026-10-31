@@ -16,6 +16,9 @@ import '../core/errors/error_catalog.dart';
 import 'push.dart';
 
 /// Overridden in main() with the loaded instance.
+/// Where the last email signed in with at [host] is kept.
+String lastEmailKey(String host) => 'signin.lastEmail.$host';
+
 final sharedPreferencesProvider = Provider<SharedPreferences>(
   (ref) => throw UnimplementedError('override sharedPreferencesProvider'),
 );
@@ -248,6 +251,13 @@ class SessionController extends Notifier<SessionState> {
   }
 
   void signedIn(Map<String, dynamic> user) {
+    // Remembered per academy, so the next sign-in (after signing out, a
+    // password change or an expired session) starts with it filled in.
+    final email = user['email'];
+    final host = state.academy?.host;
+    if (email is String && email.isNotEmpty && host != null) {
+      ref.read(sharedPreferencesProvider).setString(lastEmailKey(host), email);
+    }
     state = SessionState(
       status: SessionStatus.signedIn,
       academy: state.academy,

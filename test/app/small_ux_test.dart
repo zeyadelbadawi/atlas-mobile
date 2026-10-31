@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../design/golden_harness.dart';
+import 'fake_learning.dart';
 import 'screen_harness.dart';
 
 /// Small frictions found in the UX review, kept fixed.
@@ -53,5 +54,43 @@ void main() {
     await t.enterText(find.byType(TextField).first, 'زياد البدوي');
     await t.pump();
     expect(nameSave().onPressed, isNull);
+  });
+
+  testWidgets('sign-in starts with the email last used at this academy', (
+    t,
+  ) async {
+    await pumpScreen(
+      t,
+      session: AsSignedOut.new,
+      prefs: {'signin.lastEmail.ziadd.atlass.dpdns.org': 'zeyad@example.com'},
+    );
+    expect(find.text('zeyad@example.com'), findsOneWidget);
+  });
+
+  testWidgets('a locked lesson says why when tapped', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}',
+      size: const Size(393, 1600),
+    );
+    await t.tap(find.text('تعريف الاتصال'));
+    await t.pump();
+    expect(
+      find.descendant(
+        of: find.byType(SnackBar),
+        matching: find.text('أكمل العنصر السابق أولًا'),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('change password: an empty current password says what to do', (
+    t,
+  ) async {
+    await pumpScreen(t, session: AsSignedIn.new, path: '/account/security');
+    await t.tap(find.widgetWithText(AtlasButton, 'تغيير كلمة المرور'));
+    await t.pump();
+    expect(find.text('اكتب كلمة المرور الحالية.'), findsOneWidget);
   });
 }

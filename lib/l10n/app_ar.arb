@@ -437,6 +437,7 @@
   "profileVerifySent": "أرسلنا رابطًا إلى {email}. افتحه على هذا الهاتف لتأكيد بريدك الإلكتروني.",
   "securityTitle": "كلمة المرور وتسجيلات الدخول",
   "securityChangePassword": "تغيير كلمة المرور",
+  "securityCurrentRequired": "اكتب كلمة المرور الحالية.",
   "securityCurrentPassword": "كلمة المرور الحالية",
   "securityNewPassword": "كلمة المرور الجديدة",
   "securityConfirmPassword": "تأكيد كلمة المرور الجديدة",

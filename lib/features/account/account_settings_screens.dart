@@ -296,7 +296,7 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
   Future<void> _change() async {
     final l = context.l10n;
     setState(() {
-      _currentError = _current.text.isEmpty ? l.securityCurrentPassword : null;
+      _currentError = _current.text.isEmpty ? l.securityCurrentRequired : null;
       _nextError = _next.text.length < 8 ? l.securityPasswordTooShort : null;
       _confirmError = _confirm.text != _next.text
           ? l.securityPasswordMismatch
@@ -678,6 +678,13 @@ class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
       if (code == null) return;
       await repo.deleteAccount(challenge, code);
       ref.read(analyticsProvider).event('account_deleted');
+      // The account is gone: forget its email on every academy.
+      final prefs = ref.read(sharedPreferencesProvider);
+      for (final k in prefs.getKeys().where(
+        (k) => k.startsWith(lastEmailKey('')),
+      )) {
+        await prefs.remove(k);
+      }
       if (mounted) _toast(context, l.deleteDone);
       await ref.read(sessionProvider.notifier).signOut();
     } on AtlasApiException catch (e) {

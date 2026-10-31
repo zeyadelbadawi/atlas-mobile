@@ -859,6 +859,7 @@
   },
   "securityTitle": "Password and sign-ins",
   "securityChangePassword": "Change password",
+  "securityCurrentRequired": "Type your current password.",
   "securityCurrentPassword": "Current password",
   "securityNewPassword": "New password",
   "securityConfirmPassword": "Confirm new password",

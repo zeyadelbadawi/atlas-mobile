@@ -1522,6 +1522,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get securityChangePassword => 'Change password';
 
   @override
+  String get securityCurrentRequired => 'Type your current password.';
+
+  @override
   String get securityCurrentPassword => 'Current password';
 
   @override

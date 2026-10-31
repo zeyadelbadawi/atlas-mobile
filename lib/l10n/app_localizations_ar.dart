@@ -1525,6 +1525,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get securityChangePassword => 'تغيير كلمة المرور';
 
   @override
+  String get securityCurrentRequired => 'اكتب كلمة المرور الحالية.';
+
+  @override
   String get securityCurrentPassword => 'كلمة المرور الحالية';
 
   @override

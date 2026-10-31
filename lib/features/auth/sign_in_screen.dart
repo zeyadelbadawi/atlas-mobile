@@ -23,7 +23,17 @@ class SignInScreen extends ConsumerStatefulWidget {
 }
 
 class _SignInScreenState extends ConsumerState<SignInScreen> {
-  late final _email = TextEditingController(text: widget.email);
+  // What the learner typed on the previous screen, otherwise the email
+  // they last signed in to this academy with.
+  late final _email = TextEditingController(
+    text: (widget.email?.isNotEmpty ?? false)
+        ? widget.email
+        : ref
+              .read(sharedPreferencesProvider)
+              .getString(
+                lastEmailKey(ref.read(sessionProvider).academy?.host ?? ''),
+              ),
+  );
   final _password = TextEditingController();
   String? _emailError, _passwordError, _banner;
   bool _busy = false, _notMember = false;
