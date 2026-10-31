@@ -2124,4 +2124,55 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get coursePending =>
       'جزء من تقدّمك محفوظ على الهاتف، وسيُرسل عند عودة الاتصال.';
+
+  @override
+  String get myReviewTitle => 'قيّم هذا الكورس';
+
+  @override
+  String get myReviewPrompt =>
+      'ما رأيك في الكورس؟ رأيك يساعد الطلاب الآخرين على الاختيار.';
+
+  @override
+  String get myReviewYours => 'تقييمك';
+
+  @override
+  String get myReviewPending => 'بانتظار موافقة الأكاديمية';
+
+  @override
+  String get myReviewApproved => 'منشور';
+
+  @override
+  String get myReviewRejected => 'لم يُنشر';
+
+  @override
+  String get myReviewComment => 'تعليق (اختياري)';
+
+  @override
+  String get myReviewCommentHint => 'ما الذي أعجبك؟ وما الذي يمكن تحسينه؟';
+
+  @override
+  String get myReviewSend => 'إرسال التقييم';
+
+  @override
+  String get myReviewEdit => 'تعديل';
+
+  @override
+  String get myReviewDelete => 'حذف';
+
+  @override
+  String get myReviewDeleteTitle => 'حذف تقييمك؟';
+
+  @override
+  String get myReviewSent => 'شكرًا لك. يظهر تقييمك بعد موافقة الأكاديمية.';
+
+  @override
+  String get myReviewDeleted => 'حُذف تقييمك.';
+
+  @override
+  String get myReviewPickStars => 'اختر عدد النجوم.';
+
+  @override
+  String myReviewStar(String n) {
+    return '$n من ٥';
+  }
 }

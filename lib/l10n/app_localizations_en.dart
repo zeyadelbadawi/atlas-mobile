@@ -2114,4 +2114,56 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get coursePending =>
       'Some of your progress is saved on this phone and will be sent when you\'re back online.';
+
+  @override
+  String get myReviewTitle => 'Rate this course';
+
+  @override
+  String get myReviewPrompt =>
+      'What did you think? It helps other learners choose.';
+
+  @override
+  String get myReviewYours => 'Your review';
+
+  @override
+  String get myReviewPending => 'Waiting for the academy to approve it';
+
+  @override
+  String get myReviewApproved => 'Published';
+
+  @override
+  String get myReviewRejected => 'Not published';
+
+  @override
+  String get myReviewComment => 'Comment (optional)';
+
+  @override
+  String get myReviewCommentHint => 'What did you like? What could be better?';
+
+  @override
+  String get myReviewSend => 'Send review';
+
+  @override
+  String get myReviewEdit => 'Edit';
+
+  @override
+  String get myReviewDelete => 'Delete';
+
+  @override
+  String get myReviewDeleteTitle => 'Delete your review?';
+
+  @override
+  String get myReviewSent =>
+      'Thank you. Your review appears once the academy approves it.';
+
+  @override
+  String get myReviewDeleted => 'Your review was deleted.';
+
+  @override
+  String get myReviewPickStars => 'Choose how many stars.';
+
+  @override
+  String myReviewStar(String n) {
+    return '$n out of 5';
+  }
 }

@@ -194,6 +194,56 @@ void main() {
       expect(find.text('أكملت الدرس'), findsOneWidget);
     });
   });
+
+  group('rating an enrolled course', () {
+    Future<FakeLearningRepository> openCourse(WidgetTester t) async {
+      final learning = FakeLearningRepository();
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/${FakeLearningRepository.courseId}',
+        size: const Size(393, 1800),
+        learning: learning,
+      );
+      return learning;
+    }
+
+    testWidgets('four stars and a comment, then waiting for approval', (
+      t,
+    ) async {
+      final learning = await openCourse(t);
+      expect(find.text('قيّم هذا الكورس'), findsOneWidget);
+      await t.ensureVisible(find.byTooltip('٤ من ٥').first);
+      await t.tap(find.byTooltip('٤ من ٥').first);
+      await t.pumpAndSettle();
+      await t.enterText(find.byType(TextField).last, 'شرح ممتاز');
+      await t.tap(find.text('إرسال التقييم'));
+      await t.pumpAndSettle();
+      expect(learning.review?.rating, 4);
+      expect(learning.review?.body, 'شرح ممتاز');
+      expect(find.text('بانتظار موافقة الأكاديمية'), findsOneWidget);
+      expect(find.text('تقييمك'), findsOneWidget);
+    });
+
+    testWidgets('can be deleted after a confirm', (t) async {
+      final learning = FakeLearningRepository();
+      await learning.saveReview('c-calc', rating: 5);
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/${FakeLearningRepository.courseId}',
+        size: const Size(393, 1800),
+        learning: learning,
+      );
+      await t.ensureVisible(find.text('حذف'));
+      await t.tap(find.text('حذف'));
+      await t.pumpAndSettle();
+      await t.tap(find.text('حذف').last);
+      await t.pumpAndSettle();
+      expect(learning.review, isNull);
+      expect(find.text('قيّم هذا الكورس'), findsOneWidget);
+    });
+  });
 }
 
 /// A connection that is down until [online]; or a server that refuses.

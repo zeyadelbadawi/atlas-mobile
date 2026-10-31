@@ -90,12 +90,16 @@ class CourseReview {
       name = (j['studentName'] as String?)?.trim(),
       rating = _int(j['rating']).clamp(1, 5),
       body = (j['body'] as String?)?.trim(),
+      status = j['status'] as String? ?? 'approved',
       createdAt = DateTime.tryParse(j['createdAt'] as String? ?? '');
 
   final String id;
   final String? name;
   final int rating;
   final String? body;
+
+  /// pending (waiting for the academy), approved (public) or rejected.
+  final String status;
   final DateTime? createdAt;
 }
 

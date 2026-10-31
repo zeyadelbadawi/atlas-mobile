@@ -598,5 +598,21 @@
   "lessonQueued": "حُفظ على الهاتف، وسيُرسل عند عودة الاتصال.",
   "lessonUndoQueued": "أُلغي على الهاتف، وسيُرسل عند عودة الاتصال.",
   "lessonPending": "تم، وفي انتظار الاتصال لإرساله.",
-  "coursePending": "جزء من تقدّمك محفوظ على الهاتف، وسيُرسل عند عودة الاتصال."
+  "coursePending": "جزء من تقدّمك محفوظ على الهاتف، وسيُرسل عند عودة الاتصال.",
+  "myReviewTitle": "قيّم هذا الكورس",
+  "myReviewPrompt": "ما رأيك في الكورس؟ رأيك يساعد الطلاب الآخرين على الاختيار.",
+  "myReviewYours": "تقييمك",
+  "myReviewPending": "بانتظار موافقة الأكاديمية",
+  "myReviewApproved": "منشور",
+  "myReviewRejected": "لم يُنشر",
+  "myReviewComment": "تعليق (اختياري)",
+  "myReviewCommentHint": "ما الذي أعجبك؟ وما الذي يمكن تحسينه؟",
+  "myReviewSend": "إرسال التقييم",
+  "myReviewEdit": "تعديل",
+  "myReviewDelete": "حذف",
+  "myReviewDeleteTitle": "حذف تقييمك؟",
+  "myReviewSent": "شكرًا لك. يظهر تقييمك بعد موافقة الأكاديمية.",
+  "myReviewDeleted": "حُذف تقييمك.",
+  "myReviewPickStars": "اختر عدد النجوم.",
+  "myReviewStar": "{n} من ٥"
 }

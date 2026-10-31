@@ -134,3 +134,10 @@ final latestReviewsProvider = FutureProvider.autoDispose
       (ref, courseId) =>
           ref.watch(catalogRepositoryProvider).reviews(courseId, pageSize: 3),
     );
+
+/// The learner's own review of an enrolled course (null when none).
+final myReviewProvider = FutureProvider.autoDispose
+    .family<CourseReview?, String>(
+      (ref, courseId) =>
+          ref.watch(learningRepositoryProvider).myReview(courseId),
+    );

@@ -1268,5 +1268,28 @@
   "lessonQueued": "Saved on this phone. It will be sent when you're back online.",
   "lessonUndoQueued": "Taken back on this phone. It will be sent when you're back online.",
   "lessonPending": "Done, waiting for a connection to send.",
-  "coursePending": "Some of your progress is saved on this phone and will be sent when you're back online."
+  "coursePending": "Some of your progress is saved on this phone and will be sent when you're back online.",
+  "myReviewTitle": "Rate this course",
+  "myReviewPrompt": "What did you think? It helps other learners choose.",
+  "myReviewYours": "Your review",
+  "myReviewPending": "Waiting for the academy to approve it",
+  "myReviewApproved": "Published",
+  "myReviewRejected": "Not published",
+  "myReviewComment": "Comment (optional)",
+  "myReviewCommentHint": "What did you like? What could be better?",
+  "myReviewSend": "Send review",
+  "myReviewEdit": "Edit",
+  "myReviewDelete": "Delete",
+  "myReviewDeleteTitle": "Delete your review?",
+  "myReviewSent": "Thank you. Your review appears once the academy approves it.",
+  "myReviewDeleted": "Your review was deleted.",
+  "myReviewPickStars": "Choose how many stars.",
+  "myReviewStar": "{n} out of 5",
+  "@myReviewStar": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  }
 }

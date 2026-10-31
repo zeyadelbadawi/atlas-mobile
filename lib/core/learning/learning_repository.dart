@@ -1,4 +1,5 @@
 import '../api/atlas_api_client.dart';
+import 'catalog_repository.dart' show CourseReview;
 import 'learning_models.dart';
 
 /// Learner reads and writes for one academy (the client's host).
@@ -72,6 +73,33 @@ class LearningRepository {
     'learning/courses/$courseId/progress/complete-lesson/$lessonId',
     query: {'opId': ?opId, 'clientOpAt': ?clientOpAt},
   );
+
+  /// The learner's own review of a course, in any status, or null.
+  Future<CourseReview?> myReview(String courseId) async {
+    final body = await client.get<dynamic>('courses/$courseId/reviews/mine');
+    return body is Map
+        ? CourseReview.fromJson(Map<String, dynamic>.from(body))
+        : null;
+  }
+
+  /// Writes the learner's review (replacing an earlier one). It waits for
+  /// the academy's approval before anyone else sees it.
+  Future<CourseReview> saveReview(
+    String courseId, {
+    required int rating,
+    String? body,
+  }) async => CourseReview.fromJson(
+    await client.post<Map<String, dynamic>>(
+      'courses/$courseId/reviews',
+      data: {
+        'rating': rating,
+        if (body != null && body.trim().isNotEmpty) 'body': body.trim(),
+      },
+    ),
+  );
+
+  Future<void> deleteReview(String courseId) =>
+      client.delete<dynamic>('courses/$courseId/reviews/mine');
 
   Future<CourseCompletion> completion(String courseId) async =>
       CourseCompletion.fromJson(

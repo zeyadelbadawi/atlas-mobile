@@ -3691,6 +3691,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Some of your progress is saved on this phone and will be sent when you\'re back online.'**
   String get coursePending;
+
+  /// No description provided for @myReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate this course'**
+  String get myReviewTitle;
+
+  /// No description provided for @myReviewPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'What did you think? It helps other learners choose.'**
+  String get myReviewPrompt;
+
+  /// No description provided for @myReviewYours.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review'**
+  String get myReviewYours;
+
+  /// No description provided for @myReviewPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the academy to approve it'**
+  String get myReviewPending;
+
+  /// No description provided for @myReviewApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Published'**
+  String get myReviewApproved;
+
+  /// No description provided for @myReviewRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Not published'**
+  String get myReviewRejected;
+
+  /// No description provided for @myReviewComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment (optional)'**
+  String get myReviewComment;
+
+  /// No description provided for @myReviewCommentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What did you like? What could be better?'**
+  String get myReviewCommentHint;
+
+  /// No description provided for @myReviewSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send review'**
+  String get myReviewSend;
+
+  /// No description provided for @myReviewEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get myReviewEdit;
+
+  /// No description provided for @myReviewDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get myReviewDelete;
+
+  /// No description provided for @myReviewDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your review?'**
+  String get myReviewDeleteTitle;
+
+  /// No description provided for @myReviewSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you. Your review appears once the academy approves it.'**
+  String get myReviewSent;
+
+  /// No description provided for @myReviewDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Your review was deleted.'**
+  String get myReviewDeleted;
+
+  /// No description provided for @myReviewPickStars.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how many stars.'**
+  String get myReviewPickStars;
+
+  /// No description provided for @myReviewStar.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} out of 5'**
+  String myReviewStar(String n);
 }
 
 class _AppLocalizationsDelegate

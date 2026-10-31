@@ -14,6 +14,7 @@ import '../../design/design.dart';
 import '../learning/course_widgets.dart';
 import '../learning/learning_ui.dart';
 import 'completion_card.dart';
+import 'my_review.dart';
 
 /// One course: progress, where to continue, and the syllabus by unit with
 /// the bookmark on the current item.
@@ -243,7 +244,11 @@ class _Course extends ConsumerWidget {
           ),
           const SizedBox(height: AtlasSpace.s16),
         ],
-        if (done) _CompletedCard(courseId: s.courseId),
+        if (done) ...[
+          _CompletedCard(courseId: s.courseId),
+          const SizedBox(height: AtlasSpace.s16),
+          MyReviewCard(courseId: s.courseId),
+        ],
         if (next != null && !s.finished) ...[
           if (done) const SizedBox(height: AtlasSpace.s16),
           AtlasButton(
@@ -270,6 +275,10 @@ class _Course extends ConsumerWidget {
                   ? () => explainLocked(context, item)
                   : () => openItem(context, ref, s, item),
             ),
+        ],
+        if (!done) ...[
+          const SizedBox(height: AtlasSpace.s32),
+          MyReviewCard(courseId: s.courseId),
         ],
       ],
     );

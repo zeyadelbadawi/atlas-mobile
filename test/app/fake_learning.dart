@@ -3,6 +3,7 @@ import 'package:atlas_mobile/core/api/academy_endpoint.dart';
 import '../design/golden_harness.dart' show testNow;
 
 import 'package:atlas_mobile/core/api/atlas_api_client.dart';
+import 'package:atlas_mobile/core/learning/catalog_repository.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/core/learning/learning_repository.dart';
 import 'package:cookie_jar/cookie_jar.dart';
@@ -223,6 +224,28 @@ class FakeLearningRepository extends LearningRepository {
   @override
   Future<CourseSequence> sequence(String courseId) async =>
       CourseSequence.fromJson(sequenceJson);
+
+  /// The learner's own review (none by default).
+  CourseReview? review;
+
+  @override
+  Future<CourseReview?> myReview(String courseId) async => review;
+
+  @override
+  Future<CourseReview> saveReview(
+    String courseId, {
+    required int rating,
+    String? body,
+  }) async => review = CourseReview.fromJson({
+    'id': 'my',
+    'rating': rating,
+    'body': body,
+    'status': 'pending',
+    'createdAt': '2026-10-24T10:00:00Z',
+  });
+
+  @override
+  Future<void> deleteReview(String courseId) async => review = null;
 
   @override
   Future<CourseCompletion> completion(String courseId) async =>

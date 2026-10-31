@@ -191,6 +191,7 @@ void main() {
   speedShots();
   reminderShots();
   offlineShots();
+  myReviewShots();
 
   shot(
     'lesson_undo',
@@ -500,4 +501,59 @@ class _Offline extends FakeLearningRepository {
       retryable: true,
     );
   }
+}
+
+/// Batch 2 (A2): the learner rates an enrolled course.
+void myReviewShots() {
+  Finder cardOr() {
+    final k = find.byKey(const ValueKey('my-review'));
+    return k.evaluate().isNotEmpty ? k : find.text('واجب الاتصال').last;
+  }
+
+  shot('course_rate', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}',
+      size: const Size(393, 1500),
+    );
+  }, focus: cardOr);
+
+  shot(
+    'course_rate_sheet',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/${FakeLearningRepository.courseId}',
+        size: const Size(393, 1500),
+      );
+      final star = find.byTooltip('٤ من ٥');
+      if (star.evaluate().isNotEmpty) {
+        await t.tap(star.first);
+        await t.pump();
+        await t.pump(const Duration(milliseconds: 600));
+      }
+    },
+    focus: () {
+      final sheet = find.byType(BottomSheet);
+      return sheet.evaluate().isNotEmpty ? sheet : cardOr();
+    },
+  );
+
+  shot('course_rated', (t) async {
+    final learning = FakeLearningRepository();
+    await learning.saveReview(
+      FakeLearningRepository.courseId,
+      rating: 4,
+      body: 'شرح واضح والأمثلة كثيرة. أتمنى أسئلة أكثر في الكويز.',
+    );
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}',
+      size: const Size(393, 1500),
+      learning: learning,
+    );
+  }, focus: cardOr);
 }
