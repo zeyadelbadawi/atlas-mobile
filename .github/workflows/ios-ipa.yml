@@ -1,0 +1,43 @@
+name: iOS IPA (unsigned, for sideloading)
+
+# An unsigned IPA for testing on a phone with Sideloadly / AltStore, which
+# sign it with the tester's own Apple ID. Not for the App Store.
+#
+# Runs when asked: "Run workflow" on the Actions tab (once this file is on
+# the default branch), or a push whose commit message contains [ios].
+# macOS minutes cost more than Linux ones, so it never runs on every push.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['claude/**']
+
+env:
+  FLUTTER_VERSION: '3.47.7'
+
+jobs:
+  ipa:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[ios]')
+    name: Build unsigned IPA
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      # No signing here: Sideloadly signs the app with the tester's Apple ID.
+      - run: flutter build ios --release --no-codesign
+      - name: Package the IPA
+        run: |
+          mkdir -p dist/Payload
+          cp -R build/ios/iphoneos/Runner.app dist/Payload/
+          cd dist && zip -qry "atlas-unsigned.ipa" Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-ios-ipa
+          path: dist/atlas-unsigned.ipa
+          retention-days: 14
