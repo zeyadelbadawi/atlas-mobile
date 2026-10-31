@@ -10,6 +10,7 @@ import '../../app/ui_helpers.dart';
 import '../../core/learning/catalog_repository.dart';
 import '../../design/design.dart';
 import '../learning/learning_ui.dart';
+import 'reviews.dart';
 
 /// The academy's free courses: search, page through, open one to preview
 /// and join it. Paid courses are not listed (nothing is sold in the app).
@@ -226,6 +227,12 @@ class CatalogCourseRow extends StatelessWidget {
         mark: context.digits(number.toString().padLeft(2, '0')),
       ),
       status: joined ? l.catalogJoined : l.catalogFree,
+      badge: course.totalReviews == 0
+          ? null
+          : RatingBadge(
+              average: course.averageRating,
+              total: course.totalReviews,
+            ),
       onTap: () => context.push('/catalog/${course.id}'),
     );
   }

@@ -1195,5 +1195,38 @@
     }
   },
   "lessonUndo": "Mark as not done",
-  "lessonUndone": "The lesson is marked as not done."
+  "lessonUndone": "The lesson is marked as not done.",
+  "reviewsTitle": "Student reviews",
+  "reviewsCount": "{count, plural, =1{{n} review} other{{n} reviews}}",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewsSeeAll": "See all reviews",
+  "reviewsLearner": "A learner",
+  "reviewsStars": "{rating} out of 5 stars",
+  "@reviewsStars": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewsStarsRow": "{stars} stars: {count}",
+  "@reviewsStarsRow": {
+    "placeholders": {
+      "stars": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -14,6 +14,7 @@ import '../features/home/home_screen.dart';
 import '../features/assignment/assignment_screen.dart';
 import '../features/catalog/catalog_screen.dart';
 import '../features/catalog/course_preview_screen.dart';
+import '../features/catalog/reviews.dart';
 import '../features/certificates/certificates_screen.dart';
 import '../features/learning/item_redirect_screen.dart';
 import '../features/lesson/lesson_screen.dart';
@@ -162,6 +163,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/catalog/:id',
         builder: (_, s) =>
             CoursePreviewScreen(idOrSlug: s.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/catalog/:id/reviews',
+        builder: (_, s) =>
+            CourseReviewsScreen(courseId: s.pathParameters['id']!),
       ),
       GoRoute(
         path: '/course/:id',

@@ -109,3 +109,15 @@ final isEnrolledProvider = FutureProvider.autoDispose.family<bool, String>(
 final tasksProvider = FutureProvider.autoDispose<List<LearnerTask>>(
   (ref) => ref.watch(assessmentRepositoryProvider).tasks(),
 );
+
+final courseRatingProvider = FutureProvider.autoDispose
+    .family<RatingSummary, String>(
+      (ref, courseId) => ref.watch(catalogRepositoryProvider).rating(courseId),
+    );
+
+/// The few newest reviews the course preview shows.
+final latestReviewsProvider = FutureProvider.autoDispose
+    .family<ReviewsPage, String>(
+      (ref, courseId) =>
+          ref.watch(catalogRepositoryProvider).reviews(courseId, pageSize: 3),
+    );

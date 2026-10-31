@@ -2025,4 +2025,37 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get lessonUndone => 'أُلغي إكمال الدرس.';
+
+  @override
+  String get reviewsTitle => 'تقييمات الطلاب';
+
+  @override
+  String reviewsCount(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n تقييم',
+      many: '$n تقييمًا',
+      few: '$n تقييمات',
+      two: 'تقييمان',
+      one: 'تقييم واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reviewsSeeAll => 'عرض كل التقييمات';
+
+  @override
+  String get reviewsLearner => 'طالب';
+
+  @override
+  String reviewsStars(String rating) {
+    return '$rating من ٥ نجوم';
+  }
+
+  @override
+  String reviewsStarsRow(String stars, String count) {
+    return '$stars نجوم: $count';
+  }
 }

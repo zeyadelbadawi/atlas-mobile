@@ -2015,4 +2015,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lessonUndone => 'The lesson is marked as not done.';
+
+  @override
+  String get reviewsTitle => 'Student reviews';
+
+  @override
+  String reviewsCount(int count, String n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$n reviews',
+      one: '$n review',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reviewsSeeAll => 'See all reviews';
+
+  @override
+  String get reviewsLearner => 'A learner';
+
+  @override
+  String reviewsStars(String rating) {
+    return '$rating out of 5 stars';
+  }
+
+  @override
+  String reviewsStarsRow(String stars, String count) {
+    return '$stars stars: $count';
+  }
 }

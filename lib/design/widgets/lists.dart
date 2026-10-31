@@ -281,6 +281,7 @@ class CourseRow extends StatelessWidget {
     required this.cover,
     this.segments,
     this.status,
+    this.badge,
     this.onTap,
   });
 
@@ -289,6 +290,9 @@ class CourseRow extends StatelessWidget {
   final Widget cover;
   final List<ProgressSegment>? segments;
   final String? status;
+
+  /// Beside the status, e.g. the course's rating.
+  final Widget? badge;
   final VoidCallback? onTap;
 
   @override
@@ -326,11 +330,22 @@ class CourseRow extends StatelessWidget {
                       const SizedBox(height: 10),
                       SegmentedProgress(segments: segments!),
                     ],
-                    if (status != null) ...[
+                    if (status != null || badge != null) ...[
                       const SizedBox(height: 6),
-                      Text(
-                        status!,
-                        style: a.type.caption.copyWith(color: c.inkSecondary),
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          ?badge,
+                          if (status != null)
+                            Text(
+                              status!,
+                              style: a.type.caption.copyWith(
+                                color: c.inkSecondary,
+                              ),
+                            ),
+                        ],
                       ),
                     ],
                   ],

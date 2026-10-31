@@ -56,6 +56,10 @@ class FakeCatalogRepository extends CatalogRepository {
     ),
   ];
 
+  /// A sample course's JSON (the first one for an unknown id).
+  static Map<String, dynamic> raw(String id) =>
+      _courses.firstWhere((c) => c['id'] == id, orElse: () => _courses[0]);
+
   @override
   Future<CatalogPage> freeCourses({int page = 1, String? search}) async =>
       CatalogPage.fromJson({
@@ -88,6 +92,73 @@ class FakeCatalogRepository extends CatalogRepository {
 
   @override
   Future<bool> isEnrolled(String courseId) async => false;
+}
+
+/// The sample catalog with approved reviews.
+class RatedCatalog extends FakeCatalogRepository {
+  @override
+  Future<CatalogPage> freeCourses({int page = 1, String? search}) async {
+    final p = await super.freeCourses();
+    return CatalogPage.fromJson({
+      'items': [for (final c in p.items) _rated(c.id)],
+      'pagination': {'page': 1, 'totalPages': 1},
+    });
+  }
+
+  @override
+  Future<CatalogCourse> course(String idOrSlug) async =>
+      CatalogCourse.fromJson(_rated(idOrSlug));
+
+  Map<String, dynamic> _rated(String id) {
+    final raw = FakeCatalogRepository.raw(id);
+    final (avg, n) = switch (id) {
+      'free-algebra' => (4.6, 23),
+      'free-physics' => (4.2, 8),
+      _ => (0.0, 0),
+    };
+    return {
+      ...raw,
+      'stats': {
+        ...(raw['stats'] as Map<String, dynamic>),
+        'averageRating': avg,
+        'totalReviews': n,
+      },
+    };
+  }
+
+  @override
+  Future<RatingSummary> rating(String courseId) async =>
+      RatingSummary.fromJson({
+        'averageRating': 4.6,
+        'totalReviews': 23,
+        'distribution': {'5': 16, '4': 5, '3': 1, '2': 1, '1': 0},
+      });
+
+  @override
+  Future<ReviewsPage> reviews(
+    String courseId, {
+    int page = 1,
+    int pageSize = 20,
+  }) async => ReviewsPage.fromJson({
+    'items': [
+      {
+        'id': 'r1',
+        'studentName': 'مريم حسن',
+        'rating': 5,
+        'body': 'شرح واضح جدًا، والأمثلة المحلولة ساعدتني أفهم المعادلات.',
+        'createdAt': '2026-10-20T10:00:00Z',
+      },
+      {
+        'id': 'r2',
+        'studentName': 'Omar Khaled',
+        'rating': 4,
+        'body': 'Good course. More practice questions would help.',
+        'createdAt': '2026-10-12T10:00:00Z',
+      },
+      {'id': 'r3', 'rating': 5, 'createdAt': '2026-10-02T10:00:00Z'},
+    ].take(pageSize).toList(),
+    'pagination': {'page': 1, 'totalPages': 1},
+  });
 }
 
 /// Auth calls the link screens make, answered locally.

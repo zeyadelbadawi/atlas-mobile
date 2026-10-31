@@ -1,8 +1,10 @@
+import 'package:atlas_mobile/core/learning/catalog_repository.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../design/golden_harness.dart';
+import 'fake_catalog.dart';
 import 'fake_learning.dart';
 import 'screen_harness.dart';
 
@@ -71,6 +73,60 @@ void main() {
       );
       expect(find.text('أكملت الكورس'), findsOneWidget);
       expect(find.text('متطلبات إنهاء الكورس'), findsNothing);
+    });
+  });
+
+  group('course ratings', () {
+    test('the summary reads every star, missing ones as zero', () {
+      final r = RatingSummary.fromJson({
+        'averageRating': 4.5,
+        'totalReviews': 2,
+        'distribution': {'5': 1, '4': 1},
+      });
+      expect(r.distribution, {1: 0, 2: 0, 3: 0, 4: 1, 5: 1});
+    });
+
+    testWidgets('the catalog shows each rated course\'s rating', (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/catalog',
+        catalog: RatedCatalog(),
+      );
+      expect(find.text('٤٫٦'), findsOneWidget);
+      expect(find.text('٤٫٢'), findsOneWidget);
+      expect(find.text('(٢٣)'), findsOneWidget);
+    });
+
+    testWidgets('the preview shows the reviews and opens all of them', (
+      t,
+    ) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/catalog/free-algebra',
+        size: const Size(393, 2600),
+        catalog: RatedCatalog(),
+      );
+      await t.pump(const Duration(milliseconds: 300));
+      expect(find.text('تقييمات الطلاب'), findsOneWidget);
+      expect(find.text('مريم حسن'), findsOneWidget);
+      expect(find.text('طالب'), findsOneWidget); // no name given
+      await t.tap(find.text('عرض كل التقييمات'));
+      await t.pumpAndSettle(const Duration(milliseconds: 100));
+      expect(find.text('Omar Khaled'), findsOneWidget);
+    });
+
+    testWidgets('a course without reviews shows no reviews section', (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/catalog/free-english',
+        size: const Size(393, 2600),
+        catalog: RatedCatalog(),
+      );
+      await t.pump(const Duration(milliseconds: 300));
+      expect(find.text('تقييمات الطلاب'), findsNothing);
     });
   });
 

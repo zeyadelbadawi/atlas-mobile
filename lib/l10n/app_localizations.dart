@@ -3541,6 +3541,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The lesson is marked as not done.'**
   String get lessonUndone;
+
+  /// No description provided for @reviewsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Student reviews'**
+  String get reviewsTitle;
+
+  /// No description provided for @reviewsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{n} review} other{{n} reviews}}'**
+  String reviewsCount(int count, String n);
+
+  /// No description provided for @reviewsSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all reviews'**
+  String get reviewsSeeAll;
+
+  /// No description provided for @reviewsLearner.
+  ///
+  /// In en, this message translates to:
+  /// **'A learner'**
+  String get reviewsLearner;
+
+  /// No description provided for @reviewsStars.
+  ///
+  /// In en, this message translates to:
+  /// **'{rating} out of 5 stars'**
+  String reviewsStars(String rating);
+
+  /// No description provided for @reviewsStarsRow.
+  ///
+  /// In en, this message translates to:
+  /// **'{stars} stars: {count}'**
+  String reviewsStarsRow(String stars, String count);
 }
 
 class _AppLocalizationsDelegate

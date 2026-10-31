@@ -32,7 +32,10 @@ class CatalogCourse {
       totalQuizzes = _int((j['stats'] as Map?)?['totalQuizzes']),
       totalAssignments = _int((j['stats'] as Map?)?['totalAssignments']),
       durationSeconds = ((j['stats'] as Map?)?['durationSeconds'] as num?)
-          ?.toInt();
+          ?.toInt(),
+      averageRating =
+          ((j['stats'] as Map?)?['averageRating'] as num?)?.toDouble() ?? 0,
+      totalReviews = _int((j['stats'] as Map?)?['totalReviews']);
 
   final String id;
   final String slug;
@@ -56,6 +59,53 @@ class CatalogCourse {
 
   /// Null when no lesson declares a length.
   final int? durationSeconds;
+
+  /// The mean of the approved reviews (0 when there are none).
+  final double averageRating;
+  final int totalReviews;
+}
+
+/// The approved reviews of a course in sum: their mean and how many gave
+/// each number of stars.
+class RatingSummary {
+  RatingSummary.fromJson(Map<String, dynamic> j)
+    : average = (j['averageRating'] as num?)?.toDouble() ?? 0,
+      total = _int(j['totalReviews']),
+      distribution = {
+        for (var star = 1; star <= 5; star++)
+          star: _int((j['distribution'] as Map?)?['$star']),
+      };
+
+  final double average;
+  final int total;
+
+  /// Stars (1..5) → how many reviews gave that many.
+  final Map<int, int> distribution;
+}
+
+/// One approved review, as the academy's website shows it.
+class CourseReview {
+  CourseReview.fromJson(Map<String, dynamic> j)
+    : id = j['id'] as String? ?? '',
+      name = (j['studentName'] as String?)?.trim(),
+      rating = _int(j['rating']).clamp(1, 5),
+      body = (j['body'] as String?)?.trim(),
+      createdAt = DateTime.tryParse(j['createdAt'] as String? ?? '');
+
+  final String id;
+  final String? name;
+  final int rating;
+  final String? body;
+  final DateTime? createdAt;
+}
+
+class ReviewsPage {
+  ReviewsPage.fromJson(Map<String, dynamic> j)
+    : items = _maps(j['items']).map(CourseReview.fromJson).toList(),
+      hasMore = CatalogPage._hasMore(j);
+
+  final List<CourseReview> items;
+  final bool hasMore;
 }
 
 class CatalogPage {
@@ -127,6 +177,24 @@ class CatalogRepository {
     );
     return _maps(body).map(CurriculumSection.fromJson).toList();
   }
+
+  Future<RatingSummary> rating(String courseId) async => RatingSummary.fromJson(
+    await client.get<Map<String, dynamic>>(
+      'public/websites/$academyId/courses/$courseId/rating',
+    ),
+  );
+
+  /// The approved reviews, newest first as the server orders them.
+  Future<ReviewsPage> reviews(
+    String courseId, {
+    int page = 1,
+    int pageSize = 20,
+  }) async => ReviewsPage.fromJson(
+    await client.get<Map<String, dynamic>>(
+      'public/websites/$academyId/courses/$courseId/reviews',
+      query: {'page': page, 'pageSize': pageSize},
+    ),
+  );
 
   /// Whether the learner already holds an enrollment for this course
   /// (`null` body when not).

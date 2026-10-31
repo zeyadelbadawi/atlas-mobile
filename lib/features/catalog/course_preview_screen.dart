@@ -11,6 +11,7 @@ import '../../core/api/api_error.dart';
 import '../../core/learning/catalog_repository.dart';
 import '../../design/design.dart';
 import '../learning/learning_ui.dart';
+import 'reviews.dart';
 
 /// A course the learner may not have joined yet: what it covers, its
 /// content outline, and "Join for free" (or "Open course" once joined).
@@ -222,6 +223,13 @@ class _Preview extends ConsumerWidget {
             style: a.type.subhead.copyWith(color: c.inkSecondary),
           ),
         ],
+        if (course.totalReviews > 0) ...[
+          const SizedBox(height: AtlasSpace.s8),
+          RatingBadge(
+            average: course.averageRating,
+            total: course.totalReviews,
+          ),
+        ],
         const SizedBox(height: AtlasSpace.s12),
         Text(
           facts.join(context.sep),
@@ -289,6 +297,7 @@ class _Preview extends ConsumerWidget {
               ),
           ],
         ],
+        CourseReviewsSection(courseId: course.id, total: course.totalReviews),
       ],
     );
   }

@@ -10,10 +10,12 @@ import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/core/academy/academy.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/design/design.dart';
+import 'package:atlas_mobile/features/catalog/reviews.dart';
 import 'package:atlas_mobile/features/results/results_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../app/fake_catalog.dart';
 import '../app/fake_learning.dart';
 import '../app/screen_harness.dart';
 import '../design/golden_harness.dart';
@@ -179,6 +181,7 @@ void main() {
   );
 
   completionShots();
+  ratingShots();
 
   shot(
     'lesson_undo',
@@ -326,4 +329,40 @@ class _WithRequirements extends FakeLearningRepository {
           'minScore': 70,
         },
       });
+}
+
+/// Batch 1 (A3): course ratings in the catalog and on the course preview.
+void ratingShots() {
+  shot(
+    'catalog_rating',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/catalog',
+        catalog: RatedCatalog(),
+      );
+    },
+    focus: () {
+      final k = find.byType(RatingBadge);
+      return k.evaluate().isNotEmpty ? k.first : find.text('مجاني').first;
+    },
+  );
+
+  shot(
+    'preview_reviews',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/catalog/free-algebra',
+        size: const Size(393, 2600),
+        catalog: RatedCatalog(),
+      );
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('course-reviews'));
+      return k.evaluate().isNotEmpty ? k : find.text('ملخص الوحدة');
+    },
+  );
 }
