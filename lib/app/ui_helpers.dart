@@ -61,15 +61,28 @@ class FormScreen extends StatelessWidget {
     required this.title,
     required this.children,
     this.showTitle = true,
+    this.icon,
+    this.subtitle,
   });
 
   final String title;
   final List<Widget> children;
   final bool showTitle;
 
+  /// Drawn in a tonal tile above the title: what this step is about
+  /// (a letter for an emailed code, a key for a new password).
+  final IconData? icon;
+
+  /// One line under the title, when the step needs it.
+  final String? subtitle;
+
   @override
   Widget build(BuildContext context) {
     final a = context.atlas;
+    final c = a.colors;
+    var order = 0;
+    Widget enter(Widget w) =>
+        w is SizedBox ? w : Entrance(order: order++, child: w);
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -88,16 +101,44 @@ class FormScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (showTitle) ...[
-                  Semantics(
-                    header: true,
-                    child: Text(
-                      title,
-                      style: a.type.title1.copyWith(color: a.colors.ink),
+                  if (icon != null) ...[
+                    enter(
+                      Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Container(
+                          width: 56,
+                          height: 56,
+                          decoration: BoxDecoration(
+                            color: c.tonal,
+                            borderRadius: BorderRadius.circular(AtlasRadius.lg),
+                          ),
+                          child: Icon(icon, color: c.accent, size: 26),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: AtlasSpace.s16),
+                  ],
+                  enter(
+                    Semantics(
+                      header: true,
+                      child: Text(
+                        title,
+                        style: a.type.title1.copyWith(color: c.ink),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: AtlasSpace.s20),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: AtlasSpace.s8),
+                    enter(
+                      Text(
+                        subtitle!,
+                        style: a.type.body.copyWith(color: c.inkSecondary),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: AtlasSpace.s24),
                 ],
-                ...children,
+                for (final w in children) enter(w),
               ],
             ),
           ),

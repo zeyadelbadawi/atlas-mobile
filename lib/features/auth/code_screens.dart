@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:clock/clock.dart';
 
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/ui_helpers.dart';
@@ -87,6 +88,7 @@ class _EmailCodeScreenState extends ConsumerState<EmailCodeScreen> {
     final wait = _resendAt.difference(clock.now()).inSeconds;
     return FormScreen(
       title: l.codeTitle,
+      icon: LucideIcons.mailCheck,
       children: [
         Text(
           l.codeBody(widget.challenge.maskedEmail),
@@ -188,6 +190,7 @@ class _AuthenticatorCodeScreenState
     final a = context.atlas;
     return FormScreen(
       title: l.totpTitle,
+      icon: LucideIcons.shieldCheck,
       children: [
         Text(
           l.totpBody,

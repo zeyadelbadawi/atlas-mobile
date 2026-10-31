@@ -7,6 +7,7 @@ export 'widgets/academy_logo.dart';
 export 'widgets/atlas_banner.dart';
 export 'widgets/atlas_brand.dart';
 export 'widgets/atlas_button.dart';
+export 'widgets/atlas_card.dart';
 export 'widgets/atlas_sidebar.dart';
 export 'widgets/atlas_tab_shell.dart';
 export 'widgets/atlas_text_field.dart';

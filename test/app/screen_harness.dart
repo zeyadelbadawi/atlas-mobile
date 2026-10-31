@@ -168,8 +168,10 @@ Future<ProviderContainer> pumpScreen(
   }
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 600));
-  // Let content that arrived in that pump finish fading in (AsyncBody).
+  // Let content that arrived in that pump finish fading in (AsyncBody) and
+  // rising into place (Entrance, up to ~0.8 s with its stagger).
   await tester.pump(const Duration(milliseconds: 300));
+  await tester.pump(const Duration(milliseconds: 800));
   return container;
 }
 

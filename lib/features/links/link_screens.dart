@@ -77,6 +77,7 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
     final a = context.atlas;
     return FormScreen(
       title: l.verifyTitle,
+      icon: LucideIcons.mailCheck,
       children: [
         switch (_state) {
           _VerifyState.working => Row(
@@ -252,6 +253,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     final academy = ref.watch(sessionProvider).academy;
     return FormScreen(
       title: l.resetTitle,
+      icon: LucideIcons.lockKeyhole,
       children: [
         if (_banner != null) ...[
           AtlasBanner(kind: AtlasBannerKind.error, message: _banner!),

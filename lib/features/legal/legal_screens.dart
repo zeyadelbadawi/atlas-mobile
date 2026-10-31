@@ -41,6 +41,7 @@ class LegalListScreen extends StatelessWidget {
     final l = context.l10n;
     return FormScreen(
       title: l.legalTitle,
+      icon: LucideIcons.scrollText,
       children: [
         SettingsGroup(
           children: [
@@ -155,6 +156,15 @@ class AboutScreen extends ConsumerWidget {
     return FormScreen(
       title: l.aboutTitle,
       children: [
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: AtlasLockup(
+            height: 30,
+            markColor: a.colors.accent,
+            wordColor: a.colors.ink,
+          ),
+        ),
+        const SizedBox(height: AtlasSpace.s16),
         Text(
           l.aboutBody,
           style: a.type.body.copyWith(color: a.colors.inkSecondary),

@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -186,6 +187,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     final l = context.l10n;
     return FormScreen(
       title: l.registerTitle,
+      icon: LucideIcons.userPlus,
       children: [
         if (_existing) ...[
           AtlasBanner(message: l.registerExisting),

@@ -3,6 +3,8 @@ library;
 
 import 'package:atlas_mobile/app/atlas_app.dart';
 import 'package:atlas_mobile/core/auth/auth_repository.dart';
+import 'package:atlas_mobile/design/design.dart';
+import 'package:atlas_mobile/features/academy_picker/qr_scan_screen.dart';
 import 'package:clock/clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -356,6 +358,33 @@ void main() {
   testWidgets('picker_ar_ipad', (t) async {
     await pumpScreen(t, session: AsNoAcademy.new, size: const Size(1032, 1376));
     await _golden(t, 'picker_ar_ipad');
+  }, variant: ios);
+
+  testWidgets('forgot_ar', (t) async {
+    await pumpScreen(t, session: AsSignedOut.new, path: '/academy/forgot');
+    await _golden(t, 'forgot_ar');
+  }, variant: ios);
+
+  testWidgets('qr_viewfinder_ar', (t) async {
+    await setDevice(t, const Size(393, 852));
+    await t.pumpWidget(
+      goldenApp(
+        palette: AcademyPalette.atlas,
+        child: const Material(
+          color: Color(0xFF6B7280),
+          child: ScanViewfinder(
+            size: Size(393, 852),
+            hint: 'وجّه الكاميرا إلى رمز QR الخاص بأكاديميتك',
+          ),
+        ),
+      ),
+    );
+    await t.pump(const Duration(milliseconds: 600));
+    await expectGolden(
+      t,
+      find.byType(MaterialApp),
+      'goldens/qr_viewfinder_ar.png',
+    );
   }, variant: ios);
 
   testWidgets('home_ar_scrolled', (t) async {

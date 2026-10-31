@@ -107,7 +107,7 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
                       children: [
                         Entrance(
                           order: 3,
-                          child: _Sheet(
+                          child: AtlasCard(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
@@ -146,12 +146,11 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
                           ),
                           Entrance(
                             order: 5,
-                            child: _Sheet(
+                            child: AtlasCard(
                               padding: EdgeInsets.zero,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                  AtlasRadius.xl,
-                                ),
+                              clip: true,
+                              child: SizedBox(
+                                width: double.infinity,
                                 child: Column(
                                   children: [
                                     for (final academy in recent)
@@ -263,72 +262,46 @@ class _Hero extends StatelessWidget {
             ),
             ReadableWidth(
               form: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Entrance(
-                    child: AtlasLockup(
-                      height: 24,
-                      markColor: Colors.white,
-                      wordColor: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: AtlasSpace.s40),
-                  Entrance(
-                    order: 1,
-                    child: Semantics(
-                      header: true,
-                      child: Text(
-                        l.pickerTitle,
-                        style: a.type.largeTitle.copyWith(color: Colors.white),
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Entrance(
+                      child: AtlasLockup(
+                        height: 24,
+                        markColor: Colors.white,
+                        wordColor: Colors.white,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: AtlasSpace.s8),
-                  Entrance(
-                    order: 2,
-                    child: Text(
-                      l.pickerBody,
-                      style: a.type.body.copyWith(color: AtlasBrand.navy100),
+                    const SizedBox(height: AtlasSpace.s40),
+                    Entrance(
+                      order: 1,
+                      child: Semantics(
+                        header: true,
+                        child: Text(
+                          l.pickerTitle,
+                          style: a.type.largeTitle.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: AtlasSpace.s8),
+                    Entrance(
+                      order: 2,
+                      child: Text(
+                        l.pickerBody,
+                        style: a.type.body.copyWith(color: AtlasBrand.navy100),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-/// A raised surface with the soft Atlas shadow.
-class _Sheet extends StatelessWidget {
-  const _Sheet({
-    required this.child,
-    this.padding = const EdgeInsets.all(AtlasSpace.s20),
-  });
-  final Widget child;
-  final EdgeInsets padding;
-
-  @override
-  Widget build(BuildContext context) {
-    final c = context.atlas.colors;
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: c.raised,
-        borderRadius: BorderRadius.circular(AtlasRadius.xl),
-        border: Border.all(color: c.rule),
-        boxShadow: [
-          BoxShadow(
-            color: c.shadow,
-            blurRadius: 24,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: child,
     );
   }
 }

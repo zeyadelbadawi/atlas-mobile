@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,6 +54,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     final a = context.atlas;
     return FormScreen(
       title: l.forgotTitle,
+      icon: LucideIcons.keyRound,
       children: [
         Text(
           l.forgotBody,
@@ -137,6 +139,7 @@ class _AppleLinkScreenState extends ConsumerState<AppleLinkScreen> {
     final a = context.atlas;
     return FormScreen(
       title: l.appleLinkTitle,
+      icon: LucideIcons.link,
       children: [
         Text(
           l.appleLinkBody(widget.step.email),
@@ -221,6 +224,7 @@ class _AppleCreateScreenState extends ConsumerState<AppleCreateScreen> {
     final a = context.atlas;
     return FormScreen(
       title: l.appleCreateTitle,
+      icon: LucideIcons.userPlus,
       children: [
         Text(
           l.appleCreateBody,
