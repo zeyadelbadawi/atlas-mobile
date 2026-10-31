@@ -28,8 +28,8 @@ class _AnnouncementsScreenState extends ConsumerState<AnnouncementsScreen> {
     final items = ref.watch(announcementsProvider).value;
     final open = _open ?? items?.firstOrNull?.id;
     final list = _list(context, split ? open : null);
-    return Scaffold(
-      appBar: AppBar(),
+    return ScrollTitleScaffold(
+      title: context.l10n.announcementsTitle,
       body: !split
           ? list
           : SplitView(

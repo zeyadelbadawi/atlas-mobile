@@ -28,8 +28,8 @@ class CertificatesScreen extends ConsumerWidget {
     final a = context.atlas;
     final c = a.colors;
     final value = ref.watch(certificatesProvider);
-    return Scaffold(
-      appBar: AppBar(),
+    return ScrollTitleScaffold(
+      title: l.certificatesTitle,
       body: RefreshIndicator.adaptive(
         onRefresh: () => ref.refresh(certificatesProvider.future),
         child: ListView(

@@ -88,6 +88,31 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
     }
   }
 
+  /// Swiped away: gone at once, with Undo (no "are you sure?").
+  Future<void> _removeRecent(Academy academy) async {
+    final store = ref.read(academyStoreProvider);
+    final l = context.l10n;
+    final messenger = ScaffoldMessenger.of(context);
+    final index = store.recent.indexWhere((a) => a.host == academy.host);
+    await store.removeRecent(academy);
+    if (!mounted) return;
+    setState(() {});
+    messenger
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(l.pickerRemoved(academy.name)),
+          action: SnackBarAction(
+            label: l.commonUndo,
+            onPressed: () async {
+              await store.restoreRecent(academy, index);
+              if (mounted) setState(() {});
+            },
+          ),
+        ),
+      );
+  }
+
   Future<void> _scan() async {
     final value = await context.push<String>('/picker/scan');
     if (value == null || !mounted) return;
@@ -245,10 +270,8 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
                                             ),
                                           ),
                                         ),
-                                        onDismissed: (_) async {
-                                          await store.removeRecent(academy);
-                                          setState(() {});
-                                        },
+                                        onDismissed: (_) =>
+                                            _removeRecent(academy),
                                         child: AcademyRow(
                                           name: academy.name,
                                           host: academy.host,

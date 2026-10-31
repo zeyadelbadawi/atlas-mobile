@@ -88,8 +88,9 @@ class FormScreen extends StatelessWidget {
     var order = 0;
     Widget enter(Widget w) =>
         w is SizedBox ? w : Entrance(order: order++, child: w);
-    return Scaffold(
-      appBar: AppBar(),
+    return ScrollTitleScaffold(
+      title: title,
+      showAfter: icon != null ? 110 : 40,
       body: SafeArea(
         top: false,
         child: SingleChildScrollView(

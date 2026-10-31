@@ -212,6 +212,18 @@ abstract class AppLocalizations {
   /// **'No academy found at {host}. Check the name, or ask your academy for its link.'**
   String pickerNotFound(String host);
 
+  /// No description provided for @commonUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get commonUndo;
+
+  /// No description provided for @pickerRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} removed from recent academies.'**
+  String pickerRemoved(String name);
+
   /// No description provided for @pickerOpen.
   ///
   /// In en, this message translates to:

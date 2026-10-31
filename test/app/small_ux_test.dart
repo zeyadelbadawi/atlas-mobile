@@ -108,4 +108,35 @@ void main() {
     await t.pumpAndSettle(const Duration(milliseconds: 100));
     expect(find.byType(AnnouncementDetailScreen), findsOneWidget);
   });
+
+  testWidgets('the page name comes into the top bar once its title scrolls '
+      'away', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/account/results',
+      size: const Size(393, 520),
+    );
+    AnimatedOpacity barTitle() => t.widget<AnimatedOpacity>(
+      find.descendant(
+        of: find.byType(AppBar),
+        matching: find.byType(AnimatedOpacity),
+      ),
+    );
+    expect(barTitle().opacity, 0);
+    await t.drag(find.byType(ListView).first, const Offset(0, -400));
+    await t.pump(const Duration(milliseconds: 300));
+    expect(barTitle().opacity, 1);
+  });
+
+  testWidgets('a recent academy swiped away can be put back', (t) async {
+    await pumpScreen(t, session: AsNoAcademy.new, size: const Size(393, 1100));
+    expect(find.text('Manara'), findsOneWidget);
+    await t.drag(find.text('Manara'), const Offset(500, 0));
+    await t.pumpAndSettle();
+    expect(find.text('Manara'), findsNothing);
+    await t.tap(find.text('تراجع'));
+    await t.pumpAndSettle();
+    expect(find.text('Manara'), findsOneWidget);
+  });
 }

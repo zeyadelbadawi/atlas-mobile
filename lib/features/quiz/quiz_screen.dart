@@ -157,8 +157,8 @@ class _QuizScreenState extends ConsumerState<QuizScreen> {
         session: _session!,
         onFinished: _finished,
       ),
-      _ => Scaffold(
-        appBar: AppBar(),
+      _ => ScrollTitleScaffold(
+        title: _quiz?.title ?? '',
         body: SafeArea(
           top: false,
           child: switch (_phase) {

@@ -70,6 +70,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get commonUndo => 'Undo';
+
+  @override
+  String pickerRemoved(String name) {
+    return '$name removed from recent academies.';
+  }
+
+  @override
   String get pickerOpen => 'Open academy';
 
   @override

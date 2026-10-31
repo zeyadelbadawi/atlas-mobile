@@ -21,8 +21,8 @@ class ResultsScreen extends ConsumerWidget {
     final l = context.l10n;
     final a = context.atlas;
     final value = ref.watch(studentResultsProvider);
-    return Scaffold(
-      appBar: AppBar(),
+    return ScrollTitleScaffold(
+      title: l.resultsTitle,
       body: RefreshIndicator.adaptive(
         onRefresh: () => ref.refresh(studentResultsProvider.future),
         child: ListView(

@@ -47,6 +47,15 @@ class AcademyStore {
           jsonEncode(a.toJson()),
       ]);
 
+  /// Puts back a recent academy just removed, where it was (undo).
+  Future<void> restoreRecent(Academy academy, int index) {
+    final list = [...recent.where((a) => a.host != academy.host)];
+    list.insert(index.clamp(0, list.length), academy);
+    return _prefs.setStringList(_recentKey, [
+      for (final a in list.take(maxRecent)) jsonEncode(a.toJson()),
+    ]);
+  }
+
   static Academy? _tryDecode(String s) {
     try {
       return Academy.fromJson(jsonDecode(s) as Map<String, dynamic>);

@@ -22,6 +22,7 @@ export 'widgets/entrance.dart';
 export 'widgets/lists.dart';
 export 'widgets/pressable.dart';
 export 'widgets/score_ring.dart';
+export 'widgets/scroll_title_scaffold.dart';
 export 'widgets/scroll_effects.dart';
 export 'widgets/segmented_progress.dart';
 export 'widgets/split_view.dart';

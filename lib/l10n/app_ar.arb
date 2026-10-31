@@ -19,6 +19,8 @@
   "pickerAtlasName": "أكاديميتك على أطلس؟ اكتب اسمها فقط",
   "catalogClearSearch": "مسح البحث",
   "pickerNotFound": "لم نجد أكاديمية على {host}. راجع الاسم، أو اطلب رابط الأكاديمية منها.",
+  "commonUndo": "تراجع",
+  "pickerRemoved": "أُزيلت {name} من آخر الأكاديميات.",
   "pickerOpen": "فتح الأكاديمية",
   "pickerRecent": "آخر الأكاديميات",
   "pickerRemoveRecent": "إزالة",

@@ -343,8 +343,8 @@ class _AssignmentScreenState extends ConsumerState<AssignmentScreen> {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    return Scaffold(
-      appBar: AppBar(),
+    return ScrollTitleScaffold(
+      title: _assignment?.title ?? '',
       body: SafeArea(
         top: false,
         child: _loading

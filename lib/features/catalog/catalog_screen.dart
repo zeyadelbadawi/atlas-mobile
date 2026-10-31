@@ -94,8 +94,8 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
     final l = context.l10n;
     final a = context.atlas;
     final searching = _search.text.trim().isNotEmpty;
-    return Scaffold(
-      appBar: AppBar(),
+    return ScrollTitleScaffold(
+      title: l.catalogTitle,
       body: RefreshIndicator.adaptive(
         onRefresh: _reload,
         child: ListView(
