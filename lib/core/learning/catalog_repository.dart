@@ -200,6 +200,18 @@ class CatalogRepository {
     ),
   );
 
+  /// Related courses (same category first), free ones only: the app sells
+  /// nothing.
+  Future<List<CatalogCourse>> recommendations(String courseId) async {
+    final body = await client.get<List<dynamic>>(
+      'public/websites/$academyId/courses/$courseId/recommendations',
+    );
+    return _maps(body)
+        .map(CatalogCourse.fromJson)
+        .where((c) => c.isFree)
+        .toList();
+  }
+
   /// Whether the learner already holds an enrollment for this course
   /// (`null` body when not).
   Future<bool> isEnrolled(String courseId) async {

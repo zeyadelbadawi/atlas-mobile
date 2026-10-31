@@ -11,6 +11,7 @@ import '../../core/api/api_error.dart';
 import '../../core/learning/catalog_repository.dart';
 import '../../design/design.dart';
 import '../learning/learning_ui.dart';
+import 'catalog_screen.dart' show CatalogCourseRow;
 import 'reviews.dart';
 
 /// A course the learner may not have joined yet: what it covers, its
@@ -298,6 +299,7 @@ class _Preview extends ConsumerWidget {
           ],
         ],
         CourseReviewsSection(courseId: course.id, total: course.totalReviews),
+        _MoreCourses(courseId: course.id),
       ],
     );
   }
@@ -327,6 +329,28 @@ class _Preview extends ConsumerWidget {
       'all_levels' => l.levelAll,
       _ => null,
     };
+  }
+}
+
+/// Related free courses, when the academy has any.
+class _MoreCourses extends ConsumerWidget {
+  const _MoreCourses({required this.courseId});
+  final String courseId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final more = ref.watch(recommendationsProvider(courseId)).value ?? const [];
+    final list = more.where((c) => c.id != courseId).take(4).toList();
+    if (list.isEmpty) return const SizedBox.shrink();
+    return Column(
+      key: const ValueKey('more-courses'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SectionHeader(title: context.l10n.previewMore),
+        for (final (i, c) in list.indexed)
+          CatalogCourseRow(course: c, number: i + 1),
+      ],
+    );
   }
 }
 

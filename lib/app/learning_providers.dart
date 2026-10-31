@@ -141,3 +141,10 @@ final myReviewProvider = FutureProvider.autoDispose
       (ref, courseId) =>
           ref.watch(learningRepositoryProvider).myReview(courseId),
     );
+
+/// Free courses related to one, for the end of its preview.
+final recommendationsProvider = FutureProvider.autoDispose
+    .family<List<CatalogCourse>, String>(
+      (ref, courseId) =>
+          ref.watch(catalogRepositoryProvider).recommendations(courseId),
+    );

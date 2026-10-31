@@ -92,6 +92,10 @@ class FakeCatalogRepository extends CatalogRepository {
 
   @override
   Future<bool> isEnrolled(String courseId) async => false;
+
+  @override
+  Future<List<CatalogCourse>> recommendations(String courseId) async =>
+      const [];
 }
 
 /// The sample catalog with approved reviews.
@@ -125,6 +129,13 @@ class RatedCatalog extends FakeCatalogRepository {
       },
     };
   }
+
+  @override
+  Future<List<CatalogCourse>> recommendations(String courseId) async => [
+    for (final c in FakeCatalogRepository._courses)
+      if (c['id'] != courseId)
+        CatalogCourse.fromJson(_rated(c['id'] as String)),
+  ];
 
   @override
   Future<RatingSummary> rating(String courseId) async =>

@@ -192,6 +192,7 @@ void main() {
   reminderShots();
   offlineShots();
   myReviewShots();
+  moreCoursesShots();
 
   shot(
     'lesson_undo',
@@ -556,4 +557,24 @@ void myReviewShots() {
       learning: learning,
     );
   }, focus: cardOr);
+}
+
+/// Batch 3 (A4): related free courses at the end of a course preview.
+void moreCoursesShots() {
+  shot(
+    'preview_more',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/catalog/free-algebra',
+        size: const Size(393, 3000),
+        catalog: RatedCatalog(),
+      );
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('more-courses'));
+      return k.evaluate().isNotEmpty ? k : find.text('عرض كل التقييمات');
+    },
+  );
 }

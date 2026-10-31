@@ -614,5 +614,6 @@
   "myReviewSent": "شكرًا لك. يظهر تقييمك بعد موافقة الأكاديمية.",
   "myReviewDeleted": "حُذف تقييمك.",
   "myReviewPickStars": "اختر عدد النجوم.",
-  "myReviewStar": "{n} من ٥"
+  "myReviewStar": "{n} من ٥",
+  "previewMore": "كورسات قد تعجبك"
 }

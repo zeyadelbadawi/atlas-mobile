@@ -2175,4 +2175,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String myReviewStar(String n) {
     return '$n من ٥';
   }
+
+  @override
+  String get previewMore => 'كورسات قد تعجبك';
 }

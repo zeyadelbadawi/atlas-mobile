@@ -2166,4 +2166,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String myReviewStar(String n) {
     return '$n out of 5';
   }
+
+  @override
+  String get previewMore => 'You might also like';
 }

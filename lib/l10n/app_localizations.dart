@@ -3787,6 +3787,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n} out of 5'**
   String myReviewStar(String n);
+
+  /// No description provided for @previewMore.
+  ///
+  /// In en, this message translates to:
+  /// **'You might also like'**
+  String get previewMore;
 }
 
 class _AppLocalizationsDelegate

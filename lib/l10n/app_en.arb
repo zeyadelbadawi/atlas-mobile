@@ -1291,5 +1291,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "previewMore": "You might also like"
 }
