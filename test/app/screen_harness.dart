@@ -7,6 +7,7 @@ import 'package:atlas_mobile/app/atlas_app.dart';
 import 'package:atlas_mobile/app/deep_links.dart';
 import 'package:atlas_mobile/app/learning_providers.dart';
 import 'package:atlas_mobile/app/providers.dart';
+import 'package:atlas_mobile/core/academy/academy_directory.dart';
 import 'package:atlas_mobile/app/push.dart';
 import 'package:atlas_mobile/app/router.dart';
 import 'package:atlas_mobile/core/notifications/notification_catalog.dart';
@@ -106,6 +107,7 @@ Future<ProviderContainer> pumpScreen(
   CatalogRepository? catalog,
   NotificationsRepository? notifications,
   MobileConfig config = const MobileConfig(signInWithApple: true),
+  AcademyDirectory? directory,
 }) async {
   SharedPreferences.setMockInitialValues({
     'settings.language': language,
@@ -136,6 +138,8 @@ Future<ProviderContainer> pumpScreen(
       )),
       mobileConfigProvider.overrideWith((ref) async => config),
       sessionProvider.overrideWith(session),
+      if (directory != null)
+        academyDirectoryProvider.overrideWithValue(directory),
       learningRepositoryProvider.overrideWithValue(
         learning ?? FakeLearningRepository(),
       ),

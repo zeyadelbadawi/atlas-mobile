@@ -161,20 +161,44 @@ abstract class AppLocalizations {
   /// No description provided for @pickerBody.
   ///
   /// In en, this message translates to:
-  /// **'Enter the website address your academy gave you, or its short name.'**
+  /// **'Type your academy\'s name as it appears in its link, or scan its QR code.'**
   String get pickerBody;
 
   /// No description provided for @pickerFieldLabel.
   ///
   /// In en, this message translates to:
-  /// **'Academy address'**
+  /// **'Academy name'**
   String get pickerFieldLabel;
 
   /// No description provided for @pickerFieldHint.
   ///
   /// In en, this message translates to:
-  /// **'academy.atlass.dpdns.org'**
+  /// **'academy'**
   String get pickerFieldHint;
+
+  /// No description provided for @pickerCustomDomain.
+  ///
+  /// In en, this message translates to:
+  /// **'Your academy has its own domain?'**
+  String get pickerCustomDomain;
+
+  /// No description provided for @pickerCustomLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy website address'**
+  String get pickerCustomLabel;
+
+  /// No description provided for @pickerCustomHint.
+  ///
+  /// In en, this message translates to:
+  /// **'learn.your-academy.com'**
+  String get pickerCustomHint;
+
+  /// No description provided for @pickerAtlasName.
+  ///
+  /// In en, this message translates to:
+  /// **'Academy on Atlas? Type just its name'**
+  String get pickerAtlasName;
 
   /// No description provided for @pickerOpen.
   ///
@@ -197,13 +221,13 @@ abstract class AppLocalizations {
   /// No description provided for @pickerEmptyField.
   ///
   /// In en, this message translates to:
-  /// **'Enter your academy\'s address.'**
+  /// **'Type your academy\'s name.'**
   String get pickerEmptyField;
 
   /// No description provided for @pickerInvalid.
   ///
   /// In en, this message translates to:
-  /// **'That doesn\'t look like a website address. Check it and try again.'**
+  /// **'That doesn\'t look like an academy name or a website address. Check it and try again.'**
   String get pickerInvalid;
 
   /// No description provided for @pickerAboutAtlas.

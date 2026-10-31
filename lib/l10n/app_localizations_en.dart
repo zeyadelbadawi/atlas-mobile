@@ -41,13 +41,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pickerBody =>
-      'Enter the website address your academy gave you, or its short name.';
+      'Type your academy\'s name as it appears in its link, or scan its QR code.';
 
   @override
-  String get pickerFieldLabel => 'Academy address';
+  String get pickerFieldLabel => 'Academy name';
 
   @override
-  String get pickerFieldHint => 'academy.atlass.dpdns.org';
+  String get pickerFieldHint => 'academy';
+
+  @override
+  String get pickerCustomDomain => 'Your academy has its own domain?';
+
+  @override
+  String get pickerCustomLabel => 'Academy website address';
+
+  @override
+  String get pickerCustomHint => 'learn.your-academy.com';
+
+  @override
+  String get pickerAtlasName => 'Academy on Atlas? Type just its name';
 
   @override
   String get pickerOpen => 'Open academy';
@@ -59,11 +71,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pickerRemoveRecent => 'Remove';
 
   @override
-  String get pickerEmptyField => 'Enter your academy\'s address.';
+  String get pickerEmptyField => 'Type your academy\'s name.';
 
   @override
   String get pickerInvalid =>
-      'That doesn\'t look like a website address. Check it and try again.';
+      'That doesn\'t look like an academy name or a website address. Check it and try again.';
 
   @override
   String get pickerAboutAtlas => 'About Atlas';

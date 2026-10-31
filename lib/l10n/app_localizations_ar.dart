@@ -41,13 +41,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pickerBody =>
-      'اكتب عنوان موقع أكاديميتك كما أرسلته لك، أو اسمها المختصر.';
+      'اكتب اسم أكاديميتك كما يظهر في رابطها، أو امسح رمز QR.';
 
   @override
-  String get pickerFieldLabel => 'عنوان الأكاديمية';
+  String get pickerFieldLabel => 'اسم الأكاديمية';
 
   @override
-  String get pickerFieldHint => 'academy.atlass.dpdns.org';
+  String get pickerFieldHint => 'academy';
+
+  @override
+  String get pickerCustomDomain => 'لأكاديميتك دومين خاص؟';
+
+  @override
+  String get pickerCustomLabel => 'عنوان موقع الأكاديمية';
+
+  @override
+  String get pickerCustomHint => 'learn.your-academy.com';
+
+  @override
+  String get pickerAtlasName => 'أكاديميتك على أطلس؟ اكتب اسمها فقط';
 
   @override
   String get pickerOpen => 'فتح الأكاديمية';
@@ -59,10 +71,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pickerRemoveRecent => 'إزالة';
 
   @override
-  String get pickerEmptyField => 'اكتب عنوان أكاديميتك.';
+  String get pickerEmptyField => 'اكتب اسم أكاديميتك.';
 
   @override
-  String get pickerInvalid => 'هذا لا يبدو عنوان موقع. راجعه وحاول مرة أخرى.';
+  String get pickerInvalid =>
+      'هذا لا يبدو اسم أكاديمية أو عنوان موقع. راجعه وحاول مرة أخرى.';
 
   @override
   String get pickerAboutAtlas => 'عن أطلس';

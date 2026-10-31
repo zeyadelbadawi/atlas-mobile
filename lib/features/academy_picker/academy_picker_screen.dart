@@ -8,6 +8,7 @@ import '../../app/deep_links.dart';
 import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
 import '../../core/academy/academy.dart';
+import '../../core/config/app_env.dart';
 import '../../design/design.dart';
 
 /// First screen: the learner finds their academy by its address or short
@@ -24,6 +25,21 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
   final _field = TextEditingController();
   String? _error;
   bool _busy = false;
+
+  /// The learner chose "my academy has its own domain", or typed / pasted
+  /// a full address (a dot or a slash): the field takes the whole address,
+  /// used as typed. Otherwise only the name, on Atlas's domain.
+  bool _ownDomain = false;
+  bool get _fullAddress =>
+      _ownDomain || _field.text.contains('.') || _field.text.contains('/');
+
+  void _setOwnDomain(bool value) {
+    setState(() {
+      _ownDomain = value;
+      _error = null;
+      if (!value) _field.clear();
+    });
+  }
 
   @override
   void dispose() {
@@ -112,17 +128,65 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 AtlasTextField(
-                                  label: l.pickerFieldLabel,
+                                  label: _fullAddress
+                                      ? l.pickerCustomLabel
+                                      : l.pickerFieldLabel,
                                   controller: _field,
-                                  hint: l.pickerFieldHint,
+                                  hint: _fullAddress
+                                      ? l.pickerCustomHint
+                                      : l.pickerFieldHint,
                                   ltrValue: true,
                                   keyboardType: TextInputType.url,
                                   textInputAction: TextInputAction.go,
                                   autofillHints: const [AutofillHints.url],
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.deny(
+                                      RegExp(r'\s'),
+                                    ),
+                                  ],
                                   error: _error,
+                                  // The part every Atlas academy shares: the
+                                  // learner types only what is theirs.
+                                  suffix: _fullAddress
+                                      ? null
+                                      : ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                            maxWidth:
+                                                MediaQuery.sizeOf(context)
+                                                    .width *
+                                                0.5,
+                                          ),
+                                          child: Text(
+                                            '.${AppEnv.platformHost}',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.fade,
+                                            softWrap: false,
+                                            // Darker than the hint: the
+                                            // part that is already there.
+                                            style: a.type.body.copyWith(
+                                              color: c.ink,
+                                            ),
+                                          ),
+                                        ),
+                                  onChanged: (_) => setState(() {
+                                    _error = null;
+                                  }),
                                   onSubmitted: (_) => _open(),
                                 ),
-                                const SizedBox(height: AtlasSpace.s16),
+                                Align(
+                                  alignment: AlignmentDirectional.centerStart,
+                                  child: TextButton(
+                                    onPressed: _busy
+                                        ? null
+                                        : () => _setOwnDomain(!_fullAddress),
+                                    child: Text(
+                                      _fullAddress
+                                          ? l.pickerAtlasName
+                                          : l.pickerCustomDomain,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: AtlasSpace.s8),
                                 AtlasButton(
                                   label: l.pickerOpen,
                                   loading: _busy,

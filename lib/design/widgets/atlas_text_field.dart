@@ -26,6 +26,7 @@ class AtlasTextField extends StatefulWidget {
     this.onChanged,
     this.enabled = true,
     this.prefix,
+    this.suffix,
     this.inputFormatters,
     this.focusNode,
     this.showPasswordLabel = 'Show password',
@@ -49,6 +50,10 @@ class AtlasTextField extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final bool enabled;
   final Widget? prefix;
+
+  /// Fixed text after the value, e.g. the domain the learner does not
+  /// have to type.
+  final Widget? suffix;
   final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focusNode;
 
@@ -60,16 +65,44 @@ class _AtlasTextFieldState extends State<AtlasTextField> {
   late final FocusNode _focus = widget.focusNode ?? FocusNode();
   bool _obscured = true;
 
+  /// Set once the field has been given a suffix; see the row below.
+  bool _suffixMode = false;
+
   @override
   void initState() {
     super.initState();
     _focus.addListener(_onFocus);
+    widget.controller?.addListener(_onText);
   }
 
   void _onFocus() => setState(() {});
 
+  // With a suffix the field hugs its text, so it is redrawn as it changes.
+  void _onText() {
+    if (_suffixMode) setState(() {});
+  }
+
+  /// The width the value (or the hint, while empty) needs, so a suffix
+  /// sits right after it: "ziadd" + ".atlass.dpdns.org".
+  double _valueWidth(BuildContext context, TextStyle style) {
+    final text = widget.controller?.text ?? '';
+    final painter = TextPainter(
+      text: TextSpan(
+        text: text.isEmpty ? (widget.hint ?? '') : text,
+        style: style,
+      ),
+      textDirection: TextDirection.ltr,
+      textScaler: MediaQuery.textScalerOf(context),
+      maxLines: 1,
+    )..layout();
+    final w = painter.width;
+    painter.dispose();
+    return w + 4; // room for the cursor
+  }
+
   @override
   void dispose() {
+    widget.controller?.removeListener(_onText);
     _focus.removeListener(_onFocus);
     if (widget.focusNode == null) _focus.dispose();
     super.dispose();
@@ -83,6 +116,31 @@ class _AtlasTextFieldState extends State<AtlasTextField> {
     final hasError = widget.error != null && widget.error!.isNotEmpty;
     final ring = hasError ? c.danger : (focused ? c.accent : null);
     final message = hasError ? widget.error : widget.helper;
+    _suffixMode |= widget.suffix != null;
+    final Widget field = TextField(
+      controller: widget.controller,
+      focusNode: _focus,
+      enabled: widget.enabled,
+      obscureText: widget.password && _obscured,
+      enableSuggestions: !widget.password,
+      autocorrect: false,
+      keyboardType: widget.keyboardType,
+      textInputAction: widget.textInputAction,
+      autofillHints: widget.autofillHints,
+      onSubmitted: widget.onSubmitted,
+      onChanged: widget.onChanged,
+      inputFormatters: widget.inputFormatters,
+      textAlign: TextAlign.start,
+      style: a.type.body.copyWith(color: c.ink),
+      cursorColor: c.accent,
+      decoration: InputDecoration(
+        isCollapsed: true,
+        border: InputBorder.none,
+        hintText: widget.hint,
+        hintStyle: a.type.body.copyWith(color: c.inkTertiary),
+        contentPadding: const EdgeInsets.symmetric(vertical: 13),
+      ),
+    );
 
     return Opacity(
       opacity: widget.enabled ? 1 : 0.6,
@@ -95,69 +153,66 @@ class _AtlasTextFieldState extends State<AtlasTextField> {
             style: a.type.footnote.copyWith(color: c.inkSecondary),
           ),
           const SizedBox(height: 6),
-          AnimatedContainer(
-            duration: AtlasMotion.quick,
-            curve: AtlasMotion.easeOut,
-            constraints: const BoxConstraints(minHeight: AtlasSize.field),
-            padding: const EdgeInsetsDirectional.only(start: 16, end: 8),
-            decoration: BoxDecoration(
-              color: ring != null ? c.raised : c.sunken,
-              borderRadius: BorderRadius.circular(AtlasRadius.md),
-              border: Border.all(color: ring ?? Colors.transparent, width: 2),
-            ),
-            child: Directionality(
-              textDirection: widget.ltrValue
-                  ? TextDirection.ltr
-                  : Directionality.of(context),
-              child: Row(
-                children: [
-                  if (widget.prefix != null) ...[
-                    widget.prefix!,
-                    const SizedBox(width: 8),
-                  ],
-                  Expanded(
-                    child: TextField(
-                      controller: widget.controller,
-                      focusNode: _focus,
-                      enabled: widget.enabled,
-                      obscureText: widget.password && _obscured,
-                      enableSuggestions: !widget.password,
-                      autocorrect: false,
-                      keyboardType: widget.keyboardType,
-                      textInputAction: widget.textInputAction,
-                      autofillHints: widget.autofillHints,
-                      onSubmitted: widget.onSubmitted,
-                      onChanged: widget.onChanged,
-                      inputFormatters: widget.inputFormatters,
-                      textAlign: TextAlign.start,
-                      style: a.type.body.copyWith(color: c.ink),
-                      cursorColor: c.accent,
-                      decoration: InputDecoration(
-                        isCollapsed: true,
-                        border: InputBorder.none,
-                        hintText: widget.hint,
-                        hintStyle: a.type.body.copyWith(color: c.inkTertiary),
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 13,
+          // A tap anywhere on the box (also beside a short value) types.
+          GestureDetector(
+            excludeFromSemantics: true,
+            onTap: widget.enabled ? _focus.requestFocus : null,
+            child: AnimatedContainer(
+              duration: AtlasMotion.quick,
+              curve: AtlasMotion.easeOut,
+              constraints: const BoxConstraints(minHeight: AtlasSize.field),
+              padding: const EdgeInsetsDirectional.only(start: 16, end: 8),
+              decoration: BoxDecoration(
+                color: ring != null ? c.raised : c.sunken,
+                borderRadius: BorderRadius.circular(AtlasRadius.md),
+                border: Border.all(color: ring ?? Colors.transparent, width: 2),
+              ),
+              child: Directionality(
+                textDirection: widget.ltrValue
+                    ? TextDirection.ltr
+                    : Directionality.of(context),
+                child: Row(
+                  children: [
+                    if (widget.prefix != null) ...[
+                      widget.prefix!,
+                      const SizedBox(width: 8),
+                    ],
+                    if (!_suffixMode)
+                      Expanded(child: field)
+                    else ...[
+                      // Once a field has had a suffix it keeps this one
+                      // structure, so the input is never rebuilt (and the
+                      // keyboard never drops) as the suffix comes and goes.
+                      // With a suffix the input takes what its text needs,
+                      // nearly all the row if it must; without, all of it.
+                      Flexible(
+                        flex: 100,
+                        child: SizedBox(
+                          width: widget.suffix == null
+                              ? double.infinity
+                              : _valueWidth(context, a.type.body),
+                          child: field,
                         ),
                       ),
-                    ),
-                  ),
-                  if (widget.password)
-                    IconButton(
-                      onPressed: () => setState(() => _obscured = !_obscured),
-                      tooltip: _obscured
-                          ? widget.showPasswordLabel
-                          : widget.hidePasswordLabel,
-                      icon: Icon(
-                        _obscured ? LucideIcons.eye : LucideIcons.eyeOff,
-                        size: 22,
-                        color: c.inkSecondary,
-                      ),
-                    )
-                  else
-                    const SizedBox(width: 8),
-                ],
+                      widget.suffix ?? const SizedBox.shrink(),
+                      const Spacer(),
+                    ],
+                    if (widget.password)
+                      IconButton(
+                        onPressed: () => setState(() => _obscured = !_obscured),
+                        tooltip: _obscured
+                            ? widget.showPasswordLabel
+                            : widget.hidePasswordLabel,
+                        icon: Icon(
+                          _obscured ? LucideIcons.eye : LucideIcons.eyeOff,
+                          size: 22,
+                          color: c.inkSecondary,
+                        ),
+                      )
+                    else
+                      const SizedBox(width: 8),
+                  ],
+                ),
               ),
             ),
           ),
