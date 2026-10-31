@@ -21,7 +21,9 @@ class NotificationsScreen extends ConsumerWidget {
     final l = context.l10n;
     final a = context.atlas;
     final feed = ref.watch(notificationFeedProvider);
-    final hasUnread = feed.value?.items.any((n) => !n.isRead) ?? false;
+    final items = feed.value?.items;
+    final loadingMore = feed.value?.loadingMore ?? false;
+    final hasUnread = items?.any((n) => !n.isRead) ?? false;
     return Scaffold(
       body: RefreshIndicator.adaptive(
         onRefresh: () async {
@@ -51,11 +53,8 @@ class NotificationsScreen extends ConsumerWidget {
                 ],
               ),
               SliverPadding(
-                padding: const EdgeInsets.fromLTRB(
-                  AtlasSpace.gutter,
-                  0,
-                  AtlasSpace.gutter,
-                  120,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AtlasSpace.gutter,
                 ),
                 sliver: SliverToBoxAdapter(
                   child: ReadableWidth(
@@ -73,34 +72,45 @@ class NotificationsScreen extends ConsumerWidget {
                           ],
                         ),
                         const SizedBox(height: AtlasSpace.s8),
-                        AsyncBody<NotificationPageState>(
-                          value: feed,
-                          onRetry: () =>
-                              ref.invalidate(notificationFeedProvider),
-                          data: (s) => s.items.isEmpty
-                              ? _Empty(a: a)
-                              : Column(
-                                  children: [
-                                    for (final (i, n) in s.items.indexed)
-                                      Entrance(
-                                        key: ValueKey(n.id),
-                                        order: i,
-                                        child: NotificationRow(notification: n),
-                                      ),
-                                    if (s.loadingMore)
-                                      const Padding(
-                                        padding: EdgeInsets.all(20),
-                                        child:
-                                            CircularProgressIndicator.adaptive(),
-                                      ),
-                                  ],
-                                ),
-                        ),
+                        // Loading, error or empty; a list of notifications
+                        // is the lazy sliver below.
+                        if (items == null || items.isEmpty)
+                          AsyncBody<NotificationPageState>(
+                            value: feed,
+                            onRetry: () =>
+                                ref.invalidate(notificationFeedProvider),
+                            data: (s) => _Empty(a: a),
+                          ),
                       ],
                     ),
                   ),
                 ),
               ),
+              // Built as it scrolls into view: a feed can run to hundreds.
+              if (items != null && items.isNotEmpty)
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AtlasSpace.gutter,
+                  ),
+                  sliver: SliverList.builder(
+                    itemCount: items.length + (loadingMore ? 1 : 0),
+                    itemBuilder: (context, i) => ReadableWidth(
+                      child: i == items.length
+                          ? const Padding(
+                              padding: EdgeInsets.all(20),
+                              child: Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              ),
+                            )
+                          : Entrance(
+                              key: ValueKey(items[i].id),
+                              order: i,
+                              child: NotificationRow(notification: items[i]),
+                            ),
+                    ),
+                  ),
+                ),
+              const SliverToBoxAdapter(child: SizedBox(height: 120)),
             ],
           ),
         ),
