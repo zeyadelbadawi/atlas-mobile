@@ -568,6 +568,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get playerRecording => 'أوقف تسجيل الشاشة لمتابعة المشاهدة.';
 
   @override
+  String get playerPlay => 'تشغيل';
+
+  @override
+  String get playerPause => 'إيقاف مؤقت';
+
+  @override
+  String get playerBack10 => 'رجوع ١٠ ثوانٍ';
+
+  @override
+  String get playerForward10 => 'تقديم ١٠ ثوانٍ';
+
+  @override
   String get playerFailed =>
       'تعذّر تشغيل الفيديو. تحقّق من اتصالك وحاول مرة أخرى.';
 

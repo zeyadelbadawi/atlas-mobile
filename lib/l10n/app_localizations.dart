@@ -1094,6 +1094,30 @@ abstract class AppLocalizations {
   /// **'Stop screen recording to keep watching.'**
   String get playerRecording;
 
+  /// No description provided for @playerPlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get playerPlay;
+
+  /// No description provided for @playerPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get playerPause;
+
+  /// No description provided for @playerBack10.
+  ///
+  /// In en, this message translates to:
+  /// **'Back 10 seconds'**
+  String get playerBack10;
+
+  /// No description provided for @playerForward10.
+  ///
+  /// In en, this message translates to:
+  /// **'Forward 10 seconds'**
+  String get playerForward10;
+
   /// No description provided for @playerFailed.
   ///
   /// In en, this message translates to:

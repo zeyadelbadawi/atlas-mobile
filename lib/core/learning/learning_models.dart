@@ -250,6 +250,8 @@ class LessonGrant {
           ? (raw['externalEmbed'] as Map)['videoId'] as String?
           : null,
       hostedVideoUrl = (raw['video'] as Map?)?['url'] as String?,
+      hostedVideoHls = (raw['video'] as Map?)?['format'] == 'hls',
+      hostedPosterUrl = (raw['video'] as Map?)?['posterUrl'] as String?,
       resources = _list(raw['resources']).map(GrantResource.fromJson).toList(),
       watermarkCode = (raw['watermark'] as Map?)?['code'] as String?,
       watermarkIdentity =
@@ -272,7 +274,12 @@ class LessonGrant {
   final String? fileName;
   final String? externalUrl;
   final String? youtubeId;
+  /// A video uploaded to Atlas (not YouTube): a short-lived signed URL.
   final String? hostedVideoUrl;
+
+  /// HLS stream (Cloudflare Stream) rather than a progressive MP4.
+  final bool hostedVideoHls;
+  final String? hostedPosterUrl;
   final List<GrantResource> resources;
   final String? watermarkCode;
   final String? watermarkIdentity;

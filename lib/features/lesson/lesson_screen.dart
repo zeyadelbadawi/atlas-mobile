@@ -19,6 +19,7 @@ import '../../design/design.dart';
 import '../courses/course_screen.dart';
 import '../learning/course_widgets.dart';
 import '../learning/learning_ui.dart';
+import '../player/hosted_lesson_player.dart';
 import '../player/playback_session.dart';
 import '../player/youtube_lesson_player.dart';
 
@@ -166,6 +167,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     final item = seq?.items.where((i) => i.id == widget.lessonId).firstOrNull;
     final g = _grant;
     final video = g?.youtubeId != null;
+    final hosted = g?.youtubeId == null && g?.hostedVideoUrl != null;
     final Widget body = _loading
         ? const Center(
             child: SizedBox.square(
@@ -182,6 +184,26 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                 ReadableWidth(
                   child: YouTubeLessonPlayer(
                     videoId: g!.youtubeId!,
+                    academyOrigin: ref
+                        .read(sessionProvider)
+                        .academy!
+                        .endpoint
+                        .originHeader,
+                    watermarkCode: g.watermarkCode ?? '',
+                    watermarkSecondary: g.watermarkIdentity,
+                    session: _session,
+                    startSeconds: g.resumeSeconds,
+                    recordingMessage: context.l10n.playerRecording,
+                    failedMessage: context.l10n.playerFailed,
+                    onEnded: () => setState(() => _eligible = true),
+                  ),
+                ),
+              if (hosted)
+                ReadableWidth(
+                  child: HostedLessonPlayer(
+                    url: g!.hostedVideoUrl!,
+                    hls: g.hostedVideoHls,
+                    posterUrl: g.hostedPosterUrl,
                     academyOrigin: ref
                         .read(sessionProvider)
                         .academy!
@@ -397,7 +419,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             onPressed: g.fileUrl == null ? null : () => _open(g.fileUrl!),
           ),
         ];
-      case 'video' when g.youtubeId == null:
+      case 'video' when g.youtubeId == null && g.hostedVideoUrl == null:
         // Hosted video tiers are not switched on yet; the web plays them.
         final host = ref.read(sessionProvider).academy!.host;
         return [

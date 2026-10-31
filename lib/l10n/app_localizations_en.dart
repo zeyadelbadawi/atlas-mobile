@@ -566,6 +566,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get playerRecording => 'Stop screen recording to keep watching.';
 
   @override
+  String get playerPlay => 'Play';
+
+  @override
+  String get playerPause => 'Pause';
+
+  @override
+  String get playerBack10 => 'Back 10 seconds';
+
+  @override
+  String get playerForward10 => 'Forward 10 seconds';
+
+  @override
   String get playerFailed =>
       'This video couldn\'t play. Check your connection and try again.';
 
