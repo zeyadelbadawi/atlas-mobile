@@ -19,10 +19,22 @@
   "pickerAtlasName": "Academy on Atlas? Type just its name",
   "catalogClearSearch": "Clear search",
   "pickerNotFound": "No academy found at {host}. Check the name, or ask your academy for its link.",
-  "@pickerNotFound": {"placeholders": {"host": {"type": "String"}}},
+  "@pickerNotFound": {
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
   "commonUndo": "Undo",
   "pickerRemoved": "{name} removed from recent academies.",
-  "@pickerRemoved": {"placeholders": {"name": {"type": "String"}}},
+  "@pickerRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "pickerOpen": "Open academy",
   "pickerRecent": "Recent academies",
   "pickerRemoveRecent": "Remove",
@@ -139,9 +151,21 @@
   "legalCookie": "Cookie Policy",
   "legalContents": "Contents",
   "legalLastUpdated": "Last updated: {date}",
-  "@legalLastUpdated": {"placeholders": {"date": {"type": "String"}}},
+  "@legalLastUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "legalEffective": "Effective: {date}",
-  "@legalEffective": {"placeholders": {"date": {"type": "String"}}},
+  "@legalEffective": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "legalBackToTop": "Back to top",
   "legalLoadFailed": "This page didn't load. Check your connection and try again.",
   "aboutTitle": "About the app",
@@ -1089,7 +1113,85 @@
   "tasksRetry": "Not submitted",
   "tasksDue": "Due {date}",
   "tasksSubmitted": "Submitted {date}",
-  "@tasksDue": {"placeholders": {"date": {"type": "String"}}},
-  "@tasksSubmitted": {"placeholders": {"date": {"type": "String"}}},
-  "tasksAwaitingShort": "Awaiting"
+  "@tasksDue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@tasksSubmitted": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tasksAwaitingShort": "Awaiting",
+  "completionTitle": "To complete this course",
+  "completionHint": "Here is what this course needs before it counts as completed.",
+  "completionLessons": "{done} of {required} required lessons",
+  "@completionLessons": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "required": {
+        "type": "String"
+      }
+    }
+  },
+  "completionQuizPassed": "Passed with {score}%",
+  "@completionQuizPassed": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "completionQuizPending": "Awaiting grading",
+  "completionQuizNotPassed": "Not passed yet",
+  "completionAssignmentGraded": "Graded: {score}",
+  "@completionAssignmentGraded": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "completionAssignmentGradedNoScore": "Graded",
+  "completionAssignmentSubmitted": "Submitted, awaiting grading",
+  "completionAssignmentNotSubmitted": "Not submitted yet",
+  "completionMinScore": "Overall score of at least {required}% (now {current}%)",
+  "@completionMinScore": {
+    "placeholders": {
+      "required": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "completionStateDone": "Done",
+  "completionStateWaiting": "Waiting",
+  "completionStateTodo": "Not done",
+  "completionCertificateNotYet": "You get a certificate when you complete the course.",
+  "completionCertificateNotYetMin": "You get a certificate when you complete the course with an overall score of at least {score}%.",
+  "@completionCertificateNotYetMin": {
+    "placeholders": {
+      "score": {
+        "type": "String"
+      }
+    }
+  },
+  "courseCertificateRevoked": "Your certificate for this course was revoked. Contact the academy if you think this is a mistake.",
+  "completionMinScoreNone": "Overall score of at least {required}% (no grades yet)",
+  "@completionMinScoreNone": {
+    "placeholders": {
+      "required": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -178,6 +178,8 @@ void main() {
     ),
   );
 
+  completionShots();
+
   shot('courses_broken_cover', (t) async {
     await pumpScreen(
       t,
@@ -222,4 +224,90 @@ class _BrokenCovers extends FakeLearningRepository {
             : c,
     ];
   }
+}
+
+/// Batch 1 (A1): what the course still needs before it is completed.
+void completionShots() {
+  Finder checklistOr(String fallback) {
+    final k = find.byKey(const ValueKey('completion-checklist'));
+    return k.evaluate().isNotEmpty ? k : find.text(fallback);
+  }
+
+  shot('course_requirements', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}',
+      size: const Size(393, 1500),
+      learning: _WithRequirements(),
+    );
+  }, focus: () => checklistOr('استكمل'));
+
+  shot('course_lessons_done_quiz_not_passed', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}',
+      size: const Size(393, 1100),
+      learning: _WithRequirements(allDone: true),
+    );
+  }, focus: () => checklistOr('أكملت الكورس'));
+}
+
+/// A course that needs its quiz passed, its assignment graded and an
+/// overall score of 60%, with a certificate from 70%.
+class _WithRequirements extends FakeLearningRepository {
+  _WithRequirements({this.allDone = false});
+  final bool allDone;
+
+  @override
+  Future<CourseSequence> sequence(String courseId) async {
+    final j = FakeLearningRepository.sequenceJson;
+    if (allDone) {
+      for (final i in j['items'] as List) {
+        (i as Map)['state'] = 'completed';
+        i['lockReason'] = null;
+      }
+      j['completedCount'] = j['totalCount'];
+      j['continueItemId'] = null;
+    }
+    return CourseSequence.fromJson(j);
+  }
+
+  @override
+  Future<CourseCompletion> completion(String courseId) async =>
+      CourseCompletion.fromJson({
+        'completed': false,
+        'lessons': {'total': 5, 'completed': allDone ? 5 : 2},
+        'rule': {'lessons': 'all', 'minOverallScore': 60},
+        'overallScore': allDone ? 45 : null,
+        'quizzes': [
+          {
+            'quizId': 'l3',
+            'title': 'كويز النهايات',
+            'required': true,
+            'passed': false,
+            'effectiveScore': allDone ? 45 : null,
+            'pendingGrading': false,
+          },
+        ],
+        'assignments': [
+          {
+            'assignmentId': 'l6',
+            'title': 'واجب الاتصال',
+            'required': true,
+            'submitted': allDone,
+            'graded': false,
+            'score': null,
+          },
+        ],
+        'missing': [
+          {'kind': 'quiz_not_passed', 'id': 'l3'},
+        ],
+        'certificate': {
+          'enabled': true,
+          'status': 'unavailable',
+          'minScore': 70,
+        },
+      });
 }

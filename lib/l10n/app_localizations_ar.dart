@@ -1952,4 +1952,71 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tasksAwaitingShort => 'للتصحيح';
+
+  @override
+  String get completionTitle => 'متطلبات إنهاء الكورس';
+
+  @override
+  String get completionHint => 'هذا ما يحتاجه الكورس قبل أن يُعدّ مكتملًا.';
+
+  @override
+  String completionLessons(String done, String required) {
+    return '$done من $required من الدروس المطلوبة';
+  }
+
+  @override
+  String completionQuizPassed(String score) {
+    return 'ناجح بنسبة $score٪';
+  }
+
+  @override
+  String get completionQuizPending => 'بانتظار التصحيح';
+
+  @override
+  String get completionQuizNotPassed => 'لم تنجح فيه بعد';
+
+  @override
+  String completionAssignmentGraded(String score) {
+    return 'تم التصحيح: $score';
+  }
+
+  @override
+  String get completionAssignmentGradedNoScore => 'تم التصحيح';
+
+  @override
+  String get completionAssignmentSubmitted => 'أُرسل، بانتظار التصحيح';
+
+  @override
+  String get completionAssignmentNotSubmitted => 'لم يُرسل بعد';
+
+  @override
+  String completionMinScore(String required, String current) {
+    return 'نتيجة إجمالية لا تقل عن $required٪ (حاليًا $current٪)';
+  }
+
+  @override
+  String get completionStateDone => 'تم';
+
+  @override
+  String get completionStateWaiting => 'قيد الانتظار';
+
+  @override
+  String get completionStateTodo => 'لم يتم';
+
+  @override
+  String get completionCertificateNotYet => 'تحصل على شهادة عند إنهاء الكورس.';
+
+  @override
+  String completionCertificateNotYetMin(String score) {
+    return 'تحصل على شهادة عند إنهاء الكورس بنتيجة إجمالية لا تقل عن $score٪.';
+  }
+
+  @override
+  String get courseCertificateRevoked =>
+      'أُلغيت شهادتك لهذا الكورس. تواصل مع الأكاديمية إذا كنت ترى أن هذا خطأ.';
+
+  @override
+  String completionMinScoreNone(String required) {
+    return 'نتيجة إجمالية لا تقل عن $required٪ (لا توجد درجات بعد)';
+  }
 }

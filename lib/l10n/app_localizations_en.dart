@@ -1940,4 +1940,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tasksAwaitingShort => 'Awaiting';
+
+  @override
+  String get completionTitle => 'To complete this course';
+
+  @override
+  String get completionHint =>
+      'Here is what this course needs before it counts as completed.';
+
+  @override
+  String completionLessons(String done, String required) {
+    return '$done of $required required lessons';
+  }
+
+  @override
+  String completionQuizPassed(String score) {
+    return 'Passed with $score%';
+  }
+
+  @override
+  String get completionQuizPending => 'Awaiting grading';
+
+  @override
+  String get completionQuizNotPassed => 'Not passed yet';
+
+  @override
+  String completionAssignmentGraded(String score) {
+    return 'Graded: $score';
+  }
+
+  @override
+  String get completionAssignmentGradedNoScore => 'Graded';
+
+  @override
+  String get completionAssignmentSubmitted => 'Submitted, awaiting grading';
+
+  @override
+  String get completionAssignmentNotSubmitted => 'Not submitted yet';
+
+  @override
+  String completionMinScore(String required, String current) {
+    return 'Overall score of at least $required% (now $current%)';
+  }
+
+  @override
+  String get completionStateDone => 'Done';
+
+  @override
+  String get completionStateWaiting => 'Waiting';
+
+  @override
+  String get completionStateTodo => 'Not done';
+
+  @override
+  String get completionCertificateNotYet =>
+      'You get a certificate when you complete the course.';
+
+  @override
+  String completionCertificateNotYetMin(String score) {
+    return 'You get a certificate when you complete the course with an overall score of at least $score%.';
+  }
+
+  @override
+  String get courseCertificateRevoked =>
+      'Your certificate for this course was revoked. Contact the academy if you think this is a mistake.';
+
+  @override
+  String completionMinScoreNone(String required) {
+    return 'Overall score of at least $required% (no grades yet)';
+  }
 }

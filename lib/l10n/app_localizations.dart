@@ -3421,6 +3421,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Awaiting'**
   String get tasksAwaitingShort;
+
+  /// No description provided for @completionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'To complete this course'**
+  String get completionTitle;
+
+  /// No description provided for @completionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Here is what this course needs before it counts as completed.'**
+  String get completionHint;
+
+  /// No description provided for @completionLessons.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {required} required lessons'**
+  String completionLessons(String done, String required);
+
+  /// No description provided for @completionQuizPassed.
+  ///
+  /// In en, this message translates to:
+  /// **'Passed with {score}%'**
+  String completionQuizPassed(String score);
+
+  /// No description provided for @completionQuizPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting grading'**
+  String get completionQuizPending;
+
+  /// No description provided for @completionQuizNotPassed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not passed yet'**
+  String get completionQuizNotPassed;
+
+  /// No description provided for @completionAssignmentGraded.
+  ///
+  /// In en, this message translates to:
+  /// **'Graded: {score}'**
+  String completionAssignmentGraded(String score);
+
+  /// No description provided for @completionAssignmentGradedNoScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Graded'**
+  String get completionAssignmentGradedNoScore;
+
+  /// No description provided for @completionAssignmentSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted, awaiting grading'**
+  String get completionAssignmentSubmitted;
+
+  /// No description provided for @completionAssignmentNotSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Not submitted yet'**
+  String get completionAssignmentNotSubmitted;
+
+  /// No description provided for @completionMinScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall score of at least {required}% (now {current}%)'**
+  String completionMinScore(String required, String current);
+
+  /// No description provided for @completionStateDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get completionStateDone;
+
+  /// No description provided for @completionStateWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get completionStateWaiting;
+
+  /// No description provided for @completionStateTodo.
+  ///
+  /// In en, this message translates to:
+  /// **'Not done'**
+  String get completionStateTodo;
+
+  /// No description provided for @completionCertificateNotYet.
+  ///
+  /// In en, this message translates to:
+  /// **'You get a certificate when you complete the course.'**
+  String get completionCertificateNotYet;
+
+  /// No description provided for @completionCertificateNotYetMin.
+  ///
+  /// In en, this message translates to:
+  /// **'You get a certificate when you complete the course with an overall score of at least {score}%.'**
+  String completionCertificateNotYetMin(String score);
+
+  /// No description provided for @courseCertificateRevoked.
+  ///
+  /// In en, this message translates to:
+  /// **'Your certificate for this course was revoked. Contact the academy if you think this is a mistake.'**
+  String get courseCertificateRevoked;
+
+  /// No description provided for @completionMinScoreNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall score of at least {required}% (no grades yet)'**
+  String completionMinScoreNone(String required);
 }
 
 class _AppLocalizationsDelegate

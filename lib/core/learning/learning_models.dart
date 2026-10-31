@@ -292,15 +292,104 @@ class CourseCompletion {
     : completed = j['completed'] == true,
       completedAt = _date(j['completedAt']),
       missing = _list(j['missing']),
+      lessonsTotal = _int((j['lessons'] as Map?)?['total']),
+      lessonsCompleted = _int((j['lessons'] as Map?)?['completed']),
+      lessonsRule = (j['rule'] as Map?)?['lessons'],
+      minOverallScore = ((j['rule'] as Map?)?['minOverallScore'] as num?)
+          ?.toDouble(),
+      overallScore = (j['overallScore'] as num?)?.toDouble(),
+      quizzes = _list(j['quizzes'])
+          .where((q) => q['required'] == true)
+          .map(
+            (q) => CompletionRequirement(
+              kind: 'quiz',
+              id: q['quizId'] as String? ?? '',
+              title: q['title'] as String? ?? '',
+              state: q['passed'] == true
+                  ? RequirementState.done
+                  : q['pendingGrading'] == true
+                  ? RequirementState.waiting
+                  : RequirementState.todo,
+              score: (q['effectiveScore'] as num?)?.toDouble(),
+            ),
+          )
+          .toList(),
+      assignments = _list(j['assignments'])
+          .where((a) => a['required'] == true)
+          .map(
+            (a) => CompletionRequirement(
+              kind: 'assignment',
+              id: a['assignmentId'] as String? ?? '',
+              title: a['title'] as String? ?? '',
+              state: a['graded'] == true
+                  ? RequirementState.done
+                  : a['submitted'] == true
+                  ? RequirementState.waiting
+                  : RequirementState.todo,
+              score: (a['score'] as num?)?.toDouble(),
+            ),
+          )
+          .toList(),
       certificateEnabled = (j['certificate'] as Map?)?['enabled'] == true,
       certificateStatus =
-          (j['certificate'] as Map?)?['status'] as String? ?? 'unavailable';
+          (j['certificate'] as Map?)?['status'] as String? ?? 'unavailable',
+      certificateMinScore = ((j['certificate'] as Map?)?['minScore'] as num?)
+          ?.toDouble();
 
   final bool completed;
   final DateTime? completedAt;
   final List<Map<String, dynamic>> missing;
+  final int lessonsTotal;
+  final int lessonsCompleted;
+
+  /// The rule's lessons: 'all', 'none' or a count.
+  final Object? lessonsRule;
+  final double? minOverallScore;
+  final double? overallScore;
+
+  /// The required quizzes and assignments, each with where the learner is.
+  final List<CompletionRequirement> quizzes;
+  final List<CompletionRequirement> assignments;
   final bool certificateEnabled;
+
+  /// unavailable, eligible (being prepared), issued or revoked.
   final String certificateStatus;
+  final double? certificateMinScore;
+
+  /// How many lessons the course needs, as the server counts it.
+  int get lessonsRequired => switch (lessonsRule) {
+    'none' => 0,
+    num n => n.toInt().clamp(0, lessonsTotal),
+    _ => lessonsTotal,
+  };
+
+  bool get minScoreMet =>
+      minOverallScore == null ||
+      (overallScore != null && overallScore! >= minOverallScore!);
+
+  /// Anything the course asks for besides its lessons.
+  bool get hasRequirementsBeyondLessons =>
+      quizzes.isNotEmpty || assignments.isNotEmpty || minOverallScore != null;
+}
+
+enum RequirementState { done, waiting, todo }
+
+/// A quiz or assignment the course needs before it counts as completed.
+class CompletionRequirement {
+  const CompletionRequirement({
+    required this.kind,
+    required this.id,
+    required this.title,
+    required this.state,
+    this.score,
+  });
+
+  /// quiz or assignment.
+  final String kind;
+  final String id;
+  final String title;
+  final RequirementState state;
+  final double? score;
 }
 
 class LearnerDevice {

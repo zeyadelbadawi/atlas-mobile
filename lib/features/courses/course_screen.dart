@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +12,7 @@ import '../../core/learning/learning_models.dart';
 import '../../design/design.dart';
 import '../learning/course_widgets.dart';
 import '../learning/learning_ui.dart';
+import 'completion_card.dart';
 
 /// One course: progress, where to continue, and the syllabus by unit with
 /// the bookmark on the current item.
@@ -52,6 +55,7 @@ class _CourseScreenState extends ConsumerState<CourseScreen> {
               edgeOffset: MediaQuery.paddingOf(context).top,
               onRefresh: () async {
                 ref.invalidate(sequenceProvider(courseId));
+                ref.invalidate(completionProvider(courseId));
                 await ref.read(sequenceProvider(courseId).future);
               },
               child: ListView(
@@ -214,17 +218,31 @@ class _Course extends ConsumerWidget {
     for (final i in s.items) {
       units.putIfAbsent(i.unitNumber, () => []).add(i);
     }
+    // The server decides when a course is complete: every lesson done is
+    // not enough while a required quiz is not passed.
+    final completion = ref.watch(completionProvider(s.courseId)).value;
+    final done = completion?.completed ?? s.finished;
+    final checklist =
+        completion != null &&
+        !completion.completed &&
+        (s.finished || completion.hasRequirementsBeyondLessons);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (s.finished)
-          _CompletedCard(courseId: s.courseId)
-        else if (next != null)
+        if (done) _CompletedCard(courseId: s.courseId),
+        if (next != null && !s.finished) ...[
+          if (done) const SizedBox(height: AtlasSpace.s16),
           AtlasButton(
             label: s.completedCount == 0 ? l.homeStart : l.courseContinue,
             icon: LucideIcons.play,
             onPressed: () => openItem(context, ref, s, next),
           ),
+        ],
+        if (checklist) ...[
+          if (next != null && !s.finished)
+            const SizedBox(height: AtlasSpace.s16),
+          CompletionChecklist(courseId: s.courseId, completion: completion),
+        ],
         for (final entry in units.entries) ...[
           SectionHeader(
             title:
@@ -244,17 +262,45 @@ class _Course extends ConsumerWidget {
   }
 }
 
-class _CompletedCard extends ConsumerWidget {
+class _CompletedCard extends ConsumerStatefulWidget {
   const _CompletedCard({required this.courseId});
   final String courseId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_CompletedCard> createState() => _CompletedCardState();
+}
+
+class _CompletedCardState extends ConsumerState<_CompletedCard> {
+  Timer? _poll;
+  int _polls = 0;
+
+  /// While the certificate is being prepared, look again now and then
+  /// (for about two minutes) so it appears without a pull to refresh.
+  void _watch(String status) {
+    if (status != 'eligible' || _poll != null || _polls >= 12) return;
+    _poll = Timer(const Duration(seconds: 10), () {
+      _poll = null;
+      _polls++;
+      if (mounted) ref.invalidate(completionProvider(widget.courseId));
+    });
+  }
+
+  @override
+  void dispose() {
+    _poll?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final courseId = widget.courseId;
     final l = context.l10n;
     final a = context.atlas;
     final completion = ref.watch(completionProvider(courseId)).value;
     final enabled = completion?.certificateEnabled ?? false;
-    final issued = completion?.certificateStatus == 'issued';
+    final status = completion?.certificateStatus;
+    final issued = status == 'issued';
+    if (enabled && status != null) _watch(status);
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -287,6 +333,8 @@ class _CompletedCard extends ConsumerWidget {
                           ? l.courseCompletedBody
                           : issued
                           ? l.courseCertificateIssued
+                          : status == 'revoked'
+                          ? l.courseCertificateRevoked
                           : l.courseCertificatePending,
                       style: a.type.subhead.copyWith(
                         color: a.colors.inkSecondary,
