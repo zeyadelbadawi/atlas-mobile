@@ -2009,4 +2009,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String completionMinScoreNone(String required) {
     return 'Overall score of at least $required% (no grades yet)';
   }
+
+  @override
+  String get lessonUndo => 'Mark as not done';
+
+  @override
+  String get lessonUndone => 'The lesson is marked as not done.';
 }

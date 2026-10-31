@@ -73,6 +73,34 @@ void main() {
       expect(find.text('متطلبات إنهاء الكورس'), findsNothing);
     });
   });
+
+  testWidgets('a lesson marked done by mistake can be taken back', (t) async {
+    final learning = _Undo();
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/${FakeLearningRepository.courseId}/lesson/l0',
+      size: const Size(393, 1400),
+      learning: learning,
+    );
+    await t.pump(const Duration(seconds: 1));
+    await t.ensureVisible(find.text('إلغاء الإكمال'));
+    await t.tap(find.text('إلغاء الإكمال'));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 500));
+    expect(learning.undone, ['c-calc/l0']);
+    expect(find.text('أُلغي إكمال الدرس.'), findsOneWidget);
+    expect(find.text('أكملت الدرس'), findsOneWidget);
+    expect(find.text('إلغاء الإكمال'), findsNothing);
+  });
+}
+
+class _Undo extends FakeLearningRepository {
+  final undone = <String>[];
+
+  @override
+  Future<void> undoCompleteLesson(String courseId, String lessonId) async =>
+      undone.add('$courseId/$lessonId');
 }
 
 /// Every lesson done; the quiz passed only when [completed].

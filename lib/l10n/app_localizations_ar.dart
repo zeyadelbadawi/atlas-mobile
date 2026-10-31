@@ -2019,4 +2019,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String completionMinScoreNone(String required) {
     return 'نتيجة إجمالية لا تقل عن $required٪ (لا توجد درجات بعد)';
   }
+
+  @override
+  String get lessonUndo => 'إلغاء الإكمال';
+
+  @override
+  String get lessonUndone => 'أُلغي إكمال الدرس.';
 }

@@ -571,5 +571,7 @@
   "completionCertificateNotYet": "تحصل على شهادة عند إنهاء الكورس.",
   "completionCertificateNotYetMin": "تحصل على شهادة عند إنهاء الكورس بنتيجة إجمالية لا تقل عن {score}٪.",
   "courseCertificateRevoked": "أُلغيت شهادتك لهذا الكورس. تواصل مع الأكاديمية إذا كنت ترى أن هذا خطأ.",
-  "completionMinScoreNone": "نتيجة إجمالية لا تقل عن {required}٪ (لا توجد درجات بعد)"
+  "completionMinScoreNone": "نتيجة إجمالية لا تقل عن {required}٪ (لا توجد درجات بعد)",
+  "lessonUndo": "إلغاء الإكمال",
+  "lessonUndone": "أُلغي إكمال الدرس."
 }

@@ -180,6 +180,22 @@ void main() {
 
   completionShots();
 
+  shot(
+    'lesson_undo',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/${FakeLearningRepository.courseId}/lesson/l0',
+        size: const Size(393, 1100),
+      );
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('lesson-undo'));
+      return k.evaluate().isNotEmpty ? k : find.text('تم');
+    },
+  );
+
   shot('courses_broken_cover', (t) async {
     await pumpScreen(
       t,

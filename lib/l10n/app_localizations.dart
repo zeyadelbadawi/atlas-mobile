@@ -3529,6 +3529,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Overall score of at least {required}% (no grades yet)'**
   String completionMinScoreNone(String required);
+
+  /// No description provided for @lessonUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as not done'**
+  String get lessonUndo;
+
+  /// No description provided for @lessonUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'The lesson is marked as not done.'**
+  String get lessonUndone;
 }
 
 class _AppLocalizationsDelegate

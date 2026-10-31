@@ -42,7 +42,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   LessonGrant? _grant;
   PlaybackSession? _session;
   AtlasApiException? _error;
-  bool _loading = true, _completing = false, _done = false, _eligible = false;
+  bool _loading = true, _completing = false, _eligible = false;
+
+  /// Set once the learner marks the lesson done (true) or takes it back
+  /// (false); until then the course's own record says.
+  bool? _done;
 
   @override
   void initState() {
@@ -158,6 +162,33 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     }
   }
 
+  Future<void> _undo() async {
+    setState(() => _completing = true);
+    try {
+      await ref
+          .read(learningRepositoryProvider)
+          .undoCompleteLesson(widget.courseId, widget.lessonId);
+      ref.read(analyticsProvider).event('lesson_undo_complete');
+      refreshLearning(ref, widget.courseId);
+      if (!mounted) return;
+      // What was watched still counts, so it can be marked done again.
+      setState(() {
+        _done = false;
+        _eligible = true;
+      });
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(context.l10n.lessonUndone)));
+    } on AtlasApiException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(errorText(ref, context, e))));
+      }
+    } finally {
+      if (mounted) setState(() => _completing = false);
+    }
+  }
+
   void _open(String url) =>
       launchUrl(Uri.parse(url), mode: LaunchMode.inAppBrowserView);
 
@@ -260,7 +291,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     final c = a.colors;
     final next = seq?.after(widget.lessonId);
     final alreadyDone = item?.isDone ?? false;
-    final done = _done || alreadyDone;
+    final done = _done ?? alreadyDone;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -390,6 +421,15 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
               style: AtlasButtonStyle.tonal,
               onPressed: () => context.pop(),
             ),
+          const SizedBox(height: AtlasSpace.s8),
+          AtlasButton(
+            key: const ValueKey('lesson-undo'),
+            label: l.lessonUndo,
+            icon: LucideIcons.undo2,
+            style: AtlasButtonStyle.plain,
+            loading: _completing,
+            onPressed: _completing ? null : _undo,
+          ),
         ],
       ],
     );

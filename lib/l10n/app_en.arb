@@ -1193,5 +1193,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "lessonUndo": "Mark as not done",
+  "lessonUndone": "The lesson is marked as not done."
 }

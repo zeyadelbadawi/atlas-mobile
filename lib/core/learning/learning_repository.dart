@@ -52,6 +52,13 @@ class LearningRepository {
     return (body['percentage'] as num?)?.toDouble() ?? 0;
   }
 
+  /// Takes back a completion (a lesson marked done by mistake). The
+  /// server keeps what was watched and leaves later lessons unlocked.
+  Future<void> undoCompleteLesson(String courseId, String lessonId) =>
+      client.delete<dynamic>(
+        'learning/courses/$courseId/progress/complete-lesson/$lessonId',
+      );
+
   Future<CourseCompletion> completion(String courseId) async =>
       CourseCompletion.fromJson(
         await client.get<Map<String, dynamic>>(
