@@ -438,3 +438,35 @@ class ServerNote {
   final bool saved;
   final DateTime editedAt;
 }
+
+/// `GET live-sessions/courses/:courseId` — one live class of a course the
+/// learner is enrolled in (drafts are never listed).
+class LiveSession {
+  LiveSession.fromJson(Map<String, dynamic> j)
+    : id = j['id'] as String? ?? '',
+      title = j['title'] as String? ?? '',
+      description = j['description'] as String?,
+      status = j['status'] as String? ?? 'scheduled',
+      startsAt =
+          DateTime.tryParse(j['scheduledStartAt'] as String? ?? '')
+              ?.toLocal() ??
+          DateTime(2000),
+      endsAt =
+          DateTime.tryParse(j['scheduledEndAt'] as String? ?? '')?.toLocal() ??
+          DateTime(2000),
+      hostName = (j['host'] as Map?)?['name'] as String?,
+      recordingAvailable = j['recordingAvailable'] == true;
+
+  final String id;
+  final String title;
+  final String? description;
+
+  /// scheduled | live | ended | cancelled | failed
+  final String status;
+  final DateTime startsAt;
+  final DateTime endsAt;
+  final String? hostName;
+  final bool recordingAvailable;
+
+  bool get cancelled => status == 'cancelled' || status == 'failed';
+}

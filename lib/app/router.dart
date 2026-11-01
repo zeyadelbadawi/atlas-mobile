@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/auth/auth_repository.dart';
+import '../features/live/live_session_screen.dart';
 import '../features/academy_picker/academy_picker_screen.dart';
 import '../features/academy_picker/qr_scan_screen.dart';
 import '../features/account/account_screen.dart';
@@ -186,6 +187,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, s) => ItemRedirectScreen(
           courseId: s.pathParameters['id']!,
           itemId: s.pathParameters['itemId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/course/:id/live/:sessionId',
+        builder: (_, s) => LiveSessionScreen(
+          courseId: s.pathParameters['id']!,
+          sessionId: s.pathParameters['sessionId']!,
         ),
       ),
       GoRoute(

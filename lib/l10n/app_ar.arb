@@ -678,5 +678,18 @@
   "goalSheetTitle": "هدفك الأسبوعي",
   "goalSheetBody": "كم يومًا تريد أن تذاكر كل أسبوع؟",
   "goalOff": "بدون هدف",
-  "goalEdit": "تغيير الهدف الأسبوعي"
+  "goalEdit": "تغيير الهدف الأسبوعي",
+  "liveNow": "مباشرة الآن",
+  "liveEnded": "انتهت هذه الحصة.",
+  "liveCancelled": "أُلغيت هذه الحصة.",
+  "liveJoin": "انضم من موقع الأكاديمية",
+  "liveRecording": "شاهد التسجيل على موقع الأكاديمية",
+  "liveHost": "مع {name}",
+  "liveTime": "من {start} إلى {end}",
+  "liveJoinNote": "تنضم للحصة من موقع الأكاديمية، ويُتاح الانضمام قبل بدايتها بربع ساعة.",
+  "liveNotFound": "لم نجد هذه الحصة.",
+  "liveStartsIn": "تبدأ بعد",
+  "liveDays": "أيام",
+  "liveHours": "ساعات",
+  "liveMinutes": "دقائق"
 }

@@ -2389,4 +2389,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goalEdit => 'Change weekly goal';
+
+  @override
+  String get liveNow => 'Live now';
+
+  @override
+  String get liveEnded => 'This class has ended.';
+
+  @override
+  String get liveCancelled => 'This class was cancelled.';
+
+  @override
+  String get liveJoin => 'Join on the academy website';
+
+  @override
+  String get liveRecording => 'Watch the recording on the academy website';
+
+  @override
+  String liveHost(String name) {
+    return 'With $name';
+  }
+
+  @override
+  String liveTime(String start, String end) {
+    return '$start – $end';
+  }
+
+  @override
+  String get liveJoinNote =>
+      'You\'ll join on the academy website; joining opens 15 minutes before the start.';
+
+  @override
+  String get liveNotFound => 'We couldn\'t find this class.';
+
+  @override
+  String get liveStartsIn => 'Starts in';
+
+  @override
+  String get liveDays => 'days';
+
+  @override
+  String get liveHours => 'hours';
+
+  @override
+  String get liveMinutes => 'minutes';
 }

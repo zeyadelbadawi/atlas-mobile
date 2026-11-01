@@ -271,7 +271,7 @@ class _Course extends ConsumerWidget {
             SyllabusRow(
               item: item,
               current: item.id == next?.id && !s.finished,
-              onTap: item.isLocked
+              onTap: item.isLocked && !opensWhenLocked(item)
                   ? () => explainLocked(context, item)
                   : () => openItem(context, ref, s, item),
             ),
@@ -437,7 +437,7 @@ class CourseOutline extends ConsumerWidget {
               current: item.id == openId,
               onTap: item.id == openId
                   ? null
-                  : item.isLocked
+                  : item.isLocked && !opensWhenLocked(item)
                   ? () => explainLocked(context, item)
                   : () => openItem(context, ref, s, item, replace: true),
             ),
@@ -470,7 +470,6 @@ class SyllabusRow extends StatelessWidget {
         lock
       else if (item.durationSeconds != null && item.durationSeconds! > 0)
         l.minutes(context.digits('${(item.durationSeconds! / 60).ceil()}')),
-      if (item.type == 'live_session' && !item.isLocked) l.itemOnWebsite,
     ].join(context.sep);
     final fg = item.isLocked ? c.inkTertiary : c.ink;
     // The bookmark is a picture; a screen reader hears "You are here".
@@ -557,6 +556,11 @@ class SyllabusRow extends StatelessWidget {
 }
 
 /// A tap on a locked item says why it is locked, instead of doing nothing.
+/// A live class that has not started is "locked" only until its time; its
+/// screen shows when it is and counts down, so it opens anyway.
+bool opensWhenLocked(SequenceItem item) =>
+    item.type == 'live_session' && item.lockReason == 'notStarted';
+
 void explainLocked(BuildContext context, SequenceItem item) {
   final why = lockText(context, item);
   if (why == null) return;

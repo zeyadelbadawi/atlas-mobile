@@ -1418,5 +1418,20 @@
   "goalSheetBody": "How many days a week do you want to study?",
   "goalOff": "No goal",
   "goalEdit": "Change weekly goal",
-  "@goalProgress": {"placeholders": {"done": {"type": "String"}, "goal": {"type": "String"}}}
+  "@goalProgress": {"placeholders": {"done": {"type": "String"}, "goal": {"type": "String"}}},
+  "liveNow": "Live now",
+  "liveEnded": "This class has ended.",
+  "liveCancelled": "This class was cancelled.",
+  "liveJoin": "Join on the academy website",
+  "liveRecording": "Watch the recording on the academy website",
+  "liveHost": "With {name}",
+  "liveTime": "{start} – {end}",
+  "liveJoinNote": "You'll join on the academy website; joining opens 15 minutes before the start.",
+  "liveNotFound": "We couldn't find this class.",
+  "liveStartsIn": "Starts in",
+  "liveDays": "days",
+  "liveHours": "hours",
+  "liveMinutes": "minutes",
+  "@liveHost": {"placeholders": {"name": {"type": "String"}}},
+  "@liveTime": {"placeholders": {"start": {"type": "String"}, "end": {"type": "String"}}}
 }

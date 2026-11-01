@@ -16,11 +16,12 @@ class _Offline extends FakeLearningRepository {
 
   @override
   Future<List<ServerNote>> notes() async {
-    if (!online)
+    if (!online) {
       throw const AtlasApiException(
         kind: 'network',
         messageKey: 'errors.network',
       );
+    }
     return super.notes();
   }
 
@@ -32,11 +33,12 @@ class _Offline extends FakeLearningRepository {
     required bool saved,
     required DateTime editedAt,
   }) {
-    if (!online)
+    if (!online) {
       throw const AtlasApiException(
         kind: 'network',
         messageKey: 'errors.network',
       );
+    }
     return super.putNote(
       courseId: courseId,
       lessonId: lessonId,

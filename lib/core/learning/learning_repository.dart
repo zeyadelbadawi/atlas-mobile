@@ -165,4 +165,14 @@ class LearningRepository {
         if (d is String) d,
     ];
   }
+
+  /// The course's live classes, earliest first (empty when not enrolled).
+  Future<List<LiveSession>> liveSessions(String courseId) async {
+    final body = await client.get<dynamic>('live-sessions/courses/$courseId');
+    return [
+      if (body is List)
+        for (final m in body.whereType<Map>())
+          LiveSession.fromJson(Map<String, dynamic>.from(m)),
+    ];
+  }
 }

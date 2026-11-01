@@ -1,3 +1,4 @@
+import 'package:atlas_mobile/core/platform/calendar.dart';
 import 'package:atlas_mobile/app/app_lock.dart';
 import 'package:atlas_mobile/app/notes.dart';
 import 'package:atlas_mobile/app/providers.dart';
@@ -135,7 +136,7 @@ void main() {
 
   group('due dates in the calendar', () {
     testWidgets('an assignment still to do: its due date goes in', (t) async {
-      final added = <({String title, String description, DateTime dueAt})>[];
+      final added = <DueEvent>[];
       await pumpScreen(
         t,
         session: AsSignedIn.new,

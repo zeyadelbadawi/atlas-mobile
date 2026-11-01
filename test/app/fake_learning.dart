@@ -336,4 +336,71 @@ class FakeLearningRepository extends LearningRepository {
 
   @override
   Future<List<String>> studyDays(String timeZone) async => serverDays;
+
+  /// Live classes of the demo course, around [testNow].
+  List<Map<String, dynamic>> liveSessionsJson = [
+    {
+      'id': 'ls-next',
+      'title': demo('مراجعة النهايات قبل الامتحان'),
+      'description': demo('نحل معًا أسئلة الامتحانات السابقة على النهايات.'),
+      'status': 'scheduled',
+      'scheduledStartAt': _now
+          .add(const Duration(days: 2, hours: 3, minutes: 20))
+          .toUtc()
+          .toIso8601String(),
+      'scheduledEndAt': _now
+          .add(const Duration(days: 2, hours: 4, minutes: 20))
+          .toUtc()
+          .toIso8601String(),
+      'host': {'id': 't1', 'name': demo('أ. أحمد سمير')},
+      'recordingAvailable': false,
+    },
+    {
+      'id': 'ls-now',
+      'title': demo('حصة الاتصال'),
+      'status': 'live',
+      'scheduledStartAt': _now
+          .subtract(const Duration(minutes: 10))
+          .toUtc()
+          .toIso8601String(),
+      'scheduledEndAt': _now
+          .add(const Duration(minutes: 50))
+          .toUtc()
+          .toIso8601String(),
+      'recordingAvailable': false,
+    },
+    {
+      'id': 'ls-done',
+      'title': demo('مقدمة في التفاضل'),
+      'status': 'ended',
+      'scheduledStartAt': _now
+          .subtract(const Duration(days: 3))
+          .toUtc()
+          .toIso8601String(),
+      'scheduledEndAt': _now
+          .subtract(const Duration(days: 3, hours: -1))
+          .toUtc()
+          .toIso8601String(),
+      'recordingAvailable': true,
+    },
+    {
+      'id': 'ls-off',
+      'title': demo('حصة ملغاة'),
+      'status': 'cancelled',
+      'scheduledStartAt': _now
+          .add(const Duration(days: 1))
+          .toUtc()
+          .toIso8601String(),
+      'scheduledEndAt': _now
+          .add(const Duration(days: 1, hours: 1))
+          .toUtc()
+          .toIso8601String(),
+      'recordingAvailable': false,
+    },
+  ];
+
+  @override
+  Future<List<LiveSession>> liveSessions(String courseId) async => [
+    for (final j in liveSessionsJson) LiveSession.fromJson(j),
+  ];
 }

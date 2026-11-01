@@ -51,9 +51,9 @@ class ContinueForCourse extends ConsumerWidget {
   }
 }
 
-/// Opens a course item in the app: lessons in the player, quizzes and
-/// assignments on their screens. Live sessions open on the academy's
-/// website (Zoom in the app comes when the backend enables it).
+/// Opens a course item in the app: lessons in the player, quizzes,
+/// assignments and live classes on their screens (a live class is joined
+/// on the academy's website; Zoom in the app comes later).
 /// [replace] swaps the current screen (lesson → next activity).
 void openItem(
   BuildContext context,
@@ -66,6 +66,7 @@ void openItem(
     'lesson' => '/course/${s.courseId}/lesson/${item.id}',
     'quiz' => '/course/${s.courseId}/quiz/${item.id}',
     'assignment' => '/course/${s.courseId}/assignment/${item.id}',
+    'live_session' => '/course/${s.courseId}/live/${item.id}',
     _ => null,
   };
   if (path != null) {

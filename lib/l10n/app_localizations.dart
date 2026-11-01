@@ -4171,6 +4171,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change weekly goal'**
   String get goalEdit;
+
+  /// No description provided for @liveNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Live now'**
+  String get liveNow;
+
+  /// No description provided for @liveEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'This class has ended.'**
+  String get liveEnded;
+
+  /// No description provided for @liveCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'This class was cancelled.'**
+  String get liveCancelled;
+
+  /// No description provided for @liveJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join on the academy website'**
+  String get liveJoin;
+
+  /// No description provided for @liveRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch the recording on the academy website'**
+  String get liveRecording;
+
+  /// No description provided for @liveHost.
+  ///
+  /// In en, this message translates to:
+  /// **'With {name}'**
+  String liveHost(String name);
+
+  /// No description provided for @liveTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{start} – {end}'**
+  String liveTime(String start, String end);
+
+  /// No description provided for @liveJoinNote.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll join on the academy website; joining opens 15 minutes before the start.'**
+  String get liveJoinNote;
+
+  /// No description provided for @liveNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t find this class.'**
+  String get liveNotFound;
+
+  /// No description provided for @liveStartsIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Starts in'**
+  String get liveStartsIn;
+
+  /// No description provided for @liveDays.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get liveDays;
+
+  /// No description provided for @liveHours.
+  ///
+  /// In en, this message translates to:
+  /// **'hours'**
+  String get liveHours;
+
+  /// No description provided for @liveMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'minutes'**
+  String get liveMinutes;
 }
 
 class _AppLocalizationsDelegate

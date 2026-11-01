@@ -38,6 +38,12 @@ final sequenceProvider = FutureProvider.autoDispose
           ref.watch(learningRepositoryProvider).sequence(courseId),
     );
 
+final liveSessionsProvider = FutureProvider.autoDispose
+    .family<List<LiveSession>, String>(
+      (ref, courseId) =>
+          ref.watch(learningRepositoryProvider).liveSessions(courseId),
+    );
+
 final completionProvider = FutureProvider.autoDispose
     .family<CourseCompletion, String>(
       (ref, courseId) =>

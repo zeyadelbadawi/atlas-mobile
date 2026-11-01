@@ -2398,4 +2398,48 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get goalEdit => 'تغيير الهدف الأسبوعي';
+
+  @override
+  String get liveNow => 'مباشرة الآن';
+
+  @override
+  String get liveEnded => 'انتهت هذه الحصة.';
+
+  @override
+  String get liveCancelled => 'أُلغيت هذه الحصة.';
+
+  @override
+  String get liveJoin => 'انضم من موقع الأكاديمية';
+
+  @override
+  String get liveRecording => 'شاهد التسجيل على موقع الأكاديمية';
+
+  @override
+  String liveHost(String name) {
+    return 'مع $name';
+  }
+
+  @override
+  String liveTime(String start, String end) {
+    return 'من $start إلى $end';
+  }
+
+  @override
+  String get liveJoinNote =>
+      'تنضم للحصة من موقع الأكاديمية، ويُتاح الانضمام قبل بدايتها بربع ساعة.';
+
+  @override
+  String get liveNotFound => 'لم نجد هذه الحصة.';
+
+  @override
+  String get liveStartsIn => 'تبدأ بعد';
+
+  @override
+  String get liveDays => 'أيام';
+
+  @override
+  String get liveHours => 'ساعات';
+
+  @override
+  String get liveMinutes => 'دقائق';
 }

@@ -206,6 +206,7 @@ void main() {
   streakShots();
   offlineLessonShots();
   photoShots();
+  liveShots();
 
   shot(
     'lesson_undo',
@@ -964,4 +965,17 @@ void photoShots() {
       // Let the held upload finish so no timer is left.
     },
   );
+}
+
+/// Batch 5 (A6): a live class, view only.
+void liveShots() {
+  for (final id in ['ls-next', 'ls-now', 'ls-done']) {
+    shot('live_$id', (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/c-calc/live/$id',
+      );
+    });
+  }
 }

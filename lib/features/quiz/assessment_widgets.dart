@@ -372,6 +372,7 @@ class AddToCalendarButton extends ConsumerWidget {
             title: l.calendarEventTitle(title),
             description: kind,
             dueAt: dueAt,
+            startsAt: null,
           ));
           ref.read(analyticsProvider).event('calendar_add', {'ok': ok ? 1 : 0});
           if (!ok && context.mounted) {
