@@ -4129,6 +4129,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shown on your account and to your academy\'s teachers.'**
   String get photoProfileHint;
+
+  /// No description provided for @goalSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a weekly goal'**
+  String get goalSet;
+
+  /// No description provided for @goalProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal: {done} of {goal} days in the last 7'**
+  String goalProgress(String done, String goal);
+
+  /// No description provided for @goalReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal reached for the last 7 days.'**
+  String get goalReached;
+
+  /// No description provided for @goalSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your weekly goal'**
+  String get goalSheetTitle;
+
+  /// No description provided for @goalSheetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'How many days a week do you want to study?'**
+  String get goalSheetBody;
+
+  /// No description provided for @goalOff.
+  ///
+  /// In en, this message translates to:
+  /// **'No goal'**
+  String get goalOff;
+
+  /// No description provided for @goalEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Change weekly goal'**
+  String get goalEdit;
 }
 
 class _AppLocalizationsDelegate

@@ -1410,5 +1410,13 @@
   "photoInvalid": "This photo can't be used. Try another one.",
   "photoFailed": "Couldn't update your photo. Check your connection and try again.",
   "photoNoAccess": "Allow access to the camera or photos in Settings to add a photo.",
-  "photoProfileHint": "Shown on your account and to your academy's teachers."
+  "photoProfileHint": "Shown on your account and to your academy's teachers.",
+  "goalSet": "Set a weekly goal",
+  "goalProgress": "Goal: {done} of {goal} days in the last 7",
+  "goalReached": "Goal reached for the last 7 days.",
+  "goalSheetTitle": "Your weekly goal",
+  "goalSheetBody": "How many days a week do you want to study?",
+  "goalOff": "No goal",
+  "goalEdit": "Change weekly goal",
+  "@goalProgress": {"placeholders": {"done": {"type": "String"}, "goal": {"type": "String"}}}
 }

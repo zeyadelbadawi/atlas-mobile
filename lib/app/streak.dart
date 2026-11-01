@@ -80,3 +80,27 @@ int streakOf(Set<String> days, DateTime now) {
 final streakProvider = Provider<int>(
   (ref) => streakOf(ref.watch(studyDaysProvider), clockNow()),
 );
+
+/// How many days a week the learner wants to study (1–7), or null for no
+/// goal. On this phone; the streak card counts it over the last seven days.
+class WeeklyGoal extends Notifier<int?> {
+  static const key = 'study.weeklyGoal';
+
+  @override
+  int? build() {
+    final v = ref.watch(sharedPreferencesProvider).getInt(key);
+    return v != null && v >= 1 && v <= 7 ? v : null;
+  }
+
+  Future<void> set(int? days) async {
+    final prefs = ref.read(sharedPreferencesProvider);
+    if (days == null) {
+      await prefs.remove(key);
+    } else {
+      await prefs.setInt(key, days.clamp(1, 7));
+    }
+    state = days?.clamp(1, 7);
+  }
+}
+
+final weeklyGoalProvider = NotifierProvider<WeeklyGoal, int?>(WeeklyGoal.new);

@@ -2375,4 +2375,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get photoProfileHint => 'تظهر في حسابك ولمعلّمي الأكاديمية.';
+
+  @override
+  String get goalSet => 'حدّد هدفًا أسبوعيًا';
+
+  @override
+  String goalProgress(String done, String goal) {
+    return 'هدفك: $done من $goal أيام في آخر ٧ أيام';
+  }
+
+  @override
+  String get goalReached => 'حققت هدفك في آخر ٧ أيام.';
+
+  @override
+  String get goalSheetTitle => 'هدفك الأسبوعي';
+
+  @override
+  String get goalSheetBody => 'كم يومًا تريد أن تذاكر كل أسبوع؟';
+
+  @override
+  String get goalOff => 'بدون هدف';
+
+  @override
+  String get goalEdit => 'تغيير الهدف الأسبوعي';
 }

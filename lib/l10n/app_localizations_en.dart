@@ -2366,4 +2366,27 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get photoProfileHint =>
       'Shown on your account and to your academy\'s teachers.';
+
+  @override
+  String get goalSet => 'Set a weekly goal';
+
+  @override
+  String goalProgress(String done, String goal) {
+    return 'Goal: $done of $goal days in the last 7';
+  }
+
+  @override
+  String get goalReached => 'Goal reached for the last 7 days.';
+
+  @override
+  String get goalSheetTitle => 'Your weekly goal';
+
+  @override
+  String get goalSheetBody => 'How many days a week do you want to study?';
+
+  @override
+  String get goalOff => 'No goal';
+
+  @override
+  String get goalEdit => 'Change weekly goal';
 }

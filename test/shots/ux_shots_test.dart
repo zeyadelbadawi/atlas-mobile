@@ -786,6 +786,42 @@ void streakShots() {
       return k.evaluate().isNotEmpty ? k : find.text('مواعيد قريبة');
     },
   );
+
+  shot(
+    'home_streak_goal',
+    (t) async {
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/home',
+        size: const Size(393, 1200),
+        prefs: {
+          'study.weeklyGoal': 4,
+          'study.days.${ziadd.id}.u1': [d(0), d(1), d(2), d(4)],
+        },
+      );
+    },
+    focus: () {
+      final k = find.byKey(const ValueKey('streak'));
+      return k.evaluate().isNotEmpty ? k : find.text('مواعيد قريبة');
+    },
+  );
+
+  shot('goal_sheet', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/home',
+      size: const Size(393, 1200),
+      prefs: {
+        'study.weeklyGoal': 4,
+        'study.days.${ziadd.id}.u1': [d(0)],
+      },
+    );
+    await t.tap(find.byTooltip('تغيير الهدف الأسبوعي'));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+  });
 }
 
 /// Batch 4 (B10): a text lesson opened again with no connection.
