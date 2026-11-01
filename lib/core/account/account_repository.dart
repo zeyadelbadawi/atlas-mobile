@@ -1,3 +1,7 @@
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
+
 import '../api/atlas_api_client.dart';
 
 DateTime? _date(Object? v) =>
@@ -8,11 +12,15 @@ class AccountProfile {
     : id = j['id'] as String? ?? '',
       name = j['name'] as String? ?? '',
       email = j['email'] as String? ?? '',
+      avatar = j['avatar'] as String?,
       raw = j;
 
   final String id;
   final String name;
   final String email;
+
+  /// The profile photo's path on the academy's API host, or null.
+  final String? avatar;
 
   final Map<String, dynamic> raw;
 }
@@ -86,6 +94,32 @@ class AccountRepository {
           data: {'name': name},
         ),
       );
+
+  /// Sets the profile photo: a square image the app already cropped (the
+  /// server keeps a 512 x 512 WebP). Answers the updated account.
+  Future<AccountProfile> uploadAvatar(
+    Uint8List bytes, {
+    String? fileName,
+  }) async => AccountProfile.fromJson(
+    await client.post<Map<String, dynamic>>(
+      'users/me/avatar',
+      data: FormData.fromMap({
+        'file': MultipartFile.fromBytes(
+          bytes,
+          filename: fileName ?? 'avatar.jpg',
+          contentType: DioMediaType(
+            'image',
+            (fileName ?? '').endsWith('.png') ? 'png' : 'jpeg',
+          ),
+        ),
+      }),
+    ),
+  );
+
+  /// Removes the profile photo; the initials show again.
+  Future<AccountProfile> removeAvatar() async => AccountProfile.fromJson(
+    await client.delete<Map<String, dynamic>>('users/me/avatar'),
+  );
 
   Future<AccountPhone> phone() async => AccountPhone.fromJson(
     await client.get<Map<String, dynamic>>('users/me/phone'),

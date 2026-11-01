@@ -1397,5 +1397,18 @@
       }
     }
   },
-  "lessonOfflineCopy": "No connection. This is the copy saved on your phone when you last opened the lesson."
+  "lessonOfflineCopy": "No connection. This is the copy saved on your phone when you last opened the lesson.",
+  "photoAdd": "Add a profile photo",
+  "photoChange": "Change profile photo",
+  "photoSheetTitle": "Profile photo",
+  "photoTake": "Take a photo",
+  "photoChoose": "Choose from photos",
+  "photoRemove": "Remove photo",
+  "photoCropTitle": "Move and scale",
+  "photoCropHint": "Drag to move the photo, pinch to zoom.",
+  "photoUse": "Use photo",
+  "photoInvalid": "This photo can't be used. Try another one.",
+  "photoFailed": "Couldn't update your photo. Check your connection and try again.",
+  "photoNoAccess": "Allow access to the camera or photos in Settings to add a photo.",
+  "photoProfileHint": "Shown on your account and to your academy's teachers."
 }

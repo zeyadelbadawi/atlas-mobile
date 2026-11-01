@@ -4051,6 +4051,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No connection. This is the copy saved on your phone when you last opened the lesson.'**
   String get lessonOfflineCopy;
+
+  /// No description provided for @photoAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a profile photo'**
+  String get photoAdd;
+
+  /// No description provided for @photoChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change profile photo'**
+  String get photoChange;
+
+  /// No description provided for @photoSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile photo'**
+  String get photoSheetTitle;
+
+  /// No description provided for @photoTake.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get photoTake;
+
+  /// No description provided for @photoChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from photos'**
+  String get photoChoose;
+
+  /// No description provided for @photoRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get photoRemove;
+
+  /// No description provided for @photoCropTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Move and scale'**
+  String get photoCropTitle;
+
+  /// No description provided for @photoCropHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to move the photo, pinch to zoom.'**
+  String get photoCropHint;
+
+  /// No description provided for @photoUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Use photo'**
+  String get photoUse;
+
+  /// No description provided for @photoInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This photo can\'t be used. Try another one.'**
+  String get photoInvalid;
+
+  /// No description provided for @photoFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t update your photo. Check your connection and try again.'**
+  String get photoFailed;
+
+  /// No description provided for @photoNoAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow access to the camera or photos in Settings to add a photo.'**
+  String get photoNoAccess;
+
+  /// No description provided for @photoProfileHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown on your account and to your academy\'s teachers.'**
+  String get photoProfileHint;
 }
 
 class _AppLocalizationsDelegate

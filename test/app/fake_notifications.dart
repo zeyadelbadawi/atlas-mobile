@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:typed_data';
+
+import 'package:atlas_mobile/core/api/api_error.dart';
 import 'package:atlas_mobile/core/account/account_repository.dart';
 
 import '../design/golden_harness.dart' show testNow;
@@ -105,6 +109,38 @@ class FakeNotificationsRepository extends NotificationsRepository {
 
 class FakeAccountRepository extends AccountRepository {
   FakeAccountRepository() : super(_client());
+
+  /// What the learner uploaded last; set [failUpload] to make it fail.
+  Uint8List? uploaded;
+  bool removed = false;
+  AtlasApiException? failUpload;
+  Completer<void>? holdUpload;
+
+  static const learner = {
+    'id': 'u1',
+    'name': 'زياد البدوي',
+    'email': 'zeyad@example.com',
+  };
+
+  @override
+  Future<AccountProfile> uploadAvatar(
+    Uint8List bytes, {
+    String? fileName,
+  }) async {
+    await holdUpload?.future;
+    if (failUpload != null) throw failUpload!;
+    uploaded = bytes;
+    return AccountProfile.fromJson({
+      ...learner,
+      'avatar': '/api/v1/public/media/users/avatars/0b8f3c1e-2d4a-4f6b-9c7d-1e2f3a4b5c6d.webp',
+    });
+  }
+
+  @override
+  Future<AccountProfile> removeAvatar() async {
+    removed = true;
+    return AccountProfile.fromJson(learner);
+  }
 
   @override
   Future<AccountPhone> phone() async => AccountPhone.fromJson({

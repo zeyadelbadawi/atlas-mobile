@@ -2324,4 +2324,46 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get lessonOfflineCopy =>
       'No connection. This is the copy saved on your phone when you last opened the lesson.';
+
+  @override
+  String get photoAdd => 'Add a profile photo';
+
+  @override
+  String get photoChange => 'Change profile photo';
+
+  @override
+  String get photoSheetTitle => 'Profile photo';
+
+  @override
+  String get photoTake => 'Take a photo';
+
+  @override
+  String get photoChoose => 'Choose from photos';
+
+  @override
+  String get photoRemove => 'Remove photo';
+
+  @override
+  String get photoCropTitle => 'Move and scale';
+
+  @override
+  String get photoCropHint => 'Drag to move the photo, pinch to zoom.';
+
+  @override
+  String get photoUse => 'Use photo';
+
+  @override
+  String get photoInvalid => 'This photo can\'t be used. Try another one.';
+
+  @override
+  String get photoFailed =>
+      'Couldn\'t update your photo. Check your connection and try again.';
+
+  @override
+  String get photoNoAccess =>
+      'Allow access to the camera or photos in Settings to add a photo.';
+
+  @override
+  String get photoProfileHint =>
+      'Shown on your account and to your academy\'s teachers.';
 }

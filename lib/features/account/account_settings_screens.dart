@@ -20,6 +20,7 @@ import '../../core/api/api_error.dart';
 import '../../design/design.dart';
 import '../auth/register_screen.dart' show phonePrefix;
 import '../learning/learning_ui.dart';
+import 'profile_photo.dart';
 
 final accountRepositoryProvider = Provider<AccountRepository>((ref) {
   ref.watch(sessionProvider.select((s) => (s.academy, s.user?['id'])));
@@ -55,6 +56,73 @@ void _toast(BuildContext context, String text) => ScaffoldMessenger.of(context)
     );
 
 /* ---------------------------------------------------------------- profile */
+
+/// The profile photo, large, with its two actions spelled out.
+class _PhotoCard extends ConsumerWidget {
+  const _PhotoCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final c = a.colors;
+    final name = ref.watch(sessionProvider).displayName;
+    final has = ref.watch(avatarImageProvider) != null;
+    final busy = ref.watch(photoUploadProvider).busy;
+    return AtlasCard(
+      child: Row(
+        children: [
+          EditableAvatar(
+            name: name,
+            size: 80,
+            background: c.tonal,
+            foreground: c.accent,
+            ring: c.raised,
+          ),
+          const SizedBox(width: AtlasSpace.s16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l.photoSheetTitle,
+                  style: a.type.headline.copyWith(color: c.ink),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  l.photoProfileHint,
+                  style: a.type.footnote.copyWith(color: c.inkSecondary),
+                ),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextButton.icon(
+                    key: const Key('photo-edit'),
+                    onPressed: busy
+                        ? null
+                        : () => editProfilePhoto(context, ref),
+                    icon: Icon(
+                      has ? LucideIcons.refreshCw : LucideIcons.imagePlus,
+                      size: 18,
+                    ),
+                    label: Text(has ? l.photoChange : l.photoAdd),
+                    style: TextButton.styleFrom(
+                      foregroundColor: c.accent,
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      textStyle: a.type.subhead.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -177,6 +245,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       title: l.accountProfile,
       icon: LucideIcons.userPen,
       children: [
+        const _PhotoCard(),
+        const SizedBox(height: AtlasSpace.s16),
         if (_banner != null) ...[
           AtlasBanner(kind: AtlasBannerKind.error, message: _banner!),
           const SizedBox(height: AtlasSpace.s16),

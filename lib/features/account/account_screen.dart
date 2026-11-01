@@ -14,6 +14,7 @@ import '../notes/notes_screen.dart';
 import '../results/results_screen.dart';
 import 'account_settings_screens.dart';
 import 'devices_screen.dart';
+import 'profile_photo.dart';
 
 /// The Account tab: who is signed in, devices, language, appearance,
 /// policies, change academy, sign out. On a wide screen (iPad) the page a
@@ -264,8 +265,8 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
   }
 }
 
-/// The learner on the academy's cover: their initials, name and email, and
-/// the academy they are signed in to.
+/// The learner on the academy's cover: their photo (or initials), name and
+/// email, and the academy they are signed in to. The photo is tappable.
 class _ProfileHeader extends StatelessWidget {
   const _ProfileHeader({
     required this.name,
@@ -276,17 +277,6 @@ class _ProfileHeader extends StatelessWidget {
 
   final String name, email, academyName;
   final ImageProvider? logo;
-
-  /// Two Latin initials ("ZE"); one Arabic letter, because two Arabic
-  /// letters side by side read as a word.
-  static String initials(String name) {
-    final words = name.trim().split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
-    if (words.isEmpty) return '';
-    if (RegExp(r'[\u0600-\u06FF]').hasMatch(words.first)) {
-      return words.first.characters.first;
-    }
-    return words.take(2).map((w) => w.characters.first).join().toUpperCase();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -329,20 +319,12 @@ class _ProfileHeader extends StatelessWidget {
               Entrance(
                 child: Row(
                   children: [
-                    ExcludeSemantics(
-                      child: Container(
-                        width: 64,
-                        height: 64,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: c.onCover,
-                        ),
-                        child: Text(
-                          initials(name),
-                          style: a.type.title2.copyWith(color: c.cover),
-                        ),
-                      ),
+                    EditableAvatar(
+                      name: name,
+                      size: 72,
+                      background: c.onCover,
+                      foreground: c.cover,
+                      ring: c.cover,
                     ),
                     const SizedBox(width: 16),
                     Expanded(

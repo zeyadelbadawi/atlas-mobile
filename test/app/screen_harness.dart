@@ -2,6 +2,7 @@
 // with fake repositories, a chosen session, language, theme and size.
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:atlas_mobile/app/atlas_app.dart';
 import 'package:atlas_mobile/app/deep_links.dart';
@@ -19,8 +20,10 @@ import 'package:atlas_mobile/app/push.dart';
 import 'package:atlas_mobile/app/router.dart';
 import 'package:atlas_mobile/core/notifications/notification_catalog.dart';
 import 'package:atlas_mobile/features/account/account_settings_screens.dart';
+import 'package:atlas_mobile/features/account/profile_photo.dart';
 import 'package:atlas_mobile/core/academy/academy.dart';
 import 'package:atlas_mobile/core/auth/auth_repository.dart';
+import 'package:atlas_mobile/core/account/account_repository.dart';
 import 'package:atlas_mobile/core/errors/error_catalog.dart';
 import 'package:atlas_mobile/core/learning/assessment_repository.dart';
 import 'package:atlas_mobile/core/learning/catalog_repository.dart';
@@ -126,6 +129,9 @@ Future<ProviderContainer> pumpScreen(
   Biometrics? biometrics,
   AppShortcuts? shortcuts,
   HomeWidgets? homeWidgets,
+  AccountRepository? account,
+  PhotoPicker? photoPicker,
+  ImageProvider? avatar,
 }) async {
   SharedPreferences.setMockInitialValues({
     ...prefs,
@@ -173,7 +179,12 @@ Future<ProviderContainer> pumpScreen(
       notificationsRepositoryProvider.overrideWithValue(
         notifications ?? FakeNotificationsRepository(),
       ),
-      accountRepositoryProvider.overrideWithValue(FakeAccountRepository()),
+      accountRepositoryProvider.overrideWithValue(
+        account ?? FakeAccountRepository(),
+      ),
+      photoPickerProvider.overrideWithValue(photoPicker ?? FakePhotoPicker()),
+      // Tests have no network: the photo, when there is one, from memory.
+      avatarImageProvider.overrideWithValue(avatar),
       notificationCatalogProvider.overrideWithValue(notificationCatalog()),
       pushControllerProvider.overrideWith(PushNotAsked.new),
       deepLinkProvider.overrideWith(NoLinks.new),
@@ -205,3 +216,16 @@ Future<ProviderContainer> pumpScreen(
 }
 
 final ios = TargetPlatformVariant.only(TargetPlatform.iOS);
+
+/// Hands back [photo] (or nothing, as if the learner backed out).
+class FakePhotoPicker implements PhotoPicker {
+  FakePhotoPicker([this.photo]);
+  final Uint8List? photo;
+  bool? camera;
+
+  @override
+  Future<Uint8List?> pick({required bool camera}) async {
+    this.camera = camera;
+    return photo;
+  }
+}

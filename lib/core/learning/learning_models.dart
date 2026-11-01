@@ -415,3 +415,26 @@ class LearnerDevices {
   final int maxDevices;
   final int maxSessions;
 }
+
+/// `GET learning/notes` — one lesson's note and saved mark, as the server
+/// keeps it. An empty, unsaved one is a deletion made on another phone.
+class ServerNote {
+  ServerNote.fromJson(Map<String, dynamic> j)
+    : courseId = j['courseId'] as String? ?? '',
+      lessonId = j['lessonId'] as String? ?? '',
+      courseTitle = j['courseTitle'] as String? ?? '',
+      lessonTitle = j['lessonTitle'] as String? ?? '',
+      note = j['note'] as String? ?? '',
+      saved = j['saved'] == true,
+      editedAt =
+          DateTime.tryParse(j['editedAt'] as String? ?? '')?.toLocal() ??
+          DateTime(2000);
+
+  final String courseId;
+  final String lessonId;
+  final String courseTitle;
+  final String lessonTitle;
+  final String note;
+  final bool saved;
+  final DateTime editedAt;
+}

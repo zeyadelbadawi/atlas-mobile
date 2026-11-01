@@ -1,6 +1,7 @@
 @Tags(['shots'])
 library;
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -12,6 +13,7 @@ import 'package:atlas_mobile/core/academy/academy.dart';
 import 'package:atlas_mobile/core/learning/assessment_models.dart';
 import 'package:atlas_mobile/core/learning/learning_models.dart';
 import 'package:atlas_mobile/design/design.dart';
+import 'package:atlas_mobile/features/account/profile_photo.dart';
 import 'package:atlas_mobile/features/catalog/reviews.dart';
 import 'package:atlas_mobile/features/player/hosted_lesson_player.dart';
 import 'package:atlas_mobile/features/results/results_screen.dart';
@@ -23,6 +25,7 @@ import '../app/fake_assessment.dart';
 import '../app/fake_biometrics.dart';
 import '../app/fake_catalog.dart';
 import '../app/fake_learning.dart';
+import '../app/fake_notifications.dart';
 import '../app/fake_video.dart';
 import '../app/screen_harness.dart';
 import '../design/golden_harness.dart';
@@ -202,6 +205,7 @@ void main() {
   searchShots();
   streakShots();
   offlineLessonShots();
+  photoShots();
 
   shot(
     'lesson_undo',
@@ -820,4 +824,108 @@ class _NoConnection extends FakeLearningRepository {
         messageKey: 'errors.network.offline',
         retryable: true,
       );
+}
+
+/// Profile photo: on the account cover and on the Profile page.
+void photoShots() {
+  final sample = File('test/fixtures/avatar_sample.png').readAsBytesSync();
+  Finder avatarOr(Finder fallback) {
+    final k = find.byType(EditableAvatar);
+    return k.evaluate().isNotEmpty ? k : fallback;
+  }
+
+  shot('account_photo', (t) async {
+    await pumpScreen(t, session: AsSignedIn.new, path: '/account');
+  }, focus: () => avatarOr(find.text('ز')));
+
+  shot('account_photo_set', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/account',
+      avatar: MemoryImage(sample),
+    );
+    await t.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 200)),
+    );
+    await t.pump(const Duration(milliseconds: 400));
+  }, focus: () => avatarOr(find.text('ز')));
+
+  shot(
+    'profile_photo',
+    (t) async {
+      await pumpScreen(t, session: AsSignedIn.new, path: '/account/profile');
+    },
+    focus: () {
+      final k = find.byKey(const Key('photo-edit'));
+      return k.evaluate().isNotEmpty
+          ? find.ancestor(of: k, matching: find.byType(AtlasCard)).first
+          : find.byType(AtlasCard).first;
+    },
+  );
+
+  shot('photo_sheet', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/account/profile',
+      avatar: MemoryImage(sample),
+    );
+    await t.tap(find.byKey(const Key('photo-edit')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+  });
+
+  shot('photo_crop', (t) async {
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/account/profile',
+      photoPicker: FakePhotoPicker(sample),
+    );
+    await t.tap(find.byKey(const Key('photo-edit')));
+    await t.pump();
+    await t.pump(const Duration(milliseconds: 600));
+    await t.tap(find.text('اختيار من الصور'));
+    for (var i = 0; i < 6; i++) {
+      await t.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 80)),
+      );
+      await t.pump(const Duration(milliseconds: 150));
+    }
+  });
+
+  shot(
+    'photo_uploading',
+    (t) async {
+      final account = FakeAccountRepository()..holdUpload = Completer<void>();
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/account/profile',
+        account: account,
+        photoPicker: FakePhotoPicker(sample),
+      );
+      await t.tap(find.byKey(const Key('photo-edit')));
+      await t.pump();
+      await t.pump(const Duration(milliseconds: 600));
+      await t.tap(find.text('اختيار من الصور'));
+      for (var i = 0; i < 6; i++) {
+        await t.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 80)),
+        );
+        await t.pump(const Duration(milliseconds: 150));
+      }
+      await t.tap(find.byKey(const Key('photo-use')));
+      for (var i = 0; i < 6; i++) {
+        await t.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 80)),
+        );
+        await t.pump(const Duration(milliseconds: 150));
+      }
+    },
+    after: (t) async {
+      // Let the held upload finish so no timer is left.
+    },
+  );
 }

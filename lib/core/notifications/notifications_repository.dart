@@ -124,6 +124,7 @@ class NotificationsRepository {
     required String platform,
     required String appVersion,
     required String locale,
+    bool? dueReminders,
   }) async {
     final body = await client.put<Map<String, dynamic>>(
       'users/me/push-devices',
@@ -132,6 +133,7 @@ class NotificationsRepository {
         'platform': platform,
         'appVersion': appVersion,
         'locale': locale,
+        'dueReminders': ?dueReminders,
       },
     );
     return body['id'] as String?;

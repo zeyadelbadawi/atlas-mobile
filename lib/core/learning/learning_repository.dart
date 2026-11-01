@@ -122,4 +122,47 @@ class LearningRepository {
         'learning/session/takeover',
         data: {'courseId': ?courseId, 'lessonId': ?lessonId},
       );
+
+  /// The learner's notes and saved lessons on this academy, every phone's.
+  Future<List<ServerNote>> notes() async {
+    final body = await client.get<dynamic>('learning/notes');
+    return [
+      if (body is List)
+        for (final m in body.whereType<Map>())
+          ServerNote.fromJson(Map<String, dynamic>.from(m)),
+    ];
+  }
+
+  /// Saves one lesson's note (empty and unsaved = deleted). The server keeps
+  /// the newest edit and answers what it now holds.
+  Future<ServerNote> putNote({
+    required String courseId,
+    required String lessonId,
+    required String note,
+    required bool saved,
+    required DateTime editedAt,
+  }) async => ServerNote.fromJson(
+    await client.put<Map<String, dynamic>>(
+      'learning/notes/$lessonId',
+      data: {
+        'courseId': courseId,
+        'note': note,
+        'saved': saved,
+        'editedAt': editedAt.toUtc().toIso8601String(),
+      },
+    ),
+  );
+
+  /// Local dates (`YYYY-MM-DD`) the learner studied on this academy, in
+  /// [timeZone] (an IANA name), newest first.
+  Future<List<String>> studyDays(String timeZone) async {
+    final body = await client.get<Map<String, dynamic>>(
+      'learning/streak',
+      query: {'tz': timeZone},
+    );
+    return [
+      for (final d in (body['days'] as List? ?? const []))
+        if (d is String) d,
+    ];
+  }
 }

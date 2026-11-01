@@ -2335,4 +2335,45 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get lessonOfflineCopy =>
       'لا يوجد اتصال. هذه النسخة المحفوظة على هاتفك من آخر مرة فتحت فيها الدرس.';
+
+  @override
+  String get photoAdd => 'إضافة صورة شخصية';
+
+  @override
+  String get photoChange => 'تغيير الصورة الشخصية';
+
+  @override
+  String get photoSheetTitle => 'الصورة الشخصية';
+
+  @override
+  String get photoTake => 'التقاط صورة';
+
+  @override
+  String get photoChoose => 'اختيار من الصور';
+
+  @override
+  String get photoRemove => 'إزالة الصورة';
+
+  @override
+  String get photoCropTitle => 'تحريك وتكبير';
+
+  @override
+  String get photoCropHint => 'اسحب لتحريك الصورة، وباعد بإصبعين للتكبير.';
+
+  @override
+  String get photoUse => 'استخدام الصورة';
+
+  @override
+  String get photoInvalid => 'لا يمكن استخدام هذه الصورة. جرّب صورة أخرى.';
+
+  @override
+  String get photoFailed =>
+      'تعذّر تحديث صورتك. تحقّق من الاتصال وحاول مرة أخرى.';
+
+  @override
+  String get photoNoAccess =>
+      'اسمح بالوصول إلى الكاميرا أو الصور من الإعدادات لإضافة صورة.';
+
+  @override
+  String get photoProfileHint => 'تظهر في حسابك ولمعلّمي الأكاديمية.';
 }
