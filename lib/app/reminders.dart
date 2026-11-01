@@ -40,9 +40,10 @@ class ReminderSettings {
       );
 }
 
-/// The daily study reminder and the due-date reminders. All on the phone:
-/// the backend sends no "due soon" message for quizzes and assignments
-/// (it does for live sessions, so those are left to it).
+/// The daily study reminder and the due-date reminders, scheduled on the
+/// phone. With push on and a server that sends it, the day-before due-date
+/// reminder comes from the server instead (it also covers a due date set or
+/// moved while the app is closed); the hour-before one stays on the phone.
 ///
 /// Rescheduled from fresh data whenever it may have changed: on sign-in,
 /// when the app comes back to the front, after a submission, and when a
@@ -50,7 +51,7 @@ class ReminderSettings {
 class RemindersController extends Notifier<ReminderSettings> {
   static const _dailyKey = 'reminders.daily';
   static const _timeKey = 'reminders.time';
-  static const _deadlinesKey = 'reminders.deadlines';
+  static const deadlinesKey = 'reminders.deadlines';
 
   /// The daily reminder's id; due-date reminders count up from 100.
   static const dailyId = 1;
@@ -77,7 +78,7 @@ class RemindersController extends Notifier<ReminderSettings> {
     ref.onDispose(life.dispose);
     return ReminderSettings(
       daily: prefs.getBool(_dailyKey) ?? false,
-      deadlines: prefs.getBool(_deadlinesKey) ?? false,
+      deadlines: prefs.getBool(deadlinesKey) ?? false,
       time: time != null && time.length == 2
           ? TimeOfDay(
               hour: int.tryParse(time[0]) ?? 20,
@@ -141,12 +142,17 @@ class RemindersController extends Notifier<ReminderSettings> {
     }
     final prefs = ref.read(sharedPreferencesProvider);
     await prefs.setBool(_dailyKey, next.daily);
-    await prefs.setBool(_deadlinesKey, next.deadlines);
+    await prefs.setBool(deadlinesKey, next.deadlines);
     await prefs.setString(
       _timeKey,
       '${next.time.hour}:${next.time.minute.toString().padLeft(2, '0')}',
     );
+    final deadlinesChanged = next.deadlines != state.deadlines;
     state = next;
+    if (deadlinesChanged) {
+      // Tell the server whether to send the day-before push.
+      await ref.read(pushControllerProvider.notifier).refreshRegistration();
+    }
     ref.read(analyticsProvider).event('reminders_set', {
       'daily': next.daily ? 1 : 0,
       'deadlines': next.deadlines ? 1 : 0,
@@ -219,6 +225,9 @@ class RemindersController extends Notifier<ReminderSettings> {
   Future<void> _scheduleDeadlines(AppLocalizations l, DateTime now) async {
     final tasks = await ref.read(assessmentRepositoryProvider).tasks();
     final due = dueSoon(tasks, now);
+    final serverSendsDayBefore = ref
+        .read(pushControllerProvider.notifier)
+        .serverDueReminders;
     var id = _firstDeadlineId;
     for (final t in due) {
       final path = t.isQuiz
@@ -229,7 +238,9 @@ class RemindersController extends Notifier<ReminderSettings> {
         (const Duration(hours: 1), l.reminderDueInHour(t.title)),
       ]) {
         final when = t.dueAt!.subtract(before);
-        if (when.isAfter(now)) {
+        final fromServer =
+            serverSendsDayBefore && before == const Duration(days: 1);
+        if (when.isAfter(now) && !fromServer) {
           await _local.at(
             id: id,
             when: when,

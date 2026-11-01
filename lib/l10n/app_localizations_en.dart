@@ -2215,7 +2215,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notesOnPhone =>
-      'Kept on this phone only. Deleting the app deletes them.';
+      'Saved to your account: they follow you to any phone you sign in on.';
 
   @override
   String get calendarAdd => 'Add to calendar';

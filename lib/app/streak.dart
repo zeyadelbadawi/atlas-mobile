@@ -4,12 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/clock.dart';
 import 'providers.dart';
 
-/// The days the learner studied, on this phone (the backend keeps no such
-/// record): a lesson finished or read for a minute, a quiz or assignment
-/// sent. Per account and academy; the last 60 days are kept.
+/// The days the learner studied: marked on this phone (a lesson finished or
+/// read for a minute, a quiz or assignment sent) and joined with the days
+/// the server saw on any phone or the website ([mergeServer]). Per account
+/// and academy; the last [keep] days are kept.
 class StudyDays extends Notifier<Set<String>> {
   static const prefix = 'study.days.';
-  static const keep = 60;
+  static const keep = 120;
   String? _key;
 
   @override
@@ -35,10 +36,23 @@ class StudyDays extends Notifier<Set<String>> {
 
   /// Today counts as a study day.
   Future<void> markToday() async {
-    final key = _key;
     final today = day(clockNow());
-    if (key == null || state.contains(today)) return;
-    final days = ({...state, today}.toList()..sort());
+    if (state.contains(today)) return;
+    await _add([today]);
+  }
+
+  /// Days the server knows the learner studied (local dates, `YYYY-MM-DD`).
+  Future<void> mergeServer(Iterable<String> days) async {
+    final valid = days.where(
+      (d) => RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(d) && !state.contains(d),
+    );
+    if (valid.isNotEmpty) await _add(valid);
+  }
+
+  Future<void> _add(Iterable<String> more) async {
+    final key = _key;
+    if (key == null) return;
+    final days = ({...state, ...more}.toList()..sort());
     final kept = days.length > keep ? days.sublist(days.length - keep) : days;
     state = Set.unmodifiable(kept);
     await ref.read(sharedPreferencesProvider).setStringList(key, kept);

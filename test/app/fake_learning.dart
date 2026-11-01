@@ -305,4 +305,35 @@ class FakeLearningRepository extends LearningRepository {
     'maxDevices': 2,
     'maxConcurrentSessions': 1,
   });
+
+  // --- the server's notes and study days (empty unless a test fills them)
+  final serverNotes = <String, ServerNote>{};
+  final serverDays = <String>[];
+  final sentNotes = <String>[];
+
+  @override
+  Future<List<ServerNote>> notes() async => serverNotes.values.toList();
+
+  @override
+  Future<ServerNote> putNote({
+    required String courseId,
+    required String lessonId,
+    required String note,
+    required bool saved,
+    required DateTime editedAt,
+  }) async {
+    sentNotes.add(lessonId);
+    final current = serverNotes[lessonId];
+    if (current != null && !editedAt.isAfter(current.editedAt)) return current;
+    return serverNotes[lessonId] = ServerNote.fromJson({
+      'courseId': courseId,
+      'lessonId': lessonId,
+      'note': note,
+      'saved': saved,
+      'editedAt': editedAt.toUtc().toIso8601String(),
+    });
+  }
+
+  @override
+  Future<List<String>> studyDays(String timeZone) async => serverDays;
 }

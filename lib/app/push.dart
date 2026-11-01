@@ -9,7 +9,9 @@ import '../core/firebase/atlas_analytics.dart';
 import '../core/notifications/notification_catalog.dart';
 import '../core/notifications/notifications_repository.dart';
 import '../l10n/app_localizations.dart';
+import '../core/api/api_error.dart';
 import 'providers.dart';
+import 'reminders.dart';
 import 'router.dart';
 import 'web_paths.dart';
 
@@ -151,6 +153,7 @@ enum PushStatus {
 /// app is open as an in-app message.
 class PushController extends Notifier<PushStatus> {
   static const _deviceKey = 'push.device.';
+  static const _dueKey = 'push.serverDue.';
   bool _handlersAttached = false;
 
   @override
@@ -231,21 +234,52 @@ class PushController extends Notifier<PushStatus> {
       final lang =
           settings.languageCode ??
           WidgetsBinding.instance.platformDispatcher.locale.languageCode;
-      final id = await ref
+      final prefs = ref.read(sharedPreferencesProvider);
+      final deadlines =
+          prefs.getBool(RemindersController.deadlinesKey) ?? false;
+      Future<String?> register({bool? due}) => ref
           .read(notificationsRepositoryProvider)
           .registerPushDevice(
             token: t,
             platform: Platform.isIOS ? 'ios' : 'android',
             appVersion: ref.read(appVersionProvider).version,
             locale: lang == 'ar' ? 'ar' : 'en',
+            dueReminders: due,
           );
-      if (id != null) {
-        await ref.read(sharedPreferencesProvider).setString(key, id);
+      String? id;
+      var serverDue = false;
+      try {
+        // The server sends the day-before due-date push when asked.
+        id = await register(due: deadlines);
+        serverDue = deadlines;
+      } on AtlasApiException catch (e) {
+        // An older server refuses the field: register without it, and the
+        // phone keeps sending both due-date reminders itself.
+        if (e.status != 400) rethrow;
+        id = await register();
       }
+      if (id != null) await prefs.setString(key, id);
+      await prefs.setBool(
+        '$_dueKey${key.substring(_deviceKey.length)}',
+        serverDue,
+      );
     } on Object catch (e) {
       debugPrint('push register: $e');
     }
   }
+
+  /// True when this phone is registered for the server's day-before
+  /// due-date push, so the phone does not send its own as well.
+  bool get serverDueReminders {
+    final key = _deviceKeyFor();
+    if (key == null || state != PushStatus.granted) return false;
+    final prefs = ref.read(sharedPreferencesProvider);
+    return prefs.getString(key) != null &&
+        (prefs.getBool('$_dueKey${key.substring(_deviceKey.length)}') ?? false);
+  }
+
+  /// Registers again (a setting the server needs changed).
+  Future<void> refreshRegistration() => _syncIfGranted();
 
   /// Before signing out: this phone stops receiving this account's pushes.
   Future<void> unregister() async {

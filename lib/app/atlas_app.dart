@@ -9,6 +9,7 @@ import '../features/system/system_screens.dart';
 import '../l10n/app_localizations.dart';
 import 'deep_links.dart';
 import 'home_widgets.dart';
+import 'learner_sync.dart';
 import 'lesson_outbox.dart';
 import 'providers.dart';
 import 'push.dart';
@@ -59,6 +60,12 @@ class AtlasApp extends ConsumerWidget {
     ref.watch(shortcutsProvider);
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => ref.read(shortcutsProvider.notifier).attach(),
+    );
+
+    // Notes and study days: synced with the server.
+    ref.watch(learnerSyncProvider);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ref.read(learnerSyncProvider.notifier).run(force: true),
     );
 
     // Study and due-date reminders: kept in step with the session.

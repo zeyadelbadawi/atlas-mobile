@@ -2222,8 +2222,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notesEmptyBody => 'احفظ درسًا أو اكتب ملاحظة عليه، وستجده هنا.';
 
   @override
-  String get notesOnPhone =>
-      'محفوظة على هذا الهاتف فقط، وتُحذف إذا حذفت التطبيق.';
+  String get notesOnPhone => 'محفوظة في حسابك، وتظهر على أي هاتف تدخل منه.';
 
   @override
   String get calendarAdd => 'إضافة إلى التقويم';

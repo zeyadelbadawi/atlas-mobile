@@ -3881,7 +3881,7 @@ abstract class AppLocalizations {
   /// No description provided for @notesOnPhone.
   ///
   /// In en, this message translates to:
-  /// **'Kept on this phone only. Deleting the app deletes them.'**
+  /// **'Saved to your account: they follow you to any phone you sign in on.'**
   String get notesOnPhone;
 
   /// No description provided for @calendarAdd.

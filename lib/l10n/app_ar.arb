@@ -630,7 +630,7 @@
   "notesSaved": "محفوظ",
   "notesEmptyTitle": "لا شيء هنا بعد",
   "notesEmptyBody": "احفظ درسًا أو اكتب ملاحظة عليه، وستجده هنا.",
-  "notesOnPhone": "محفوظة على هذا الهاتف فقط، وتُحذف إذا حذفت التطبيق.",
+  "notesOnPhone": "محفوظة في حسابك، وتظهر على أي هاتف تدخل منه.",
   "calendarAdd": "إضافة إلى التقويم",
   "calendarEventTitle": "موعد التسليم: {title}",
   "calendarFailed": "تعذّر فتح التقويم.",

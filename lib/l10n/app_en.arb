@@ -1307,7 +1307,7 @@
   "notesSaved": "Saved",
   "notesEmptyTitle": "Nothing here yet",
   "notesEmptyBody": "Save a lesson or write a note on it, and it will be here.",
-  "notesOnPhone": "Kept on this phone only. Deleting the app deletes them.",
+  "notesOnPhone": "Saved to your account: they follow you to any phone you sign in on.",
   "calendarAdd": "Add to calendar",
   "calendarEventTitle": "Due: {title}",
   "@calendarEventTitle": {

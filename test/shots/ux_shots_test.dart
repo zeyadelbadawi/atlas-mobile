@@ -659,7 +659,7 @@ void notesShots() {
       path: '/account/notes',
       prefs: prefs,
     );
-  });
+  }, focus: () => find.textContaining('محفوظة'));
 }
 
 /// Batch 3 (B6): a due date into the phone's calendar.

@@ -11,6 +11,7 @@ import 'package:atlas_mobile/app/providers.dart';
 import 'package:atlas_mobile/app/reminders.dart';
 import 'package:atlas_mobile/app/app_lock.dart';
 import 'package:atlas_mobile/app/home_widgets.dart';
+import 'package:atlas_mobile/app/learner_sync.dart';
 import 'package:atlas_mobile/app/shortcuts.dart';
 import 'package:atlas_mobile/core/platform/biometrics.dart';
 import 'package:atlas_mobile/core/platform/calendar.dart';
@@ -132,6 +133,7 @@ Future<ProviderContainer> pumpScreen(
   AccountRepository? account,
   PhotoPicker? photoPicker,
   ImageProvider? avatar,
+  PushController Function()? push,
 }) async {
   SharedPreferences.setMockInitialValues({
     ...prefs,
@@ -186,7 +188,7 @@ Future<ProviderContainer> pumpScreen(
       // Tests have no network: the photo, when there is one, from memory.
       avatarImageProvider.overrideWithValue(avatar),
       notificationCatalogProvider.overrideWithValue(notificationCatalog()),
-      pushControllerProvider.overrideWith(PushNotAsked.new),
+      pushControllerProvider.overrideWith(push ?? PushNotAsked.new),
       deepLinkProvider.overrideWith(NoLinks.new),
       splashEnabledProvider.overrideWithValue(false),
       localRemindersProvider.overrideWithValue(reminders ?? FakeReminders()),
@@ -194,6 +196,7 @@ Future<ProviderContainer> pumpScreen(
       biometricsProvider.overrideWithValue(biometrics ?? FakeBiometrics()),
       appShortcutsProvider.overrideWithValue(shortcuts ?? FakeShortcuts()),
       homeWidgetsProvider.overrideWithValue(homeWidgets ?? FakeHomeWidgets()),
+      timeZoneNameProvider.overrideWithValue(() async => 'Africa/Cairo'),
     ],
   );
   addTearDown(container.dispose);
