@@ -210,7 +210,7 @@ class _Preview extends ConsumerWidget {
       children: [
         Semantics(
           header: true,
-          child: Text(
+          child: SafeText(
             course.title,
             textDirection: contentDirection(context, course.title),
             style: a.type.title1.copyWith(color: c.ink),

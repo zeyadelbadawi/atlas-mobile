@@ -73,7 +73,7 @@ class QuizResultsView extends ConsumerWidget {
               ),
               Semantics(
                 header: true,
-                child: Text(
+                child: SafeText(
                   r.showsScore ? l.quizResultTitle : l.quizSubmittedTitle,
                   style: a.type.title1.copyWith(color: c.ink),
                 ),

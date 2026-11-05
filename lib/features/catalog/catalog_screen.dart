@@ -114,7 +114,7 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                 children: [
                   Semantics(
                     header: true,
-                    child: Text(
+                    child: SafeText(
                       l.catalogTitle,
                       style: a.type.title1.copyWith(color: a.colors.ink),
                     ),

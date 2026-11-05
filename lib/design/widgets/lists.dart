@@ -6,6 +6,7 @@ import '../content_direction.dart';
 import 'academy_logo.dart';
 import 'pressable.dart';
 import 'segmented_progress.dart';
+import 'safe_text.dart';
 
 /// Groups separate by type and space, not boxes: 28 above, 6 below.
 class SectionHeader extends StatelessWidget {
@@ -111,8 +112,8 @@ class DueRow extends StatelessWidget {
                 width: 52,
                 child: Column(
                   children: [
-                    Text(day, style: a.type.title2.copyWith(color: c.ink)),
-                    Text(
+                    OneLine(day, style: a.type.title2.copyWith(color: c.ink)),
+                    OneLine(
                       weekday,
                       style: a.type.caption.copyWith(color: c.inkSecondary),
                     ),
@@ -518,7 +519,10 @@ class SettingsRow extends StatelessWidget {
                   ],
                   Expanded(
                     child: value == null
-                        ? Text(title, style: a.type.body.copyWith(color: fg))
+                        ? SafeText(
+                            title,
+                            style: a.type.body.copyWith(color: fg),
+                          )
                         : _TitleAndValue(
                             title: Text(
                               title,
@@ -585,9 +589,26 @@ class _TitleAndValue extends StatelessWidget {
           ],
         );
       }
+      // Under the title, each keeps whole words: the title wraps between
+      // words, the value (a phone number, an address) stays on one line and
+      // shrinks if it must.
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [title, const SizedBox(height: 2), value],
+        children: [
+          SafeText(title.data!, style: title.style),
+          const SizedBox(height: 2),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              value.data!,
+              textDirection: value.textDirection,
+              style: value.style,
+              maxLines: 1,
+              softWrap: false,
+            ),
+          ),
+        ],
       );
     },
   );

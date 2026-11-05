@@ -127,7 +127,7 @@ class FormScreen extends StatelessWidget {
                   enter(
                     Semantics(
                       header: true,
-                      child: Text(
+                      child: SafeText(
                         title,
                         style: a.type.title1.copyWith(color: c.ink),
                       ),

@@ -617,8 +617,9 @@ class _AttachmentRow extends StatelessWidget {
                     style: a.type.headline.copyWith(color: c.ink),
                   ),
                 ),
-                Text(
+                OneLine(
                   fileSizeText(context, attachment.sizeBytes),
+                  alignment: AlignmentDirectional.centerStart,
                   style: a.type.footnote.copyWith(color: c.inkSecondary),
                 ),
               ],

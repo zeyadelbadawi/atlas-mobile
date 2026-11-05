@@ -46,7 +46,7 @@ class CertificatesScreen extends ConsumerWidget {
                 children: [
                   Semantics(
                     header: true,
-                    child: Text(
+                    child: SafeText(
                       l.certificatesTitle,
                       style: a.type.title1.copyWith(color: c.ink),
                     ),

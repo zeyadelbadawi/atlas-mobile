@@ -248,18 +248,12 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
   ) {
     return SizedBox(
       width: double.infinity,
-      child: SegmentedButton<T>(
-        showSelectedIcon: false,
-        segments: [
-          for (final e in options.entries)
-            ButtonSegment<T>(value: e.key, label: Text(e.value)),
-        ],
-        selected: {value},
-        onSelectionChanged: (s) => onChanged(s.first),
-        style: SegmentedButton.styleFrom(
-          selectedBackgroundColor: context.atlas.colors.tonal,
-          selectedForegroundColor: context.atlas.colors.accent,
-        ),
+      child: AtlasSegmented<T>(
+        segments: [for (final e in options.entries) (e.key, e.value)],
+        selected: value,
+        onChanged: onChanged,
+        selectedBackground: context.atlas.colors.tonal,
+        selectedForeground: context.atlas.colors.accent,
       ),
     );
   }
@@ -333,15 +327,20 @@ class _ProfileHeader extends StatelessWidget {
                         children: [
                           Semantics(
                             header: true,
-                            child: Text(
+                            child: SafeText(
                               name,
                               textDirection: contentDirection(context, name),
                               style: a.type.title1.copyWith(color: c.onCover),
                             ),
                           ),
                           if (email.isNotEmpty)
+                            // An address breaks only after "@" or ".",
+                            // never inside a part.
                             Text(
-                              email,
+                              email.replaceAllMapped(
+                                RegExp(r'([@.])'),
+                                (m) => '${m[1]}\u200B',
+                              ),
                               textDirection: TextDirection.ltr,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,

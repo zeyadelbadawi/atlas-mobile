@@ -207,6 +207,7 @@ void main() {
   offlineLessonShots();
   photoShots();
   liveShots();
+  wordShots();
 
   shot(
     'lesson_undo',
@@ -977,5 +978,31 @@ void liveShots() {
         path: '/course/c-calc/live/$id',
       );
     });
+  }
+}
+
+/// No word split across lines: segments and titles on narrow phones and
+/// with large text.
+void wordShots() {
+  for (final (path, name) in [('/courses', 'courses'), ('/tasks', 'tasks')]) {
+    for (final (w, scale) in [(393.0, 1.3), (320.0, 1.0)]) {
+      shot(
+        'words_${name}_${w.toInt()}_$scale',
+        (t) async {
+          t.platformDispatcher.textScaleFactorTestValue = scale;
+          addTearDown(t.platformDispatcher.clearTextScaleFactorTestValue);
+          await pumpScreen(
+            t,
+            session: AsSignedIn.new,
+            language: 'en',
+            path: path,
+            size: Size(w, 700),
+          );
+        },
+        focus: () => find.byType(SegmentedButton<String>).evaluate().isNotEmpty
+            ? find.byType(SegmentedButton<String>)
+            : find.byWidgetPredicate((w) => w is SegmentedButton),
+      );
+    }
   }
 }

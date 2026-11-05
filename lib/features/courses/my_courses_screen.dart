@@ -55,7 +55,7 @@ class _MyCoursesScreenState extends ConsumerState<MyCoursesScreen> {
                 children: [
                   Semantics(
                     header: true,
-                    child: Text(
+                    child: SafeText(
                       l.coursesTitle,
                       style: a.type.largeTitle.copyWith(color: a.colors.ink),
                     ),
@@ -92,26 +92,16 @@ class _MyCoursesScreenState extends ConsumerState<MyCoursesScreen> {
                   if (_search.text.trim().isNotEmpty)
                     _SearchResults(query: _search.text.trim())
                   else ...[
-                    SegmentedButton<String>(
-                      showSelectedIcon: false,
+                    AtlasSegmented<String>(
                       segments: [
-                        ButtonSegment(value: 'all', label: Text(l.coursesAll)),
-                        ButtonSegment(
-                          value: 'in_progress',
-                          label: Text(l.coursesInProgress),
-                        ),
-                        ButtonSegment(
-                          value: 'completed',
-                          label: Text(l.coursesCompleted),
-                        ),
+                        ('all', l.coursesAll),
+                        ('in_progress', l.coursesInProgress),
+                        ('completed', l.coursesCompleted),
                       ],
-                      selected: {_filter},
-                      onSelectionChanged: (s) =>
-                          setState(() => _filter = s.first),
-                      style: SegmentedButton.styleFrom(
-                        selectedBackgroundColor: a.colors.tonal,
-                        selectedForegroundColor: a.colors.accent,
-                      ),
+                      selected: _filter,
+                      onChanged: (f) => setState(() => _filter = f),
+                      selectedBackground: a.colors.tonal,
+                      selectedForeground: a.colors.accent,
                     ),
                     const SizedBox(height: AtlasSpace.s8),
                     AsyncBody<List<EnrolledCourse>>(

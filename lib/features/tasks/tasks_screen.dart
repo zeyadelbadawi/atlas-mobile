@@ -50,36 +50,28 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                 children: [
                   Semantics(
                     header: true,
-                    child: Text(
+                    child: SafeText(
                       l.tasksTitle,
                       style: a.type.largeTitle.copyWith(color: a.colors.ink),
                     ),
                   ),
                   const SizedBox(height: AtlasSpace.s16),
-                  SegmentedButton<TaskGroup>(
-                    showSelectedIcon: false,
+                  AtlasSegmented<TaskGroup>(
                     segments: [
-                      ButtonSegment(
-                        value: TaskGroup.todo,
-                        label: Text(label(l.tasksTodo, TaskGroup.todo)),
+                      (TaskGroup.todo, label(l.tasksTodo, TaskGroup.todo)),
+                      (
+                        TaskGroup.awaiting,
+                        label(l.tasksAwaitingShort, TaskGroup.awaiting),
                       ),
-                      ButtonSegment(
-                        value: TaskGroup.awaiting,
-                        label: Text(
-                          label(l.tasksAwaitingShort, TaskGroup.awaiting),
-                        ),
-                      ),
-                      ButtonSegment(
-                        value: TaskGroup.graded,
-                        label: Text(label(l.tasksGraded, TaskGroup.graded)),
+                      (
+                        TaskGroup.graded,
+                        label(l.tasksGraded, TaskGroup.graded),
                       ),
                     ],
-                    selected: {_group},
-                    onSelectionChanged: (s) => setState(() => _group = s.first),
-                    style: SegmentedButton.styleFrom(
-                      selectedBackgroundColor: a.colors.tonal,
-                      selectedForegroundColor: a.colors.accent,
-                    ),
+                    selected: _group,
+                    onChanged: (g) => setState(() => _group = g),
+                    selectedBackground: a.colors.tonal,
+                    selectedForeground: a.colors.accent,
                   ),
                   const SizedBox(height: AtlasSpace.s8),
                   AsyncBody<List<LearnerTask>>(

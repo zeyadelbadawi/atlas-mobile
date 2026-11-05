@@ -157,7 +157,7 @@ class _CourseHero extends StatelessWidget {
                 Expanded(
                   child: Semantics(
                     header: true,
-                    child: Text(
+                    child: SafeText(
                       title,
                       textDirection: contentDirection(context, title),
                       maxLines: 4,

@@ -547,7 +547,7 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                SafeText(
                                   s.isCurrent
                                       ? l.securityThisDevice
                                       : context.deviceLabel(s.deviceLabel),

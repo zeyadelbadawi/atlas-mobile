@@ -35,7 +35,7 @@ class NotesScreen extends ConsumerWidget {
               children: [
                 Semantics(
                   header: true,
-                  child: Text(
+                  child: SafeText(
                     l.notesTitle,
                     style: a.type.title1.copyWith(color: c.ink),
                   ),

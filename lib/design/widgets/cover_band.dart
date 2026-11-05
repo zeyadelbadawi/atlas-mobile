@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../atlas_theme.dart';
+import 'safe_text.dart';
 import 'academy_logo.dart';
 
 /// The handout cover: a full-bleed band in the academy colour under the
@@ -106,7 +107,7 @@ class CoverBand extends StatelessWidget {
                   const SizedBox(height: 14),
                   Semantics(
                     header: true,
-                    child: Text(
+                    child: SafeText(
                       title!,
                       style: a.type.largeTitle.copyWith(color: c.onCover),
                     ),

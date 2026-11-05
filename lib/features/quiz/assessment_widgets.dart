@@ -48,7 +48,7 @@ class FactList extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 2,
-                      child: Text(
+                      child: SafeText(
                         label,
                         style: a.type.subhead.copyWith(color: c.inkSecondary),
                       ),
@@ -56,7 +56,7 @@ class FactList extends StatelessWidget {
                     const SizedBox(width: 12),
                     Flexible(
                       flex: 3,
-                      child: Text(
+                      child: SafeText(
                         value,
                         textAlign: TextAlign.end,
                         style: a.type.headline.copyWith(color: c.ink),
@@ -116,7 +116,7 @@ class AssessmentHeader extends StatelessWidget {
           order: 1,
           child: Semantics(
             header: true,
-            child: Text(
+            child: SafeText(
               title,
               textDirection: contentDirection(context, title),
               style: a.type.title1.copyWith(color: c.ink),

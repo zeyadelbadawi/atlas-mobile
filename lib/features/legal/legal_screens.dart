@@ -161,7 +161,7 @@ class _LegalDocumentScreenState extends State<LegalDocumentScreen> {
                   order: 1,
                   child: Semantics(
                     header: true,
-                    child: Text(
+                    child: SafeText(
                       doc.title,
                       style: a.type.title1.copyWith(color: c.ink),
                     ),

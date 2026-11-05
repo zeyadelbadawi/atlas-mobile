@@ -3,6 +3,7 @@ import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
 
 import '../atlas_theme.dart';
+import 'safe_text.dart';
 
 class AtlasTab {
   const AtlasTab({required this.icon, required this.label, this.badge = false});
@@ -137,12 +138,15 @@ class _GlassBar extends StatelessWidget {
                                       i == index ? c.accent : c.ink,
                                     ),
                                     const SizedBox(height: 2),
-                                    Text(
-                                      tabs[i].label,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: a.type.tab.copyWith(
-                                        color: i == index ? c.accent : c.ink,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 2,
+                                      ),
+                                      child: OneLine(
+                                        tabs[i].label,
+                                        style: a.type.tab.copyWith(
+                                          color: i == index ? c.accent : c.ink,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -177,14 +181,26 @@ class _MaterialBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final a = context.atlas;
     final c = a.colors;
+    // One size for every label, small enough for the longest to stay on
+    // one line in its slot (a narrow phone, large text).
+    final slot = MediaQuery.sizeOf(context).width / tabs.length - 8;
+    var label = a.type.caption.copyWith(fontSize: 12);
+    for (final t in tabs) {
+      final fitted = SafeText.fit(
+        context,
+        t.label.replaceAll(' ', '\u00A0'),
+        label,
+        slot,
+      );
+      if ((fitted.fontSize ?? 12) < (label.fontSize ?? 12)) label = fitted;
+    }
     return NavigationBarTheme(
       data: NavigationBarThemeData(
         backgroundColor: c.raised,
         indicatorColor: c.tonal,
         surfaceTintColor: Colors.transparent,
         labelTextStyle: WidgetStateProperty.resolveWith(
-          (s) => a.type.caption.copyWith(
-            fontSize: 12,
+          (s) => label.copyWith(
             color: s.contains(WidgetState.selected) ? c.ink : c.inkSecondary,
           ),
         ),

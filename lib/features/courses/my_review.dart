@@ -142,24 +142,31 @@ class StarPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.atlas.colors;
-    return Row(
-      children: [
-        for (var i = 1; i <= 5; i++)
-          IconButton(
-            tooltip: context.l10n.myReviewStar(context.digits('$i')),
-            isSelected: i <= value,
-            constraints: const BoxConstraints.tightFor(width: 48, height: 48),
-            onPressed: () {
-              HapticFeedback.selectionClick();
-              onChanged(i);
-            },
-            icon: Icon(
-              i <= value ? Icons.star_rounded : Icons.star_outline_rounded,
-              size: 34,
-              color: i <= value ? c.goldText : c.inkTertiary,
+    // Five 48pt targets; on the narrowest phones they shrink together
+    // rather than overflow the card.
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: AlignmentDirectional.centerStart,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (var i = 1; i <= 5; i++)
+            IconButton(
+              tooltip: context.l10n.myReviewStar(context.digits('$i')),
+              isSelected: i <= value,
+              constraints: const BoxConstraints.tightFor(width: 48, height: 48),
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                onChanged(i);
+              },
+              icon: Icon(
+                i <= value ? Icons.star_rounded : Icons.star_outline_rounded,
+                size: 34,
+                color: i <= value ? c.goldText : c.inkTertiary,
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

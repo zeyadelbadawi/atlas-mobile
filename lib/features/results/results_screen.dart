@@ -39,7 +39,7 @@ class ResultsScreen extends ConsumerWidget {
                 children: [
                   Semantics(
                     header: true,
-                    child: Text(
+                    child: SafeText(
                       l.resultsTitle,
                       style: a.type.title1.copyWith(color: a.colors.ink),
                     ),
@@ -192,22 +192,29 @@ class _Summary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.textScalerOf(context).scale(1) > 1.35) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ring,
-          const SizedBox(height: AtlasSpace.s20),
-          metrics,
-        ],
-      );
-    }
-    return Row(
-      children: [
-        ring,
-        const SizedBox(width: AtlasSpace.s20),
-        Expanded(child: metrics),
-      ],
+    final scale = MediaQuery.textScalerOf(context).scale(1);
+    return LayoutBuilder(
+      builder: (context, box) {
+        // Side by side only when the numbers keep a readable column (a
+        // narrow phone or large text stacks them under the ring).
+        if (scale > 1.35 || box.maxWidth < 300 * scale) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ring,
+              const SizedBox(height: AtlasSpace.s20),
+              metrics,
+            ],
+          );
+        }
+        return Row(
+          children: [
+            ring,
+            const SizedBox(width: AtlasSpace.s20),
+            Expanded(child: metrics),
+          ],
+        );
+      },
     );
   }
 }
@@ -230,8 +237,8 @@ class _Metric extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(value, style: a.type.title3.copyWith(color: c.ink)),
-                Text(
+                SafeText(value, style: a.type.title3.copyWith(color: c.ink)),
+                SafeText(
                   label,
                   style: a.type.footnote.copyWith(color: c.inkSecondary),
                 ),
@@ -315,13 +322,13 @@ class ResultRow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    SafeText(
                       title,
                       textDirection: contentDirection(context, title),
                       style: a.type.headline.copyWith(color: c.ink),
                     ),
                     if (meta.isNotEmpty)
-                      Text(
+                      SafeText(
                         meta,
                         style: a.type.footnote.copyWith(color: c.inkSecondary),
                       ),
@@ -329,7 +336,14 @@ class ResultRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              trailing,
+              // A status never takes more than a third of a narrow row: it
+              // shrinks instead of squeezing the title to a sliver.
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width * 0.32,
+                ),
+                child: FittedBox(fit: BoxFit.scaleDown, child: trailing),
+              ),
               // Every row that opens something says so, not only the ones
               // without a status or a score.
               if (onTap != null && trailing is! ForwardChevron) ...[

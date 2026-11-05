@@ -146,7 +146,7 @@ class _BodyState extends ConsumerState<_Body> {
               const SizedBox(height: 8),
               Semantics(
                 header: true,
-                child: Text(
+                child: SafeText(
                   s.title,
                   textDirection: contentDirection(context, s.title),
                   style: a.type.title1.copyWith(color: c.ink),

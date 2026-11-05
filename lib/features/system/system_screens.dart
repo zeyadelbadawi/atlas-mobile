@@ -63,7 +63,7 @@ class SystemGateScreen extends StatelessWidget {
                   order: 1,
                   child: Semantics(
                     header: true,
-                    child: Text(
+                    child: SafeText(
                       maintenance ? l.maintenanceTitle : l.updateTitle,
                       textAlign: TextAlign.center,
                       style: a.type.title1.copyWith(color: c.ink),

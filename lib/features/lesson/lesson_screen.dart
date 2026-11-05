@@ -491,7 +491,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           order: 1,
           child: Semantics(
             header: true,
-            child: Text(
+            child: SafeText(
               g.title,
               textDirection: contentDirection(context, g.title),
               style: a.type.title1.copyWith(color: c.ink),

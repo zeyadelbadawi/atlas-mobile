@@ -342,7 +342,7 @@ class _AcademyHero extends StatelessWidget {
                 order: 1,
                 child: Semantics(
                   header: true,
-                  child: Text(
+                  child: SafeText(
                     name,
                     style: a.type.largeTitle.copyWith(color: c.onCover),
                   ),

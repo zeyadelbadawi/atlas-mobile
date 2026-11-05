@@ -376,7 +376,7 @@ class _Hero extends StatelessWidget {
                       order: 1,
                       child: Semantics(
                         header: true,
-                        child: Text(
+                        child: SafeText(
                           l.pickerTitle,
                           style: a.type.largeTitle.copyWith(
                             color: Colors.white,

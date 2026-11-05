@@ -69,7 +69,7 @@ class _AnnouncementsScreenState extends ConsumerState<AnnouncementsScreen> {
               children: [
                 Semantics(
                   header: true,
-                  child: Text(
+                  child: SafeText(
                     l.announcementsTitle,
                     style: a.type.title1.copyWith(color: a.colors.ink),
                   ),
@@ -222,7 +222,7 @@ class AnnouncementDetailScreen extends ConsumerWidget {
                 ),
                 Semantics(
                   header: true,
-                  child: Text(
+                  child: SafeText(
                     x.title,
                     textDirection: contentDirection(context, x.title),
                     style: a.type.title1.copyWith(color: c.ink),

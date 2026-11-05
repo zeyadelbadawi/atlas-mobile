@@ -338,7 +338,7 @@ class _CourseReviewsScreenState extends ConsumerState<CourseReviewsScreen> {
               children: [
                 Semantics(
                   header: true,
-                  child: Text(
+                  child: SafeText(
                     l.reviewsTitle,
                     style: a.type.title1.copyWith(color: a.colors.ink),
                   ),
