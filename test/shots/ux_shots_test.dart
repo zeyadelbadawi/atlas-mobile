@@ -19,6 +19,7 @@ import 'package:atlas_mobile/features/player/hosted_lesson_player.dart';
 import 'package:atlas_mobile/features/results/results_screen.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../app/fake_assessment.dart';
@@ -208,6 +209,7 @@ void main() {
   photoShots();
   liveShots();
   wordShots();
+  companyShots();
 
   shot(
     'lesson_undo',
@@ -1004,5 +1006,26 @@ void wordShots() {
             : find.byWidgetPredicate((w) => w is SegmentedButton),
       );
     }
+  }
+}
+
+void companyShots() {
+  for (final language in ['ar', 'en']) {
+    shot(
+      'about_company_$language',
+      (t) => pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        language: language,
+        path: '/about',
+        size: const Size(393, 1000),
+      ),
+      focus: () => find
+          .ancestor(
+            of: find.byIcon(LucideIcons.building2),
+            matching: find.byType(SettingsGroup),
+          )
+          .first,
+    );
   }
 }

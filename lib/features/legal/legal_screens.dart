@@ -366,7 +366,19 @@ class AboutScreen extends ConsumerWidget {
             SettingsRow(
               title: l.aboutLegalName,
               icon: LucideIcons.building2,
-              value: AppEnv.legalName,
+              value: l.aboutLegalNameValue,
+            ),
+            SettingsRow(
+              title: l.aboutCommercialRegister,
+              icon: LucideIcons.fileText,
+              value: AppEnv.commercialRegister,
+              valueLtr: true,
+            ),
+            SettingsRow(
+              title: l.aboutTaxCard,
+              icon: LucideIcons.receipt,
+              value: AppEnv.taxCard,
+              valueLtr: true,
             ),
             SettingsRow(
               title: l.aboutAddress,

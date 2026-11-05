@@ -752,6 +752,24 @@ abstract class AppLocalizations {
   /// **'Legal name'**
   String get aboutLegalName;
 
+  /// No description provided for @aboutLegalNameValue.
+  ///
+  /// In en, this message translates to:
+  /// **'CoreMind'**
+  String get aboutLegalNameValue;
+
+  /// No description provided for @aboutCommercialRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Commercial register no.'**
+  String get aboutCommercialRegister;
+
+  /// No description provided for @aboutTaxCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax card no.'**
+  String get aboutTaxCard;
+
   /// No description provided for @aboutAddress.
   ///
   /// In en, this message translates to:

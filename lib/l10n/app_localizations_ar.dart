@@ -365,6 +365,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aboutLegalName => 'الاسم القانوني';
 
   @override
+  String get aboutLegalNameValue => 'كور مايند للتكنولوجيا';
+
+  @override
+  String get aboutCommercialRegister => 'رقم السجل التجاري';
+
+  @override
+  String get aboutTaxCard => 'رقم البطاقة الضريبية';
+
+  @override
   String get aboutAddress => 'العنوان';
 
   @override

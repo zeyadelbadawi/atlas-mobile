@@ -364,6 +364,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutLegalName => 'Legal name';
 
   @override
+  String get aboutLegalNameValue => 'CoreMind';
+
+  @override
+  String get aboutCommercialRegister => 'Commercial register no.';
+
+  @override
+  String get aboutTaxCard => 'Tax card no.';
+
+  @override
   String get aboutAddress => 'Address';
 
   @override

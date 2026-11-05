@@ -13,7 +13,11 @@ abstract final class AppEnv {
   static const privacyVersion = 'privacy-2026-10-30';
 
   /// Business details for the About screen (App Store / Play requirement).
-  static const legalName = 'Atlas';
+  /// The company that owns Atlas; its name is in [AppLocalizations]
+  /// (aboutLegalNameValue), Arabic and English.
+  /// Placeholders until the real numbers are issued.
+  static const commercialRegister = '000000';
+  static const taxCard = '000-000-000';
   static const supportEmail = 'info@atlas.com';
 
   /// Shown as is; [supportPhoneDial] is what the dialer and WhatsApp get.
