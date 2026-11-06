@@ -37,6 +37,11 @@ class ScreenProtection {
   /// Android 12+: other apps' floating windows are not drawn over this app.
   Future<bool> setHideOverlays(bool on) => _call('setHideOverlays', on);
 
+  /// Android 14+: the screen's content is hidden from accessibility
+  /// services that are not assistive tools (apps that read the screen to
+  /// answer questions); TalkBack and other real tools still work.
+  Future<bool> setDataSensitive(bool on) => _call('setDataSensitive', on);
+
   /// Locks the phone to the app for a quiz: screen pinning on Android (the
   /// learner confirms, and can unpin), Apple's assessment mode on iOS
   /// (when Atlas has the entitlement). Returns whether it took effect.

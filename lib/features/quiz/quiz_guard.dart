@@ -33,7 +33,9 @@ enum PinState {
 ///   iOS cannot block them; a screenshot is reported once taken, and while
 ///   the screen is recorded or mirrored the questions are hidden
 ///   ([captured]) and that is reported too.
-/// * Other apps' floating windows are not drawn over the quiz (Android 12+).
+/// * Other apps' floating windows are not drawn over the quiz (Android 12+),
+///   and apps that read the screen through accessibility (not assistive
+///   tools) see nothing of it (Android 14+).
 /// * With [lock], the phone is locked to the quiz: screen pinning on
 ///   Android (the learner confirms it and can undo it, which is reported),
 ///   Apple's assessment mode on iOS when Atlas has the entitlement.
@@ -77,6 +79,7 @@ class QuizGuard {
   Future<void> start() async {
     unawaited(protection.setSecure(true));
     unawaited(protection.setHideOverlays(true));
+    unawaited(protection.setDataSensitive(true));
     _capture = protection.captureChanges.listen(
       _onCapture,
       onError: (Object _) {}, // no capture reports on this phone
@@ -172,6 +175,7 @@ class QuizGuard {
     _poll?.cancel();
     unawaited(protection.setSecure(false));
     unawaited(protection.setHideOverlays(false));
+    unawaited(protection.setDataSensitive(false));
     if (lock) unawaited(protection.stopPin());
     await _capture?.cancel();
   }

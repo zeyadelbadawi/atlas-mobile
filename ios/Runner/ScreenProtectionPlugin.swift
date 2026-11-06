@@ -36,7 +36,7 @@ final class ScreenProtectionPlugin: NSObject, FlutterPlugin, FlutterStreamHandle
       result(false)  // not possible on iOS; the Dart side relies on isCaptured
     case "isCaptured":
       result(Self.captured)
-    case "setHideOverlays":
+    case "setHideOverlays", "setDataSensitive":
       result(false)  // Android only
     case "startPin":
       startAssessment(result)

@@ -27,6 +27,12 @@ class FakeProtection extends ScreenProtection {
   }
 
   @override
+  Future<bool> setDataSensitive(bool on) async {
+    calls.add('sensitive:$on');
+    return true;
+  }
+
+  @override
   Future<bool> isCaptured() async => captured;
 
   @override
@@ -74,10 +80,14 @@ void main() {
     fakeAsync((async) {
       final g = guard()..start();
       async.flushMicrotasks();
-      expect(p.calls, ['secure:true', 'overlays:true']);
+      expect(p.calls, ['secure:true', 'overlays:true', 'sensitive:true']);
       g.dispose();
       async.flushMicrotasks();
-      expect(p.calls.skip(2), ['secure:false', 'overlays:false']);
+      expect(p.calls.skip(3), [
+        'secure:false',
+        'overlays:false',
+        'sensitive:false',
+      ]);
       expect(sent, isEmpty);
     });
   });

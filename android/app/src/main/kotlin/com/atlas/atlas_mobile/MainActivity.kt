@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.view.View
 import android.view.WindowManager
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -44,6 +45,23 @@ class MainActivity : FlutterFragmentActivity() {
                         runOnUiThread {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                                 window.setHideOverlayWindows(on)
+                                result.success(true)
+                            } else {
+                                result.success(false)
+                            }
+                        }
+                    }
+                    // Quiz: content hidden from accessibility services that are
+                    // not assistive tools (screen-reading "answer" apps), while
+                    // TalkBack and other real tools keep working. Android 14+.
+                    "setDataSensitive" -> {
+                        val on = call.arguments as? Boolean ?: false
+                        runOnUiThread {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                                window.decorView.setAccessibilityDataSensitive(
+                                    if (on) View.ACCESSIBILITY_DATA_SENSITIVE_YES
+                                    else View.ACCESSIBILITY_DATA_SENSITIVE_AUTO,
+                                )
                                 result.success(true)
                             } else {
                                 result.success(false)
