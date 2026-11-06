@@ -33,6 +33,12 @@ they start.
 المستخدم، معرّف الجهاز (للإشعارات)، الصور والملفات (الواجبات والصورة
 الشخصية)، التفاعل مع التطبيق (Analytics). مفيش إعلانات ولا تتبّع.
 
+## Google Play (تقرير play-policy-insights في docs/PLAY_POLICY_REPORT.md)
+- targetSdk بقى 36 (Android 16): شرط Play للتطبيقات الجديدة من ٣١ أغسطس ٢٠٢٦.
+- App access: حساب الديمو. Data safety: زي القايمة فوق.
+- رابط ويب لحذف الحساب (مطلوب في نموذج Data safety).
+- توقيع الإصدار: لسه بمفتاح debug؛ لازم upload key قبل الرفع (المرحلة ٩).
+
 ## قبل الإرسال (عليك)
 - حساب ديمو حقيقي على أكاديمية الديمو، مفيش عليه كود دخول بالإيميل.
 - في Apple Developer: تفعيل Push Notifications وSign in with Apple
