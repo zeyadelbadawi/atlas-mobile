@@ -1,12 +1,103 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../app/learning_providers.dart';
+import '../../app/providers.dart';
 import '../../app/ui_helpers.dart';
+import '../../core/config/app_env.dart';
 import '../../core/learning/catalog_repository.dart';
 import '../../design/design.dart';
 import '../learning/learning_ui.dart';
+
+/// Reviews the learner reported or hid: gone from every list on this
+/// phone at once (store review rules for content others publish).
+class HiddenReviews extends Notifier<Set<String>> {
+  static const key = 'reviews.hidden';
+
+  @override
+  Set<String> build() =>
+      (ref.watch(sharedPreferencesProvider).getStringList(key) ?? const [])
+          .toSet();
+
+  Future<void> hide(String reviewId) async {
+    if (reviewId.isEmpty || state.contains(reviewId)) return;
+    state = {...state, reviewId};
+    await ref
+        .read(sharedPreferencesProvider)
+        .setStringList(key, state.toList());
+  }
+}
+
+final hiddenReviewsProvider = NotifierProvider<HiddenReviews, Set<String>>(
+  HiddenReviews.new,
+);
+
+/// Report a review to Atlas by email (with what identifies it), then hide
+/// it; or only hide it.
+Future<void> _reviewActions(
+  BuildContext context,
+  WidgetRef ref,
+  CourseReview review,
+  String courseId,
+) async {
+  final l = context.l10n;
+  final choice = await showModalBottomSheet<String>(
+    context: context,
+    showDragHandle: true,
+    builder: (c) => SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(LucideIcons.flag),
+            title: Text(l.reviewReport),
+            subtitle: Text(l.reviewReportHelp),
+            onTap: () => Navigator.pop(c, 'report'),
+          ),
+          ListTile(
+            leading: const Icon(LucideIcons.eyeOff),
+            title: Text(l.reviewHide),
+            onTap: () => Navigator.pop(c, 'hide'),
+          ),
+        ],
+      ),
+    ),
+  );
+  if (choice == null || !context.mounted) return;
+  if (choice == 'report') {
+    final host = ref.read(sessionProvider).academy?.host ?? '';
+    unawaited(
+      launchUrl(
+        Uri(
+          scheme: 'mailto',
+          path: AppEnv.supportEmail,
+          query: _query({
+            'subject': l.reviewReportSubject,
+            'body': l.reviewReportBody(host, courseId, review.id),
+          }),
+        ),
+        mode: LaunchMode.externalApplication,
+      ).catchError((_) => false),
+    );
+  }
+  await ref.read(hiddenReviewsProvider.notifier).hide(review.id);
+  if (!context.mounted) return;
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        content: Text(choice == 'report' ? l.reviewReported : l.reviewHidden),
+      ),
+    );
+}
+
+String _query(Map<String, String> q) =>
+    q.entries.map((e) => '${e.key}=${Uri.encodeComponent(e.value)}').join('&');
 
 /// 4.6 → "٤٫٦" in Arabic, "4.6" in English.
 String ratingText(BuildContext context, double rating) {
@@ -109,6 +200,7 @@ class CourseReviewsSection extends ConsumerWidget {
     if (total == 0) return const SizedBox.shrink();
     final l = context.l10n;
     final summary = ref.watch(courseRatingProvider(courseId)).value;
+    final hidden = ref.watch(hiddenReviewsProvider);
     final latest = ref.watch(latestReviewsProvider(courseId)).value;
     return Column(
       key: const ValueKey('course-reviews'),
@@ -117,7 +209,9 @@ class CourseReviewsSection extends ConsumerWidget {
         SectionHeader(title: l.reviewsTitle),
         if (summary != null) RatingSummaryView(summary: summary),
         if (latest != null)
-          for (final r in latest.items) ReviewTile(review: r),
+          for (final r in latest.items)
+            if (!hidden.contains(r.id))
+              ReviewTile(review: r, courseId: courseId),
         if (total > (latest?.items.length ?? 0)) ...[
           const SizedBox(height: AtlasSpace.s12),
           AtlasButton(
@@ -218,12 +312,13 @@ class RatingSummaryView extends StatelessWidget {
   }
 }
 
-class ReviewTile extends StatelessWidget {
-  const ReviewTile({super.key, required this.review});
+class ReviewTile extends ConsumerWidget {
+  const ReviewTile({super.key, required this.review, required this.courseId});
   final CourseReview review;
+  final String courseId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final a = context.atlas;
     final c = a.colors;
@@ -261,6 +356,19 @@ class ReviewTile extends StatelessWidget {
                   style: a.type.caption.copyWith(color: c.inkTertiary),
                 ),
               ],
+              if (review.id.isNotEmpty)
+                IconButton(
+                  key: ValueKey('review-actions-${review.id}'),
+                  tooltip: l.reviewActions,
+                  visualDensity: VisualDensity.compact,
+                  icon: Icon(
+                    LucideIcons.ellipsis,
+                    size: 20,
+                    color: c.inkTertiary,
+                  ),
+                  onPressed: () =>
+                      unawaited(_reviewActions(context, ref, review, courseId)),
+                ),
             ],
           ),
           const SizedBox(height: 4),
@@ -328,6 +436,7 @@ class _CourseReviewsScreenState extends ConsumerState<CourseReviewsScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final summary = ref.watch(courseRatingProvider(widget.courseId)).value;
+    final hidden = ref.watch(hiddenReviewsProvider);
     final a = context.atlas;
     return ScrollTitleScaffold(
       title: l.reviewsTitle,
@@ -352,7 +461,9 @@ class _CourseReviewsScreenState extends ConsumerState<CourseReviewsScreen> {
                 ),
                 const SizedBox(height: AtlasSpace.s16),
                 if (summary != null) RatingSummaryView(summary: summary),
-                for (final r in _items) ReviewTile(review: r),
+                for (final r in _items)
+                  if (!hidden.contains(r.id))
+                    ReviewTile(review: r, courseId: widget.courseId),
                 if (_error != null)
                   LoadError(
                     message: errorText(ref, context, _error!),

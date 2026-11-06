@@ -2084,6 +2084,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reviewsLearner => 'طالب';
 
   @override
+  String get reviewActions => 'المزيد لهذا التقييم';
+
+  @override
+  String get reviewReport => 'الإبلاغ عن هذا التقييم';
+
+  @override
+  String get reviewReportHelp =>
+      'مسيء أو جارح أو لا علاقة له بالكورس. نراجع البلاغات خلال ٢٤ ساعة.';
+
+  @override
+  String get reviewHide => 'إخفاء هذا التقييم';
+
+  @override
+  String get reviewReportSubject => 'بلاغ: تقييم كورس';
+
+  @override
+  String reviewReportBody(String host, String course, String review) {
+    return 'أبلغ عن هذا التقييم.\nالأكاديمية: $host\nالكورس: $course\nالتقييم: $review\nالسبب:';
+  }
+
+  @override
+  String get reviewReported => 'شكرًا. بلاغك جاهز للإرسال، وأُخفي التقييم.';
+
+  @override
+  String get reviewHidden => 'أُخفي التقييم.';
+
+  @override
   String reviewsStars(String rating) {
     return '$rating من ٥ نجوم';
   }

@@ -2071,6 +2071,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reviewsLearner => 'A learner';
 
   @override
+  String get reviewActions => 'More for this review';
+
+  @override
+  String get reviewReport => 'Report this review';
+
+  @override
+  String get reviewReportHelp =>
+      'Offensive, abusive or not about the course. We review reports within 24 hours.';
+
+  @override
+  String get reviewHide => 'Hide this review';
+
+  @override
+  String get reviewReportSubject => 'Report: a course review';
+
+  @override
+  String reviewReportBody(String host, String course, String review) {
+    return 'I\'m reporting this review.\nAcademy: $host\nCourse: $course\nReview: $review\nWhy:';
+  }
+
+  @override
+  String get reviewReported =>
+      'Thanks. Your report is ready to send, and the review is hidden.';
+
+  @override
+  String get reviewHidden => 'Review hidden.';
+
+  @override
   String reviewsStars(String rating) {
     return '$rating out of 5 stars';
   }

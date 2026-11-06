@@ -1220,6 +1220,21 @@
   },
   "reviewsSeeAll": "See all reviews",
   "reviewsLearner": "A learner",
+  "reviewActions": "More for this review",
+  "reviewReport": "Report this review",
+  "reviewReportHelp": "Offensive, abusive or not about the course. We review reports within 24 hours.",
+  "reviewHide": "Hide this review",
+  "reviewReportSubject": "Report: a course review",
+  "reviewReportBody": "I'm reporting this review.\nAcademy: {host}\nCourse: {course}\nReview: {review}\nWhy:",
+  "@reviewReportBody": {
+    "placeholders": {
+      "host": {"type": "String"},
+      "course": {"type": "String"},
+      "review": {"type": "String"}
+    }
+  },
+  "reviewReported": "Thanks. Your report is ready to send, and the review is hidden.",
+  "reviewHidden": "Review hidden.",
   "reviewsStars": "{rating} out of 5 stars",
   "@reviewsStars": {
     "placeholders": {

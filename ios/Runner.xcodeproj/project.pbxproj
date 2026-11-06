@@ -19,6 +19,7 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		9EEFF3582A49A007728062AE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7518B56F29F2A2D52D70DE16 /* PrivacyInfo.xcprivacy */; };
 		A71A5C0D2E9B000100000001 /* ScreenProtectionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A5C0D2E9B000100000002 /* ScreenProtectionPlugin.swift */; };
 		A7A11F00000000000000A002 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A7A11F00000000000000A001 /* InfoPlist.strings */; };
 		A7A11F00000000000000A006 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A7A11F00000000000000A005 /* PrivacyInfo.xcprivacy */; };
@@ -77,6 +78,7 @@
 		4C50ADF5AFCF1769908145DC /* Runner.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7518B56F29F2A2D52D70DE16 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7884E8672EC3CC0400C636F2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		78E0A7A72DC9AD7400C4905E /* FlutterGeneratedPluginSwiftPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FlutterGeneratedPluginSwiftPackage; path = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				D40CB4B66147C42CC63BF024 /* AtlasWidget.swift */,
 				1D20FD026EA68BD8243DD84F /* Info.plist */,
 				E444A41A6D61275672DEFD96 /* AtlasWidget.entitlements */,
+				7518B56F29F2A2D52D70DE16 /* PrivacyInfo.xcprivacy */,
 			);
 			name = AtlasWidget;
 			path = AtlasWidget;
@@ -330,6 +333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EEFF3582A49A007728062AE /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

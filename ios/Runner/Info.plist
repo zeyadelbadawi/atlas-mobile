@@ -73,8 +73,10 @@
 		<string>ar</string>
 		<string>en</string>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string>Atlas uses the camera only to scan an academy's QR code or to take a photo of your work for an assignment.</string>
+	<string>Atlas uses the camera only when you ask: to scan an academy's QR code, to take a photo of your work for an assignment, or to take your profile photo.</string>
 	<!-- Taps on the home-screen widget (AtlasWidget) come back as
 	     atlaswidget://open?homeWidget&path=…, read by home_widget. -->
 	<key>CFBundleURLTypes</key>
@@ -95,7 +97,7 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>Atlas uses Face ID only to unlock the app, when you turn the app lock on.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Atlas opens your photos only when you choose one to attach to an assignment.</string>
+	<string>Atlas opens your photos only when you choose one, to attach to an assignment or to use as your profile photo.</string>
 	<key>GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS</key>
 	<false/>
 	<key>GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED</key>

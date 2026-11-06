@@ -3626,6 +3626,54 @@ abstract class AppLocalizations {
   /// **'A learner'**
   String get reviewsLearner;
 
+  /// No description provided for @reviewActions.
+  ///
+  /// In en, this message translates to:
+  /// **'More for this review'**
+  String get reviewActions;
+
+  /// No description provided for @reviewReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Report this review'**
+  String get reviewReport;
+
+  /// No description provided for @reviewReportHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Offensive, abusive or not about the course. We review reports within 24 hours.'**
+  String get reviewReportHelp;
+
+  /// No description provided for @reviewHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide this review'**
+  String get reviewHide;
+
+  /// No description provided for @reviewReportSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Report: a course review'**
+  String get reviewReportSubject;
+
+  /// No description provided for @reviewReportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m reporting this review.\nAcademy: {host}\nCourse: {course}\nReview: {review}\nWhy:'**
+  String reviewReportBody(String host, String course, String review);
+
+  /// No description provided for @reviewReported.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks. Your report is ready to send, and the review is hidden.'**
+  String get reviewReported;
+
+  /// No description provided for @reviewHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Review hidden.'**
+  String get reviewHidden;
+
   /// No description provided for @reviewsStars.
   ///
   /// In en, this message translates to:
