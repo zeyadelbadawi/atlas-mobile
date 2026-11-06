@@ -41,6 +41,9 @@ class QuizRunner extends ConsumerStatefulWidget {
   ConsumerState<QuizRunner> createState() => _QuizRunnerState();
 }
 
+/// How long something may cover the quiz before it is recorded.
+const coveredAfter = Duration(seconds: 2);
+
 class _QuizRunnerState extends ConsumerState<QuizRunner>
     with WidgetsBindingObserver {
   late final QuizSession s = widget.session;
@@ -57,6 +60,10 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
   QuizGuard? _guard;
   bool _sideBySide = false;
   Timer? _tick;
+
+  /// Notifications or Control Center pulled over the quiz.
+  Timer? _covering;
+  bool _covered = false;
   int? _remaining;
   bool _submitting = false, _finished = false, _hidden = false;
   String? _submitError;
@@ -119,6 +126,7 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _tick?.cancel();
+    _covering?.cancel();
     unawaited(_guard?.dispose());
     unawaited(_autosave.flush().whenComplete(_autosave.dispose));
     _integrity.dispose();
@@ -131,12 +139,20 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
+      case AppLifecycleState.inactive:
+        _onCovered();
       case AppLifecycleState.hidden || AppLifecycleState.paused:
+        _covering?.cancel();
         if (_hidden) return;
         _hidden = true;
         _integrity.push('visibility_hidden');
         unawaited(_autosave.flush());
       case AppLifecycleState.resumed:
+        _covering?.cancel();
+        if (_covered) {
+          _covered = false;
+          _integrity.push('focus');
+        }
         if (!_hidden) return;
         _hidden = false;
         _integrity.push('visibility_visible');
@@ -144,6 +160,22 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
       default:
         break;
     }
+  }
+
+  /// The app is visible but something is over it: the notification shade,
+  /// Control Center, a call. Recorded as focus lost only past 2 seconds, so
+  /// passing through on the way to another app (recorded as leaving) or a
+  /// glance does not count; never while the system asks to pin the screen.
+  void _onCovered() {
+    final guard = _guard;
+    if (guard == null || _hidden || _covered || _sideBySide) return;
+    if (guard.systemPrompt) return;
+    _covering?.cancel();
+    _covering = Timer(coveredAfter, () {
+      if (!mounted || _hidden || _sideBySide) return;
+      _covered = true;
+      _integrity.push('blur');
+    });
   }
 
   @override

@@ -1457,7 +1457,7 @@ abstract class AppLocalizations {
   /// No description provided for @quizIntegrityRecorded.
   ///
   /// In en, this message translates to:
-  /// **'While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, opening the quiz beside another app, screenshots and screen recording on iPhone, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.'**
+  /// **'While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, opening the quiz beside another app, pulling notifications or Control Center over it for more than two seconds, screenshots and screen recording on iPhone, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.'**
   String get quizIntegrityRecorded;
 
   /// No description provided for @quizIntegrityMonitor.

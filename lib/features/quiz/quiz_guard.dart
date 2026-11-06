@@ -73,6 +73,12 @@ class QuizGuard {
   bool get _ios => platform == TargetPlatform.iOS;
 
   /// Whether the learner can do something about the lock (pin again).
+  /// The system is showing its own prompt for the lock (Android's "pin
+  /// this app?", iOS starting assessment mode): the quiz losing focus
+  /// meanwhile is not the learner's doing.
+  bool get systemPrompt => _asking || _waitedPolls != null;
+  bool _asking = false;
+
   bool get canPin =>
       lock && !_ios && (pin == PinState.lost || pin == PinState.unavailable);
 
@@ -107,7 +113,8 @@ class QuizGuard {
   }
 
   Future<void> _startPin() async {
-    final ok = await protection.startPin();
+    _asking = true;
+    final ok = await protection.startPin().whenComplete(() => _asking = false);
     if (_stopped) return;
     if (_ios) {
       // Assessment mode answers once the session began, or failed to.

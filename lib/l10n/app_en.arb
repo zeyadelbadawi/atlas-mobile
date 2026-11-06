@@ -455,7 +455,7 @@
     }
   },
   "quizIntegrityTitle": "What is recorded during this quiz",
-  "quizIntegrityRecorded": "While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, opening the quiz beside another app, screenshots and screen recording on iPhone, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.",
+  "quizIntegrityRecorded": "While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, opening the quiz beside another app, pulling notifications or Control Center over it for more than two seconds, screenshots and screen recording on iPhone, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.",
   "quizIntegrityMonitor": "You will not be interrupted. The record is shown to your reviewer with your attempt.",
   "quizIntegrityWarn": "You will be warned each time one is recorded. The limit is {n}; reaching it flags the attempt for review.",
   "@quizIntegrityWarn": {
