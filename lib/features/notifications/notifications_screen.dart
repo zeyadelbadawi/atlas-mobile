@@ -45,9 +45,20 @@ class NotificationsScreen extends ConsumerWidget {
                 actions: [
                   if (hasUnread)
                     TextButton(
-                      onPressed: () => ref
-                          .read(notificationFeedProvider.notifier)
-                          .markAllRead(),
+                      onPressed: () async {
+                        final ok = await ref
+                            .read(notificationFeedProvider.notifier)
+                            .markAllRead();
+                        if (!ok && context.mounted) {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              SnackBar(
+                                content: Text(l.notificationsMarkFailed),
+                              ),
+                            );
+                        }
+                      },
                       child: Text(l.notificationsMarkAll),
                     ),
                 ],

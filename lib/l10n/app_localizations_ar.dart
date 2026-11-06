@@ -1457,6 +1457,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notificationsMarkAll => 'تعليم الكل كمقروء';
 
   @override
+  String get notificationsMarkFailed =>
+      'تعذّر تعليمها كمقروءة. تحقّق من اتصالك وحاول مرة أخرى.';
+
+  @override
   String get notificationsEmptyTitle => 'لا توجد إشعارات';
 
   @override

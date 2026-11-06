@@ -1454,6 +1454,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsMarkAll => 'Mark all as read';
 
   @override
+  String get notificationsMarkFailed =>
+      'Couldn\'t mark them as read. Check your connection and try again.';
+
+  @override
   String get notificationsEmptyTitle => 'You\'re all caught up';
 
   @override

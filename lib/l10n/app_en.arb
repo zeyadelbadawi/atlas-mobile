@@ -848,6 +848,7 @@
   "notificationOpen": "Open",
   "notificationsTitle": "Notifications",
   "notificationsMarkAll": "Mark all as read",
+  "notificationsMarkFailed": "Couldn't mark them as read. Check your connection and try again.",
   "notificationsEmptyTitle": "You're all caught up",
   "notificationsEmptyBody": "Grades, certificates, announcements and reminders from your academy appear here.",
   "notificationsUnread": "Unread",

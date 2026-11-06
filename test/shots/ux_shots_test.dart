@@ -213,6 +213,7 @@ void main() {
   wordShots();
   companyShots();
   strictQuizShots();
+  markReadShots();
 
   shot(
     'lesson_undo',
@@ -1114,4 +1115,17 @@ void strictQuizShots() {
     await t.pump(const Duration(seconds: 12));
     await t.pump(const Duration(milliseconds: 300));
   }, focus: () => find.byType(AppBar).last);
+}
+
+void markReadShots() {
+  shot('notif_mark_failed', (t) async {
+    await pumpScreen(t, session: AsSignedIn.new, path: '/notifications');
+    await t.pump(const Duration(seconds: 1));
+    await t.tap(find.text('تعليم الكل كمقروء'));
+    for (var i = 0; i < 4; i++) {
+      await t.pump(const Duration(milliseconds: 250));
+    }
+    // The failure of the old code surfaced as an uncaught error.
+    t.takeException();
+  }, focus: () => find.byType(Scaffold).first);
 }

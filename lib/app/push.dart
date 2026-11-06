@@ -95,13 +95,22 @@ class NotificationFeed extends AsyncNotifier<NotificationPageState> {
     ref.invalidate(unreadCountProvider);
   }
 
-  Future<void> markAllRead() async {
+  /// Marks every notification read; false (and the list as it was) when
+  /// the server could not be reached, so the screen can say so.
+  Future<bool> markAllRead() async {
     final s = state.value;
     if (s != null) {
       state = AsyncData(s.copy(items: [for (final x in s.items) x.read()]));
     }
-    await ref.read(notificationsRepositoryProvider).markAllRead();
-    ref.invalidate(unreadCountProvider);
+    try {
+      await ref.read(notificationsRepositoryProvider).markAllRead();
+      return true;
+    } on Object {
+      if (s != null) state = AsyncData(s);
+      return false;
+    } finally {
+      ref.invalidate(unreadCountProvider);
+    }
   }
 }
 

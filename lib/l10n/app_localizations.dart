@@ -2588,6 +2588,12 @@ abstract class AppLocalizations {
   /// **'Mark all as read'**
   String get notificationsMarkAll;
 
+  /// No description provided for @notificationsMarkFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t mark them as read. Check your connection and try again.'**
+  String get notificationsMarkFailed;
+
   /// No description provided for @notificationsEmptyTitle.
   ///
   /// In en, this message translates to:

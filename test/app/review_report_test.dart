@@ -46,7 +46,12 @@ void main() {
   });
 
   testWidgets('a review hidden before stays hidden', (t) async {
-    await open(t, prefs: {HiddenReviews.key: <String>['r1', 'r3']});
+    await open(
+      t,
+      prefs: {
+        HiddenReviews.key: <String>['r1', 'r3'],
+      },
+    );
     expect(find.byType(ReviewTile), findsOneWidget);
   });
 }

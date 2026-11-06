@@ -415,6 +415,7 @@
   "notificationOpen": "فتح",
   "notificationsTitle": "الإشعارات",
   "notificationsMarkAll": "تعليم الكل كمقروء",
+  "notificationsMarkFailed": "تعذّر تعليمها كمقروءة. تحقّق من اتصالك وحاول مرة أخرى.",
   "notificationsEmptyTitle": "لا توجد إشعارات",
   "notificationsEmptyBody": "تظهر هنا الدرجات والشهادات والإعلانات والتذكيرات من أكاديميتك.",
   "notificationsUnread": "غير مقروء",
