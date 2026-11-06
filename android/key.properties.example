@@ -1,0 +1,7 @@
+# Copy to android/key.properties and fill in. This file (key.properties) is
+# git-ignored and must NEVER be committed. In CI, set the same values as the
+# ATLAS_UPLOAD_* GitHub secrets instead of shipping this file.
+storeFile=/absolute/path/to/atlas-upload.jks
+storePassword=CHANGE_ME
+keyAlias=atlas-upload
+keyPassword=CHANGE_ME

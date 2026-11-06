@@ -1,9 +1,28 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
+
+// Release signing comes from android/key.properties (a local, git-ignored
+// file) or, in CI, from ATLAS_UPLOAD_* environment variables. When neither
+// is present the release build falls back to the debug key, so
+// `flutter run --release` and plain CI builds keep working without the
+// upload key. The keystore and its passwords are never committed.
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
+fun signingValue(propKey: String, envKey: String): String? =
+    keystoreProperties.getProperty(propKey) ?: System.getenv(envKey)
+
+val uploadStoreFile = signingValue("storeFile", "ATLAS_UPLOAD_STORE_FILE")
 
 android {
     namespace = "com.atlas.atlas_mobile"
@@ -18,7 +37,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.atlas.atlas_mobile"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
@@ -34,11 +52,26 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            if (uploadStoreFile != null) {
+                storeFile = file(uploadStoreFile)
+                storePassword = signingValue("storePassword", "ATLAS_UPLOAD_STORE_PASSWORD")
+                keyAlias = signingValue("keyAlias", "ATLAS_UPLOAD_KEY_ALIAS")
+                keyPassword = signingValue("keyPassword", "ATLAS_UPLOAD_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // The upload key when it is configured; otherwise the debug key,
+            // so a build without the key still works (it just isn't publishable).
+            signingConfig = if (uploadStoreFile != null) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 }

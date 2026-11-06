@@ -47,3 +47,6 @@ they start.
 - خانات الخصوصية في App Store Connect لازم تطابق `ios/Runner/PrivacyInfo.xcprivacy`
   (اتضاف رقم الموبايل).
 - الالتزام بمراجعة بلاغات التقييمات خلال ٢٤ ساعة (التطبيق بيقول كده).
+
+- توقيع أندرويد: مفتاح الرفع متظبط في `build.gradle.kts` (من `android/key.properties` أو أسرار CI). اعمل المفتاح بـ `tool/make_upload_key.sh`، والخطوات في `docs/RELEASE_SIGNING.md`. من غير المفتاح البناء بيرجع لمفتاح الديبَج (مش صالح للرفع).
+- Firebase: التطبيق بيستخدم الإشعارات والتحليلات بس (مفيش Firestore/Storage/DB من العميل)، فمفيش قواعد أمان على جهة الموبايل. مفتاح الـ FCM للإرسال لازم يفضل على السيرفر. يُنصح بتفعيل App Check من Console (التفاصيل في `docs/RELEASE_SIGNING.md`).
