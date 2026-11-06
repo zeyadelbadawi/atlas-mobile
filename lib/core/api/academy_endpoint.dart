@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 /// Where one academy's API lives.
 ///
 /// The backend decides which academy a request is for from the request's
@@ -17,8 +19,15 @@ class AcademyEndpoint {
     if (!text.contains('://')) text = 'https://$text';
     final uri = Uri.parse(text);
     if (uri.host.isEmpty) throw FormatException('no host in "$input"');
-    if (uri.scheme != 'https' && uri.scheme != 'http') {
-      throw FormatException('unsupported scheme "${uri.scheme}"');
+    // HTTPS only in release, so a scanned QR code or a pasted link cannot
+    // point the app at a cleartext origin and downgrade the session. http is
+    // allowed for loopback always, and for any host in debug/profile (the
+    // local test stack).
+    final schemeOk =
+        uri.scheme == 'https' ||
+        (uri.scheme == 'http' && _cleartextAllowed(uri.host));
+    if (!schemeOk) {
+      throw FormatException('insecure or unsupported scheme "${uri.scheme}"');
     }
     return AcademyEndpoint._(
       Uri(
@@ -57,4 +66,11 @@ class AcademyEndpoint {
 
   @override
   String toString() => originHeader;
+}
+
+/// http is acceptable only for a loopback literal, or anywhere in a
+/// debug/profile build (the local test stack). Release is https-only.
+bool _cleartextAllowed(String host) {
+  const loopback = {'localhost', '127.0.0.1', '10.0.2.2'};
+  return loopback.contains(host) || !kReleaseMode;
 }

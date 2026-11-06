@@ -11,6 +11,7 @@ import '../l10n/app_localizations.dart';
 import 'learning_providers.dart';
 import 'providers.dart';
 import 'push.dart';
+import 'launch_paths.dart';
 import 'router.dart';
 
 /// What the home-screen widget shows, already in the app's language: the
@@ -105,7 +106,12 @@ class HomeWidgetSync extends Notifier<void> {
     await refresh(force: true);
   }
 
-  void _open(String path) => unawaited(_goWhenSignedIn(path));
+  void _open(String rawPath) {
+    // Only a path the app itself emits: the tap arrives through a URL
+    // scheme any app can invoke (see launch_paths.dart).
+    final path = safeLaunchPath(rawPath);
+    if (path != null) unawaited(_goWhenSignedIn(path));
+  }
 
   Future<void> _goWhenSignedIn(String path) async {
     for (var i = 0; i < 20; i++) {

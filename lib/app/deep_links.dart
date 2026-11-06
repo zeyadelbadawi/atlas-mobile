@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_links/app_links.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -64,8 +65,14 @@ AcademyLink? parseAcademyLink(Uri uri) {
     // `ziadd.atlass.dpdns.org/courses/x`, typed without https://.
     return parseAcademyLink(Uri.parse('https://${uri.toString()}'));
   }
-  if (uri.scheme != 'https' && uri.scheme != 'http') return null;
   final host = uri.host.toLowerCase();
+  // HTTPS only in release: never follow a cleartext academy link. http is
+  // allowed for loopback, and for any host in debug/profile (local stack).
+  const loopback = {'localhost', '127.0.0.1', '10.0.2.2'};
+  if (uri.scheme != 'https' &&
+      !(uri.scheme == 'http' && (loopback.contains(host) || !kReleaseMode))) {
+    return null;
+  }
   if (host.isEmpty || !host.contains('.') && host != 'localhost') return null;
   final parts = uri.pathSegments.where((p) => p.isNotEmpty).toList();
   if (parts.isNotEmpty && (parts.first == 'ar' || parts.first == 'en')) {

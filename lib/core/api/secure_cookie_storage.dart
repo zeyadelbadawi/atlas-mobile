@@ -12,7 +12,17 @@ class SecureCookieStorage implements Storage {
   SecureCookieStorage({
     FlutterSecureStorage? storage,
     this.prefix = 'atlas.cookies.',
-  }) : _storage = storage ?? const FlutterSecureStorage();
+  }) : _storage =
+           storage ??
+           const FlutterSecureStorage(
+             // Tied to THIS device: the session is never in a cloud or
+             // device-transfer backup, and on iOS is readable only after the
+             // phone has been unlocked once since boot. (Android's store is
+             // Keystore-encrypted by default in this version.)
+             iOptions: IOSOptions(
+               accessibility: KeychainAccessibility.first_unlock_this_device,
+             ),
+           );
 
   final FlutterSecureStorage _storage;
   final String prefix;

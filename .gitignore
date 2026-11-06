@@ -48,3 +48,12 @@ app.*.map.json
 .widget_preview/
 test/**/failures/
 .scratch/
+
+# Signing keys and secrets (never commit)
+*.jks
+*.keystore
+key.properties
+**/key.properties
+*.p12
+*.mobileprovision
+ios/Runner/GoogleService-Info.plist

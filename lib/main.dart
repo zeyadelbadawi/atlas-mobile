@@ -27,7 +27,11 @@ Future<bool> _initFirebase() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kReleaseMode) ErrorWidget.builder = releaseErrorWidget;
+  if (kReleaseMode) {
+    ErrorWidget.builder = releaseErrorWidget;
+    // No app logging in release: keep error detail out of the device log.
+    debugPrint = (String? message, {int? wrapWidth}) {};
+  }
   final (prefs, errors, notifications, info, firebase) = await (
     SharedPreferences.getInstance(),
     ErrorCatalog.load(),

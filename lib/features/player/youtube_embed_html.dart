@@ -72,7 +72,15 @@ String youtubeEmbedHtml({
 /// opened outside the watermark from inside the app.
 bool isAllowedPlayerNavigation(Uri uri, {required String academyOrigin}) {
   if (uri.scheme == 'about' || uri.scheme == 'data') return true;
-  if (uri.toString().startsWith(academyOrigin)) return true;
+  // Same origin as the academy — compared as scheme+host+port, so a
+  // look-alike host like "<academy>.evil.com" cannot slip past a prefix.
+  final academy = Uri.tryParse(academyOrigin);
+  if (academy != null &&
+      uri.scheme == academy.scheme &&
+      uri.host == academy.host &&
+      uri.port == academy.port) {
+    return true;
+  }
   const hosts = {
     'www.youtube-nocookie.com',
     'www.youtube.com',
