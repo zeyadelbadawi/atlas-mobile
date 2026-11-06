@@ -280,6 +280,40 @@ void main() {
       });
     });
 
+    test('an older server that refuses the new types: they are dropped, the rest is kept', () {
+      fakeAsync((async) {
+        final batches = <List<String>>[];
+        final integrity = QuizIntegrity(
+          record: (events) async {
+            final types = [for (final e in events) e['type']! as String];
+            batches.add(types);
+            if (types.contains('screenshot')) {
+              throw const AtlasApiException(
+                kind: 'validation',
+                messageKey: 'x',
+                status: 400,
+              );
+            }
+            return EventsResult.fromJson(const {});
+          },
+          mode: 'warn',
+        )..start();
+        integrity.push('screenshot');
+        integrity.push('visibility_hidden');
+        async.flushMicrotasks();
+        async.elapse(const Duration(seconds: 3));
+        expect(batches, [
+          ['fullscreen_enter', 'screenshot', 'visibility_hidden'],
+          ['fullscreen_enter', 'visibility_hidden'],
+        ]);
+        integrity.push('screen_capture_start');
+        integrity.push('fullscreen_unavailable', {'reason': 'refused'});
+        async.elapse(const Duration(seconds: 3));
+        expect(batches.last, ['fullscreen_unavailable']);
+        integrity.dispose();
+      });
+    });
+
     test('mode off records nothing', () {
       fakeAsync((async) {
         var calls = 0;

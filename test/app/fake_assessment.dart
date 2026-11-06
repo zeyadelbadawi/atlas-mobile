@@ -13,17 +13,23 @@ enum QuizStage { intro, running, results }
 
 /// Sample assessments for screen goldens (illustrative, not real learners).
 class FakeAssessmentRepository extends AssessmentRepository {
-  FakeAssessmentRepository({this.stage = QuizStage.intro, this.graded = true})
-    : super(
-        AtlasApiClient(
-          endpoint: AcademyEndpoint.parse('ziadd.atlass.dpdns.org'),
-          cookieJar: CookieJar(),
-          userAgent: 'test',
-        ),
-      );
+  FakeAssessmentRepository({
+    this.stage = QuizStage.intro,
+    this.graded = true,
+    this.sessionIntegrity = 'off',
+  }) : super(
+         AtlasApiClient(
+           endpoint: AcademyEndpoint.parse('ziadd.atlass.dpdns.org'),
+           cookieJar: CookieJar(),
+           userAgent: 'test',
+         ),
+       );
 
   final QuizStage stage;
   final bool graded;
+
+  /// The running attempt's integrity mode ('off', 'warn', 'strict').
+  final String sessionIntegrity;
 
   static final _now = testNow.toUtc();
 
@@ -133,7 +139,8 @@ class FakeAssessmentRepository extends AssessmentRepository {
     'revision': 2,
     'settings': {
       'layout': 'one_per_page',
-      'integrityMode': 'off',
+      'integrityMode': sessionIntegrity,
+      'maxViolations': 3,
       'timeLimitSeconds': 900,
     },
     'questions': _questions,
@@ -144,6 +151,20 @@ class FakeAssessmentRepository extends AssessmentRepository {
       },
     ],
   });
+
+  /// What the running quiz sent (integrity events).
+  final recorded = <Map<String, Object?>>[];
+
+  @override
+  Future<EventsResult> recordEvents(
+    String courseId,
+    String quizId,
+    String attemptId,
+    List<Map<String, Object?>> events,
+  ) async {
+    recorded.addAll(events);
+    return EventsResult.fromJson(const {});
+  }
 
   @override
   Future<QuizResults> results(

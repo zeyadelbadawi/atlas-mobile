@@ -97,11 +97,15 @@ Future<void> setDevice(
 }) async {
   tester.view.physicalSize = size * 3;
   tester.view.devicePixelRatio = 3;
+  // The app fills the screen, as on a phone (a smaller window means split
+  // screen to the quiz).
+  tester.view.display.size = size * 3;
   tester.view.padding = FakeViewPadding(
     top: padding.top * 3,
     bottom: padding.bottom * 3,
   );
   addTearDown(tester.view.reset);
+  addTearDown(tester.view.display.reset);
 }
 
 /// A golden drawn as the device draws it: flutter_test strips shadow blur

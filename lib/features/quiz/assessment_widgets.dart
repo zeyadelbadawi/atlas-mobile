@@ -258,10 +258,14 @@ class AnswerField extends StatelessWidget {
     this.maxLines = 4,
     this.maxLength,
     this.enabled = true,
+    this.locked = false,
     this.onChanged,
   });
 
   final TextEditingController controller;
+
+  /// A monitored quiz: no selecting, copying, cutting or pasting.
+  final bool locked;
   final String label;
   final String hint;
   final String? helper;
@@ -286,6 +290,8 @@ class AnswerField extends StatelessWidget {
           maxLines: maxLines,
           maxLength: maxLength,
           onChanged: onChanged,
+          enableInteractiveSelection: !locked,
+          contextMenuBuilder: locked ? null : _defaultMenu,
           keyboardType: TextInputType.multiline,
           textCapitalization: TextCapitalization.sentences,
           style: a.type.body.copyWith(color: c.ink),
@@ -385,3 +391,6 @@ class AddToCalendarButton extends ConsumerWidget {
     );
   }
 }
+
+Widget _defaultMenu(BuildContext context, EditableTextState state) =>
+    AdaptiveTextSelectionToolbar.editableText(editableTextState: state);

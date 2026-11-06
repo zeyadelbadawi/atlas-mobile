@@ -1457,7 +1457,7 @@ abstract class AppLocalizations {
   /// No description provided for @quizIntegrityRecorded.
   ///
   /// In en, this message translates to:
-  /// **'While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.'**
+  /// **'While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, opening the quiz beside another app, screenshots and screen recording on iPhone, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.'**
   String get quizIntegrityRecorded;
 
   /// No description provided for @quizIntegrityMonitor.
@@ -1481,13 +1481,13 @@ abstract class AppLocalizations {
   /// No description provided for @quizIntegrityFullscreen.
   ///
   /// In en, this message translates to:
-  /// **'The app shows the quiz on the whole screen. Leaving the app is recorded.'**
+  /// **'The phone is locked to the quiz until you submit. On Android you are asked to pin the screen, and unpinning it is recorded.'**
   String get quizIntegrityFullscreen;
 
   /// No description provided for @quizIntegrityHonest.
   ///
   /// In en, this message translates to:
-  /// **'Atlas never uses your camera or microphone, never records your screen or what you type, and sees nothing outside this quiz. Nothing is blocked.'**
+  /// **'Atlas never uses your camera or microphone, never records your screen or what you type, and sees nothing outside this quiz.'**
   String get quizIntegrityHonest;
 
   /// No description provided for @quizIntegrityAck.
@@ -1495,6 +1495,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I understand what is recorded during this quiz.'**
   String get quizIntegrityAck;
+
+  /// No description provided for @quizIntegrityBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'During the quiz, screenshots and screen recording are blocked on Android; on iPhone the questions are hidden while the screen is recorded or shown elsewhere. Copying and pasting are off, other apps can\'t show over or beside the quiz, and your name appears faintly on the screen.'**
+  String get quizIntegrityBlocked;
+
+  /// No description provided for @quizShieldTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions hidden'**
+  String get quizShieldTitle;
+
+  /// No description provided for @quizShieldCaptured.
+  ///
+  /// In en, this message translates to:
+  /// **'Your screen is being recorded or shown on another screen, and this was recorded. Stop it to continue. The time keeps running.'**
+  String get quizShieldCaptured;
+
+  /// No description provided for @quizShieldSideBySide.
+  ///
+  /// In en, this message translates to:
+  /// **'The quiz isn\'t shown next to another app. Open it on the whole screen to continue. The time keeps running.'**
+  String get quizShieldSideBySide;
+
+  /// No description provided for @quizPinAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'This quiz asks you to pin the screen to it.'**
+  String get quizPinAsk;
+
+  /// No description provided for @quizPinLost.
+  ///
+  /// In en, this message translates to:
+  /// **'You unpinned the screen, and this was recorded. Pin it again to continue.'**
+  String get quizPinLost;
+
+  /// No description provided for @quizPinAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin the screen'**
+  String get quizPinAction;
 
   /// No description provided for @quizQuestionOf.
   ///

@@ -67,6 +67,11 @@ class QuizSettings {
   final bool hideTimer;
 
   bool get integrityOn => integrityMode != 'off';
+
+  /// The phone is locked to the quiz (screen pinning / assessment mode):
+  /// in strict mode, or when the quiz requires full screen.
+  bool get locksPhone =>
+      integrityOn && (integrityMode == 'strict' || requireFullscreen);
   bool get integrityWarns =>
       integrityMode == 'warn' || integrityMode == 'strict';
 }
@@ -211,6 +216,11 @@ class AttemptSettings {
   final int? timeLimitSeconds;
 
   bool get integrityOn => integrityMode != 'off';
+
+  /// The phone is locked to the quiz (screen pinning / assessment mode):
+  /// in strict mode, or when the quiz requires full screen.
+  bool get locksPhone =>
+      integrityOn && (integrityMode == 'strict' || requireFullscreen);
   bool get integrityWarns =>
       integrityMode == 'warn' || integrityMode == 'strict';
 }

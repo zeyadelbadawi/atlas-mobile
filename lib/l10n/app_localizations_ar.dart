@@ -786,7 +786,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quizIntegrityRecorded =>
-      'أثناء فتح الاختبار يُسجَّل ما يلي مع وقت حدوثه: الخروج من التطبيق (إلى تطبيق آخر أو الشاشة الرئيسية) والعودة إليه، وفحص للاتصال مرة كل دقيقة. يرى المراجِع ذلك مع تفسيرات واضحة، وهي مدخل للحوار وليست دليلًا على أي شيء.';
+      'أثناء فتح الاختبار يُسجَّل ما يلي مع وقت حدوثه: الخروج من التطبيق (إلى تطبيق آخر أو الشاشة الرئيسية) والعودة إليه، وفتح الاختبار بجوار تطبيق آخر، ولقطات الشاشة وتسجيلها على iPhone، وفحص للاتصال مرة كل دقيقة. يرى المراجِع ذلك مع تفسيرات واضحة، وهي مدخل للحوار وليست دليلًا على أي شيء.';
 
   @override
   String get quizIntegrityMonitor =>
@@ -804,14 +804,39 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get quizIntegrityFullscreen =>
-      'يعرض التطبيق الاختبار على الشاشة كاملة، ويُسجَّل الخروج من التطبيق.';
+      'يُقفَل الهاتف على الاختبار حتى ترسله. على Android يُطلب منك تثبيت الشاشة، ويُسجَّل إلغاء التثبيت.';
 
   @override
   String get quizIntegrityHonest =>
-      'لا يستخدم أطلس الكاميرا أو الميكروفون أبدًا، ولا يسجّل شاشتك أو ما تكتبه، ولا يرى شيئًا خارج هذا الاختبار. لا يُمنع أي شيء.';
+      'لا يستخدم أطلس الكاميرا أو الميكروفون أبدًا، ولا يسجّل شاشتك أو ما تكتبه، ولا يرى شيئًا خارج هذا الاختبار.';
 
   @override
   String get quizIntegrityAck => 'أفهم ما يُسجَّل أثناء هذا الاختبار.';
+
+  @override
+  String get quizIntegrityBlocked =>
+      'أثناء الاختبار تُمنع لقطات الشاشة وتسجيلها على Android، وعلى iPhone تُخفى الأسئلة ما دامت الشاشة تُسجَّل أو تُعرض على شاشة أخرى. النسخ واللصق متوقفان، ولا تظهر تطبيقات أخرى فوق الاختبار أو بجواره، ويظهر اسمك بخط خفيف على الشاشة.';
+
+  @override
+  String get quizShieldTitle => 'الأسئلة مخفية';
+
+  @override
+  String get quizShieldCaptured =>
+      'شاشة هاتفك تُسجَّل أو تُعرض على شاشة أخرى، وسُجّل ذلك. أوقف التسجيل أو العرض لتكمل، والوقت مستمر.';
+
+  @override
+  String get quizShieldSideBySide =>
+      'لا يُعرض الاختبار بجوار تطبيق آخر. افتحه على الشاشة كاملة لتكمل، والوقت مستمر.';
+
+  @override
+  String get quizPinAsk => 'يطلب هذا الاختبار تثبيت الشاشة عليه.';
+
+  @override
+  String get quizPinLost =>
+      'ألغيت تثبيت الشاشة، وسُجّل ذلك. ثبّتها مرة أخرى لتكمل.';
+
+  @override
+  String get quizPinAction => 'تثبيت الشاشة';
 
   @override
   String quizQuestionOf(String current, String total) {

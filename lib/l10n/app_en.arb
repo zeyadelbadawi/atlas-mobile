@@ -455,7 +455,7 @@
     }
   },
   "quizIntegrityTitle": "What is recorded during this quiz",
-  "quizIntegrityRecorded": "While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.",
+  "quizIntegrityRecorded": "While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, opening the quiz beside another app, screenshots and screen recording on iPhone, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.",
   "quizIntegrityMonitor": "You will not be interrupted. The record is shown to your reviewer with your attempt.",
   "quizIntegrityWarn": "You will be warned each time one is recorded. The limit is {n}; reaching it flags the attempt for review.",
   "@quizIntegrityWarn": {
@@ -473,9 +473,16 @@
       }
     }
   },
-  "quizIntegrityFullscreen": "The app shows the quiz on the whole screen. Leaving the app is recorded.",
-  "quizIntegrityHonest": "Atlas never uses your camera or microphone, never records your screen or what you type, and sees nothing outside this quiz. Nothing is blocked.",
+  "quizIntegrityFullscreen": "The phone is locked to the quiz until you submit. On Android you are asked to pin the screen, and unpinning it is recorded.",
+  "quizIntegrityHonest": "Atlas never uses your camera or microphone, never records your screen or what you type, and sees nothing outside this quiz.",
   "quizIntegrityAck": "I understand what is recorded during this quiz.",
+  "quizIntegrityBlocked": "During the quiz, screenshots and screen recording are blocked on Android; on iPhone the questions are hidden while the screen is recorded or shown elsewhere. Copying and pasting are off, other apps can't show over or beside the quiz, and your name appears faintly on the screen.",
+  "quizShieldTitle": "Questions hidden",
+  "quizShieldCaptured": "Your screen is being recorded or shown on another screen, and this was recorded. Stop it to continue. The time keeps running.",
+  "quizShieldSideBySide": "The quiz isn't shown next to another app. Open it on the whole screen to continue. The time keeps running.",
+  "quizPinAsk": "This quiz asks you to pin the screen to it.",
+  "quizPinLost": "You unpinned the screen, and this was recorded. Pin it again to continue.",
+  "quizPinAction": "Pin the screen",
   "quizQuestionOf": "Question {current} of {total}",
   "@quizQuestionOf": {
     "placeholders": {

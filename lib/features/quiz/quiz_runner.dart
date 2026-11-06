@@ -13,6 +13,7 @@ import '../../design/design.dart';
 import '../player/watermark_overlay.dart';
 import 'assessment_widgets.dart';
 import 'quiz_engine.dart';
+import 'quiz_guard.dart';
 
 /// The attempt in progress.
 ///
@@ -53,6 +54,8 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
   );
   late final QuizAutosave _autosave;
   late final QuizIntegrity _integrity;
+  QuizGuard? _guard;
+  bool _sideBySide = false;
   Timer? _tick;
   int? _remaining;
   bool _submitting = false, _finished = false, _hidden = false;
@@ -94,6 +97,15 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
       onWarn: _onWarn,
       onAutoSubmitted: () => _finish(),
     )..start();
+    if (s.settings.integrityOn) {
+      _guard = QuizGuard(
+        protection: ref.read(screenProtectionProvider),
+        onEvent: _integrity.push,
+        onChanged: _rebuild,
+        lock: s.settings.locksPhone,
+      );
+      unawaited(_guard!.start());
+    }
     _remaining = _clock.remaining();
     _tick = Timer.periodic(const Duration(seconds: 1), (_) => _onTick());
     WidgetsBinding.instance.addObserver(this);
@@ -107,6 +119,7 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _tick?.cancel();
+    unawaited(_guard?.dispose());
     unawaited(_autosave.flush().whenComplete(_autosave.dispose));
     _integrity.dispose();
     for (final c in _text.values) {
@@ -131,6 +144,26 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
       default:
         break;
     }
+  }
+
+  @override
+  void didChangeMetrics() => _checkSideBySide();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _checkSideBySide();
+  }
+
+  /// Split screen, a pop-up window, or an iPad's app beside the quiz: the
+  /// questions are hidden and it is recorded as focus lost.
+  void _checkSideBySide() {
+    if (_guard == null || !mounted) return;
+    final view = View.of(context);
+    final now = isSideBySide(view.physicalSize, view.display.size);
+    if (now == _sideBySide) return;
+    _integrity.push(now ? 'blur' : 'focus');
+    setState(() => _sideBySide = now);
   }
 
   /// After the app was away the phone's stopwatch may have stopped: ask the
@@ -382,6 +415,11 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
                             ),
                     ),
                   ),
+                if (_guard?.canPin ?? false)
+                  _PinBanner(
+                    lost: _guard!.pin == PinState.lost,
+                    onPin: () => unawaited(_guard!.pinAgain()),
+                  ),
                 _Navigator(
                   questions: questions,
                   answers: _answers,
@@ -416,6 +454,7 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
                                     answer: _answers[q.id],
                                     flagged: _flagged.contains(q.id),
                                     enabled: !_submitting,
+                                    locked: s.settings.integrityOn,
                                     controller: q.isText
                                         ? _controller(q.id)
                                         : null,
@@ -462,6 +501,10 @@ class _QuizRunnerState extends ConsumerState<QuizRunner>
                     secondary: user['email'] as String?,
                   ),
                 ),
+              ),
+            if ((_guard?.captured ?? false) || _sideBySide)
+              Positioned.fill(
+                child: _Shield(captured: _guard?.captured ?? false),
               ),
             if (_submitting)
               const Positioned.fill(child: ModalBarrier(dismissible: false)),
@@ -673,9 +716,11 @@ class _QuestionCard extends StatelessWidget {
     required this.onToggle,
     required this.onText,
     required this.onFlag,
+    this.locked = false,
   });
 
   final QuizSessionQuestion question;
+  final bool locked;
   final int index, total;
   final QuizAnswer? answer;
   final bool flagged, enabled;
@@ -724,6 +769,7 @@ class _QuestionCard extends StatelessWidget {
         const SizedBox(height: AtlasSpace.s8),
         if (q.isText)
           AnswerField(
+            locked: locked,
             controller: controller!,
             label: l.quizYourAnswer,
             hint: l.quizTypeAnswer,
@@ -809,6 +855,96 @@ class _BottomBar extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Covers the questions while the screen is recorded or mirrored, or the
+/// quiz is shown beside another app. The time keeps running.
+class _Shield extends StatelessWidget {
+  const _Shield({required this.captured});
+  final bool captured;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final a = context.atlas;
+    final c = a.colors;
+    return ColoredBox(
+      key: const ValueKey('quiz-shield'),
+      color: c.paper,
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(AtlasSpace.gutter),
+          child: ReadableWidth(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  captured
+                      ? LucideIcons.monitorOff
+                      : LucideIcons.panelsLeftRight,
+                  size: 40,
+                  color: c.accent,
+                ),
+                const SizedBox(height: AtlasSpace.s16),
+                Semantics(
+                  header: true,
+                  child: SafeText(
+                    l.quizShieldTitle,
+                    textAlign: TextAlign.center,
+                    style: a.type.title3.copyWith(color: c.ink),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  captured ? l.quizShieldCaptured : l.quizShieldSideBySide,
+                  textAlign: TextAlign.center,
+                  style: a.type.body.copyWith(color: c.inkSecondary),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Android: the screen is not pinned to the quiz (refused, or unpinned).
+class _PinBanner extends StatelessWidget {
+  const _PinBanner({required this.lost, required this.onPin});
+  final bool lost;
+  final VoidCallback onPin;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return Padding(
+      key: const ValueKey('quiz-pin'),
+      padding: const EdgeInsets.fromLTRB(
+        AtlasSpace.gutter,
+        8,
+        AtlasSpace.gutter,
+        0,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AtlasBanner(
+            kind: lost ? AtlasBannerKind.error : AtlasBannerKind.info,
+            message: lost ? l.quizPinLost : l.quizPinAsk,
+          ),
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: TextButton.icon(
+              icon: const Icon(LucideIcons.pin, size: 18),
+              label: Text(l.quizPinAction),
+              onPressed: onPin,
+            ),
+          ),
+        ],
       ),
     );
   }

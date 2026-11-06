@@ -16,9 +16,11 @@ import 'package:atlas_mobile/design/design.dart';
 import 'package:atlas_mobile/features/account/profile_photo.dart';
 import 'package:atlas_mobile/features/catalog/reviews.dart';
 import 'package:atlas_mobile/features/player/hosted_lesson_player.dart';
+import 'package:atlas_mobile/features/quiz/assessment_widgets.dart';
 import 'package:atlas_mobile/features/results/results_screen.dart';
 import 'package:video_player_platform_interface/video_player_platform_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -210,6 +212,7 @@ void main() {
   liveShots();
   wordShots();
   companyShots();
+  strictQuizShots();
 
   shot(
     'lesson_undo',
@@ -1028,4 +1031,87 @@ void companyShots() {
           .first,
     );
   }
+}
+
+/// The phone's capture/lock channel answering like a phone would.
+void _fakePhone(
+  WidgetTester t, {
+  bool captured = false,
+  bool pinWorks = false,
+}) {
+  t.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+    const MethodChannel('atlas/screen_protection'),
+    (call) async => switch (call.method) {
+      'isCaptured' => captured,
+      'startPin' => pinWorks,
+      'isPinned' => false,
+      _ => true,
+    },
+  );
+  const events = EventChannel('atlas/screen_capture/events');
+  t.binding.defaultBinaryMessenger.setMockStreamHandler(
+    events,
+    MockStreamHandler.inline(
+      onListen: (_, sink) => sink.success({'captured': captured}),
+    ),
+  );
+  addTearDown(() {
+    t.binding.defaultBinaryMessenger
+      ..setMockMethodCallHandler(
+        const MethodChannel('atlas/screen_protection'),
+        null,
+      )
+      ..setMockStreamHandler(events, null);
+  });
+}
+
+void strictQuizShots() {
+  const course = FakeLearningRepository.courseId;
+  shot(
+    'quiz_notice_strict',
+    (t) => pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/$course/quiz/l3',
+      size: const Size(393, 1700),
+    ),
+    focus: () => find
+        .ancestor(
+          of: find.byIcon(LucideIcons.shieldCheck),
+          matching: find.byType(Panel),
+        )
+        .first,
+  );
+  shot(
+    'quiz_recorded_ios',
+    (t) async {
+      _fakePhone(t, captured: true);
+      await pumpScreen(
+        t,
+        session: AsSignedIn.new,
+        path: '/course/$course/quiz/l3',
+        assessments: FakeAssessmentRepository(
+          stage: QuizStage.running,
+          sessionIntegrity: 'warn',
+        ),
+      );
+      await t.pump(const Duration(milliseconds: 300));
+    },
+    ios: true,
+    focus: () => find.byType(Scaffold).last,
+  );
+  shot('quiz_pin_android', (t) async {
+    _fakePhone(t, pinWorks: true);
+    await pumpScreen(
+      t,
+      session: AsSignedIn.new,
+      path: '/course/$course/quiz/l3',
+      assessments: FakeAssessmentRepository(
+        stage: QuizStage.running,
+        sessionIntegrity: 'strict',
+      ),
+    );
+    await t.pump(const Duration(seconds: 12));
+    await t.pump(const Duration(milliseconds: 300));
+  }, focus: () => find.byType(AppBar).last);
 }

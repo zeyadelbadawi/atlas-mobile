@@ -312,11 +312,22 @@ class QuizIntegrity {
     push('fullscreen_enter');
   }
 
-  void push(String type) {
+  /// Event types an older server does not know (it refuses the whole
+  /// batch): dropped from then on once it has said so.
+  static const newTypes = {
+    'screenshot',
+    'screen_capture_start',
+    'screen_capture_stop',
+  };
+  bool _olderServer = false;
+
+  void push(String type, [Map<String, Object?>? payload]) {
     if (!active || _stopped) return;
+    if (_olderServer && newTypes.contains(type)) return;
     _queue.add({
       'type': type,
       'clientAt': DateTime.now().toUtc().toIso8601String(),
+      'payload': ?payload,
     });
     // A backgrounded app may be suspended: send at once so the time is true.
     if (type == 'visibility_hidden') unawaited(flush());
@@ -342,7 +353,16 @@ class QuizIntegrity {
       } else if (r.action == 'warn') {
         onWarn?.call(r.violationCount, r.maxViolations);
       }
-    } on Object {
+    } on Object catch (e) {
+      final known = batch.where((x) => !newTypes.contains(x['type'])).toList();
+      if (e is AtlasApiException &&
+          e.status == 400 &&
+          known.length < batch.length) {
+        // An older server: keep what it knows, stop sending what it doesn't.
+        _olderServer = true;
+        _queue.insertAll(0, known);
+        return;
+      }
       // Events are evidence, not answers: keep them for one more try.
       if (_queue.length < maxBatch) _queue.insertAll(0, batch);
     } finally {

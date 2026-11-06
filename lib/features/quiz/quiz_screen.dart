@@ -423,7 +423,9 @@ class _Disclosure extends StatelessWidget {
             'warn' => l.quizIntegrityWarn(n),
             _ => l.quizIntegrityMonitor,
           }, style: p),
-          if (settings.requireFullscreen) ...[
+          const SizedBox(height: 8),
+          Text(l.quizIntegrityBlocked, style: p),
+          if (settings.locksPhone) ...[
             const SizedBox(height: 8),
             Text(l.quizIntegrityFullscreen, style: p),
           ],

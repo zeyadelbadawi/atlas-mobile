@@ -781,7 +781,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quizIntegrityRecorded =>
-      'While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.';
+      'While the quiz is open, these are recorded with the time they happened: leaving the app (for another app or the home screen) and coming back, opening the quiz beside another app, screenshots and screen recording on iPhone, and a connection check once a minute. Your reviewer sees them with plain explanations — they are prompts for a conversation, not proof of anything.';
 
   @override
   String get quizIntegrityMonitor =>
@@ -799,15 +799,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quizIntegrityFullscreen =>
-      'The app shows the quiz on the whole screen. Leaving the app is recorded.';
+      'The phone is locked to the quiz until you submit. On Android you are asked to pin the screen, and unpinning it is recorded.';
 
   @override
   String get quizIntegrityHonest =>
-      'Atlas never uses your camera or microphone, never records your screen or what you type, and sees nothing outside this quiz. Nothing is blocked.';
+      'Atlas never uses your camera or microphone, never records your screen or what you type, and sees nothing outside this quiz.';
 
   @override
   String get quizIntegrityAck =>
       'I understand what is recorded during this quiz.';
+
+  @override
+  String get quizIntegrityBlocked =>
+      'During the quiz, screenshots and screen recording are blocked on Android; on iPhone the questions are hidden while the screen is recorded or shown elsewhere. Copying and pasting are off, other apps can\'t show over or beside the quiz, and your name appears faintly on the screen.';
+
+  @override
+  String get quizShieldTitle => 'Questions hidden';
+
+  @override
+  String get quizShieldCaptured =>
+      'Your screen is being recorded or shown on another screen, and this was recorded. Stop it to continue. The time keeps running.';
+
+  @override
+  String get quizShieldSideBySide =>
+      'The quiz isn\'t shown next to another app. Open it on the whole screen to continue. The time keeps running.';
+
+  @override
+  String get quizPinAsk => 'This quiz asks you to pin the screen to it.';
+
+  @override
+  String get quizPinLost =>
+      'You unpinned the screen, and this was recorded. Pin it again to continue.';
+
+  @override
+  String get quizPinAction => 'Pin the screen';
 
   @override
   String quizQuestionOf(String current, String total) {

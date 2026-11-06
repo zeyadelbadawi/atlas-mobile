@@ -34,6 +34,27 @@ class ScreenProtection {
     }
   }
 
+  /// Android 12+: other apps' floating windows are not drawn over this app.
+  Future<bool> setHideOverlays(bool on) => _call('setHideOverlays', on);
+
+  /// Locks the phone to the app for a quiz: screen pinning on Android (the
+  /// learner confirms, and can unpin), Apple's assessment mode on iOS
+  /// (when Atlas has the entitlement). Returns whether it took effect.
+  Future<bool> startPin() => _call('startPin');
+  Future<bool> stopPin() => _call('stopPin');
+  Future<bool> isPinned() => _call('isPinned');
+
+  Future<bool> _call(String method, [Object? argument]) async {
+    try {
+      return await _methods.invokeMethod<bool>(method, argument) ?? false;
+    } on MissingPluginException {
+      return false;
+    } on PlatformException catch (e) {
+      debugPrint('screen protection $method: $e');
+      return false;
+    }
+  }
+
   Future<bool> isCaptured() async {
     try {
       return await _methods.invokeMethod<bool>('isCaptured') ?? false;
@@ -51,15 +72,28 @@ class ScreenProtection {
     return _events.receiveBroadcastStream().map((raw) {
       final map = Map<String, Object?>.from(raw as Map);
       if (map['screenshot'] == true) return const CaptureEvent.screenshot();
+      if (map['pinned'] == false) return const CaptureEvent.unpinned();
       return CaptureEvent.captured(map['captured'] == true);
     });
   }
 }
 
 class CaptureEvent {
-  const CaptureEvent.captured(this.isCaptured) : isScreenshot = false;
-  const CaptureEvent.screenshot() : isCaptured = false, isScreenshot = true;
+  const CaptureEvent.captured(this.isCaptured)
+    : isScreenshot = false,
+      isUnpinned = false;
+  const CaptureEvent.screenshot()
+    : isCaptured = false,
+      isScreenshot = true,
+      isUnpinned = false;
+
+  /// iOS: the system ended the assessment-mode session (a call, for one).
+  const CaptureEvent.unpinned()
+    : isCaptured = false,
+      isScreenshot = false,
+      isUnpinned = true;
 
   final bool isCaptured;
   final bool isScreenshot;
+  final bool isUnpinned;
 }
