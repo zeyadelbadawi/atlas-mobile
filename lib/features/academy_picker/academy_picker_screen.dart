@@ -191,11 +191,12 @@ class _AcademyPickerScreenState extends ConsumerState<AcademyPickerScreen> {
                                                     .width *
                                                 0.5,
                                           ),
-                                          child: Text(
+                                          // Shrinks rather than losing
+                                          // its end on a narrow phone.
+                                          child: OneLine(
                                             '.${AppEnv.platformHost}',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.fade,
-                                            softWrap: false,
+                                            alignment:
+                                                AlignmentDirectional.centerEnd,
                                             // Darker than the hint: the
                                             // part that is already there.
                                             style: a.type.body.copyWith(

@@ -312,9 +312,11 @@ class _CertificateCardState extends ConsumerState<CertificateCard> {
                 ),
                 Directionality(
                   textDirection: TextDirection.ltr,
-                  // Copied with the button beside it.
-                  child: Text(
+                  // Copied with the button beside it. One line, shrinking
+                  // if it must: a code split at a hyphen is easy to misread.
+                  child: OneLine(
                     cert.codeDisplay,
+                    alignment: AlignmentDirectional.centerStart,
                     style: a.type.title2.copyWith(
                       color: c.ink,
                       letterSpacing: 1.5,

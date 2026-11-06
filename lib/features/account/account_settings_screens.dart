@@ -544,32 +544,37 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
                           const IconTile(icon: LucideIcons.monitorSmartphone),
                           const SizedBox(width: 12),
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SafeText(
-                                  s.isCurrent
-                                      ? l.securityThisDevice
-                                      : context.deviceLabel(s.deviceLabel),
-                                  style: a.type.headline.copyWith(color: c.ink),
-                                ),
-                                if (s.lastUsedAt != null)
-                                  Text(
-                                    l.securityLastActive(
-                                      relative(context, s.lastUsedAt!),
-                                    ),
-                                    style: a.type.footnote.copyWith(
-                                      color: c.inkSecondary,
+                            child: TextWithAction(
+                              text: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SafeText(
+                                    s.isCurrent
+                                        ? l.securityThisDevice
+                                        : context.deviceLabel(s.deviceLabel),
+                                    style: a.type.headline.copyWith(
+                                      color: c.ink,
                                     ),
                                   ),
-                              ],
+                                  if (s.lastUsedAt != null)
+                                    Text(
+                                      l.securityLastActive(
+                                        relative(context, s.lastUsedAt!),
+                                      ),
+                                      style: a.type.footnote.copyWith(
+                                        color: c.inkSecondary,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              action: s.isCurrent
+                                  ? null
+                                  : TextButton(
+                                      onPressed: () => _revoke(s),
+                                      child: Text(l.securitySignOutSession),
+                                    ),
                             ),
                           ),
-                          if (!s.isCurrent)
-                            TextButton(
-                              onPressed: () => _revoke(s),
-                              child: Text(l.securitySignOutSession),
-                            ),
                         ],
                       ),
                     ),

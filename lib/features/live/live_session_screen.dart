@@ -182,14 +182,16 @@ class _BodyState extends ConsumerState<_Body> {
                       children: [
                         Icon(LucideIcons.clock, size: 18, color: c.accent),
                         const SizedBox(width: 10),
-                        Text(
-                          context.digits(
-                            l.liveTime(
-                              time.format(s.startsAt),
-                              time.format(s.endsAt),
+                        Expanded(
+                          child: Text(
+                            context.digits(
+                              l.liveTime(
+                                time.format(s.startsAt),
+                                time.format(s.endsAt),
+                              ),
                             ),
+                            style: a.type.body.copyWith(color: c.ink),
                           ),
-                          style: a.type.body.copyWith(color: c.ink),
                         ),
                       ],
                     ),

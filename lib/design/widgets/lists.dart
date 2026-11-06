@@ -396,10 +396,15 @@ class AcademyRow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(name, style: a.type.headline.copyWith(color: c.ink)),
-                    Text(
+                    SafeText(
+                      name,
+                      style: a.type.headline.copyWith(color: c.ink),
+                    ),
+                    // One line, shrinking a little if it must: an address
+                    // split in the middle ("dpdns.o / rg") reads as broken.
+                    OneLine(
                       host,
-                      textDirection: TextDirection.ltr,
+                      alignment: AlignmentDirectional.centerStart,
                       style: a.type.footnote.copyWith(color: c.inkSecondary),
                     ),
                   ],
@@ -644,6 +649,42 @@ class IconTile extends StatelessWidget {
           color: danger ? c.danger : c.accent,
         ),
       ),
+    );
+  }
+}
+
+/// A row's text with an action at its end (Sign out, Remove). When the row
+/// is too narrow for both (a small phone, large text), the action moves
+/// under the text instead of squeezing it one word per line.
+class TextWithAction extends StatelessWidget {
+  const TextWithAction({super.key, required this.text, required this.action});
+
+  final Widget text;
+  final Widget? action;
+
+  @override
+  Widget build(BuildContext context) {
+    final action = this.action;
+    if (action == null) return text;
+    return LayoutBuilder(
+      builder: (context, box) {
+        final scale = MediaQuery.textScalerOf(context).scale(1);
+        if (box.maxWidth >= 260 * scale) {
+          return Row(
+            children: [
+              Expanded(child: text),
+              action,
+            ],
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            text,
+            Align(alignment: AlignmentDirectional.centerStart, child: action),
+          ],
+        );
+      },
     );
   }
 }

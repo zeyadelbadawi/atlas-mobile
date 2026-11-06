@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../atlas_theme.dart';
 import 'pressable.dart';
+import 'safe_text.dart';
 
 enum AtlasButtonStyle { primary, tonal, plain, destructive }
 
@@ -53,11 +54,14 @@ class AtlasButton extends StatelessWidget {
                 Icon(icon, size: 20, color: fg),
                 const SizedBox(width: AtlasSpace.s8),
               ],
+              // A long label (a narrow phone, large text) takes a second
+              // line instead of being cut with an ellipsis.
               Flexible(
-                child: Text(
+                child: SafeText(
                   label,
                   style: a.type.button.copyWith(color: fg),
-                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

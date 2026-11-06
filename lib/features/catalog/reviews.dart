@@ -244,16 +244,23 @@ class ReviewTile extends StatelessWidget {
                 child: Text(
                   name,
                   textDirection: contentDirection(context, name),
+                  // At the row's start whatever the name's language, so an
+                  // English name in Arabic never runs into the date.
+                  textAlign: Directionality.of(context) == TextDirection.rtl
+                      ? TextAlign.right
+                      : TextAlign.left,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: a.type.headline.copyWith(color: c.ink),
                 ),
               ),
-              if (review.createdAt != null)
+              if (review.createdAt != null) ...[
+                const SizedBox(width: 12),
                 Text(
                   shortDate(context, review.createdAt!),
                   style: a.type.caption.copyWith(color: c.inkTertiary),
                 ),
+              ],
             ],
           ),
           const SizedBox(height: 4),

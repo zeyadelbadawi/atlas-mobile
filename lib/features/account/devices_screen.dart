@@ -123,36 +123,41 @@ class _DeviceRow extends StatelessWidget {
           IconTile(icon: icon),
           const SizedBox(width: 12),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  device.label,
-                  style: a.type.body.copyWith(color: a.colors.ink),
-                ),
-                Text(
-                  device.current
-                      ? l.devicesThis
-                      : device.lastSeenAt == null
-                      ? ''
-                      : l.devicesLastSeen(
-                          relative(context, device.lastSeenAt!),
-                        ),
-                  style: a.type.footnote.copyWith(
-                    color: device.current
-                        ? a.colors.accent
-                        : a.colors.inkSecondary,
+            child: TextWithAction(
+              text: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SafeText(
+                    device.label,
+                    style: a.type.body.copyWith(color: a.colors.ink),
                   ),
-                ),
-              ],
+                  Text(
+                    device.current
+                        ? l.devicesThis
+                        : device.lastSeenAt == null
+                        ? ''
+                        : l.devicesLastSeen(
+                            relative(context, device.lastSeenAt!),
+                          ),
+                    style: a.type.footnote.copyWith(
+                      color: device.current
+                          ? a.colors.accent
+                          : a.colors.inkSecondary,
+                    ),
+                  ),
+                ],
+              ),
+              action: onRemove == null
+                  ? null
+                  : TextButton(
+                      onPressed: onRemove,
+                      style: TextButton.styleFrom(
+                        foregroundColor: a.colors.danger,
+                      ),
+                      child: Text(l.devicesRemove),
+                    ),
             ),
           ),
-          if (onRemove != null)
-            TextButton(
-              onPressed: onRemove,
-              style: TextButton.styleFrom(foregroundColor: a.colors.danger),
-              child: Text(l.devicesRemove),
-            ),
         ],
       ),
     );

@@ -6,5 +6,8 @@ tags:
   golden:
     # Pixel goldens of the design system (test/design/goldens). Regenerate
     # with: flutter test --tags golden --update-goldens
+  journey:
+    # Learner-journey QA: every screen in four set-ups, pictures in
+    # build/journey. flutter test --tags journey test/journey
   store:
     # App Store / Play screenshots: STORE_SHOTS=1 flutter test --tags store test/store

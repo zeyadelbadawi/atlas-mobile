@@ -7,12 +7,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../design/golden_harness.dart';
+import 'fake_catalog.dart';
 import 'fake_learning.dart';
 import 'screen_harness.dart';
 
 const _course = FakeLearningRepository.courseId;
 
-const _signedIn = [
+const List<String?> _signedIn = [
   '/home',
   '/courses',
   '/tasks',
@@ -36,9 +37,17 @@ const _signedIn = [
   '/course/$_course/live/ls-next',
   '/legal/terms',
   '/about',
+  '/catalog/free-algebra/reviews',
+  '/course/$_course/live/ls-done',
+  '/course/$_course/live/ls-now',
+  '/announcements/a1',
 ];
 
-const _signedOut = ['/academy/sign-in', '/academy/register', '/academy/forgot'];
+const List<String?> _signedOut = [
+  '/academy/sign-in',
+  '/academy/register',
+  '/academy/forgot',
+];
 
 String _where(RenderObject o) {
   if (!const bool.fromEnvironment('WHERE')) return '';
@@ -112,6 +121,7 @@ void main() {
       for (final (session, paths) in [
         (AsSignedIn.new, _signedIn),
         (AsSignedOut.new, _signedOut),
+        (AsNoAcademy.new, const <String?>[null]),
       ]) {
         for (final path in paths) {
           testWidgets('$language ×$scale $path: no word split across lines', (
@@ -125,6 +135,7 @@ void main() {
               language: language,
               path: path,
               size: const Size(320, 640),
+              catalog: RatedCatalog(),
             );
             expect(brokenWords(t), isEmpty);
           });

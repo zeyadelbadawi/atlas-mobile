@@ -17,12 +17,30 @@ import 'reviews.dart';
 /// A course the learner may not have joined yet: what it covers, its
 /// content outline, and "Join for free" (or "Open course" once joined).
 /// Reached from the catalog and from academy links (`/courses/:idOrSlug`).
-class CoursePreviewScreen extends ConsumerWidget {
+class CoursePreviewScreen extends ConsumerStatefulWidget {
   const CoursePreviewScreen({super.key, required this.idOrSlug});
   final String idOrSlug;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CoursePreviewScreen> createState() =>
+      _CoursePreviewScreenState();
+}
+
+class _CoursePreviewScreenState extends ConsumerState<CoursePreviewScreen> {
+  // The compact title bar slides in once the cover has scrolled away, so
+  // the back button never sits over the text (as on the course screen).
+  final _scroll = ScrollController();
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  String get idOrSlug => widget.idOrSlug;
+
+  @override
+  Widget build(BuildContext context) {
     final l = context.l10n;
     final a = context.atlas;
     final course = ref.watch(catalogCourseProvider(idOrSlug));
@@ -34,6 +52,7 @@ class CoursePreviewScreen extends ConsumerWidget {
         child: Stack(
           children: [
             ListView(
+              controller: _scroll,
               padding: EdgeInsets.zero,
               children: [
                 _Cover(course: loaded),
@@ -85,6 +104,12 @@ class CoursePreviewScreen extends ConsumerWidget {
                 ),
               ],
             ),
+            if (loaded != null)
+              CompactTitleBar(
+                controller: _scroll,
+                showAfter: 170,
+                title: loaded.title,
+              ),
             const CoverBackButton(),
           ],
         ),

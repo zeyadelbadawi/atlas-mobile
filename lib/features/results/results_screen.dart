@@ -78,11 +78,15 @@ class _Results extends StatelessWidget {
         body: l.resultsEmptyBody,
       );
     }
-    final graded = [
+    // Both numbers from the same list, so "passed" can never exceed the
+    // quizzes it is counted out of.
+    final gradedQuizzes = [
       for (final c in r.courses)
         for (final q in c.quizzes)
           if (q.score != null) q,
-    ].length;
+    ];
+    final graded = gradedQuizzes.length;
+    final passed = gradedQuizzes.where((q) => q.passed ?? false).length;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -122,7 +126,7 @@ class _Results extends StatelessWidget {
                     icon: LucideIcons.circleCheck,
                     value: graded == 0
                         ? '—'
-                        : l.countOf(d('${r.quizzesPassed}'), d('$graded')),
+                        : l.countOf(d('$passed'), d('$graded')),
                     label: l.resultsQuizzesPassed,
                   ),
                   Divider(height: 24, color: c.rule),
